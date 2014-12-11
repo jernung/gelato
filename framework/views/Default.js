@@ -1,0 +1,23 @@
+/**
+ * @module Framework
+ */
+define(['core/BaseView', 'require.text!templates/Default.html'], function(BaseView, Template) {
+
+    /**
+     * @class DefaultView
+     * @extends BaseView
+     */
+    var DefaultView = BaseView.extend({
+        /**
+         * @method render
+         * @returns {DefaultView}
+         */
+        render: function() {
+            this.$el.html(Template);
+            return this;
+        }
+    });
+
+    return DefaultView;
+
+});
