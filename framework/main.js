@@ -11,10 +11,7 @@
                 FastClick.attach(document.body);
                 window.app = $.extend(new Application(), app);
                 window.app.router = new Router();
-                window.setTimeout(function() {
-                    $('body').removeClass('loading');
-                    Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
-                }, 2000);
+                Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
             });
         }
     }

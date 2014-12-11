@@ -29,6 +29,7 @@ app = (function() {
             jasmine: 'libraries/jasmine-2.1.3',
             'jasmine.html': 'libraries/jasmine.html-2.1.3',
             jquery: 'libraries/jquery-2.1.1',
+            'jquery.mobile': 'libraries/jquery.mobile-1.4.5',
             'jquery.notify': 'libraries/jquery.notify-0.3.1',
             modernizr: 'libraries/modernizr.custom-2.8.3',
             moment: 'libraries/moment-2.8.4',
@@ -46,6 +47,7 @@ app = (function() {
             bootstrap: ['jquery'],
             'bootstrap.switch': ['bootstrap'],
             'jasmine.html': ['jasmine'],
+            'jquery.mobile': ['jquery'],
             'jquery.notify': ['jquery'],
             'moment.timezones': ['moment']
         }

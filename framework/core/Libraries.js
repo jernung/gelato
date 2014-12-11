@@ -15,6 +15,7 @@ define([
     'jasmine',
     'jasmine.html',
     'jquery',
+    'jquery.mobile',
     'jquery.notify',
     'modernizr',
     'moment.timezone',
