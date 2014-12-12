@@ -11,7 +11,16 @@ define([], function() {
          * @property el
          * @type String
          */
-        el: 'application'
+        el: 'application',
+        /**
+         * @method renderTemplate
+         * @param {String} template
+         * @returns {BaseView}
+         */
+        renderTemplate: function(template) {
+            this.$el.html(Handlebars.compile(template)(app.strings));
+            return this;
+        }
     });
 
     return BaseView;
