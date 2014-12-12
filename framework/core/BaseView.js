@@ -11,7 +11,7 @@ define([], function() {
          * @property el
          * @type String
          */
-        el: 'application',
+        el: '#application',
         /**
          * @method renderTemplate
          * @param {String} template

@@ -13,9 +13,9 @@ html.no-js(lang='en')
         link(rel='stylesheet', href='styles/gelato.css')
         link(rel='stylesheet', href='styles/main.css')
     body
-        application.fill-parent
-        modal.fill-parent.hidden
-        panel.fill-parent.hidden
+        #application.application-container.fill-parent
+        #modal.modal-container.fill-parent.hidden
+        #panel.panel-container.fill-parent.hidden
         script(type='text/javascript', src='config.js')
         script(type='text/javascript', src='fonts.js')
         script(data-main='main', src='libraries/require-2.1.15.js')
