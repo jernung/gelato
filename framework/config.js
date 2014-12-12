@@ -26,6 +26,7 @@ app = (function() {
             bootstrap: 'libraries/bootstrap-3.3.1',
             'bootstrap.switch': 'libraries/bootstrap.switch-3.2.2',
             fastclick: 'libraries/fastclick-1.0.3',
+            handlebars: 'libraries/handlebars-2.0.0',
             jasmine: 'libraries/jasmine-2.1.3',
             'jasmine.html': 'libraries/jasmine.html-2.1.3',
             jquery: 'libraries/jquery-2.1.1',
@@ -70,6 +71,15 @@ app = (function() {
     }
 
     /**
+     * @method getSetting
+     * @param {String} name
+     * @returns {String}
+     */
+    function getSetting(name) {
+        return localStorage.getItem('application-' + name);
+    }
+
+    /**
      * @method isCordova
      * @returns {Boolean}
      */
@@ -85,12 +95,32 @@ app = (function() {
         return location.hostname === 'localhost';
     }
 
+    /**
+     * @method removeSetting
+     * @param {String} name
+     */
+    function removeSetting(name) {
+        localStorage.removeItem('application-' + name);
+    }
+
+    /**
+     * @method setSetting
+     * @param {String} name
+     * @param {String} value
+     */
+    function setSetting(name, value) {
+        localStorage.setItem('application-' + name, value);
+    }
+
     return {
         config: config,
         getPushState: getPushState,
         getRoot: getRoot,
+        getSetting: getSetting,
         isCordova: isCordova,
-        isLocal: isLocal
+        isLocal: isLocal,
+        removeSetting: removeSetting,
+        setSetting: setSetting
     };
 
 })();
