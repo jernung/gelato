@@ -1,6 +1,6 @@
 define([], {
     application: {
-        description: 'A delectable mixture of mobile friendly libraries.',
+        description: '美味移動友好的函式庫',
         name: '杰拉托框架'
     }
 });
