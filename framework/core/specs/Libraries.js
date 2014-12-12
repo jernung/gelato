@@ -27,6 +27,11 @@ define([], function() {
                 expect(WebFont).toBeDefined();
             });
         });
+        describe('Handlebars', function() {
+            it('should be defined in the global scope.', function() {
+                expect(Handlebars).toBeDefined();
+            });
+        });
         describe('Jquery', function() {
             it('should be defined in the global namespace.', function() {
                 expect($).toBeDefined();
