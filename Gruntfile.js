@@ -180,8 +180,7 @@ module.exports = function(grunt) {
                     }
                 },
                 files: [
-                    {src: 'main.js', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project},
-                    {src: '**/*.html', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project}
+                    {src: 'index.html', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project}
                 ]
             }
         },

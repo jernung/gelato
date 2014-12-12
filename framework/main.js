@@ -7,10 +7,15 @@
             });
         } else {
             console.log('LOADING:', 'application');
-            requirejs(['Application', 'routers/Router'], function(Application, Router) {
+            requirejs([
+                'Application',
+                'routers/Router',
+                'require.i18n!locale/nls/strings'
+            ], function(Application, Router, Strings) {
                 FastClick.attach(document.body);
                 window.app = $.extend(new Application(), app);
                 window.app.router = new Router();
+                window.app.strings = Strings;
                 Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
             });
         }
@@ -40,7 +45,10 @@
     requirejs.config({
         baseUrl: './',
         callback: loadCoreLibraries,
-        config: {moment: {noGlobal: true}},
+        config: {
+            moment: {noGlobal: true}
+        },
+        locale: app.getSetting('locale') || 'en-us',
         paths: app.config.paths,
         shim: app.config.shim,
         urlArgs: app.isLocal() ? 'bust=' + (new Date()).getTime() : undefined,
