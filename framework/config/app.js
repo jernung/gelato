@@ -25,10 +25,16 @@ app = (function() {
             'backbone.routefilter': 'libraries/backbone.routefilter-0.2.0',
             bootstrap: 'libraries/bootstrap-3.3.1',
             'bootstrap.switch': 'libraries/bootstrap.switch-3.2.2',
+            'createjs.easel': 'libraries/createjs.easel-0.8.0',
+            'createjs.preload': 'libraries/createjs.preload-0.6.0',
+            'createjs.sound': 'libraries/createjs.sound-0.6.0',
+            'createjs.tween': 'libraries/createjs.tween-0.6.0',
             fastclick: 'libraries/fastclick-1.0.3',
+            handlebars: 'libraries/handlebars-2.0.0',
             jasmine: 'libraries/jasmine-2.1.3',
             'jasmine.html': 'libraries/jasmine.html-2.1.3',
             jquery: 'libraries/jquery-2.1.1',
+            'jquery.mobile': 'libraries/jquery.mobile-1.4.5',
             'jquery.notify': 'libraries/jquery.notify-0.3.1',
             modernizr: 'libraries/modernizr.custom-2.8.3',
             moment: 'libraries/moment-2.8.4',
@@ -46,10 +52,17 @@ app = (function() {
             bootstrap: ['jquery'],
             'bootstrap.switch': ['bootstrap'],
             'jasmine.html': ['jasmine'],
+            'jquery.mobile': ['jquery'],
             'jquery.notify': ['jquery'],
             'moment.timezones': ['moment']
         }
     };
+
+    /**
+     * @property fonts
+     * @type {Object}
+     */
+    var fonts = {};
 
     /**
      * @method getPushState
@@ -68,6 +81,15 @@ app = (function() {
     }
 
     /**
+     * @method getSetting
+     * @param {String} name
+     * @returns {String}
+     */
+    function getSetting(name) {
+        return localStorage.getItem('application-' + name);
+    }
+
+    /**
      * @method isCordova
      * @returns {Boolean}
      */
@@ -83,12 +105,51 @@ app = (function() {
         return location.hostname === 'localhost';
     }
 
+    /**
+     * @method mergeObjects
+     * @param {Object} object1
+     * @param {Object} object2
+     * @returns {Object}
+     */
+    function mergeObjects(object1, object2) {
+        for (var key in object2) {
+            if (object1[key] && object2[key].constructor === Object) {
+                mergeObjects(object1[key], object2[key]);
+            } else {
+                object1[key] = object2[key];
+            }
+        }
+        return object1;
+    }
+
+    /**
+     * @method removeSetting
+     * @param {String} name
+     */
+    function removeSetting(name) {
+        localStorage.removeItem('application-' + name);
+    }
+
+    /**
+     * @method setSetting
+     * @param {String} name
+     * @param {String} value
+     */
+    function setSetting(name, value) {
+        localStorage.setItem('application-' + name, value);
+    }
+
     return {
         config: config,
+        fonts: fonts,
         getPushState: getPushState,
         getRoot: getRoot,
+        getSetting: getSetting,
         isCordova: isCordova,
-        isLocal: isLocal
+        isLocal: isLocal,
+        mergeObjects: mergeObjects,
+        removeSetting: removeSetting,
+        setSetting: setSetting
     };
 
 })();

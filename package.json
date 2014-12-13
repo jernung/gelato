@@ -6,7 +6,7 @@
         "url": "http://www.joshmcfarland.net/"
     },
     "license": "MIT",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "repository": {
         "type": "git",
         "url": "https://github.com/jernung/gelato-framework"
@@ -25,6 +25,7 @@
         "grunt-contrib-watch": "0.6.1",
         "grunt-contrib-yuidoc": "0.5.2",
         "grunt-react": "0.10.0",
+        "grunt-replace": "0.8.0",
         "grunt-zip": "0.16.2"
     }
 }

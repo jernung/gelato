@@ -13,7 +13,7 @@ define(['core/BaseView', 'require.text!templates/Default.html'], function(BaseVi
          * @returns {DefaultView}
          */
         render: function() {
-            this.$el.html(Template);
+            this.renderTemplate(Template);
             return this;
         }
     });

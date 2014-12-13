@@ -2,17 +2,19 @@ html.no-js(lang='en')
     head
         meta(charset='utf-8')
         meta(http-equiv='X-UA-Compatible', content='IE=edge')
-        title
-        meta(name='description', content='')
+        title @@application-title
+        meta(name='description', content='@@application-description')
         meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+        link(rel='apple-touch-icon', href='assets/favicon.png')
+        link(rel='shortcut icon', href='assets/favicon.ico')
         link(rel='stylesheet', href='styles/bootstrap.css')
         link(rel='stylesheet', href='styles/bootstrap.switch.css')
         link(rel='stylesheet', href='styles/font.awesome.css')
         link(rel='stylesheet', href='styles/gelato.css')
-    body.loading
-        application.application-container
-        dialog.dialog-container
-        sidebar.sidebar-container
-        script(type='text/javascript', src='config.js')
-        script(type='text/javascript', src='fonts.js')
-        script(data-main='main', src='libraries/require-2.1.15.js')
+        link(rel='stylesheet', href='styles/main.css')
+    body
+        #application.application-container.fill-parent
+        #modal.modal-container.fill-parent.hidden
+        #panel.panel-container.fill-parent.hidden
+        script(type='text/javascript', src='config/app.js')
+        script(data-main='config/main', src='libraries/require-2.1.15.js')

@@ -1,14 +1,12 @@
 html, body {
-  background: none;
   height: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
   width: 100%;
 }
 
-body.loading {
-  background: url("../core/images/ajax-loader.gif") #ffffff center no-repeat;
-}
-
-application {
+.fill-parent {
   height: 100%;
   position: absolute;
   width: 100%;

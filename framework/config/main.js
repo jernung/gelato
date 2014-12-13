@@ -7,14 +7,16 @@
             });
         } else {
             console.log('LOADING:', 'application');
-            requirejs(['Application', 'routers/Router'], function(Application, Router) {
+            requirejs([
+                'Application',
+                'routers/Router',
+                'require.i18n!locale/nls/strings'
+            ], function(Application, Router, Strings) {
                 FastClick.attach(document.body);
                 window.app = $.extend(new Application(), app);
                 window.app.router = new Router();
-                window.setTimeout(function() {
-                    $('body').removeClass('loading');
-                    Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
-                }, 2000);
+                window.app.strings = Strings;
+                Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
             });
         }
     }
@@ -31,19 +33,22 @@
     }
 
     function loadFonts() {
-        if (app.fonts) {
+        if (_.isEmpty(app.fonts)) {
+            loadApplication();
+        } else {
             console.log('LOADING:', 'fonts');
             app.fonts.active = loadApplication;
             WebFont.load(app.fonts);
-        } else {
-            loadApplication();
         }
     }
 
     requirejs.config({
         baseUrl: './',
         callback: loadCoreLibraries,
-        config: {moment: {noGlobal: true}},
+        config: {
+            moment: {noGlobal: true}
+        },
+        locale: app.getSetting('locale') || 'en-us',
         paths: app.config.paths,
         shim: app.config.shim,
         urlArgs: app.isLocal() ? 'bust=' + (new Date()).getTime() : undefined,

@@ -5,6 +5,7 @@
 define([
     'async',
     'fastclick',
+    'handlebars',
     'moment',
     'pouchdb',
     'react',
@@ -12,9 +13,14 @@ define([
     'backbone.routefilter',
     'bootstrap',
     'bootstrap.switch',
+    'createjs.easel',
+    'createjs.preload',
+    'createjs.sound',
+    'createjs.tween',
     'jasmine',
     'jasmine.html',
     'jquery',
+    'jquery.mobile',
     'jquery.notify',
     'modernizr',
     'moment.timezone',
@@ -22,9 +28,10 @@ define([
     'require.text',
     'underscore',
     'webfont'
-], function(Async, FastClick, Moment, PouchDB, React) {
+], function(Async, FastClick, Handlebars, Moment, PouchDB, React) {
     window.Async = Async;
     window.FastClick = FastClick;
+    window.Handlebars = Handlebars;
     window.Moment = Moment;
     window.PouchDB = PouchDB;
     window.React = React;

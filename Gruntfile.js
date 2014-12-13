@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-    require('./framework/config.js');
+    require('./framework/config/app.js');
 
     var path = {
         compilers: 'compilers',
@@ -29,13 +29,17 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.loadNpmTasks('grunt-react');
+    grunt.loadNpmTasks('grunt-replace');
     grunt.loadNpmTasks('grunt-zip');
 
     grunt.initConfig({
         /**
-         * GELATO
+         * PACKAGE
          */
-        gelato: grunt.file.readJSON('package.json'),
+        pkg: {
+            application: grunt.file.readJSON(path.projects + '/' + project + '/package.json'),
+            framework: grunt.file.readJSON('package.json')
+        },
         /**
          * CLEAN
          */
@@ -165,6 +169,22 @@ module.exports = function(grunt) {
             }
         },
         /**
+         * REPLACE
+         */
+        replace: {
+            'build': {
+                options: {
+                    variables: {
+                        'application-title': '<%= pkg.application.title %>',
+                        'application-description': '<%= pkg.application.description %>'
+                    }
+                },
+                files: [
+                    {src: 'index.html', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project}
+                ]
+            }
+        },
+        /**
          * SASS
          */
         sass: {
@@ -238,6 +258,7 @@ module.exports = function(grunt) {
         'react:build',
         'jade:build',
         'sass:build',
+        'replace:build',
         'validate'
     ]);
 
