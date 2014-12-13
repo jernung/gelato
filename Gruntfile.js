@@ -1,6 +1,6 @@
 module.exports = function(grunt) {
 
-    require('./framework/config.js');
+    require('./framework/config/app.js');
 
     var path = {
         compilers: 'compilers',

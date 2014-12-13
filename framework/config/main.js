@@ -33,12 +33,12 @@
     }
 
     function loadFonts() {
-        if (app.fonts) {
+        if (_.isEmpty(app.fonts)) {
+            loadApplication();
+        } else {
             console.log('LOADING:', 'fonts');
             app.fonts.active = loadApplication;
             WebFont.load(app.fonts);
-        } else {
-            loadApplication();
         }
     }
 

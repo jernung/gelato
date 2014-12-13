@@ -55,6 +55,12 @@ app = (function() {
     };
 
     /**
+     * @property fonts
+     * @type {Object}
+     */
+    var fonts = {};
+
+    /**
      * @method getPushState
      * @returns {Boolean}
      */
@@ -96,6 +102,23 @@ app = (function() {
     }
 
     /**
+     * @method mergeObjects
+     * @param {Object} object1
+     * @param {Object} object2
+     * @returns {Object}
+     */
+    function mergeObjects(object1, object2) {
+        for (var key in object2) {
+            if (object1[key] && object2[key].constructor === Object) {
+                mergeObjects(object1[key], object2[key]);
+            } else {
+                object1[key] = object2[key];
+            }
+        }
+        return object1;
+    }
+
+    /**
      * @method removeSetting
      * @param {String} name
      */
@@ -114,11 +137,13 @@ app = (function() {
 
     return {
         config: config,
+        fonts: fonts,
         getPushState: getPushState,
         getRoot: getRoot,
         getSetting: getSetting,
         isCordova: isCordova,
         isLocal: isLocal,
+        mergeObjects: mergeObjects,
         removeSetting: removeSetting,
         setSetting: setSetting
     };
