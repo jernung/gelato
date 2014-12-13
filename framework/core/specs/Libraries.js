@@ -17,6 +17,23 @@ define([], function() {
                 expect($.guid).toEqual(Backbone.$.guid);
             });
         });
+        describe('CreateJS', function() {
+            it('should be defined in the global scope.', function() {
+                expect(createjs).toBeDefined();
+            });
+            it('should contain the easel library.', function() {
+                expect(createjs.EaselJS).toBeDefined();
+            });
+            it('should contain the preload library.', function() {
+                expect(createjs.PreloadJS).toBeDefined();
+            });
+            it('should contain the sound library.', function() {
+                expect(createjs.SoundJS).toBeDefined();
+            });
+            it('should contain the tween library.', function() {
+                expect(createjs.TweenJS).toBeDefined();
+            });
+        });
         describe('FastClick', function() {
             it('should be defined in the global scope.', function() {
                 expect(FastClick).toBeDefined();
