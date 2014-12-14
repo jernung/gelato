@@ -65,6 +65,12 @@ app = (function() {
     var fonts = {};
 
     /**
+     * @property version
+     * @type {String}
+     */
+    var version = '@@application-version';
+
+    /**
      * @method getPushState
      * @returns {Boolean}
      */
@@ -149,7 +155,8 @@ app = (function() {
         isLocal: isLocal,
         mergeObjects: mergeObjects,
         removeSetting: removeSetting,
-        setSetting: setSetting
+        setSetting: setSetting,
+        version: version
     };
 
 })();

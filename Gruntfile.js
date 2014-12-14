@@ -188,12 +188,14 @@ module.exports = function(grunt) {
             'build': {
                 options: {
                     variables: {
+                        'application-description': '<%= pkg.application.description %>',
                         'application-title': '<%= pkg.application.title %>',
-                        'application-description': '<%= pkg.application.description %>'
+                        'application-version': '<%= pkg.application.version %>'
                     }
                 },
                 files: [
-                    {src: 'index.html', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project}
+                    {src: 'index.html', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project},
+                    {src: 'config/app.js', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project}
                 ]
             }
         },
