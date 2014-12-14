@@ -96,7 +96,7 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        cwd: '/' + project,
+                        cwd: path.projects + '/' + project,
                         src: ['**/*', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: path.www + '/' + project
                     }
