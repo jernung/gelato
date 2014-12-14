@@ -1,6 +1,14 @@
 app = (function() {
 
     /**
+     * @property attributes
+     * @type {Object}
+     */
+    var attributes = {
+        version: '@@application-version'
+    };
+
+    /**
      * @property config
      * @type {Object}
      */
@@ -63,12 +71,6 @@ app = (function() {
      * @type {Object}
      */
     var fonts = {};
-
-    /**
-     * @property version
-     * @type {String}
-     */
-    var version = '@@application-version';
 
     /**
      * @method getPushState
@@ -146,6 +148,7 @@ app = (function() {
     }
 
     return {
+        attributes: attributes,
         config: config,
         fonts: fonts,
         getPushState: getPushState,
@@ -155,8 +158,7 @@ app = (function() {
         isLocal: isLocal,
         mergeObjects: mergeObjects,
         removeSetting: removeSetting,
-        setSetting: setSetting,
-        version: version
+        setSetting: setSetting
     };
 
 })();
