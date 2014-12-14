@@ -4,9 +4,11 @@ module.exports = function(grunt) {
 
     var path = {
         compilers: 'compilers',
+        docs: 'docs',
         framework: 'framework',
         projects: 'projects',
-        www: 'www'
+        www: 'www',
+        yuidoc: 'yuidoc'
     };
 
     var project = grunt.option('project') ? grunt.option('project') : 'gelato-starter';
@@ -50,6 +52,17 @@ module.exports = function(grunt) {
                     '!' + path.compilers + '/android/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
                     '!' + path.compilers + '/android/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
                     '!' + path.compilers + '/android/crosswalk/README.md'
+                ],
+                options: {force: true}
+            },
+            'docs': {
+                src: [path.docs + '/' + project + '/**/*'],
+                options: {force: true}
+            },
+            'docs-all': {
+                src: [
+                    path.docs + '/**/*',
+                    '!' + path.docs + '/README.md'
                 ],
                 options: {force: true}
             },
@@ -246,6 +259,25 @@ module.exports = function(grunt) {
                     spawn: false
                 }
             }
+        },
+        /**
+         * YUIDOC
+         */
+        yuidoc: {
+            'build': {
+                name: '<%= pkg.application.title %>',
+                description: '<%= pkg.application.description %>',
+                version: '<%= pkg.application.version %>',
+                options: {
+                    exclude: 'libraries',
+                    paths: [
+                        path.projects + '/' + project,
+                        path.framework
+                    ],
+                    themedir: path.yuidoc,
+                    outdir: path.docs + '/' + project
+                }
+            }
         }
     });
 
@@ -260,6 +292,14 @@ module.exports = function(grunt) {
         'sass:build',
         'replace:build',
         'validate'
+    ]);
+
+    /**
+     * TASK: docs
+     */
+    grunt.registerTask('docs', [
+        'clean:docs',
+        'yuidoc:build'
     ]);
 
     /**

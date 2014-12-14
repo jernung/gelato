@@ -3,6 +3,7 @@
 .sass-cache/
 build/
 compilers/android/crosswalk/**/
+docs/
 node_modules/
 nbproject/
 projects/**/
