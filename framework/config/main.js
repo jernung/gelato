@@ -36,6 +36,7 @@
         if (Object.keys(app.fonts).length) {
             console.log('LOADING:', 'fonts');
             app.fonts.active = loadApplication;
+            app.fonts.inactive = loadApplication;
             WebFont.load(app.fonts);
         } else {
             loadApplication();

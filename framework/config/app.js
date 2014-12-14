@@ -70,7 +70,12 @@ app = (function() {
      * @property fonts
      * @type {Object}
      */
-    var fonts = {};
+    var fonts = {
+        custom: {
+            families: ['Arial Unicode MS'],
+            urls: ['styles/arialuni.css']
+        }
+    };
 
     /**
      * @method getPushState
