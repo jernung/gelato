@@ -286,46 +286,56 @@ module.exports = function(grunt) {
     /**
      * TASK: build
      */
-    grunt.registerTask('build', [
-        'clean:www',
-        'copy:build',
-        'react:build',
-        'jade:build',
-        'sass:build',
-        'replace:build',
-        'validate'
-    ]);
+    grunt.registerTask('build', function() {
+        grunt.task.run([
+            'clean:www',
+            'copy:build',
+            'react:build',
+            'jade:build',
+            'sass:build',
+            'replace:build',
+            'validate'
+        ]);
+    });
 
     /**
      * TASK: docs
      */
-    grunt.registerTask('docs', [
-        'clean:docs',
-        'yuidoc:build'
-    ]);
+    grunt.registerTask('docs', function() {
+        grunt.task.run([
+            'clean:docs',
+            'yuidoc:build'
+        ]);
+    });
 
     /**
      * TASK: install-android
      */
-    grunt.registerTask('install-android', [
-        'clean:crosswalk',
-        'unzip:crosswalk-arm',
-        'unzip:crosswalk-x86'
-    ]);
+    grunt.registerTask('install-android', function() {
+        grunt.task.run([
+            'clean:crosswalk',
+            'unzip:crosswalk-arm',
+            'unzip:crosswalk-x86'
+        ]);
+    });
 
     /**
      * TASK: validate
      */
-    grunt.registerTask('validate', [
-        'csslint:www',
-        'jshint:www'
-    ]);
+    grunt.registerTask('validate', function() {
+        grunt.task.run([
+            'csslint:www',
+            'jshint:www'
+        ]);
+    });
 
     /**
      * TASK: wash
      */
-    grunt.registerTask('wash', [
-        'clean:www-all'
-    ]);
+    grunt.registerTask('wash', function() {
+        grunt.task.run([
+            'clean:www-all'
+        ]);
+    });
 
 };
