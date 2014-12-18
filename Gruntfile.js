@@ -311,6 +311,14 @@ module.exports = function(grunt) {
             grunt.log.error('No project declared.');
             return false;
         }
+        if (!grunt.file.isDir(path.projects + '/' + project)) {
+            grunt.log.error('Project directory not found.');
+            return false;
+        }
+        if (!grunt.file.isFile(path.projects + '/' + project + '/package.json')) {
+            grunt.log.error('Project directory missing package.json file.');
+            return false;
+        }
     });
 
     /**
