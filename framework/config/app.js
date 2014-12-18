@@ -5,6 +5,7 @@ app = (function() {
      * @type {Object}
      */
     var attributes = {
+        name: '@@application-name',
         version: '@@application-version'
     };
 
@@ -75,6 +76,14 @@ app = (function() {
             families: ['Arial Unicode MS'],
             urls: ['styles/arialuni.css']
         }
+    };
+
+    /**
+     * @property framework
+     * @type {Object}
+     */
+    var framework = {
+        version: '@@framework-version'
     };
 
     /**
@@ -156,6 +165,7 @@ app = (function() {
         attributes: attributes,
         config: config,
         fonts: fonts,
+        framework: framework,
         getPushState: getPushState,
         getRoot: getRoot,
         getSetting: getSetting,

@@ -196,8 +196,10 @@ module.exports = function(grunt) {
                 options: {
                     variables: {
                         'application-description': '<%= pkg.application.description %>',
+                        'application-name': '<%= pkg.application.name %>',
                         'application-title': '<%= pkg.application.title %>',
-                        'application-version': '<%= pkg.application.version %>'
+                        'application-version': '<%= pkg.application.version %>',
+                        'framework-version': '<%= pkg.framework.version %>'
                     }
                 },
                 files: [
