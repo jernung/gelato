@@ -15,7 +15,7 @@ module.exports = function(grunt) {
 
     var setting = {
         crosswalk: {
-            version: '10.39.235.12'
+            version: '10.39.235.13'
         }
     };
 
