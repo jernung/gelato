@@ -40,11 +40,14 @@ module.exports = function(grunt) {
          */
         pkg: {
             application: function() {
-                return grunt.file.readJSON(path.projects + '/' + project + '/package.json');
-            },
+                if (grunt.file.isFile(path.projects + '/' + project + '/package.json')) {
+                    return grunt.file.readJSON(path.projects + '/' + project + '/package.json');
+                }
+                return grunt.file.readJSON('package.json');
+            }(),
             framework: function() {
                 return grunt.file.readJSON('package.json');
-            }
+            }()
         },
         /**
          * CLEAN
