@@ -42,7 +42,7 @@ app = (function() {
             handlebars: 'libraries/handlebars-2.0.0',
             jasmine: 'libraries/jasmine-2.1.3',
             'jasmine.html': 'libraries/jasmine.html-2.1.3',
-            jquery: 'libraries/jquery-2.1.1',
+            jquery: 'libraries/jquery-2.1.3',
             'jquery.mobile': 'libraries/jquery.mobile-1.4.5',
             'jquery.notify': 'libraries/jquery.notify-0.3.1',
             modernizr: 'libraries/modernizr.custom-2.8.3',
@@ -71,12 +71,7 @@ app = (function() {
      * @property fonts
      * @type {Object}
      */
-    var fonts = {
-        custom: {
-            families: ['Arial Unicode MS'],
-            urls: ['styles/arialuni.css']
-        }
-    };
+    var fonts = {};
 
     /**
      * @property framework
