@@ -11,7 +11,7 @@ module.exports = function(grunt) {
         yuidoc: 'yuidoc'
     };
 
-    var project = grunt.option('project') ? grunt.option('project') : 'gelato-starter';
+    var project = grunt.option('project');
 
     var setting = {
         crosswalk: {
@@ -39,8 +39,12 @@ module.exports = function(grunt) {
          * PACKAGE
          */
         pkg: {
-            application: grunt.file.readJSON(path.projects + '/' + project + '/package.json'),
-            framework: grunt.file.readJSON('package.json')
+            application: function() {
+                return grunt.file.readJSON(path.projects + '/' + project + '/package.json');
+            },
+            framework: function() {
+                return grunt.file.readJSON('package.json');
+            }
         },
         /**
          * CLEAN
@@ -288,6 +292,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('build', function() {
         grunt.task.run([
+            'check-requirements',
             'clean:www',
             'copy:build',
             'react:build',
@@ -299,10 +304,21 @@ module.exports = function(grunt) {
     });
 
     /**
+     * TASK: check-requirements
+     */
+    grunt.registerTask('check-requirements', function() {
+        if (!project) {
+            grunt.log.error('No project declared.');
+            return false;
+        }
+    });
+
+    /**
      * TASK: docs
      */
     grunt.registerTask('docs', function() {
         grunt.task.run([
+            'check-requirements',
             'clean:docs',
             'yuidoc:build'
         ]);
@@ -313,6 +329,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('install-android', function() {
         grunt.task.run([
+            'check-requirements',
             'clean:crosswalk',
             'unzip:crosswalk-arm',
             'unzip:crosswalk-x86'
@@ -324,6 +341,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('validate', function() {
         grunt.task.run([
+            'check-requirements',
             'csslint:www',
             'jshint:www'
         ]);
@@ -334,6 +352,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('wash', function() {
         grunt.task.run([
+            'check-requirements',
             'clean:www-all'
         ]);
     });
