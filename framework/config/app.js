@@ -49,7 +49,7 @@ app = (function() {
             moment: 'libraries/moment-2.8.4',
             'moment.timezone': 'libraries/moment.timezone-0.2.5',
             pouchdb: 'libraries/pouchdb-3.2.0',
-            react: 'libraries/react-0.12.1',
+            react: 'libraries/react-0.12.2',
             'require.i18n': 'libraries/require.i18n-2.0.4',
             'require.text': 'libraries/require.text-2.0.12',
             underscore: 'libraries/lodash.underscore-2.4.1',
