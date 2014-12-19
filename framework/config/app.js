@@ -29,7 +29,7 @@ app = (function() {
             templates: 'templates',
             views: 'views',
             //framework libraries
-            async: 'libraries/async-0.9.0',
+            async: 'libraries/async-0.9.2',
             backbone: 'libraries/backbone-1.1.2',
             'backbone.routefilter': 'libraries/backbone.routefilter-0.2.0',
             bootstrap: 'libraries/bootstrap-3.3.1',
