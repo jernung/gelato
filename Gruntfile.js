@@ -20,6 +20,7 @@ module.exports = function(grunt) {
     };
 
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -90,6 +91,29 @@ module.exports = function(grunt) {
             }
         },
         /**
+         * COFFEE
+         */
+        coffee: {
+            'build': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: path.framework,
+                        src: '**/*.coffee',
+                        dest: path.www + '/' + project,
+                        ext: '.js'
+                    },
+                    {
+                        expand: true,
+                        cwd: path.projects + '/' + project,
+                        src: '**/*.coffee',
+                        dest: path.www + '/' + project,
+                        ext: '.js'
+                    }
+                ]
+            }
+        },
+        /**
          * COPY
          */
         copy: {
@@ -98,13 +122,13 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: path.framework,
-                        src: ['**/*', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
+                        src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: path.www + '/' + project
                     },
                     {
                         expand: true,
                         cwd: path.projects + '/' + project,
-                        src: ['**/*', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
+                        src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: path.www + '/' + project
                     }
                 ]
@@ -254,11 +278,13 @@ module.exports = function(grunt) {
         watch: {
             'all': {
                 files: [
+                    path.projects + '/' + project + '/**/*.coffee',
                     path.projects + '/' + project + '/**/*.html',
                     path.projects + '/' + project + '/**/*.jade',
                     path.projects + '/' + project + '/**/*.js',
                     path.projects + '/' + project + '/**/*.jsx',
                     path.projects + '/' + project + '/**/*.scss',
+                    path.framework + '/**/*.coffee',
                     path.framework + '/**/*.html',
                     path.framework + '/**/*.jade',
                     path.framework + '/**/*.js',
@@ -300,6 +326,7 @@ module.exports = function(grunt) {
             'check-requirements',
             'clean:www',
             'copy:build',
+            'coffee:build',
             'react:build',
             'jade:build',
             'sass:build',
