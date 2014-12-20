@@ -8,12 +8,12 @@
         } else {
             console.log('LOADING:', 'application');
             requirejs([
-                'Application',
+                'models/Application',
                 'routers/Router',
                 'require.i18n!locale/nls/strings'
             ], function(Application, Router, Strings) {
                 FastClick.attach(document.body);
-                window.app = $.extend(new Application(), app);
+                window.app = $.extend(true, new Application(), app);
                 window.app.router = new Router();
                 window.app.strings = Strings;
                 Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
@@ -33,12 +33,13 @@
     }
 
     function loadFonts() {
-        if (_.isEmpty(app.fonts)) {
-            loadApplication();
-        } else {
+        if (Object.keys(app.fonts).length) {
             console.log('LOADING:', 'fonts');
             app.fonts.active = loadApplication;
+            app.fonts.inactive = loadApplication;
             WebFont.load(app.fonts);
+        } else {
+            loadApplication();
         }
     }
 

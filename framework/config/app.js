@@ -1,6 +1,15 @@
 app = (function() {
 
     /**
+     * @property attributes
+     * @type {Object}
+     */
+    var attributes = {
+        name: '@@application-name',
+        version: '@@application-version'
+    };
+
+    /**
      * @property config
      * @type {Object}
      */
@@ -20,7 +29,7 @@ app = (function() {
             templates: 'templates',
             views: 'views',
             //framework libraries
-            async: 'libraries/async-0.9.0',
+            async: 'libraries/async-0.9.2',
             backbone: 'libraries/backbone-1.1.2',
             'backbone.routefilter': 'libraries/backbone.routefilter-0.2.0',
             bootstrap: 'libraries/bootstrap-3.3.1',
@@ -33,18 +42,18 @@ app = (function() {
             handlebars: 'libraries/handlebars-2.0.0',
             jasmine: 'libraries/jasmine-2.1.3',
             'jasmine.html': 'libraries/jasmine.html-2.1.3',
-            jquery: 'libraries/jquery-2.1.1',
+            jquery: 'libraries/jquery-2.1.3',
             'jquery.mobile': 'libraries/jquery.mobile-1.4.5',
             'jquery.notify': 'libraries/jquery.notify-0.3.1',
             modernizr: 'libraries/modernizr.custom-2.8.3',
             moment: 'libraries/moment-2.8.4',
             'moment.timezone': 'libraries/moment.timezone-0.2.5',
             pouchdb: 'libraries/pouchdb-3.2.0',
-            react: 'libraries/react-0.12.1',
+            react: 'libraries/react-0.12.2',
             'require.i18n': 'libraries/require.i18n-2.0.4',
             'require.text': 'libraries/require.text-2.0.12',
             underscore: 'libraries/lodash.underscore-2.4.1',
-            webfont: 'libraries/webfontloader-1.5.8'
+            webfont: 'libraries/webfontloader-1.5.10'
         },
         shim: {
             backbone: ['jquery', 'underscore'],
@@ -63,6 +72,14 @@ app = (function() {
      * @type {Object}
      */
     var fonts = {};
+
+    /**
+     * @property framework
+     * @type {Object}
+     */
+    var framework = {
+        version: '@@framework-version'
+    };
 
     /**
      * @method getPushState
@@ -140,8 +157,10 @@ app = (function() {
     }
 
     return {
+        attributes: attributes,
         config: config,
         fonts: fonts,
+        framework: framework,
         getPushState: getPushState,
         getRoot: getRoot,
         getSetting: getSetting,

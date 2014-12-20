@@ -4,20 +4,23 @@ module.exports = function(grunt) {
 
     var path = {
         compilers: 'compilers',
+        docs: 'docs',
         framework: 'framework',
         projects: 'projects',
-        www: 'www'
+        www: 'www',
+        yuidoc: 'yuidoc'
     };
 
-    var project = grunt.option('project') ? grunt.option('project') : 'gelato-starter';
+    var project = grunt.option('project');
 
     var setting = {
         crosswalk: {
-            version: '10.39.235.12'
+            version: '10.39.235.13'
         }
     };
 
     grunt.loadNpmTasks('grunt-contrib-clean');
+    grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -37,8 +40,15 @@ module.exports = function(grunt) {
          * PACKAGE
          */
         pkg: {
-            application: grunt.file.readJSON(path.projects + '/' + project + '/package.json'),
-            framework: grunt.file.readJSON('package.json')
+            application: function() {
+                if (grunt.file.isFile(path.projects + '/' + project + '/package.json')) {
+                    return grunt.file.readJSON(path.projects + '/' + project + '/package.json');
+                }
+                return grunt.file.readJSON('package.json');
+            }(),
+            framework: function() {
+                return grunt.file.readJSON('package.json');
+            }()
         },
         /**
          * CLEAN
@@ -50,6 +60,17 @@ module.exports = function(grunt) {
                     '!' + path.compilers + '/android/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
                     '!' + path.compilers + '/android/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
                     '!' + path.compilers + '/android/crosswalk/README.md'
+                ],
+                options: {force: true}
+            },
+            'docs': {
+                src: [path.docs + '/' + project + '/**/*'],
+                options: {force: true}
+            },
+            'docs-all': {
+                src: [
+                    path.docs + '/**/*',
+                    '!' + path.docs + '/README.md'
                 ],
                 options: {force: true}
             },
@@ -70,6 +91,29 @@ module.exports = function(grunt) {
             }
         },
         /**
+         * COFFEE
+         */
+        coffee: {
+            'build': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: path.framework,
+                        src: '**/*.coffee',
+                        dest: path.www + '/' + project,
+                        ext: '.js'
+                    },
+                    {
+                        expand: true,
+                        cwd: path.projects + '/' + project,
+                        src: '**/*.coffee',
+                        dest: path.www + '/' + project,
+                        ext: '.js'
+                    }
+                ]
+            }
+        },
+        /**
          * COPY
          */
         copy: {
@@ -78,13 +122,13 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: path.framework,
-                        src: ['**/*', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
+                        src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: path.www + '/' + project
                     },
                     {
                         expand: true,
-                        cwd: '/' + project,
-                        src: ['**/*', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
+                        cwd: path.projects + '/' + project,
+                        src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: path.www + '/' + project
                     }
                 ]
@@ -175,12 +219,16 @@ module.exports = function(grunt) {
             'build': {
                 options: {
                     variables: {
+                        'application-description': '<%= pkg.application.description %>',
+                        'application-name': '<%= pkg.application.name %>',
                         'application-title': '<%= pkg.application.title %>',
-                        'application-description': '<%= pkg.application.description %>'
+                        'application-version': '<%= pkg.application.version %>',
+                        'framework-version': '<%= pkg.framework.version %>'
                     }
                 },
                 files: [
-                    {src: 'index.html', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project}
+                    {src: 'index.html', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project},
+                    {src: 'config/app.js', dest: path.www + '/'+ project, expand: true, cwd: path.www + '/'+ project}
                 ]
             }
         },
@@ -230,11 +278,13 @@ module.exports = function(grunt) {
         watch: {
             'all': {
                 files: [
+                    path.projects + '/' + project + '/**/*.coffee',
                     path.projects + '/' + project + '/**/*.html',
                     path.projects + '/' + project + '/**/*.jade',
                     path.projects + '/' + project + '/**/*.js',
                     path.projects + '/' + project + '/**/*.jsx',
                     path.projects + '/' + project + '/**/*.scss',
+                    path.framework + '/**/*.coffee',
                     path.framework + '/**/*.html',
                     path.framework + '/**/*.jade',
                     path.framework + '/**/*.js',
@@ -246,44 +296,105 @@ module.exports = function(grunt) {
                     spawn: false
                 }
             }
+        },
+        /**
+         * YUIDOC
+         */
+        yuidoc: {
+            'build': {
+                name: '<%= pkg.application.title %>',
+                description: '<%= pkg.application.description %>',
+                version: '<%= pkg.application.version %>',
+                options: {
+                    exclude: 'libraries',
+                    paths: [
+                        path.projects + '/' + project,
+                        path.framework
+                    ],
+                    themedir: path.yuidoc,
+                    outdir: path.docs + '/' + project
+                }
+            }
         }
     });
 
     /**
      * TASK: build
      */
-    grunt.registerTask('build', [
-        'clean:www',
-        'copy:build',
-        'react:build',
-        'jade:build',
-        'sass:build',
-        'replace:build',
-        'validate'
-    ]);
+    grunt.registerTask('build', function() {
+        grunt.task.run([
+            'check-requirements',
+            'clean:www',
+            'copy:build',
+            'coffee:build',
+            'react:build',
+            'jade:build',
+            'sass:build',
+            'replace:build',
+            'validate'
+        ]);
+    });
+
+    /**
+     * TASK: check-requirements
+     */
+    grunt.registerTask('check-requirements', function() {
+        if (!project) {
+            grunt.log.error('No project declared.');
+            return false;
+        }
+        if (!grunt.file.isDir(path.projects + '/' + project)) {
+            grunt.log.error('Project directory not found.');
+            return false;
+        }
+        if (!grunt.file.isFile(path.projects + '/' + project + '/package.json')) {
+            grunt.log.error('Project directory missing package.json file.');
+            return false;
+        }
+    });
+
+    /**
+     * TASK: docs
+     */
+    grunt.registerTask('docs', function() {
+        grunt.task.run([
+            'check-requirements',
+            'clean:docs',
+            'yuidoc:build'
+        ]);
+    });
 
     /**
      * TASK: install-android
      */
-    grunt.registerTask('install-android', [
-        'clean:crosswalk',
-        'unzip:crosswalk-arm',
-        'unzip:crosswalk-x86'
-    ]);
+    grunt.registerTask('install-android', function() {
+        grunt.task.run([
+            'check-requirements',
+            'clean:crosswalk',
+            'unzip:crosswalk-arm',
+            'unzip:crosswalk-x86'
+        ]);
+    });
 
     /**
      * TASK: validate
      */
-    grunt.registerTask('validate', [
-        'csslint:www',
-        'jshint:www'
-    ]);
+    grunt.registerTask('validate', function() {
+        grunt.task.run([
+            'check-requirements',
+            'csslint:www',
+            'jshint:www'
+        ]);
+    });
 
     /**
      * TASK: wash
      */
-    grunt.registerTask('wash', [
-        'clean:www-all'
-    ]);
+    grunt.registerTask('wash', function() {
+        grunt.task.run([
+            'check-requirements',
+            'clean:www-all'
+        ]);
+    });
 
 };
