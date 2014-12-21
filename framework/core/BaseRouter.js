@@ -2,7 +2,6 @@
  * @module Framework
  */
 define([], function() {
-
     /**
      * @class BaseRouter
      * @extends Backbone.Router
