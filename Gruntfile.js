@@ -3,6 +3,7 @@ module.exports = function(grunt) {
     require('./framework/core/config/app.js');
 
     var path = {
+        build: 'build',
         compilers: 'compilers',
         docs: 'docs',
         framework: 'framework',
@@ -54,6 +55,17 @@ module.exports = function(grunt) {
          * CLEAN
          */
         clean: {
+            'build': {
+                src: [path.build + '/' + project + '/**/*'],
+                options: {force: true}
+            },
+            'build-all': {
+                src: [
+                    path.build + '/**/*',
+                    '!' + path.build + '/README.md'
+                ],
+                options: {force: true}
+            },
             'crosswalk': {
                 src: [
                     path.compilers + '/android/crosswalk/**/*',
@@ -233,6 +245,43 @@ module.exports = function(grunt) {
             }
         },
         /**
+         * REQUIREJS
+         */
+        requirejs: {
+            'build-combine': {
+                options: {
+                    baseUrl: path.www + '/' + project,
+                    dir: path.build + '/' + project,
+                    fileExclusionRegExp: undefined,
+                    generateSourceMaps: false,
+                    keepBuildDir: false,
+                    modules: app.config.modules,
+                    optimize: 'none',
+                    optimizeCss: 'standard',
+                    paths: app.config.paths,
+                    preserveLicenseComments: true,
+                    removeCombined: true,
+                    shim: app.config.shim
+                }
+            },
+            'build-compact': {
+                options: {
+                    baseUrl: path.www + '/' + project,
+                    dir: path.build + '/' + project,
+                    fileExclusionRegExp: undefined,
+                    generateSourceMaps: false,
+                    keepBuildDir: false,
+                    modules: app.config.modules,
+                    optimize: 'uglify',
+                    optimizeCss: 'standard',
+                    paths: app.config.paths,
+                    preserveLicenseComments: false,
+                    removeCombined: true,
+                    shim: app.config.shim
+                }
+            }
+        },
+        /**
          * SASS
          */
         sass: {
@@ -321,7 +370,7 @@ module.exports = function(grunt) {
     /**
      * TASK: build
      */
-    grunt.registerTask('build', function() {
+    grunt.registerTask('build', function(type) {
         grunt.task.run([
             'check-requirements',
             'clean:www',
@@ -333,6 +382,11 @@ module.exports = function(grunt) {
             'replace:build',
             'validate'
         ]);
+        if (type === 'combine') {
+            grunt.task.run('requirejs:build-combine');
+        } else if (type === 'compact') {
+            grunt.task.run('requirejs:build-compact');
+        }
     });
 
     /**
