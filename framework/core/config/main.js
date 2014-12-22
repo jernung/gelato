@@ -7,16 +7,10 @@
             });
         } else {
             console.log('LOADING:', 'application');
-            requirejs([
-                'models/Application',
-                'routers/Router',
-                'require.i18n!locale/nls/strings'
-            ], function(Application, Router, Strings) {
+            requirejs(['models/Application'], function(Application) {
                 FastClick.attach(document.body);
                 window.app = $.extend(true, new Application(), app);
-                window.app.router = new Router();
-                window.app.strings = Strings;
-                Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
+                window.app.router.start();
             });
         }
     }

@@ -15,8 +15,15 @@ app = (function() {
      */
     var config = {
         modules: [
-            {name: 'core/Libraries'},
-            {name: 'core/Tests'}
+            {
+                name: 'core/Libraries'
+            },
+            {
+                name: 'core/Tests'
+            },
+            {
+                name: 'models/Application'
+            }
         ],
         paths: {
             //default directories
