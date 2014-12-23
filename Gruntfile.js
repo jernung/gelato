@@ -34,6 +34,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-yuidoc');
     grunt.loadNpmTasks('grunt-react');
     grunt.loadNpmTasks('grunt-replace');
+    grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
 
     grunt.initConfig({
@@ -308,6 +309,10 @@ module.exports = function(grunt) {
                 }
             }
         },
+        /**
+         * SHELL
+         */
+        shell: {},
         /**
          * UNZIP
          */
