@@ -2,7 +2,7 @@
 .idea/
 .sass-cache/
 build/
-compilers/android/crosswalk/**/
+cordova/**/
 docs/**/
 node_modules/
 nbproject/

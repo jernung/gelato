@@ -9,4 +9,5 @@ define([], function() {
     var BaseModel = Backbone.Model.extend({});
 
     return BaseModel;
+
 });

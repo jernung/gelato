@@ -2,7 +2,6 @@
  * @module Framework
  */
 define(['core/BaseRouter', 'views/Default'], function(BaseRouter, DefaultView) {
-
     /**
      * @class Router
      * @extends BaseRouter

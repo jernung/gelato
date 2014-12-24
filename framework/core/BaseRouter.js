@@ -2,7 +2,6 @@
  * @module Framework
  */
 define([], function() {
-
     /**
      * @class BaseRouter
      * @extends Backbone.Router
@@ -15,7 +14,13 @@ define([], function() {
         /**
          * @method before
          */
-        before: function(route) {}
+        before: function(route) {},
+        /**
+         * @method start
+         */
+        start: function() {
+            Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
+        }
     });
 
     return BaseRouter;

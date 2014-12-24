@@ -9,4 +9,5 @@ define([], function() {
     var BaseCollection = Backbone.Collection.extend({});
 
     return BaseCollection;
+
 });
