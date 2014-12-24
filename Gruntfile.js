@@ -77,6 +77,10 @@ module.exports = function(grunt) {
                 ],
                 options: {force: true}
             },
+            'cordova-www': {
+                src: [path.cordova + '/' + project.name + '/www/**/*'],
+                options: {force: true}
+            },
             'crosswalk': {
                 src: [
                     path.cordova + '/crosswalk/**/*',
@@ -153,6 +157,16 @@ module.exports = function(grunt) {
                         cwd: path.projects + '/' + project.name,
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: path.www + '/' + project.name
+                    }
+                ]
+            },
+            'www-cordova': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: path.www + '/' + project.name,
+                        src: ['**/*'],
+                        dest: path.cordova + '/' + project.name + '/www'
                     }
                 ]
             }
@@ -251,7 +265,7 @@ module.exports = function(grunt) {
                 },
                 files: [
                     {src: 'index.html', dest: path.www + '/'+ project.name, expand: true, cwd: path.www + '/'+ project.name},
-                    {src: 'config/app.js', dest: path.www + '/'+ project.name, expand: true, cwd: path.www + '/'+ project.name}
+                    {src: 'core/config/app.js', dest: path.www + '/'+ project.name, expand: true, cwd: path.www + '/'+ project.name}
                 ]
             }
         },
@@ -325,8 +339,28 @@ module.exports = function(grunt) {
         shell: {
             'install-cordova': {
                 command: [
-                    'cd cordova',
-                    'cordova create "' + project.name + '" ' + project.package + '" project.title + "'
+                    'cd ' + path.cordova,
+                    'cordova create "' + project.name + '" ' + project.package + ' "' + project.title + '"'
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+            'install-cordova-android': {
+                command: [
+                    'cd ' + path.cordova + '/' + project.name,
+                    'cordova platform add android'
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+            'run-android': {
+                command: [
+                    'cd ' + path.cordova + '/' + project.name,
+                    'cordova run android'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -469,6 +503,22 @@ module.exports = function(grunt) {
             ]);
         }
     });
+
+    /**
+     * TASK: run-android
+     */
+    grunt.registerTask('run-android', function() {
+        grunt.task.run([
+            'build',
+            'clean:cordova-www',
+            'copy:www-cordova'
+        ]);
+        if (!grunt.file.isDir(path.cordova + '/' + project.name + '/platforms/android')) {
+            grunt.task.run('shell:install-cordova-android');
+        }
+        grunt.task.run('shell:run-android');
+    });
+
 
     /**
      * TASK: validate
