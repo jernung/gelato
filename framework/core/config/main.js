@@ -19,7 +19,9 @@
         console.log('LOADING:', 'core libraries');
         requirejs(['core/Libraries'], function() {
             if (app.isCordova()) {
-                document.addEventListener('deviceready', loadFonts, false);
+                requirejs(['cordova'], function() {
+                    document.addEventListener('deviceready', loadFonts, false);
+                });
             } else {
                 $(document).ready(loadFonts);
             }
