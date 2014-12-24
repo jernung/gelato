@@ -4,7 +4,7 @@ module.exports = function(grunt) {
 
     var path = {
         build: 'build',
-        compilers: 'compilers',
+        cordova: 'cordova',
         docs: 'docs',
         framework: 'framework',
         projects: 'projects',
@@ -69,10 +69,10 @@ module.exports = function(grunt) {
             },
             'crosswalk': {
                 src: [
-                    path.compilers + '/android/crosswalk/**/*',
-                    '!' + path.compilers + '/android/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
-                    '!' + path.compilers + '/android/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
-                    '!' + path.compilers + '/android/crosswalk/README.md'
+                    path.cordova + '/crosswalk/**/*',
+                    '!' + path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
+                    '!' + path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
+                    '!' + path.cordova + '/crosswalk/README.md'
                 ],
                 options: {force: true}
             },
@@ -318,12 +318,12 @@ module.exports = function(grunt) {
          */
         unzip: {
             'crosswalk-arm': {
-                src: path.compilers + '/android/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
-                dest: path.compilers + '/android/crosswalk'
+                src: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
+                dest: path.cordova + '/crosswalk'
             },
             'crosswalk-x86': {
-                src: path.compilers + '/android/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
-                dest: path.compilers + '/android/crosswalk'
+                src: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
+                dest: path.cordova + '/crosswalk'
             }
         },
         /**
@@ -424,9 +424,9 @@ module.exports = function(grunt) {
     });
 
     /**
-     * TASK: install-android
+     * TASK: install-cordova
      */
-    grunt.registerTask('install-android', function() {
+    grunt.registerTask('install-cordova', function() {
         grunt.task.run([
             'check-requirements',
             'clean:crosswalk',
