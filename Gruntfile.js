@@ -396,9 +396,7 @@ module.exports = function(grunt) {
                 command: [
                     'cd ' + path.cordova + '/build/' + project.name + '/platforms/android/CordovaLib',
                     'android update project --subprojects --path . --target android-19',
-                    'ant debug',
-                    'cd ../../..',
-                    'cordova build android'
+                    'ant debug'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -486,7 +484,7 @@ module.exports = function(grunt) {
     });
 
     /**
-     * TASK: build
+     * TASK: build-project
      */
     grunt.registerTask('build-project', function(type) {
         grunt.task.run([
@@ -572,7 +570,10 @@ module.exports = function(grunt) {
      * TASK: run-android
      */
     grunt.registerTask('run-android', function() {
-        grunt.task.run('check-requirements');
+        grunt.task.run([
+            'check-requirements',
+            'build-project'
+        ]);
         if (!grunt.file.isDir(path.cordova + '/build/' + project.name + '/platforms/android')) {
             grunt.task.run('shell:install-cordova-android');
         }
@@ -580,7 +581,6 @@ module.exports = function(grunt) {
             grunt.task.run('install-crosswalk');
         }
         grunt.task.run([
-            'build-project',
             'clean:cordova-www',
             'copy:www-cordova',
             'shell:run-android'
