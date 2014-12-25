@@ -484,6 +484,17 @@ module.exports = function(grunt) {
     });
 
     /**
+     * TASK: build-docs
+     */
+    grunt.registerTask('build-docs', function() {
+        grunt.task.run([
+            'check-requirements',
+            'clean:docs',
+            'yuidoc:build'
+        ]);
+    });
+
+    /**
      * TASK: build-project
      */
     grunt.registerTask('build-project', function(type) {
@@ -521,17 +532,6 @@ module.exports = function(grunt) {
             grunt.log.error('Project directory missing package.json file.');
             return false;
         }
-    });
-
-    /**
-     * TASK: docs
-     */
-    grunt.registerTask('docs', function() {
-        grunt.task.run([
-            'check-requirements',
-            'clean:docs',
-            'yuidoc:build'
-        ]);
     });
 
     /**
