@@ -2,7 +2,8 @@
 .idea/
 .sass-cache/
 build/
-cordova/**/
+cordova/build/**/
+cordova/crosswalk/**/
 docs/**/
 node_modules/
 nbproject/
