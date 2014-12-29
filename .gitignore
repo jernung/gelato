@@ -5,6 +5,7 @@ cordova/build/**/
 cordova/crosswalk/**/
 node_modules/
 nbproject/
+projects/
 
 # Files #
 !README.md

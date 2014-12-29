@@ -1,37 +1,50 @@
 module.exports = function(grunt) {
 
-    require('./framework/core/config/app.js');
-
-    var path = {
-        build: 'build',
-        cordova: 'cordova',
-        docs: 'docs',
-        framework: 'framework',
-        projects: 'projects',
-        www: 'www',
-        yuidoc: 'yuidoc'
-    };
-
-    var framework = function() {
-        return grunt.file.readJSON('package.json');
-    }();
-
-    var project = function() {
-        var projectName = grunt.option('project');
-        if (!projectName) {
-            return;
-        }
-        if (grunt.file.isFile(path.projects + '/' + projectName + '/package.json')) {
-            return grunt.file.readJSON(path.projects + '/' + projectName + '/package.json');
-        }
-        return grunt.file.readJSON('package.json');
-    }();
-
-    var setting = {
+    var framework = {
         crosswalk: {
+            path: 'cordova/crosswalk',
             version: '10.39.235.14'
-        }
+        },
+        path: 'framework',
+        pkg: grunt.file.readJSON('package.json')
     };
+
+    framework.crosswalk.isInstalled = function() {
+        if (!grunt.file.isFile(framework.crosswalk.path + '/' + framework.crosswalk.version + '-arm/VERSION')) {
+            return false;
+        }
+        if (!grunt.file.isFile(framework.crosswalk.path + '/' + framework.crosswalk.version + '-x86/VERSION')) {
+            return false;
+        }
+        return true;
+    };
+
+    var project = {
+        name: grunt.option('name') === undefined ? null : grunt.option('name'),
+        path: function() {
+            if (grunt.option('path')) {
+                return grunt.option('path') + '/' + grunt.option('name');
+            } else {
+                return grunt.option('name');
+            }
+        }(),
+        template: grunt.option('template') === undefined ? 'default' : grunt.option('template')
+    };
+
+    project.isInstalled = function() {
+        if (grunt.file.isFile(project.path + '/src/package.json')) {
+            return true;
+        }
+        return false;
+    };
+
+    project.pkg = function() {
+        if (grunt.file.isFile(project.path + '/src/package.json')) {
+            return grunt.file.readJSON(project.path + '/src/package.json');
+        } else {
+            return new Object();
+        }
+    }();
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-coffee');
@@ -56,67 +69,17 @@ module.exports = function(grunt) {
          * CLEAN
          */
         clean: {
-            'build': {
-                src: [path.build + '/' + project.name + '/**/*'],
-                options: {force: true}
-            },
-            'build-all': {
-                src: [
-                    path.build + '/**/*',
-                    '!' + path.build + '/README.md'
-                ],
-                options: {force: true}
-            },
-            'cordova-android-cordovalib': {
-                src: [path.cordova + '/build/' + project.name + '/platforms/android/CordovaLib/**/*'],
-                options: {force: true}
-            },
-            'cordova-build': {
-                src: [path.cordova + '/build/' + project.name + '/**/*'],
-                options: {force: true}
-            },
-            'cordova-build-all': {
-                src: [
-                    path.cordova + '/build/**/*'
-                ],
-                options: {force: true}
-            },
-            'cordova-www': {
-                src: [path.cordova + '/build/' + project.name + '/www/**/*'],
-                options: {force: true}
-            },
             'crosswalk': {
                 src: [
-                    path.cordova + '/crosswalk/**/*',
-                    '!' + path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
-                    '!' + path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
-                    '!' + path.cordova + '/crosswalk/README.md'
+                    framework.crosswalk.path + '/**/*',
+                    '!' + framework.crosswalk.path + '/crosswalk-cordova-' + framework.crosswalk.version + '-arm.zip',
+                    '!' + framework.crosswalk.path + '/crosswalk-cordova-' + framework.crosswalk.version + '-x86.zip'
                 ],
                 options: {force: true}
             },
-            'docs': {
-                src: [path.docs + '/' + project.name + '/**/*'],
-                options: {force: true}
-            },
-            'docs-all': {
+            'project-www': {
                 src: [
-                    path.docs + '/**/*',
-                    '!' + path.docs + '/README.md'
-                ],
-                options: {force: true}
-            },
-            'node-modules': {
-                src: ['nodemodules/**/*'],
-                options: {force: true}
-            },
-            'www': {
-                src: [path.www + '/' + project.name + '/**/*'],
-                options: {force: true}
-            },
-            'www-all': {
-                src: [
-                    path.www + '/**/*',
-                    '!' + path.www + '/README.md'
+                    project.path + '/www/**/*'
                 ],
                 options: {force: true}
             }
@@ -125,20 +88,20 @@ module.exports = function(grunt) {
          * COFFEE
          */
         coffee: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: framework.path,
                         src: '**/*.coffee',
-                        dest: path.www + '/' + project.name,
+                        dest: project.path + '/www',
                         ext: '.js'
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: project.path + '/src',
                         src: '**/*.coffee',
-                        dest: path.www + '/' + project.name,
+                        dest: project.path + '/www',
                         ext: '.js'
                     }
                 ]
@@ -148,61 +111,29 @@ module.exports = function(grunt) {
          * COPY
          */
         copy: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: framework.path,
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
-                        dest: path.www + '/' + project.name
+                        dest: project.path + '/www'
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: project.path + '/src',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
-                        dest: path.www + '/' + project.name
+                        dest: project.path + '/www'
                     }
                 ]
             },
-            'cordova-android-crosswalk-arm': {
+            'template': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm/framework',
+                        cwd: 'templates/' + project.template,
                         src: ['**/*'],
-                        dest: path.cordova + '/build/' + project.name + '/platforms/android/CordovaLib'
-                    },
-                    {
-                        expand: true,
-                        cwd: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm',
-                        src: ['VERSION'],
-                        dest: path.cordova + '/build/' + project.name + '/platforms/android'
-                    }
-                ]
-            },
-            'cordova-android-crosswalk-x86': {
-                files: [
-                    {
-                        expand: true,
-                        cwd: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86/framework',
-                        src: ['**/*'],
-                        dest: path.cordova + '/build/' + project.name + '/platforms/android/CordovaLib'
-                    },
-                    {
-                        expand: true,
-                        cwd: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86',
-                        src: ['VERSION'],
-                        dest: path.cordova + '/build/' + project.name + '/platforms/android'
-                    }
-                ]
-            },
-            'www-cordova': {
-                files: [
-                    {
-                        expand: true,
-                        cwd: path.www + '/' + project.name,
-                        src: ['**/*'],
-                        dest: path.cordova + '/build/' + project.name + '/www'
+                        dest: project.path + '/src'
                     }
                 ]
             }
@@ -211,16 +142,16 @@ module.exports = function(grunt) {
          * CSSLINT
          */
         csslint: {
-            'www': {
+            'project-www': {
                 options: {
                     csslintrc: '.csslintrc',
                     import: 2
                 },
                 src: [
-                    path.www + '/' + project.name + '/**/styles/**.*.css',
-                    '!' + path.www + '/' + project.name + '/**/styles/bootstrap.css',
-                    '!' + path.www + '/' + project.name + '/**/styles/bootstrap.switch.css',
-                    '!' + path.www + '/' + project.name + '/**/styles/font.awesome.css'
+                    project.path + '/www/**/styles/**.*.css',
+                    '!' + project.path + '/www/**/styles/bootstrap.css',
+                    '!' + project.path + '/www/**/styles/bootstrap.switch.css',
+                    '!' + project.path + '/www/**/styles/font.awesome.css'
                 ]
             }
         },
@@ -228,20 +159,20 @@ module.exports = function(grunt) {
          * JADE
          */
         jade: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: framework.path,
                         src: ['**/*.jade'],
-                        dest: path.www + '/' + project.name,
+                        dest: project.path + '/www',
                         ext: '.html'
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: project.path + '/src',
                         src: ['**/*.jade'],
-                        dest: path.www + '/' + project.name,
+                        dest: project.path + '/www',
                         ext: '.html'
                     }
                 ]
@@ -251,14 +182,14 @@ module.exports = function(grunt) {
          * JSHINT
          */
         jshint: {
-            'www': {
+            'project-www': {
                 options: {
                     jshintrc: '.jshintrc'
                 },
                 src: [
                     'Gruntfile.js',
-                    path.www + '/' + project.name + '/**/*.js',
-                    '!' + path.www + '/' + project.name + '/libraries/**/*.js'
+                    project.path + '/www/**/*.js',
+                    '!' + project.path + '/www/libraries/**/*.js'
                 ]
             }
         },
@@ -266,20 +197,20 @@ module.exports = function(grunt) {
          * REACT
          */
         react: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: framework.path,
                         src: '**/*.jsx',
-                        dest: path.www + '/' + project.name,
+                        dest: project.path + '/www',
                         ext: '.js'
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: project.path + '/src',
                         src: '**/*.jsx',
-                        dest: path.www + '/' + project.name,
+                        dest: project.path + '/www',
                         ext: '.js'
                     }
                 ]
@@ -289,78 +220,51 @@ module.exports = function(grunt) {
          * REPLACE
          */
         replace: {
-            'build': {
+            'project-www': {
                 options: {
                     variables: {
-                        'application-description': project.description,
-                        'application-name': project.name,
-                        'application-title': project.title,
-                        'application-version': project.version,
-                        'framework-version': framework.version
+                        'application-description': project.pkg.description,
+                        'application-name': project.pkg.name,
+                        'application-title': project.pkg.title,
+                        'application-version': project.pkg.version,
+                        'framework-version': framework.pkg.version
                     }
                 },
                 files: [
-                    {src: 'index.html', dest: path.www + '/'+ project.name, expand: true, cwd: path.www + '/'+ project.name},
-                    {src: 'core/config/app.js', dest: path.www + '/'+ project.name, expand: true, cwd: path.www + '/'+ project.name}
+                    {
+                        expand: true,
+                        src: 'index.html',
+                        cwd: project.path + '/www',
+                        dest: project.path + '/www'
+                    },
+                    {
+                        expand: true,
+                        src: 'core/config/app.js',
+                        cwd: project.path + '/www',
+                        dest: project.path + '/www'
+                    }
                 ]
-            }
-        },
-        /**
-         * REQUIREJS
-         */
-        requirejs: {
-            'build-combine': {
-                options: {
-                    baseUrl: path.www + '/' + project.name,
-                    dir: path.build + '/' + project.name,
-                    fileExclusionRegExp: undefined,
-                    generateSourceMaps: false,
-                    keepBuildDir: false,
-                    modules: app.config.modules,
-                    optimize: 'none',
-                    optimizeCss: 'standard',
-                    paths: app.config.paths,
-                    preserveLicenseComments: true,
-                    removeCombined: true,
-                    shim: app.config.shim
-                }
-            },
-            'build-compact': {
-                options: {
-                    baseUrl: path.www + '/' + project.name,
-                    dir: path.build + '/' + project.name,
-                    fileExclusionRegExp: undefined,
-                    generateSourceMaps: false,
-                    keepBuildDir: false,
-                    modules: app.config.modules,
-                    optimize: 'uglify',
-                    optimizeCss: 'standard',
-                    paths: app.config.paths,
-                    preserveLicenseComments: false,
-                    removeCombined: true,
-                    shim: app.config.shim
-                }
             }
         },
         /**
          * SASS
          */
         sass: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: framework.path,
                         src: ['**/*.scss'],
-                        dest: path.www + '/' + project.name,
+                        dest: project.path + '/www',
                         ext: '.css'
 
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: project.path + '/src',
                         src: ['**/*.scss'],
-                        dest: path.www + '/' + project.name,
+                        dest: project.path + '/www',
                         ext: '.css'
                     }
                 ],
@@ -373,240 +277,96 @@ module.exports = function(grunt) {
          * SHELL
          */
         shell: {
-            'install-cordova': {
-                command: [
-                    'cd ' + path.cordova + '/build',
-                    'cordova create "' + project.name + '" ' + project.package + ' "' + project.title + '"'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            },
-            'install-cordova-android': {
-                command: [
-                    'cd ' + path.cordova + '/build/' + project.name,
-                    'cordova platform add android'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            },
-            'install-cordova-android-crosswalk': {
-                command: [
-                    'cd ' + path.cordova + '/build/' + project.name + '/platforms/android/CordovaLib',
-                    'android update project --subprojects --path . --target android-19',
-                    'ant debug'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            },
-            'install-cordova-plugins': {
-                command: [
-                    'cd ' + path.cordova + '/build/' + project.name,
-                    'cordova plugin add ../../plugins/gelato-core'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            },
-            'run-android': {
-                command: [
-                    'cd ' + path.cordova + '/build/' + project.name,
-                    'cordova run android'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            }
+
         },
         /**
          * UNZIP
          */
         unzip: {
             'crosswalk-arm': {
-                src: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
-                dest: path.cordova + '/crosswalk'
+                src: framework.crosswalk.path + '/crosswalk-cordova-' + framework.crosswalk.version + '-arm.zip',
+                dest: framework.crosswalk.path
             },
             'crosswalk-x86': {
-                src: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
-                dest: path.cordova + '/crosswalk'
-            }
-        },
-        /**
-         * WATCH
-         */
-        watch: {
-            'all': {
-                files: [
-                    path.projects + '/' + project.name + '/**/*.coffee',
-                    path.projects + '/' + project.name + '/**/*.html',
-                    path.projects + '/' + project.name + '/**/*.jade',
-                    path.projects + '/' + project.name + '/**/*.js',
-                    path.projects + '/' + project.name + '/**/*.jsx',
-                    path.projects + '/' + project.name + '/**/*.scss',
-                    path.framework + '/**/*.coffee',
-                    path.framework + '/**/*.html',
-                    path.framework + '/**/*.jade',
-                    path.framework + '/**/*.js',
-                    path.framework + '/**/*.jsx',
-                    path.framework + '/**/*.scss'
-                ],
-                tasks: ['build'],
-                options: {
-                    spawn: false
-                }
-            }
-        },
-        /**
-         * YUIDOC
-         */
-        yuidoc: {
-            'build': {
-                name: project.title,
-                description: project.description,
-                version: project.version,
-                options: {
-                    exclude: 'libraries',
-                    paths: [
-                        path.projects + '/' + project.name,
-                        path.framework
-                    ],
-                    themedir: path.yuidoc,
-                    outdir: path.docs + '/' + project.name
-                }
+                src: framework.crosswalk.path + '/crosswalk-cordova-' + framework.crosswalk.version + '-x86.zip',
+                dest: framework.crosswalk.path
             }
         }
-    });
-
-    /**
-     * TASK: build-docs
-     */
-    grunt.registerTask('build-docs', function() {
-        grunt.task.run([
-            'check-requirements',
-            'clean:docs',
-            'yuidoc:build'
-        ]);
     });
 
     /**
      * TASK: build-project
      */
-    grunt.registerTask('build-project', function(type) {
+    grunt.registerTask('build-project', function() {
+        if (!grunt.file.isDir(project.path + '/www')) {
+            grunt.file.mkdir(project.path + '/www');
+        }
         grunt.task.run([
             'check-requirements',
-            'clean:www',
-            'copy:build',
-            'coffee:build',
-            'react:build',
-            'jade:build',
-            'sass:build',
-            'replace:build',
-            'validate'
+            'clean:project-www',
+            'copy:project-www',
+            'coffee:project-www',
+            'react:project-www',
+            'jade:project-www',
+            'sass:project-www',
+            'replace:project-www',
+            'validate-project'
         ]);
-        if (type === 'combine') {
-            grunt.task.run('requirejs:build-combine');
-        } else if (type === 'compact') {
-            grunt.task.run('requirejs:build-compact');
-        }
     });
 
     /**
      * TASK: check-requirements
      */
     grunt.registerTask('check-requirements', function() {
-        if (!project) {
-            grunt.log.error('No valid project declared.');
+        if (!project.name) {
+            grunt.log.error('Project name declaration required.');
             return false;
         }
-        if (!grunt.file.isDir(path.projects + '/' + project.name)) {
-            grunt.log.error('Project directory not found.');
-            return false;
-        }
-        if (!grunt.file.isFile(path.projects + '/' + project.name + '/package.json')) {
-            grunt.log.error('Project directory missing package.json file.');
+        if (!project.isInstalled()) {
+            grunt.log.error('Project ' + project.name + " doesn't exist.");
             return false;
         }
     });
 
     /**
-     * TASK: install-cordova
+     * TASK: create-project
      */
-    grunt.registerTask('install-cordova', function() {
-        grunt.task.run([
-            'check-requirements',
-            'clean:cordova-build',
-            'shell:install-cordova',
-            'shell:install-cordova-plugins'
-        ]);
+    grunt.registerTask('create-project', function() {
+        if (!project.name) {
+            grunt.log.error('Project name declaration required.');
+            return false;
+        }
+        if (project.isInstalled()) {
+            grunt.log.error('Project ' + project.name + ' already exists.');
+            return false;
+        }
+        grunt.log.writeln('Creating project ' + project.name + ' using ' + project.template + ' template.');
+        grunt.file.mkdir(project.path);
+        grunt.task.run(['copy:template']);
     });
 
     /**
-     * TASK: install-crosswalk
+     * TASK: unzip-crosswalk
      */
-    grunt.registerTask('install-crosswalk', function() {
-        grunt.task.run('check-requirements');
-        if (!grunt.file.isFile(path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm/VERSION') ||
-            !grunt.file.isFile(path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86/VERSION')) {
+    grunt.registerTask('unzip-crosswalk', function() {
+        if (!framework.crosswalk.isInstalled()) {
+            grunt.log.writeln('Unzipping crosswalk version ' + framework.crosswalk.version + '.');
             grunt.task.run([
                 'clean:crosswalk',
                 'unzip:crosswalk-arm',
                 'unzip:crosswalk-x86'
             ]);
         }
-        grunt.task.run([
-            'clean:cordova-android-cordovalib',
-            'copy:cordova-android-crosswalk-arm',
-            'shell:install-cordova-android-crosswalk'
-        ]);
     });
-
-    /**
-     * TASK: run-android
-     */
-    grunt.registerTask('run-android', function() {
-        grunt.task.run([
-            'check-requirements',
-            'build-project'
-        ]);
-        if (!grunt.file.isDir(path.cordova + '/build/' + project.name + '/platforms/android')) {
-            grunt.task.run('shell:install-cordova-android');
-        }
-        if (!grunt.file.isFile(path.cordova + '/build/' + project.name + '/platforms/android/VERSION')) {
-            grunt.task.run('install-crosswalk');
-        }
-        grunt.task.run([
-            'clean:cordova-www',
-            'copy:www-cordova',
-            'shell:run-android'
-        ]);
-    });
-
 
     /**
      * TASK: validate
      */
-    grunt.registerTask('validate', function() {
+    grunt.registerTask('validate-project', function() {
         grunt.task.run([
             'check-requirements',
-            'csslint:www',
-            'jshint:www'
-        ]);
-    });
-
-    /**
-     * TASK: wash
-     */
-    grunt.registerTask('wash', function() {
-        grunt.task.run([
-            'check-requirements',
-            'clean:www-all'
+            'csslint:project-www',
+            'jshint:project-www'
         ]);
     });
 
