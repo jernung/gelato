@@ -1,10 +1,8 @@
 define([], {
     root: {
         application: {
-            description: 'A delectable mixture of mobile friendly libraries.',
-            name: 'Gelato Framework'
+            description: '@@application-description',
+            title: '@@application-title'
         }
-    },
-    'zh-cn': true,
-    'zh-tw': true
+    }
 });
