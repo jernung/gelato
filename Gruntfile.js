@@ -28,7 +28,7 @@ module.exports = function(grunt) {
                 return grunt.option('name');
             }
         }(),
-        template: grunt.option('template') === undefined ? 'default' : grunt.option('template')
+        structure: grunt.option('structure') === undefined ? 'default' : grunt.option('structure')
     };
 
     project.isInstalled = function() {
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
         if (grunt.file.isFile(project.path + '/src/package.json')) {
             return grunt.file.readJSON(project.path + '/src/package.json');
         } else {
-            return new Object();
+            return {};
         }
     }();
 
@@ -126,11 +126,11 @@ module.exports = function(grunt) {
                     }
                 ]
             },
-            'template': {
+            'structure': {
                 files: [
                     {
                         expand: true,
-                        cwd: 'templates/' + project.template,
+                        cwd: 'structures/' + project.structure,
                         src: ['**/*'],
                         dest: project.path + '/src'
                     }
@@ -241,6 +241,12 @@ module.exports = function(grunt) {
                         src: 'core/config/app.js',
                         cwd: project.path + '/www',
                         dest: project.path + '/www'
+                    },
+                    {
+                        expand: true,
+                        src: 'locale/nls/**/*.js',
+                        cwd: project.path + '/www',
+                        dest: project.path + '/www'
                     }
                 ]
             }
@@ -339,9 +345,9 @@ module.exports = function(grunt) {
             grunt.log.error('Project ' + project.name + ' already exists.');
             return false;
         }
-        grunt.log.writeln('Creating project ' + project.name + ' using ' + project.template + ' template.');
+        grunt.log.writeln('Creating project ' + project.name + ' using ' + project.structure + ' structure.');
         grunt.file.mkdir(project.path);
-        grunt.task.run(['copy:template']);
+        grunt.task.run('copy:structure');
     });
 
     /**
