@@ -9,6 +9,6 @@ program.parse(process.argv);
 if (gelato.project.type === 'gelato') {
     shell.exec('grunt build-project');
 } else {
-    console.log('Not a valid gelato project.');
+    console.log('Not a valid gelato project directory.');
     process.exit(1);
 }

@@ -27,8 +27,10 @@ module.exports = {
     },
     path: gelatoPath,
     project: {
+        description: project.description,
         name: project.name,
         path: projectPath,
+        title: project.title,
         type: project.type,
         version: project.version
     },

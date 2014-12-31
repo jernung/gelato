@@ -288,7 +288,6 @@ module.exports = function(grunt) {
      * TASK: build-project
      */
     grunt.registerTask('build-project', function() {
-        grunt.file.mkdir(gelato.project.path + '/www');
         grunt.task.run([
             'clean:project-www',
             'copy:project-www',
@@ -308,11 +307,11 @@ module.exports = function(grunt) {
         gelato.project.name = option.name;
         gelato.project.path = gelato.project.path + '/' + option.name;
         grunt.config.set('gelato', gelato);
-        grunt.file.mkdir(gelato.project.path);
         grunt.task.run([
             'copy:structure',
             'replace:structure'
         ]);
+        grunt.log.writeln('Created project ' + gelato.project.name + '.');
     });
 
     /**
@@ -331,7 +330,6 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('validate-project', function() {
         grunt.task.run([
-            'check-requirements',
             'csslint:project-www',
             'jshint:project-www'
         ]);
