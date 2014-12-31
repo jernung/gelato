@@ -9,6 +9,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
@@ -68,6 +69,21 @@ module.exports = function(grunt) {
                         ext: '.js'
                     }
                 ]
+            }
+        },
+        /**
+         * CONNECT
+         */
+        connect: {
+            'project-www': {
+                options: {
+                    base: '<%= gelato.project.path %>/www',
+                    hostname: 'localhost',
+                    keepalive: true,
+                    open: true,
+                    port: 8080,
+                    protocol: 'http'
+                }
             }
         },
         /**
@@ -312,6 +328,15 @@ module.exports = function(grunt) {
             'replace:structure'
         ]);
         grunt.log.writeln('Created project ' + gelato.project.name + '.');
+    });
+
+    /**
+     * TASK: run-project
+     */
+    grunt.registerTask('run-project', function() {
+        grunt.task.run([
+            'connect:project-www'
+        ]);
     });
 
     /**
