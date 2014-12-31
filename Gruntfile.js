@@ -34,15 +34,15 @@ module.exports = function(grunt) {
         clean: {
             'crosswalk': {
                 src: [
-                    gelato.crosswalk.path + '/**/*',
-                    '!' + gelato.crosswalk.path + '/crosswalk-cordova-' + gelato.crosswalk.version + '-arm.zip',
-                    '!' + gelato.crosswalk.path + '/crosswalk-cordova-' + gelato.crosswalk.version + '-x86.zip'
+                    '<%= gelato.crosswalk.path %>/**/*',
+                    '!<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-arm.zip',
+                    '!<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-x86.zip'
                 ],
                 options: {force: true}
             },
             'project-www': {
                 src: [
-                    gelato.project.path + '/www/**/*'
+                    '<%= gelato.project.path %>/www/**/*'
                 ],
                 options: {force: true}
             }
@@ -55,16 +55,16 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: gelato.framework.path,
+                        cwd: '<%= gelato.framework.path %>',
                         src: '**/*.coffee',
-                        dest: gelato.project.path + '/www',
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.js'
                     },
                     {
                         expand: true,
-                        cwd: gelato.project.path + '/src',
+                        cwd: '<%= gelato.project.path %>/src',
                         src: '**/*.coffee',
-                        dest: gelato.project.path + '/www',
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.js'
                     }
                 ]
@@ -78,15 +78,15 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: gelato.framework.path,
+                        cwd: '<%= gelato.framework.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
-                        dest: gelato.project.path + '/www'
+                        dest: '<%= gelato.project.path %>/www'
                     },
                     {
                         expand: true,
-                        cwd: gelato.project.path + '/src',
+                        cwd: '<%= gelato.project.path %>/src',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
-                        dest: gelato.project.path + '/www'
+                        dest: '<%= gelato.project.path %>/www'
                     }
                 ]
             },
@@ -94,15 +94,15 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: gelato.structures.path + '/default',
+                        cwd: '<%= gelato.structures.path %>/default',
                         src: ['**/*'],
-                        dest: gelato.project.path + '/src'
+                        dest: '<%= gelato.project.path %>/src'
                     },
                     {
                         expand: true,
-                        cwd: gelato.structures.path,
+                        cwd: '<%= gelato.structures.path %>',
                         src: ['package.json'],
-                        dest: gelato.project.path
+                        dest: '<%= gelato.project.path %>'
                     }
                 ]
             }
@@ -117,10 +117,10 @@ module.exports = function(grunt) {
                     import: 2
                 },
                 src: [
-                    gelato.project.path + '/www/**/styles/**.*.css',
-                    '!' + gelato.project.path + '/www/**/styles/bootstrap.css',
-                    '!' + gelato.project.path + '/www/**/styles/bootstrap.switch.css',
-                    '!' + gelato.project.path + '/www/**/styles/font.awesome.css'
+                    '<%= gelato.project.path %>/www/**/styles/**.*.css',
+                    '!<%= gelato.project.path %>/www/**/styles/bootstrap.css',
+                    '!<%= gelato.project.path %>/www/**/styles/bootstrap.switch.css',
+                    '!<%= gelato.project.path %>/www/**/styles/font.awesome.css'
                 ]
             }
         },
@@ -132,16 +132,16 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: gelato.framework.path,
+                        cwd: '<%= gelato.framework.path %>',
                         src: ['**/*.jade'],
-                        dest: gelato.project.path + '/www',
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.html'
                     },
                     {
                         expand: true,
-                        cwd: gelato.project.path + '/src',
+                        cwd: '<%= gelato.project.path %>/src',
                         src: ['**/*.jade'],
-                        dest: gelato.project.path + '/www',
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.html'
                     }
                 ]
@@ -157,8 +157,8 @@ module.exports = function(grunt) {
                 },
                 src: [
                     'Gruntfile.js',
-                    gelato.project.path + '/www/**/*.js',
-                    '!' + gelato.project.path + '/www/libraries/**/*.js'
+                    '<%= gelato.project.path %>/www/**/*.js',
+                    '!<%= gelato.project.path %>/www/libraries/**/*.js'
                 ]
             }
         },
@@ -170,16 +170,16 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: gelato.framework.path,
+                        cwd: '<%= gelato.framework.path %>',
                         src: '**/*.jsx',
-                        dest: gelato.project.path + '/www',
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.js'
                     },
                     {
                         expand: true,
-                        cwd: gelato.project.path + '/src',
+                        cwd: '<%= gelato.project.path %>/src',
                         src: '**/*.jsx',
-                        dest: gelato.project.path + '/www',
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.js'
                     }
                 ]
@@ -192,31 +192,31 @@ module.exports = function(grunt) {
             'project-www': {
                 options: {
                     variables: {
-                        'application-description': gelato.project.description,
-                        'application-name': gelato.project.name,
-                        'application-title': gelato.project.title,
-                        'application-version': gelato.project.version,
-                        'framework-version': gelato.version
+                        'application-description': '<%= gelato.project.description %>',
+                        'application-name': '<%= gelato.project.name %>',
+                        'application-title': '<%= gelato.project.title %>',
+                        'application-version': '<%= gelato.project.version %>',
+                        'framework-version': '<%= gelato.version %>'
                     }
                 },
                 files: [
                     {
                         expand: true,
                         src: 'index.html',
-                        cwd: gelato.project.path + '/www',
-                        dest: gelato.project.path + '/www'
+                        cwd: '<%= gelato.project.path %>/www',
+                        dest: '<%= gelato.project.path %>/www'
                     },
                     {
                         expand: true,
                         src: 'core/config/app.js',
-                        cwd: gelato.project.path + '/www',
-                        dest: gelato.project.path + '/www'
+                        cwd: '<%= gelato.project.path %>/www',
+                        dest: '<%= gelato.project.path %>/www'
                     },
                     {
                         expand: true,
                         src: 'locale/nls/**/*.js',
-                        cwd: gelato.project.path + '/www',
-                        dest: gelato.project.path + '/www'
+                        cwd: '<%= gelato.project.path %>/www',
+                        dest: '<%= gelato.project.path %>/www'
                     }
                 ]
             },
@@ -230,8 +230,8 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         src: 'package.json',
-                        cwd: gelato.project.path,
-                        dest: gelato.project.path
+                        cwd: '<%= gelato.project.path %>',
+                        dest: '<%= gelato.project.path %>'
                     }
                 ]
             }
@@ -244,17 +244,17 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: gelato.framework.path,
+                        cwd: '<%= gelato.framework.path %>',
                         src: ['**/*.scss'],
-                        dest: gelato.project.path + '/www',
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.css'
 
                     },
                     {
                         expand: true,
-                        cwd: gelato.project.path + '/src',
+                        cwd: '<%= gelato.project.path %>/src',
                         src: ['**/*.scss'],
-                        dest: gelato.project.path + '/www',
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.css'
                     }
                 ],
@@ -274,12 +274,12 @@ module.exports = function(grunt) {
          */
         unzip: {
             'crosswalk-arm': {
-                src: gelato.crosswalk.path + '/crosswalk-cordova-' + gelato.crosswalk.version + '-arm.zip',
-                dest: gelato.crosswalk.path
+                src: '<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-arm.zip',
+                dest: '<%= gelato.crosswalk.path %>'
             },
             'crosswalk-x86': {
-                src: gelato.crosswalk.path + '/crosswalk-cordova-' + gelato.crosswalk.version + '-x86.zip',
-                dest: gelato.crosswalk.path
+                src: '<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-x86.zip',
+                dest: '<%= gelato.crosswalk.path %>'
             }
         }
     });
