@@ -2,9 +2,17 @@ var gelato = require('./gelato.js');
 
 module.exports = function(grunt) {
 
+    /**
+     * @property option
+     * @type Object
+     */
     var option = {
+        appname: grunt.option('appname') === undefined ? 'open' : grunt.option('appname'),
+        hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
         name: grunt.option('name'),
-        path: grunt.option('path')
+        path: grunt.option('path'),
+        port: grunt.option('port') === undefined ? '8080' : grunt.option('port'),
+        protocol: grunt.option('protocol') === undefined ? 'http' : grunt.option('protocol')
     };
 
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -30,6 +38,10 @@ module.exports = function(grunt) {
          * GELATO
          */
         gelato: gelato,
+        /**
+         * OPTIONS
+         */
+        option: option,
         /**
          * CLEAN
          */
@@ -79,11 +91,13 @@ module.exports = function(grunt) {
             'project-www': {
                 options: {
                     base: '<%= gelato.project.path %>/www',
-                    hostname: 'localhost',
+                    hostname: '<%= option.hostname %>',
                     keepalive: true,
-                    open: true,
-                    port: 8080,
-                    protocol: 'http'
+                    open: {
+                        appName: '<%= option.appname %>'
+                    },
+                    port: '<%= option.port %>',
+                    protocol: '<%= option.protocol %>'
                 }
             }
         },
