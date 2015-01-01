@@ -350,7 +350,8 @@ module.exports = function(grunt) {
         grunt.config.set('gelato', gelato);
         grunt.task.run([
             'copy:structure',
-            'replace:structure'
+            'replace:structure',
+            'build-project'
         ]);
         grunt.log.writeln('Created project ' + gelato.project.name + '.');
     });
