@@ -20,7 +20,7 @@ shell.cd(gelatoPath);
 module.exports = {
     crosswalk: {
         path: gelatoPath + '/cordova/crosswalk',
-        version: '10.39.235.14'
+        version: '10.39.235.15'
     },
     framework: {
         path: gelatoPath + '/framework'
