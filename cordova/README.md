@@ -1,3 +1,3 @@
-# Gelato: Compilers
+# Gelato: Cordova
 
-The compilers directory contains all of the platform specific build processes.
+The cordova directory contains all of the platform specific build processes.

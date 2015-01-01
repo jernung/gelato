@@ -2,13 +2,11 @@
 .idea/
 .sass-cache/
 build/
-cordova/**/
-docs/**/
+cordova/
 node_modules/
 nbproject/
-projects/**/
-www/**/
-yuidoc/**/
+projects/
+www/
 
 # Files #
 !README.md

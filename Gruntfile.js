@@ -1,41 +1,24 @@
+var gelato = require('./gelato.js');
+
 module.exports = function(grunt) {
 
-    require('./framework/core/config/app.js');
-
-    var path = {
-        build: 'build',
-        cordova: 'cordova',
-        docs: 'docs',
-        framework: 'framework',
-        projects: 'projects',
-        www: 'www',
-        yuidoc: 'yuidoc'
-    };
-
-    var framework = function() {
-        return grunt.file.readJSON('package.json');
-    }();
-
-    var project = function() {
-        var projectName = grunt.option('project');
-        if (!projectName) {
-            return;
-        }
-        if (grunt.file.isFile(path.projects + '/' + projectName + '/package.json')) {
-            return grunt.file.readJSON(path.projects + '/' + projectName + '/package.json');
-        }
-        return grunt.file.readJSON('package.json');
-    }();
-
-    var setting = {
-        crosswalk: {
-            version: '10.39.235.13'
-        }
+    /**
+     * @property option
+     * @type Object
+     */
+    var option = {
+        appname: grunt.option('appname') === undefined ? 'open' : grunt.option('appname'),
+        hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
+        name: grunt.option('name'),
+        path: grunt.option('path'),
+        port: grunt.option('port') === undefined ? '8080' : grunt.option('port'),
+        protocol: grunt.option('protocol') === undefined ? 'http' : grunt.option('protocol')
     };
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-csslint');
     grunt.loadNpmTasks('grunt-contrib-htmlmin');
@@ -52,67 +35,28 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         /**
+         * GELATO
+         */
+        gelato: gelato,
+        /**
+         * OPTIONS
+         */
+        option: option,
+        /**
          * CLEAN
          */
         clean: {
-            'build': {
-                src: [path.build + '/' + project.name + '/**/*'],
-                options: {force: true}
-            },
-            'build-all': {
-                src: [
-                    path.build + '/**/*',
-                    '!' + path.build + '/README.md'
-                ],
-                options: {force: true}
-            },
-            'cordova': {
-                src: [path.cordova + '/' + project.name + '/**/*'],
-                options: {force: true}
-            },
-            'cordova-all': {
-                src: [
-                    path.cordova + '/**/*',
-                    '!' + path.cordova + '/README.md'
-                ],
-                options: {force: true}
-            },
-            'cordova-www': {
-                src: [path.cordova + '/' + project.name + '/www/**/*'],
-                options: {force: true}
-            },
             'crosswalk': {
                 src: [
-                    path.cordova + '/crosswalk/**/*',
-                    '!' + path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
-                    '!' + path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
-                    '!' + path.cordova + '/crosswalk/README.md'
+                    '<%= gelato.crosswalk.path %>/**/*',
+                    '!<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-arm.zip',
+                    '!<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-x86.zip'
                 ],
                 options: {force: true}
             },
-            'docs': {
-                src: [path.docs + '/' + project.name + '/**/*'],
-                options: {force: true}
-            },
-            'docs-all': {
+            'project-www': {
                 src: [
-                    path.docs + '/**/*',
-                    '!' + path.docs + '/README.md'
-                ],
-                options: {force: true}
-            },
-            'node-modules': {
-                src: ['nodemodules/**/*'],
-                options: {force: true}
-            },
-            'www': {
-                src: [path.www + '/' + project.name + '/**/*'],
-                options: {force: true}
-            },
-            'www-all': {
-                src: [
-                    path.www + '/**/*',
-                    '!' + path.www + '/README.md'
+                    '<%= gelato.project.path %>/www/**/*'
                 ],
                 options: {force: true}
             }
@@ -121,52 +65,87 @@ module.exports = function(grunt) {
          * COFFEE
          */
         coffee: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: '<%= gelato.framework.path %>',
                         src: '**/*.coffee',
-                        dest: path.www + '/' + project.name,
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.js'
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: '<%= gelato.project.path %>/src',
                         src: '**/*.coffee',
-                        dest: path.www + '/' + project.name,
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.js'
                     }
                 ]
             }
         },
         /**
+         * CONNECT
+         */
+        connect: {
+            'project-www': {
+                options: {
+                    base: '<%= gelato.project.path %>/www',
+                    hostname: '<%= option.hostname %>',
+                    keepalive: true,
+                    open: {
+                        appName: '<%= option.appname %>'
+                    },
+                    port: '<%= option.port %>',
+                    protocol: '<%= option.protocol %>'
+                }
+            }
+        },
+        /**
          * COPY
          */
         copy: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: '<%= gelato.framework.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
-                        dest: path.www + '/' + project.name
+                        dest: '<%= gelato.project.path %>/www'
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: '<%= gelato.project.path %>/src',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
-                        dest: path.www + '/' + project.name
+                        dest: '<%= gelato.project.path %>/www'
                     }
                 ]
             },
-            'www-cordova': {
+            'structure': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.www + '/' + project.name,
+                        cwd: '<%= gelato.structures.path %>/default',
                         src: ['**/*'],
-                        dest: path.cordova + '/' + project.name + '/www'
+                        dest: '<%= gelato.project.path %>/src'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= gelato.structures.path %>',
+                        src: ['copy-gitignore', 'copy-package', 'copy-readme'],
+                        dest: '<%= gelato.project.path %>',
+                        rename: function(dest, src) {
+                            switch (src) {
+                                case 'copy-gitignore':
+                                    return dest + '/.gitignore';
+                                case 'copy-package':
+                                    return dest + '/package.json';
+                                case 'copy-readme':
+                                    return dest + '/README.md';
+                                default:
+                                     return dest + '/' + src;
+                            }
+                        }
                     }
                 ]
             }
@@ -175,16 +154,16 @@ module.exports = function(grunt) {
          * CSSLINT
          */
         csslint: {
-            'www': {
+            'project-www': {
                 options: {
                     csslintrc: '.csslintrc',
                     import: 2
                 },
                 src: [
-                    path.www + '/' + project.name + '/**/styles/**.*.css',
-                    '!' + path.www + '/' + project.name + '/**/styles/bootstrap.css',
-                    '!' + path.www + '/' + project.name + '/**/styles/bootstrap.switch.css',
-                    '!' + path.www + '/' + project.name + '/**/styles/font.awesome.css'
+                    '<%= gelato.project.path %>/www/**/styles/**.*.css',
+                    '!<%= gelato.project.path %>/www/**/styles/bootstrap.css',
+                    '!<%= gelato.project.path %>/www/**/styles/bootstrap.switch.css',
+                    '!<%= gelato.project.path %>/www/**/styles/font.awesome.css'
                 ]
             }
         },
@@ -192,20 +171,20 @@ module.exports = function(grunt) {
          * JADE
          */
         jade: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: '<%= gelato.framework.path %>',
                         src: ['**/*.jade'],
-                        dest: path.www + '/' + project.name,
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.html'
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: '<%= gelato.project.path %>/src',
                         src: ['**/*.jade'],
-                        dest: path.www + '/' + project.name,
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.html'
                     }
                 ]
@@ -215,14 +194,14 @@ module.exports = function(grunt) {
          * JSHINT
          */
         jshint: {
-            'www': {
+            'project-www': {
                 options: {
                     jshintrc: '.jshintrc'
                 },
                 src: [
                     'Gruntfile.js',
-                    path.www + '/' + project.name + '/**/*.js',
-                    '!' + path.www + '/' + project.name + '/libraries/**/*.js'
+                    '<%= gelato.project.path %>/www/**/*.js',
+                    '!<%= gelato.project.path %>/www/libraries/**/*.js'
                 ]
             }
         },
@@ -230,20 +209,20 @@ module.exports = function(grunt) {
          * REACT
          */
         react: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: '<%= gelato.framework.path %>',
                         src: '**/*.jsx',
-                        dest: path.www + '/' + project.name,
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.js'
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: '<%= gelato.project.path %>/src',
                         src: '**/*.jsx',
-                        dest: path.www + '/' + project.name,
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.js'
                     }
                 ]
@@ -253,78 +232,72 @@ module.exports = function(grunt) {
          * REPLACE
          */
         replace: {
-            'build': {
+            'project-www': {
                 options: {
                     variables: {
-                        'application-description': project.description,
-                        'application-name': project.name,
-                        'application-title': project.title,
-                        'application-version': project.version,
-                        'framework-version': framework.version
+                        'application-description': '<%= gelato.project.description %>',
+                        'application-name': '<%= gelato.project.name %>',
+                        'application-title': '<%= gelato.project.title %>',
+                        'application-version': '<%= gelato.project.version %>',
+                        'framework-version': '<%= gelato.version %>'
                     }
                 },
                 files: [
-                    {src: 'index.html', dest: path.www + '/'+ project.name, expand: true, cwd: path.www + '/'+ project.name},
-                    {src: 'core/config/app.js', dest: path.www + '/'+ project.name, expand: true, cwd: path.www + '/'+ project.name}
+                    {
+                        expand: true,
+                        src: 'index.html',
+                        cwd: '<%= gelato.project.path %>/www',
+                        dest: '<%= gelato.project.path %>/www'
+                    },
+                    {
+                        expand: true,
+                        src: 'core/config/app.js',
+                        cwd: '<%= gelato.project.path %>/www',
+                        dest: '<%= gelato.project.path %>/www'
+                    },
+                    {
+                        expand: true,
+                        src: 'locale/nls/**/*.js',
+                        cwd: '<%= gelato.project.path %>/www',
+                        dest: '<%= gelato.project.path %>/www'
+                    }
                 ]
-            }
-        },
-        /**
-         * REQUIREJS
-         */
-        requirejs: {
-            'build-combine': {
-                options: {
-                    baseUrl: path.www + '/' + project.name,
-                    dir: path.build + '/' + project.name,
-                    fileExclusionRegExp: undefined,
-                    generateSourceMaps: false,
-                    keepBuildDir: false,
-                    modules: app.config.modules,
-                    optimize: 'none',
-                    optimizeCss: 'standard',
-                    paths: app.config.paths,
-                    preserveLicenseComments: true,
-                    removeCombined: true,
-                    shim: app.config.shim
-                }
             },
-            'build-compact': {
+            'structure': {
                 options: {
-                    baseUrl: path.www + '/' + project.name,
-                    dir: path.build + '/' + project.name,
-                    fileExclusionRegExp: undefined,
-                    generateSourceMaps: false,
-                    keepBuildDir: false,
-                    modules: app.config.modules,
-                    optimize: 'uglify',
-                    optimizeCss: 'standard',
-                    paths: app.config.paths,
-                    preserveLicenseComments: false,
-                    removeCombined: true,
-                    shim: app.config.shim
-                }
+                    variables: {
+                        'project-name': '<%= gelato.project.name %>'
+                    }
+                },
+                files: [
+                    {
+                        expand: true,
+                        src: ['package.json', 'README.md'],
+                        cwd: '<%= gelato.project.path %>',
+                        dest: '<%= gelato.project.path %>'
+                    }
+                ]
             }
         },
         /**
          * SASS
          */
         sass: {
-            'build': {
+            'project-www': {
                 files: [
                     {
                         expand: true,
-                        cwd: path.framework,
+                        cwd: '<%= gelato.framework.path %>',
                         src: ['**/*.scss'],
-                        dest: path.www + '/' + project.name,
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.css'
 
                     },
                     {
                         expand: true,
-                        cwd: path.projects + '/' + project.name,
+                        cwd: '<%= gelato.project.path %>/src',
                         src: ['**/*.scss'],
-                        dest: path.www + '/' + project.name,
+                        dest: '<%= gelato.project.path %>/www',
                         ext: '.css'
                     }
                 ],
@@ -336,208 +309,80 @@ module.exports = function(grunt) {
         /**
          * SHELL
          */
-        shell: {
-            'install-cordova': {
-                command: [
-                    'cd ' + path.cordova,
-                    'cordova create "' + project.name + '" ' + project.package + ' "' + project.title + '"'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            },
-            'install-cordova-android': {
-                command: [
-                    'cd ' + path.cordova + '/' + project.name,
-                    'cordova platform add android'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            },
-            'run-android': {
-                command: [
-                    'cd ' + path.cordova + '/' + project.name,
-                    'cordova run android'
-                ].join('&&'),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            }
-        },
+        shell: {},
         /**
          * UNZIP
          */
         unzip: {
             'crosswalk-arm': {
-                src: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm.zip',
-                dest: path.cordova + '/crosswalk'
+                src: '<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-arm.zip',
+                dest: '<%= gelato.crosswalk.path %>'
             },
             'crosswalk-x86': {
-                src: path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86.zip',
-                dest: path.cordova + '/crosswalk'
-            }
-        },
-        /**
-         * WATCH
-         */
-        watch: {
-            'all': {
-                files: [
-                    path.projects + '/' + project.name + '/**/*.coffee',
-                    path.projects + '/' + project.name + '/**/*.html',
-                    path.projects + '/' + project.name + '/**/*.jade',
-                    path.projects + '/' + project.name + '/**/*.js',
-                    path.projects + '/' + project.name + '/**/*.jsx',
-                    path.projects + '/' + project.name + '/**/*.scss',
-                    path.framework + '/**/*.coffee',
-                    path.framework + '/**/*.html',
-                    path.framework + '/**/*.jade',
-                    path.framework + '/**/*.js',
-                    path.framework + '/**/*.jsx',
-                    path.framework + '/**/*.scss'
-                ],
-                tasks: ['build'],
-                options: {
-                    spawn: false
-                }
-            }
-        },
-        /**
-         * YUIDOC
-         */
-        yuidoc: {
-            'build': {
-                name: project.title,
-                description: project.description,
-                version: project.version,
-                options: {
-                    exclude: 'libraries',
-                    paths: [
-                        path.projects + '/' + project.name,
-                        path.framework
-                    ],
-                    themedir: path.yuidoc,
-                    outdir: path.docs + '/' + project.name
-                }
+                src: '<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-x86.zip',
+                dest: '<%= gelato.crosswalk.path %>'
             }
         }
     });
 
     /**
-     * TASK: build
+     * TASK: build-project
      */
-    grunt.registerTask('build', function(type) {
+    grunt.registerTask('build-project', function() {
         grunt.task.run([
-            'check-requirements',
-            'clean:www',
-            'copy:build',
-            'coffee:build',
-            'react:build',
-            'jade:build',
-            'sass:build',
-            'replace:build',
-            'validate'
-        ]);
-        if (type === 'combine') {
-            grunt.task.run('requirejs:build-combine');
-        } else if (type === 'compact') {
-            grunt.task.run('requirejs:build-compact');
-        }
-    });
-
-    /**
-     * TASK: check-requirements
-     */
-    grunt.registerTask('check-requirements', function() {
-        if (!project) {
-            grunt.log.error('No valid project declared.');
-            return false;
-        }
-        if (!grunt.file.isDir(path.projects + '/' + project.name)) {
-            grunt.log.error('Project directory not found.');
-            return false;
-        }
-        if (!grunt.file.isFile(path.projects + '/' + project.name + '/package.json')) {
-            grunt.log.error('Project directory missing package.json file.');
-            return false;
-        }
-    });
-
-    /**
-     * TASK: docs
-     */
-    grunt.registerTask('docs', function() {
-        grunt.task.run([
-            'check-requirements',
-            'clean:docs',
-            'yuidoc:build'
+            'clean:project-www',
+            'copy:project-www',
+            'coffee:project-www',
+            'react:project-www',
+            'jade:project-www',
+            'sass:project-www',
+            'replace:project-www',
+            'validate-project'
         ]);
     });
 
     /**
-     * TASK: install-cordova
+     * TASK: create-project
      */
-    grunt.registerTask('install-cordova', function() {
+    grunt.registerTask('create-project', function() {
+        gelato.project.name = option.name;
+        gelato.project.path = gelato.project.path + '/' + option.name;
+        grunt.config.set('gelato', gelato);
         grunt.task.run([
-            'check-requirements',
-            'clean:cordova',
-            'shell:install-cordova',
-            'install-crosswalk'
+            'copy:structure',
+            'replace:structure',
+            'build-project'
+        ]);
+        grunt.log.writeln('Created project ' + gelato.project.name + '.');
+    });
+
+    /**
+     * TASK: run-project
+     */
+    grunt.registerTask('run-project', function() {
+        grunt.task.run([
+            'connect:project-www'
         ]);
     });
 
     /**
-     * TASK: install-crosswalk
+     * TASK: unzip-crosswalk
      */
-    grunt.registerTask('install-crosswalk', function() {
-        if (!grunt.file.isFile(path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-arm/VERSION') ||
-            !grunt.file.isFile(path.cordova + '/crosswalk/crosswalk-cordova-' + setting.crosswalk.version + '-x86/VERSION')) {
-            grunt.task.run([
-                'clean:crosswalk',
-                'unzip:crosswalk-arm',
-                'unzip:crosswalk-x86'
-            ]);
-        }
-    });
-
-    /**
-     * TASK: run-android
-     */
-    grunt.registerTask('run-android', function() {
+    grunt.registerTask('unzip-crosswalk', function() {
         grunt.task.run([
-            'build',
-            'clean:cordova-www',
-            'copy:www-cordova'
+            'clean:crosswalk',
+            'unzip:crosswalk-arm',
+            'unzip:crosswalk-x86'
         ]);
-        if (!grunt.file.isDir(path.cordova + '/' + project.name + '/platforms/android')) {
-            grunt.task.run('shell:install-cordova-android');
-        }
-        grunt.task.run('shell:run-android');
     });
-
 
     /**
      * TASK: validate
      */
-    grunt.registerTask('validate', function() {
+    grunt.registerTask('validate-project', function() {
         grunt.task.run([
-            'check-requirements',
-            'csslint:www',
-            'jshint:www'
-        ]);
-    });
-
-    /**
-     * TASK: wash
-     */
-    grunt.registerTask('wash', function() {
-        grunt.task.run([
-            'check-requirements',
-            'clean:www-all'
+            'csslint:project-www',
+            'jshint:project-www'
         ]);
     });
 
