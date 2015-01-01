@@ -1,3 +1,3 @@
 # Gelato Framework
 
-An elegant mixture of mobile friendly libraries.
+A delectable mixture of mobile friendly libraries.

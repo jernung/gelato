@@ -1,12 +1,12 @@
 {
     "name": "gelato-framework",
-    "description": "An elegant mixture of mobile friendly libraries.",
+    "description": "A delectable mixture of mobile friendly libraries.",
     "author": {
         "name": "Joshua McFarland",
         "url": "http://www.joshmcfarland.net/"
     },
     "license": "MIT",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "repository": {
         "type": "git",
         "url": "https://github.com/jernung/gelato-framework"
