@@ -3,7 +3,8 @@ var gelato = require('./gelato.js');
 module.exports = function(grunt) {
 
     var option = {
-        name: grunt.option('name')
+        name: grunt.option('name'),
+        path: grunt.option('path')
     };
 
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -117,8 +118,20 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= gelato.structures.path %>',
-                        src: ['package.json'],
-                        dest: '<%= gelato.project.path %>'
+                        src: ['copy-gitignore', 'copy-package', 'copy-readme'],
+                        dest: '<%= gelato.project.path %>',
+                        rename: function(dest, src) {
+                            switch (src) {
+                                case 'copy-gitignore':
+                                    return dest + '/.gitignore';
+                                case 'copy-package':
+                                    return dest + '/package.json';
+                                case 'copy-readme':
+                                    return dest + '/README.md';
+                                default:
+                                     return dest + '/' + src;
+                            }
+                        }
                     }
                 ]
             }
@@ -245,7 +258,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: 'package.json',
+                        src: ['package.json', 'README.md'],
                         cwd: '<%= gelato.project.path %>',
                         dest: '<%= gelato.project.path %>'
                     }
@@ -282,9 +295,7 @@ module.exports = function(grunt) {
         /**
          * SHELL
          */
-        shell: {
-
-        },
+        shell: {},
         /**
          * UNZIP
          */
