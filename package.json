@@ -14,7 +14,6 @@
     "bin": {
         "gelato": "bin/cli.js"
     },
-    "main": "gelato.js",
     "dependencies": {
         "commander": "2.6.0",
         "grunt": "0.4.5",

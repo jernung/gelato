@@ -7,7 +7,7 @@ module.exports = function(grunt) {
      * @type Object
      */
     var option = {
-        appname: grunt.option('appname') === undefined ? 'open' : grunt.option('appname'),
+        appname: grunt.option('appname'),
         hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
         name: grunt.option('name'),
         path: grunt.option('path'),
