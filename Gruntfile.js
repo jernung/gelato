@@ -309,7 +309,18 @@ module.exports = function(grunt) {
         /**
          * SHELL
          */
-        shell: {},
+        shell: {
+            'install-cordova': {
+                command: [
+                    'cd <%= gelato.project.path %>',
+                    'cordova create cordova <%= gelato.project.package %> <%= gelato.project.title %>'
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            }
+        },
         /**
          * UNZIP
          */
@@ -350,10 +361,18 @@ module.exports = function(grunt) {
         grunt.config.set('gelato', gelato);
         grunt.task.run([
             'copy:structure',
-            'replace:structure',
-            'build-project'
+            'replace:structure'
         ]);
         grunt.log.writeln('Created project ' + gelato.project.name + '.');
+    });
+
+    /**
+     * TASK: install-cordova
+     */
+    grunt.registerTask('install-cordova', function() {
+        grunt.task.run([
+            'shell:install-cordova'
+        ]);
     });
 
     /**
