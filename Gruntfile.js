@@ -8,6 +8,7 @@ module.exports = function(grunt) {
      */
     var option = {
         appname: grunt.option('appname'),
+        architecture: grunt.option('architecture') === undefined ? 'arm' : grunt.option('architecture'),
         hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
         name: grunt.option('name'),
         path: grunt.option('path'),
@@ -46,6 +47,18 @@ module.exports = function(grunt) {
          * CLEAN
          */
         clean: {
+            'cordova': {
+                src: [
+                    '<%= gelato.project.path %>/cordova'
+                ],
+                options: {force: true}
+            },
+            'cordova-android': {
+                src: [
+                    '<%= gelato.project.path %>/cordova/platforms/android'
+                ],
+                options: {force: true}
+            },
             'crosswalk': {
                 src: [
                     '<%= gelato.crosswalk.path %>/**/*',
@@ -143,7 +156,7 @@ module.exports = function(grunt) {
                                 case 'copy-readme':
                                     return dest + '/README.md';
                                 default:
-                                     return dest + '/' + src;
+                                    return dest + '/' + src;
                             }
                         }
                     }
@@ -313,7 +326,17 @@ module.exports = function(grunt) {
             'install-cordova': {
                 command: [
                     'cd <%= gelato.project.path %>',
-                    'cordova create cordova <%= gelato.project.package %> <%= gelato.project.title %>'
+                    'cordova create cordova <%= gelato.project.packageName %> <%= gelato.project.title %>'
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+            'install-cordova-android': {
+                command: [
+                    'cd <%= gelato.project.path %>/cordova',
+                    'cordova platform add android'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -371,7 +394,27 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('install-cordova', function() {
         grunt.task.run([
-            'shell:install-cordova'
+            'clean:cordova',
+            'shell:install-cordova',
+            'install-cordova-android'
+        ]);
+    });
+
+    /**
+     * TASK: install-cordova-android
+     */
+    grunt.registerTask('install-cordova-android', function() {
+        if (gelato.crosswalk.isPacked()) {
+            grunt.log.writeln('Unpacking crosswalk cordova files for Android.');
+            grunt.task.run([
+                'clean:crosswalk',
+                'unzip:crosswalk-arm',
+                'unzip:crosswalk-x86'
+            ]);
+        }
+        grunt.task.run([
+            'clean:cordova-android',
+            'shell:install-cordova-android'
         ]);
     });
 
