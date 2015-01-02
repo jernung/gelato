@@ -12,7 +12,17 @@ program
     .parse(process.argv);
 
 if (gelato.project.type === 'gelato') {
-    var cmd = ['grunt run-project'];
+    var cmd = [];
+    switch (program.args[0]) {
+        case 'android':
+            cmd.push('grunt run-android');
+            break;
+        case 'web':
+            cmd.push('grunt run-web');
+            break;
+        default:
+            cmd.push('grunt run-web');
+    }
     if (program.appname) {
         cmd.push('--appname=' + program.appname);
     }

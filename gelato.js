@@ -40,6 +40,15 @@ var gelato = {
     path: gelatoPath,
     project: {
         cordova: {
+            android: {
+                isInstalled: function() {
+                    var path = gelato.project.path;
+                    if (!fs.existsSync(path + '/cordova/platforms/android/VERSION')) {
+                        return false;
+                    }
+                    return true;
+                }
+            },
             isInstalled: function() {
                 var path = gelato.project.path;
                 if (!fs.existsSync(path + '/cordova/config.xml')) {
