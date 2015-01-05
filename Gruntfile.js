@@ -474,6 +474,9 @@ module.exports = function(grunt) {
      * TASK: install-cordova-android
      */
     grunt.registerTask('install-cordova-android', function() {
+        if (!gelato.project.cordova.isInstalled()) {
+            grunt.task.run('install-cordova');
+        }
         if (gelato.crosswalk.isPacked()) {
             grunt.task.run('unzip-cordova-crosswalk');
         }
@@ -491,9 +494,6 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('run-android', function() {
         grunt.task.run('build-project');
-        if (!gelato.project.cordova.isInstalled()) {
-            grunt.task.run('install-cordova');
-        }
         if (!gelato.project.cordova.android.isInstalled()) {
             grunt.task.run('install-cordova-android');
         }
