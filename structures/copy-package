@@ -3,7 +3,7 @@
     "type": "gelato",
     "license": "MIT",
     "name": "@@project-name",
-    "package": "com.jernung.gelato.default-template",
+    "package-name": "com.gelato.@@project-name",
     "title": "@@project-name",
     "version": "0.0.1"
 }

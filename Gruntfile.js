@@ -7,7 +7,8 @@ module.exports = function(grunt) {
      * @type Object
      */
     var option = {
-        appname: grunt.option('appname') === undefined ? 'open' : grunt.option('appname'),
+        appname: grunt.option('appname'),
+        architecture: grunt.option('architecture') === undefined ? 'arm' : grunt.option('architecture'),
         hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
         name: grunt.option('name'),
         path: grunt.option('path'),
@@ -46,11 +47,35 @@ module.exports = function(grunt) {
          * CLEAN
          */
         clean: {
-            'crosswalk': {
+            'cordova': {
+                src: [
+                    '<%= gelato.project.path %>/cordova'
+                ],
+                options: {force: true}
+            },
+            'cordova-android': {
+                src: [
+                    '<%= gelato.project.path %>/cordova/platforms/android'
+                ],
+                options: {force: true}
+            },
+            'cordova-android-cordovalib': {
+                src: [
+                    '<%= gelato.project.path %>/cordova/platforms/android/CordovaLib/**/*'
+                ],
+                options: {force: true}
+            },
+            'cordova-crosswalk': {
                 src: [
                     '<%= gelato.crosswalk.path %>/**/*',
                     '!<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-arm.zip',
                     '!<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-x86.zip'
+                ],
+                options: {force: true}
+            },
+            'cordova-www': {
+                src: [
+                    '<%= gelato.project.path %>/cordova/www/**/*'
                 ],
                 options: {force: true}
             },
@@ -105,6 +130,32 @@ module.exports = function(grunt) {
          * COPY
          */
         copy: {
+            'cordova-www': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= gelato.project.path %>/www',
+                        src: ['**/*'],
+                        dest: '<%= gelato.project.path %>/cordova/www'
+                    }
+                ]
+            },
+            'cordova-crosswalk': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-<%= option.architecture %>/framework',
+                        src: ['**/*'],
+                        dest: '<%= gelato.project.path %>/cordova/platforms/android/CordovaLib'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-<%= option.architecture %>',
+                        src: ['VERSION'],
+                        dest: '<%= gelato.project.path %>/cordova/platforms/android'
+                    },
+                ]
+            },
             'project-www': {
                 files: [
                     {
@@ -143,7 +194,7 @@ module.exports = function(grunt) {
                                 case 'copy-readme':
                                     return dest + '/README.md';
                                 default:
-                                     return dest + '/' + src;
+                                    return dest + '/' + src;
                             }
                         }
                     }
@@ -309,16 +360,68 @@ module.exports = function(grunt) {
         /**
          * SHELL
          */
-        shell: {},
+        shell: {
+            'install-cordova': {
+                command: [
+                    'cd <%= gelato.project.path %>',
+                    'cordova create cordova <%= gelato.project.packageName %> <%= gelato.project.title %>',
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+            'install-cordova-android': {
+                command: [
+                    'cd <%= gelato.project.path %>/cordova',
+                    'cordova platform add android'
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+            'install-cordova-crosswalk': {
+                command: [
+                    'cd <%= gelato.project.path %>/cordova/platforms/android/CordovaLib',
+                    'android update project --subprojects --path . --target android-19',
+                    'ant debug'
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+            'install-cordova-plugins': {
+                command: [
+                    'cd <%= gelato.project.path %>/cordova',
+                    'cordova plugin add <%= gelato.path %>/cordova/plugins/gelato-core'
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+            'run-cordova-android': {
+                command: [
+                    'cd <%= gelato.project.path %>/cordova',
+                    'cordova run android'
+                ].join('&&'),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+        },
         /**
          * UNZIP
          */
         unzip: {
-            'crosswalk-arm': {
+            'cordova-crosswalk-arm': {
                 src: '<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-arm.zip',
                 dest: '<%= gelato.crosswalk.path %>'
             },
-            'crosswalk-x86': {
+            'cordova-crosswalk-x86': {
                 src: '<%= gelato.crosswalk.path %>/crosswalk-cordova-<%= gelato.crosswalk.version %>-x86.zip',
                 dest: '<%= gelato.crosswalk.path %>'
             }
@@ -350,29 +453,74 @@ module.exports = function(grunt) {
         grunt.config.set('gelato', gelato);
         grunt.task.run([
             'copy:structure',
-            'replace:structure',
-            'build-project'
+            'replace:structure'
         ]);
         grunt.log.writeln('Created project ' + gelato.project.name + '.');
     });
 
     /**
-     * TASK: run-project
+     * TASK: install-cordova
      */
-    grunt.registerTask('run-project', function() {
+    grunt.registerTask('install-cordova', function() {
+        grunt.task.run([
+            'clean:cordova',
+            'shell:install-cordova',
+            'shell:install-cordova-plugins',
+            'install-cordova-android'
+        ]);
+    });
+
+    /**
+     * TASK: install-cordova-android
+     */
+    grunt.registerTask('install-cordova-android', function() {
+        if (!gelato.project.cordova.isInstalled()) {
+            grunt.task.run('install-cordova');
+        }
+        if (gelato.crosswalk.isPacked()) {
+            grunt.task.run('unzip-cordova-crosswalk');
+        }
+        grunt.task.run([
+            'clean:cordova-android',
+            'shell:install-cordova-android',
+            'clean:cordova-android-cordovalib',
+            'copy:cordova-crosswalk',
+            'shell:install-cordova-crosswalk'
+        ]);
+    });
+
+    /**
+     * TASK: run-android
+     */
+    grunt.registerTask('run-android', function() {
+        grunt.task.run('build-project');
+        if (!gelato.project.cordova.android.isInstalled()) {
+            grunt.task.run('install-cordova-android');
+        }
+        grunt.task.run([
+            'clean:cordova-www',
+            'copy:cordova-www',
+            'shell:run-cordova-android'
+        ]);
+    });
+
+    /**
+     * TASK: run-web
+     */
+    grunt.registerTask('run-web', function() {
         grunt.task.run([
             'connect:project-www'
         ]);
     });
 
     /**
-     * TASK: unzip-crosswalk
+     * TASK: unzip-cordova-crosswalk
      */
-    grunt.registerTask('unzip-crosswalk', function() {
+    grunt.registerTask('unzip-cordova-crosswalk', function() {
         grunt.task.run([
-            'clean:crosswalk',
-            'unzip:crosswalk-arm',
-            'unzip:crosswalk-x86'
+            'clean:cordova-crosswalk',
+            'unzip:cordova-crosswalk-arm',
+            'unzip:cordova-crosswalk-x86'
         ]);
     });
 

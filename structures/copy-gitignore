@@ -1,11 +1,11 @@
 # Directories #
 .idea/
 .sass-cache/
-cordova/build/**/
-cordova/crosswalk/**/
+cordova/
 node_modules/
 nbproject/
 projects/
+www/
 
 # Files #
 npm-debug.log
