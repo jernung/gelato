@@ -40,7 +40,7 @@ app = (function() {
             backbone: 'libraries/backbone-1.1.2',
             'backbone.routefilter': 'libraries/backbone.routefilter-0.2.0',
             bootstrap: 'libraries/bootstrap-3.3.1',
-            'bootstrap.switch': 'libraries/bootstrap.switch-3.2.2',
+            'bootstrap.switch': 'libraries/bootstrap.switch-3.3.0',
             'createjs.easel': 'libraries/createjs.easel-0.8.0',
             'createjs.preload': 'libraries/createjs.preload-0.6.0',
             'createjs.sound': 'libraries/createjs.sound-0.6.0',
