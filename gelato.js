@@ -22,7 +22,6 @@ var gelato = {
         isPacked: function() {
             var path = gelato.crosswalk.path;
             var version = gelato.crosswalk.version;
-            console.log('crosswalk', path, version);
             if (!fs.existsSync(path + '/crosswalk-cordova-' + version + '-arm/VERSION')) {
                 return true;
             }

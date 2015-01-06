@@ -16,6 +16,24 @@ module.exports = function(grunt) {
         protocol: grunt.option('protocol') === undefined ? 'http' : grunt.option('protocol')
     };
 
+    /**
+     * TESTING: Handles when grunt is run from framework directory.
+     * TODO: make setting project package variables cleaner
+     */
+    if (gelato.path === gelato.project.path) {
+        option.name = 'test';
+        if (process.argv.join().indexOf('grunt,create-project') === -1) {
+            var projectPkg = grunt.file.readJSON(option.name + '/package.json');
+            gelato.project.description = projectPkg.description;
+            gelato.project.name = option.name;
+            gelato.project.path += '/' + option.name;
+            gelato.project.packageName = projectPkg['package-name'];
+            gelato.project.title = projectPkg.title;
+            gelato.project.type = projectPkg.type;
+            gelato.project.version = projectPkg.version;
+        }
+    }
+
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-contrib-concat');
@@ -449,7 +467,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('create-project', function() {
         gelato.project.name = option.name;
-        gelato.project.path = gelato.project.path + '/' + option.name;
+        gelato.project.path += '/' + option.name;
         grunt.config.set('gelato', gelato);
         grunt.task.run([
             'copy:structure',
