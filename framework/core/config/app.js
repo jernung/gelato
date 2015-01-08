@@ -59,7 +59,7 @@ app = (function() {
             'require.i18n': 'libraries/require.i18n-2.0.4',
             'require.text': 'libraries/require.text-2.0.12',
             underscore: 'libraries/lodash.underscore-2.4.1',
-            webfont: 'libraries/webfontloader-1.5.10'
+            webfont: 'libraries/webfontloader-1.5.11'
         },
         shim: {
             backbone: ['jquery', 'underscore'],
