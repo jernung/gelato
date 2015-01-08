@@ -7,7 +7,6 @@ define([
     'fastclick',
     'handlebars',
     'moment',
-    'pouchdb',
     'react',
     'backbone',
     'backbone.routefilter',
@@ -28,11 +27,10 @@ define([
     'require.text',
     'underscore',
     'webfont'
-], function(Async, FastClick, Handlebars, Moment, PouchDB, React) {
+], function(Async, FastClick, Handlebars, Moment, React) {
     window.Async = Async;
     window.FastClick = FastClick;
     window.Handlebars = Handlebars;
     window.Moment = Moment;
-    window.PouchDB = PouchDB;
     window.React = React;
 });
