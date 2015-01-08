@@ -53,7 +53,7 @@ app = (function() {
             'jquery.mobile': 'libraries/jquery.mobile-1.4.5',
             'jquery.notify': 'libraries/jquery.notify-0.3.1',
             modernizr: 'libraries/modernizr.custom-2.8.3',
-            moment: 'libraries/moment-2.8.4',
+            moment: 'libraries/moment-2.9.0',
             'moment.timezone': 'libraries/moment.timezone-0.2.5',
             pouchdb: 'libraries/pouchdb-3.2.1',
             react: 'libraries/react-0.12.2',
