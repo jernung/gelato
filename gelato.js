@@ -64,8 +64,8 @@ var gelato = {
         type: projectPkg.type,
         version: projectPkg.version
     },
-    structures: {
-        path: gelatoPath + '/structures'
+    structure: {
+        path: gelatoPath + '/structure'
     },
     version: gelatoPkg.version
 };

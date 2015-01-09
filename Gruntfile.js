@@ -194,13 +194,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= gelato.structures.path %>/default',
-                        src: ['**/*'],
-                        dest: '<%= gelato.project.path %>/src'
-                    },
-                    {
-                        expand: true,
-                        cwd: '<%= gelato.structures.path %>',
+                        cwd: '<%= gelato.structure.path %>/',
                         src: ['copy-gitignore', 'copy-package', 'copy-readme'],
                         dest: '<%= gelato.project.path %>',
                         rename: function(dest, src) {
