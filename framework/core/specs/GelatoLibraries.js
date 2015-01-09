@@ -1,5 +1,5 @@
 define([], function() {
-    describe('Core - Libraries', function() {
+    describe('Core - GelatoLibraries', function() {
         describe('Async', function() {
             it('should be defined in the global scope.', function() {
                 expect(Async).toBeDefined();
@@ -72,11 +72,6 @@ define([], function() {
             });
             it('should include custom timezone data.', function() {
                 expect(Moment.tz).toBeDefined();
-            });
-        });
-        describe('Pouch', function() {
-            it('should be defined in the global scope.', function() {
-                expect(PouchDB).toBeDefined();
             });
         });
         describe('React', function() {
