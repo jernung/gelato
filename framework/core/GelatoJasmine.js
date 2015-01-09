@@ -1,3 +1,7 @@
+/**
+ * @module Framework
+ * @class GelatoJasmine
+ */
 define([], function() {
 
     window.jasmine = jasmineRequire.core(jasmineRequire);

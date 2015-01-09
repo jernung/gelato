@@ -2,15 +2,15 @@
  * @module Application
  */
 define([
-    'core/BaseModel',
+    'core/GelatoModel',
     'routers/Router',
     'require.i18n!locale/nls/strings'
-], function(BaseModel, Router, Strings) {
+], function(GelatoModel, Router, Strings) {
     /**
      * @class Application
-     * @extends BaseModel
+     * @extends GelatoModel
      */
-    var Application = BaseModel.extend({
+    var Application = GelatoModel.extend({
         /**
          * @method initialize
          * @constructor

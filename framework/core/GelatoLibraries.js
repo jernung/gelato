@@ -1,6 +1,6 @@
 /**
  * @module Framework
- * @class CoreLibraries
+ * @class GelatoLibraries
  */
 define([
     'async',

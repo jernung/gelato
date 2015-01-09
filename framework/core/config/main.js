@@ -2,7 +2,7 @@
 
     function loadApplication() {
         if (location.pathname.indexOf('tests.html') > -1) {
-            requirejs(['core/Jasmine', 'core/Tests'], function(Jasmine) {
+            requirejs(['core/GelatoJasmine', 'core/GelatoSpecs'], function(Jasmine) {
                 Jasmine.start();
             });
         } else {
@@ -17,7 +17,7 @@
 
     function loadCoreLibraries() {
         console.log('LOADING:', 'core libraries');
-        requirejs(['core/Libraries'], function() {
+        requirejs(['core/GelatoLibraries'], function() {
             if (app.isCordova()) {
                 requirejs(['cordova'], function() {
                     document.addEventListener('deviceready', loadFonts, false);

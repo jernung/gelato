@@ -1,12 +1,12 @@
 /**
  * @module Framework
  */
-define(['core/BaseView', 'require.text!templates/default.html'], function(BaseView, Template) {
+define(['core/GelatoView', 'require.text!templates/default.html'], function(GelatoView, Template) {
     /**
      * @class DefaultView
-     * @extends BaseView
+     * @extends GelatoView
      */
-    var DefaultView = BaseView.extend({
+    var DefaultView = GelatoView.extend({
         /**
          * @method render
          * @returns {DefaultView}

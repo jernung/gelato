@@ -3,10 +3,10 @@
  */
 define([], function() {
     /**
-     * @class BaseRouter
+     * @class GelatoRouter
      * @extends Backbone.Router
      */
-    var BaseRouter = Backbone.Router.extend({
+    var GelatoRouter = Backbone.Router.extend({
         /**
          * @method after
          */
@@ -23,6 +23,6 @@ define([], function() {
         }
     });
 
-    return BaseRouter;
+    return GelatoRouter;
 
 });

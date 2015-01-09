@@ -270,7 +270,8 @@ module.exports = function(grunt) {
                 src: [
                     'Gruntfile.js',
                     '<%= gelato.project.path %>/www/**/*.js',
-                    '!<%= gelato.project.path %>/www/libraries/**/*.js'
+                    '!<%= gelato.project.path %>/www/libraries/**/*.js',
+                    '!<%= gelato.project.path %>/www/core/libraries/**/*.js'
                 ]
             }
         },
