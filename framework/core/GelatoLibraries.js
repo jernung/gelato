@@ -11,7 +11,6 @@ define([
     'backbone',
     'backbone.routefilter',
     'bootstrap',
-    'bootstrap.switch',
     'createjs.easel',
     'createjs.preload',
     'createjs.sound',
