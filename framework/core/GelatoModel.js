@@ -3,11 +3,11 @@
  */
 define([], function() {
     /**
-     * @class BaseModel
+     * @class GelatoModel
      * @extends Backbone.Model
      */
-    var BaseModel = Backbone.Model.extend({});
+    var GelatoModel = Backbone.Model.extend({});
 
-    return BaseModel;
+    return GelatoModel;
 
 });

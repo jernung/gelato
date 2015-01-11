@@ -1,12 +1,12 @@
 /**
  * @module Framework
  */
-define(['core/BaseRouter', 'views/Default'], function(BaseRouter, DefaultView) {
+define(['core/GelatoRouter', 'views/Default'], function(GelatoRouter, DefaultView) {
     /**
      * @class Router
-     * @extends BaseRouter
+     * @extends GelatoRouter
      */
-    var Router = BaseRouter.extend({
+    var Router = GelatoRouter.extend({
         /**
          * @property routes
          * @type Object

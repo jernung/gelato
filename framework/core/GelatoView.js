@@ -3,10 +3,10 @@
  */
 define([], function() {
     /**
-     * @class BaseView
+     * @class GelatoView
      * @extends Backbone.View
      */
-    var BaseView = Backbone.View.extend({
+    var GelatoView = Backbone.View.extend({
         /**
          * @property el
          * @type String
@@ -15,7 +15,7 @@ define([], function() {
         /**
          * @method renderTemplate
          * @param {String} template
-         * @returns {BaseView}
+         * @returns {GelatoView}
          */
         renderTemplate: function(template) {
             this.$el.html(Handlebars.compile(template)(app.strings));
@@ -23,6 +23,6 @@ define([], function() {
         }
     });
 
-    return BaseView;
+    return GelatoView;
 
 });

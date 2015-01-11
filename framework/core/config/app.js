@@ -16,10 +16,10 @@ app = (function() {
     var config = {
         modules: [
             {
-                name: 'core/Libraries'
+                name: 'core/GelatoLibraries'
             },
             {
-                name: 'core/Tests'
+                name: 'core/GelatoSpecs'
             },
             {
                 name: 'models/Application'
@@ -36,37 +36,34 @@ app = (function() {
             templates: 'templates',
             views: 'views',
             //framework libraries
-            async: 'libraries/async-0.9.2',
-            backbone: 'libraries/backbone-1.1.2',
-            'backbone.routefilter': 'libraries/backbone.routefilter-0.2.0',
-            bootstrap: 'libraries/bootstrap-3.3.1',
-            'bootstrap.switch': 'libraries/bootstrap.switch-3.2.2',
-            'createjs.easel': 'libraries/createjs.easel-0.8.0',
-            'createjs.preload': 'libraries/createjs.preload-0.6.0',
-            'createjs.sound': 'libraries/createjs.sound-0.6.0',
-            'createjs.tween': 'libraries/createjs.tween-0.6.0',
-            fastclick: 'libraries/fastclick-1.0.3',
-            handlebars: 'libraries/handlebars-2.0.0',
-            jasmine: 'libraries/jasmine-2.1.3',
-            'jasmine.html': 'libraries/jasmine.html-2.1.3',
-            jquery: 'libraries/jquery-2.1.3',
-            'jquery.mobile': 'libraries/jquery.mobile-1.4.5',
-            'jquery.notify': 'libraries/jquery.notify-0.3.1',
-            modernizr: 'libraries/modernizr.custom-2.8.3',
-            moment: 'libraries/moment-2.8.4',
-            'moment.timezone': 'libraries/moment.timezone-0.2.5',
-            pouchdb: 'libraries/pouchdb-3.2.1',
-            react: 'libraries/react-0.12.2',
-            'require.i18n': 'libraries/require.i18n-2.0.4',
-            'require.text': 'libraries/require.text-2.0.12',
-            underscore: 'libraries/lodash.underscore-2.4.1',
-            webfont: 'libraries/webfontloader-1.5.10'
+            async: 'core/libraries/async-0.9.2',
+            backbone: 'core/libraries/backbone-1.1.2',
+            'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
+            bootstrap: 'core/libraries/bootstrap-3.3.1',
+            'createjs.easel': 'core/libraries/createjs.easel-0.8.0',
+            'createjs.preload': 'core/libraries/createjs.preload-0.6.0',
+            'createjs.sound': 'core/libraries/createjs.sound-0.6.0',
+            'createjs.tween': 'core/libraries/createjs.tween-0.6.0',
+            fastclick: 'core/libraries/fastclick-1.0.3',
+            handlebars: 'core/libraries/handlebars-2.0.0',
+            jasmine: 'core/libraries/jasmine-2.1.3',
+            'jasmine.html': 'core/libraries/jasmine.html-2.1.3',
+            jquery: 'core/libraries/jquery-2.1.3',
+            'jquery.mobile': 'core/libraries/jquery.mobile-1.4.5',
+            'jquery.notify': 'core/libraries/jquery.notify-0.3.1',
+            modernizr: 'core/libraries/modernizr.custom-2.8.3',
+            moment: 'core/libraries/moment-2.9.0',
+            'moment.timezone': 'core/libraries/moment.timezone-0.2.5',
+            react: 'core/libraries/react-0.12.2',
+            'require.i18n': 'core/libraries/require.i18n-2.0.4',
+            'require.text': 'core/libraries/require.text-2.0.12',
+            underscore: 'core/libraries/lodash.underscore-2.4.1',
+            webfont: 'core/libraries/webfontloader-1.5.11'
         },
         shim: {
             backbone: ['jquery', 'underscore'],
             'backbone.routefilter': ['backbone'],
             bootstrap: ['jquery'],
-            'bootstrap.switch': ['bootstrap'],
             'jasmine.html': ['jasmine'],
             'jquery.mobile': ['jquery'],
             'jquery.notify': ['jquery'],
