@@ -2,9 +2,10 @@
 
 var gelato = require('../gelato.js');
 var program = require('commander');
+var settings = gelato.load().getSettings();
 
 program
-    .version(gelato.version)
+    .version(settings.version)
     .command('build', 'build current project')
     .command('create [project]', 'create a new project')
     .command('run [platform]', 'run a project')

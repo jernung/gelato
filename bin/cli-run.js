@@ -3,6 +3,7 @@
 var gelato = require('../gelato.js');
 var program = require('commander');
 var shell = require('shelljs');
+var settings = gelato.load().getSettings();
 
 program
     .option('--appname [value]', 'specify web browser to open')
@@ -11,7 +12,7 @@ program
     .option('--protocol [value]', 'set server protocol type [http]', 'http')
     .parse(process.argv);
 
-if (gelato.project.type === 'gelato') {
+if (settings.project.type === 'gelato') {
     var cmd = [];
     switch (program.args[0]) {
         case 'android':
