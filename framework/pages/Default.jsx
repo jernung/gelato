@@ -1,15 +1,15 @@
 /**
  * @module Framework
  */
-define(['core/GelatoView', 'require.text!templates/default.html'], function(GelatoView, Template) {
+define(['core/GelatoPage', 'require.text!templates/default.html'], function(GelatoPage, Template) {
     /**
      * @class DefaultView
-     * @extends GelatoView
+     * @extends GelatoPage
      */
-    var DefaultView = GelatoView.extend({
+    var DefaultView = GelatoPage.extend({
         /**
          * @method render
-         * @returns {DefaultView}
+         * @returns {GelatoPage}
          */
         render: function() {
             this.renderTemplate(Template);

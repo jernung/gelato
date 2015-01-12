@@ -8,11 +8,6 @@ define([], function() {
      */
     var GelatoView = Backbone.View.extend({
         /**
-         * @property el
-         * @type String
-         */
-        el: '#application',
-        /**
          * @method renderTemplate
          * @param {String} template
          * @returns {GelatoView}

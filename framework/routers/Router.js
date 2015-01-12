@@ -1,7 +1,7 @@
 /**
  * @module Framework
  */
-define(['core/GelatoRouter', 'views/Default'], function(GelatoRouter, DefaultView) {
+define(['core/GelatoRouter', 'pages/Default'], function(GelatoRouter, DefaultPage) {
     /**
      * @class Router
      * @extends GelatoRouter
@@ -18,7 +18,7 @@ define(['core/GelatoRouter', 'views/Default'], function(GelatoRouter, DefaultVie
          * @method showDefault
          */
         showDefault: function() {
-            this.active = new DefaultView();
+            this.active = new DefaultPage();
             this.active.render();
         }
     });
