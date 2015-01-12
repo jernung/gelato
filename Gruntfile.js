@@ -5,7 +5,6 @@ module.exports = function(grunt) {
 
     /**
      * TESTING: Handles when grunt is run from framework directory.
-     * TODO: make setting project package variables cleaner
      */
     if (settings.path === settings.project.path) {
         grunt.option('name', 'test');
@@ -458,7 +457,9 @@ module.exports = function(grunt) {
      * TASK: create-project
      */
     grunt.registerTask('create-project', function() {
-        grunt.file.mkdir(settings.project.path += '/' + option.name);
+        settings.project.name = option.name;
+        settings.project.path += '/' + option.name;
+        grunt.file.mkdir(settings.project.path);
         grunt.task.run([
             'copy:structure',
             'replace:structure'
