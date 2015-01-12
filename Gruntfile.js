@@ -185,6 +185,12 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
+                        cwd: '<%= settings.structure.path %>/src',
+                        src: ['**/*'],
+                        dest: '<%= settings.project.path %>/src'
+                    },
+                    {
+                        expand: true,
                         cwd: '<%= settings.structure.path %>/',
                         src: ['copy-gitignore', 'copy-package', 'copy-readme'],
                         dest: '<%= settings.project.path %>',
