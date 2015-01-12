@@ -438,11 +438,11 @@ module.exports = function(grunt) {
     grunt.registerTask('build-project', function() {
         grunt.task.run([
             'clean:project-www',
-            'copy:project-www',
             'coffee:project-www',
             'react:project-www',
             'jade:project-www',
             'sass:project-www',
+            'copy:project-www',
             'replace:project-www',
             'validate-project'
         ]);
