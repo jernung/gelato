@@ -197,13 +197,14 @@ module.exports = function(grunt) {
                             switch (src) {
                                 case 'copy-gitignore':
                                     return dest + '/.gitignore';
+                                case 'copy-htaccess':
+                                    return dest + '/.htaccess';
                                 case 'copy-package':
                                     return dest + '/package.json';
                                 case 'copy-readme':
                                     return dest + '/README.md';
-                                default:
-                                    return dest + '/' + src;
                             }
+                            return dest + '/' + src;
                         }
                     }
                 ]
