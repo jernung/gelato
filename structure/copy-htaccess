@@ -17,11 +17,11 @@ AddType application/font-woff .woff
     </FilesMatch>
 </IfModule>
 
-<FilesMatch "\.(ttf|otf|eot|woff)$">
-    <IfModule mod_headers.c>
+<IfModule mod_headers.c>
+    <FilesMatch "\.(ttf|otf|eot|woff)$">
         Header set Access-Control-Allow-Origin "*"
-    </IfModule>
-</FilesMatch>
+    </FilesMatch>
+</IfModule>
 
 <ifModule mod_rewrite.c>
     RewriteEngine On

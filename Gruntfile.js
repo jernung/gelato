@@ -191,7 +191,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= settings.structure.path %>/',
-                        src: ['copy-gitignore', 'copy-package', 'copy-readme'],
+                        src: ['copy-gitignore', 'copy-htaccess', 'copy-package', 'copy-readme'],
                         dest: '<%= settings.project.path %>',
                         rename: function(dest, src) {
                             switch (src) {
