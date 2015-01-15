@@ -98,7 +98,15 @@ app = (function() {
      * @param {Object} paths
      */
     function addPaths(paths) {
-        mergeObjects(this.paths, paths);
+        mergeObjects(this.config.paths, paths);
+    }
+
+    /**
+     * @method addShim
+     * @param {Object} shim
+     */
+    function addShim(shim) {
+        mergeObjects(this.config.shim, shim);
     }
 
     /**
