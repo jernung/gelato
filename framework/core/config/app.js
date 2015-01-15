@@ -187,6 +187,7 @@ app = (function() {
     return {
         addFonts: addFonts,
         addPaths: addPaths,
+        addShim: addShim,
         attributes: attributes,
         config: config,
         fonts: fonts,
