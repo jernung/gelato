@@ -1,1 +1,1 @@
-app.addFonts();
+app.addFonts({});

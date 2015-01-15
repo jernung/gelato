@@ -87,10 +87,18 @@ app = (function() {
 
     /**
      * @method addFonts
-     * @param {Object}
+     * @param {Object} fonts
      */
     function addFonts(fonts) {
         mergeObjects(this.fonts, fonts);
+    }
+
+    /**
+     * @method addPaths
+     * @param {Object} paths
+     */
+    function addPaths(paths) {
+        mergeObjects(this.paths, paths);
     }
 
     /**
@@ -170,6 +178,7 @@ app = (function() {
 
     return {
         addFonts: addFonts,
+        addPaths: addPaths,
         attributes: attributes,
         config: config,
         fonts: fonts,
