@@ -4,13 +4,6 @@ var settings = gelato.load().getSettings();
 module.exports = function(grunt) {
 
     /**
-     * TESTING: Handles when grunt is run from framework directory.
-     */
-    if (settings.path === settings.project.path) {
-        grunt.option('name', 'test');
-    }
-
-    /**
      * @property option
      * @type Object
      */
@@ -19,7 +12,6 @@ module.exports = function(grunt) {
         architecture: grunt.option('architecture') === undefined ? 'arm' : grunt.option('architecture'),
         hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
         name: grunt.option('name'),
-        path: grunt.option('path'),
         port: grunt.option('port') === undefined ? '8080' : grunt.option('port'),
         protocol: grunt.option('protocol') === undefined ? 'http' : grunt.option('protocol')
     };
@@ -421,7 +413,7 @@ module.exports = function(grunt) {
                     stdout: true,
                     stderr: true
                 }
-            },
+            }
         },
         /**
          * UNZIP
