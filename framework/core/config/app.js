@@ -86,6 +86,14 @@ app = (function() {
     };
 
     /**
+     * @method addFonts
+     * @param {Object}
+     */
+    function addFonts(fonts) {
+        mergeObjects(this.fonts, fonts);
+    }
+
+    /**
      * @method getPushState
      * @returns {Boolean}
      */
@@ -161,6 +169,7 @@ app = (function() {
     }
 
     return {
+        addFonts: addFonts,
         attributes: attributes,
         config: config,
         fonts: fonts,
