@@ -1,7 +1,7 @@
 /**
  * @module Framework
  */
-define(['core/GelatoView'], function(GelatoView) {
+define(['gelato/GelatoView'], function(GelatoView) {
     /**
      * @class GelatoPage
      * @extends GelatoView

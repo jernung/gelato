@@ -1,7 +1,7 @@
 /**
  * @module Pages
  */
-define(['core/GelatoPage', 'require.text!templates/default.html'], function(GelatoPage, Template) {
+define(['gelato/GelatoPage', 'require.text!templates/default.html'], function(GelatoPage, Template) {
     /**
      * @class DefaultView
      * @extends GelatoPage

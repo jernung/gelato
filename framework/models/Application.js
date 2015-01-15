@@ -2,7 +2,7 @@
  * @module Application
  */
 define([
-    'core/GelatoModel',
+    'gelato/GelatoModel',
     'routers/Router',
     'require.i18n!locale/nls/strings'
 ], function(GelatoModel, Router, Strings) {

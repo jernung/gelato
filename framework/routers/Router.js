@@ -1,7 +1,7 @@
 /**
  * @module Framework
  */
-define(['core/GelatoRouter', 'pages/Default'], function(GelatoRouter, DefaultPage) {
+define(['gelato/GelatoRouter', 'pages/Default'], function(GelatoRouter, DefaultPage) {
     /**
      * @class Router
      * @extends GelatoRouter

@@ -16,10 +16,10 @@ app = (function() {
     var config = {
         modules: [
             {
-                name: 'core/GelatoLibraries'
+                name: 'core/gelato/GelatoLibraries'
             },
             {
-                name: 'core/GelatoSpecs'
+                name: 'core/gelato/GelatoSpecs'
             },
             {
                 name: 'models/Application'
@@ -30,6 +30,7 @@ app = (function() {
             collections: 'collections',
             components: 'components',
             core: 'core',
+            gelato: 'core/gelato',
             models: 'models',
             modules: 'modules',
             router: 'routers',
