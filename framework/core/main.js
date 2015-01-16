@@ -1,18 +1,20 @@
 (function() {
 
     function loadApplication() {
-        if (location.pathname.indexOf('tests.html') > -1) {
-            requirejs(['gelato/GelatoJasmine', 'gelato/GelatoSpecs'], function(Jasmine) {
-                Jasmine.start();
-            });
-        } else {
-            console.log('LOADING:', 'application');
-            requirejs(['models/Application'], function(Application) {
-                FastClick.attach(document.body);
-                window.app = $.extend(true, new Application(), app);
-                window.app.router.start();
-            });
-        }
+        requirejs(['Libraries'], function() {
+            if (location.pathname.indexOf('tests.html') > -1) {
+                requirejs(['gelato/GelatoJasmine', 'gelato/GelatoSpecs'], function(Jasmine) {
+                    Jasmine.start();
+                });
+            } else {
+                console.log('LOADING:', 'application');
+                requirejs(['models/Application'], function(Application) {
+                    FastClick.attach(document.body);
+                    window.app = $.extend(true, new Application(), app);
+                    window.app.router.start();
+                });
+            }
+        });
     }
 
     function loadCoreLibraries() {
