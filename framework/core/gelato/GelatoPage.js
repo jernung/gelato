@@ -11,7 +11,21 @@ define(['gelato/GelatoView'], function(GelatoView) {
          * @property el
          * @type String
          */
-        el: '#application'
+        el: '#application',
+        /**
+         * @method getContentHeight
+         * @returns {Number}
+         */
+        getContentHeight: function() {
+            return this.$('.content').height();
+        },
+        /**
+         * @method getContentWidth
+         * @returns {Number}
+         */
+        getContentWidth: function() {
+            return this.$('.content').width();
+        }
     });
 
     return GelatoPage;
