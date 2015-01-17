@@ -17,7 +17,7 @@ function getSettings() {
                 return false;
             },
             path: gelatoPath + '/cordova/crosswalk',
-            version: '10.39.235.15'
+            version: '10.39.235.16'
         },
         framework: {
             path: gelatoPath + '/framework'
