@@ -1,5 +1,4 @@
-var gelato = require('./gelato.js');
-var settings = gelato.load().getSettings();
+var globals = require('./globals.js');
 
 module.exports = function(grunt) {
 
@@ -36,9 +35,9 @@ module.exports = function(grunt) {
 
     grunt.initConfig({
         /**
-         * SETTINGS
+         * GLOBALS
          */
-        settings: settings,
+        globals: globals,
         /**
          * OPTIONS
          */
@@ -49,39 +48,39 @@ module.exports = function(grunt) {
         clean: {
             'cordova': {
                 src: [
-                    '<%= settings.project.path %>/cordova'
+                    '<%= globals.project.path %>/cordova'
                 ],
                 options: {force: true}
             },
             'cordova-android': {
                 src: [
-                    '<%= settings.project.path %>/cordova/platforms/android'
+                    '<%= globals.project.path %>/cordova/platforms/android'
                 ],
                 options: {force: true}
             },
             'cordova-android-cordovalib': {
                 src: [
-                    '<%= settings.project.path %>/cordova/platforms/android/CordovaLib/**/*'
+                    '<%= globals.project.path %>/cordova/platforms/android/CordovaLib/**/*'
                 ],
                 options: {force: true}
             },
             'cordova-crosswalk': {
                 src: [
-                    '<%= settings.crosswalk.path %>/**/*',
-                    '!<%= settings.crosswalk.path %>/crosswalk-cordova-<%= settings.crosswalk.version %>-arm.zip',
-                    '!<%= settings.crosswalk.path %>/crosswalk-cordova-<%= settings.crosswalk.version %>-x86.zip'
+                    '<%= globals.gelato.cordova.crosswalk.path %>/**/*',
+                    '!<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-arm.zip',
+                    '!<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-x86.zip'
                 ],
                 options: {force: true}
             },
             'cordova-www': {
                 src: [
-                    '<%= settings.project.path %>/cordova/www/**/*'
+                    '<%= globals.project.path %>/cordova/www/**/*'
                 ],
                 options: {force: true}
             },
             'project-www': {
                 src: [
-                    '<%= settings.project.path %>/www/**/*'
+                    '<%= globals.project.path %>/www/**/*'
                 ],
                 options: {force: true}
             }
@@ -94,16 +93,16 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= settings.framework.path %>',
+                        cwd: '<%= globals.gelato.framework.path %>',
                         src: '**/*.coffee',
-                        dest: '<%= settings.project.path %>/www',
+                        dest: '<%= globals.project.www.path %>',
                         ext: '.js'
                     },
                     {
                         expand: true,
-                        cwd: '<%= settings.project.path %>/src',
+                        cwd: '<%= globals.project.src.path %>',
                         src: '**/*.coffee',
-                        dest: '<%= settings.project.path %>/www',
+                        dest: '<%= globals.project.www.path %>',
                         ext: '.js'
                     }
                 ]
@@ -115,7 +114,7 @@ module.exports = function(grunt) {
         connect: {
             'project-www': {
                 options: {
-                    base: '<%= settings.project.path %>/www',
+                    base: '<%= globals.project.www.path %>',
                     hostname: '<%= option.hostname %>',
                     keepalive: true,
                     open: {
@@ -134,9 +133,9 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= settings.project.path %>/www',
+                        cwd: '<%= globals.project.www.path %>',
                         src: ['**/*'],
-                        dest: '<%= settings.project.path %>/cordova/www'
+                        dest: '<%= globals.project.cordova.www.path %>'
                     }
                 ]
             },
@@ -144,15 +143,15 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= settings.crosswalk.path %>/crosswalk-cordova-<%= settings.crosswalk.version %>-<%= option.architecture %>/framework',
+                        cwd: '!<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-' + option.architecture + '/framework',
                         src: ['**/*'],
-                        dest: '<%= settings.project.path %>/cordova/platforms/android/CordovaLib'
+                        dest: '<%= globals.project.cordova.platforms.android.cordovalib %>'
                     },
                     {
                         expand: true,
-                        cwd: '<%= settings.crosswalk.path %>/crosswalk-cordova-<%= settings.crosswalk.version %>-<%= option.architecture %>',
+                        cwd: '!<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-' + option.architecture,
                         src: ['VERSION'],
-                        dest: '<%= settings.project.path %>/cordova/platforms/android'
+                        dest: '<%= globals.project.cordova.platforms.android %>'
                     },
                 ]
             },
@@ -160,31 +159,26 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= settings.framework.path %>',
+                        cwd: '<%= globals.gelato.framework.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
-                        dest: '<%= settings.project.path %>/www'
+                        dest: '<%= globals.project.www.path %>'
                     },
                     {
                         expand: true,
-                        cwd: '<%= settings.project.path %>/src',
+                        cwd: '<%= globals.project.src.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
-                        dest: '<%= settings.project.path %>/www'
+                        dest: '<%= globals.project.www.path %>'
                     }
                 ]
             },
             'structure': {
+                //TODO: copy required framework files into project
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= settings.structure.path %>/src',
-                        src: ['**/*'],
-                        dest: '<%= settings.project.path %>/src'
-                    },
-                    {
-                        expand: true,
-                        cwd: '<%= settings.structure.path %>/',
+                        cwd: '<%= globals.gelato.copy.path %>/',
                         src: ['copy-gitignore', 'copy-htaccess', 'copy-package', 'copy-readme'],
-                        dest: '<%= settings.project.path %>',
+                        dest: '<%= globals.project.path %>',
                         rename: function(dest, src) {
                             switch (src) {
                                 case 'copy-gitignore':
@@ -212,10 +206,10 @@ module.exports = function(grunt) {
                     import: 2
                 },
                 src: [
-                    '<%= settings.project.path %>/www/**/styles/**.*.css',
-                    '!<%= settings.project.path %>/www/**/styles/bootstrap.css',
-                    '!<%= settings.project.path %>/www/**/styles/bootstrap.switch.css',
-                    '!<%= settings.project.path %>/www/**/styles/font.awesome.css'
+                    '<%= globals.project.www.path %>/**/styles/**.*.css',
+                    '!<%= globals.project.www.path %>/**/styles/bootstrap.css',
+                    '!<%= globals.project.www.path %>/**/styles/bootstrap.switch.css',
+                    '!<%= globals.project.www.path %>/**/styles/font.awesome.css'
                 ]
             }
         },
@@ -227,16 +221,16 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= settings.framework.path %>',
+                        cwd: '<%= globals.gelato.framework.path %>',
                         src: ['**/*.jade'],
-                        dest: '<%= settings.project.path %>/www',
+                        dest: '<%= globals.project.www.path %>',
                         ext: '.html'
                     },
                     {
                         expand: true,
-                        cwd: '<%= settings.project.path %>/src',
+                        cwd: '<%= globals.project.src.path %>',
                         src: ['**/*.jade'],
-                        dest: '<%= settings.project.path %>/www',
+                        dest: '<%= globals.project.www.path %>',
                         ext: '.html'
                     }
                 ]
@@ -252,9 +246,9 @@ module.exports = function(grunt) {
                 },
                 src: [
                     'Gruntfile.js',
-                    '<%= settings.project.path %>/www/**/*.js',
-                    '!<%= settings.project.path %>/www/libraries/**/*.js',
-                    '!<%= settings.project.path %>/www/core/libraries/**/*.js'
+                    '<%= globals.project.www.path %>/**/*.js',
+                    '!<%= globals.project.www.path %>/libraries/**/*.js',
+                    '!<%= globals.project.www.path %>/core/libraries/**/*.js'
                 ]
             }
         },
@@ -266,16 +260,16 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= settings.framework.path %>',
+                        cwd: '<%= globals.gelato.framework.path %>',
                         src: '**/*.jsx',
-                        dest: '<%= settings.project.path %>/www',
+                        dest: '<%= globals.project.www.path %>',
                         ext: '.js'
                     },
                     {
                         expand: true,
-                        cwd: '<%= settings.project.path %>/src',
+                        cwd: '<%= globals.project.src.path %>',
                         src: '**/*.jsx',
-                        dest: '<%= settings.project.path %>/www',
+                        dest: '<%= globals.project.www.path %>',
                         ext: '.js'
                     }
                 ]
@@ -288,46 +282,46 @@ module.exports = function(grunt) {
             'project-www': {
                 options: {
                     variables: {
-                        'application-description': '<%= settings.project.description %>',
-                        'application-name': '<%= settings.project.name %>',
-                        'application-title': '<%= settings.project.title %>',
-                        'application-version': '<%= settings.project.version %>',
-                        'framework-version': '<%= settings.version %>'
+                        'application-description': '<%= globals.project.pkg.description %>',
+                        'application-name': '<%= globals.project.pkg.name %>',
+                        'application-title': '<%= globals.project.pkg.title %>',
+                        'application-version': '<%= globals.project.pkg.version %>',
+                        'framework-version': '<%= globals.gelato.pkg.version %>'
                     }
                 },
                 files: [
                     {
                         expand: true,
                         src: ['index.html', 'tests.html'],
-                        cwd: '<%= settings.project.path %>/www',
-                        dest: '<%= settings.project.path %>/www'
+                        cwd: '<%= globals.project.www.path %>',
+                        dest: '<%= globals.project.www.path %>'
                     },
                     {
                         expand: true,
                         src: 'core/config/app.js',
-                        cwd: '<%= settings.project.path %>/www',
-                        dest: '<%= settings.project.path %>/www'
+                        cwd: '<%= globals.project.www.path %>',
+                        dest: '<%= globals.project.www.path %>'
                     },
                     {
                         expand: true,
                         src: 'locale/nls/**/*.js',
-                        cwd: '<%= settings.project.path %>/www',
-                        dest: '<%= settings.project.path %>/www'
+                        cwd: '<%= globals.project.www.path %>',
+                        dest: '<%= globals.project.www.path %>'
                     }
                 ]
             },
             'structure': {
                 options: {
                     variables: {
-                        'project-name': '<%= settings.project.name %>'
+                        'project-name': '<%= globals.project.pkg.name %>'
                     }
                 },
                 files: [
                     {
                         expand: true,
                         src: ['package.json', 'README.md'],
-                        cwd: '<%= settings.project.path %>',
-                        dest: '<%= settings.project.path %>'
+                        cwd: '<%= globals.project.path %>',
+                        dest: '<%= globals.project.path %>'
                     }
                 ]
             }
@@ -340,17 +334,17 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= settings.framework.path %>',
+                        cwd: '<%= globals.gelato.framework.path %>',
                         src: ['**/*.scss'],
-                        dest: '<%= settings.project.path %>/www',
+                        dest: '<%= globals.project.www.path %>',
                         ext: '.css'
 
                     },
                     {
                         expand: true,
-                        cwd: '<%= settings.project.path %>/src',
+                        cwd: '<%= globals.project.src.path %>',
                         src: ['**/*.scss'],
-                        dest: '<%= settings.project.path %>/www',
+                        dest: '<%= globals.project.www.path %>',
                         ext: '.css'
                     }
                 ],
@@ -365,8 +359,8 @@ module.exports = function(grunt) {
         shell: {
             'install-cordova': {
                 command: [
-                    'cd <%= settings.project.path %>',
-                    'cordova create cordova <%= settings.project.packageName %> <%= settings.project.title %>',
+                    'cd <%= globals.project.path %>',
+                    'cordova create cordova <%= globals.project.pkg.packageName %> <%= globals.project.pkg.title %>'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -375,7 +369,7 @@ module.exports = function(grunt) {
             },
             'install-cordova-android': {
                 command: [
-                    'cd <%= settings.project.path %>/cordova',
+                    'cd <%= globals.project.cordova.path %>',
                     'cordova platform add android'
                 ].join('&&'),
                 options: {
@@ -385,7 +379,7 @@ module.exports = function(grunt) {
             },
             'install-cordova-crosswalk': {
                 command: [
-                    'cd <%= settings.project.path %>/cordova/platforms/android/CordovaLib',
+                    'cd <%= globals.project.cordova.platforms.cordovalib.path %>',
                     'android update project --subprojects --path . --target android-19',
                     'ant debug'
                 ].join('&&'),
@@ -396,8 +390,8 @@ module.exports = function(grunt) {
             },
             'install-cordova-plugins': {
                 command: [
-                    'cd <%= settings.project.path %>/cordova',
-                    'cordova plugin add <%= settings.path %>/cordova/plugins/gelato-core'
+                    'cd <%= globals.project.cordova.path %>',
+                    'cordova plugin add <%= globals.gelato.cordova.plugins.path %>/gelato-core'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -406,7 +400,7 @@ module.exports = function(grunt) {
             },
             'run-cordova-android': {
                 command: [
-                    'cd <%= settings.project.path %>/cordova',
+                    'cd <%= globals.project.cordova.path %>',
                     'cordova run android'
                 ].join('&&'),
                 options: {
@@ -420,12 +414,12 @@ module.exports = function(grunt) {
          */
         unzip: {
             'cordova-crosswalk-arm': {
-                src: '<%= settings.crosswalk.path %>/crosswalk-cordova-<%= settings.crosswalk.version %>-arm.zip',
-                dest: '<%= settings.crosswalk.path %>'
+                src: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-arm.zip',
+                dest: '<%= globals.gelato.crosswalk.path %>'
             },
             'cordova-crosswalk-x86': {
-                src: '<%= settings.crosswalk.path %>/crosswalk-cordova-<%= settings.crosswalk.version %>-x86.zip',
-                dest: '<%= settings.crosswalk.path %>'
+                src: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-x86.zip',
+                dest: '<%= globals.gelato.crosswalk.path %>'
             }
         }
     });
@@ -450,9 +444,9 @@ module.exports = function(grunt) {
      * TASK: create-project
      */
     grunt.registerTask('create-project', function() {
-        settings.project.name = option.name;
-        settings.project.path += '/' + option.name;
-        grunt.file.mkdir(settings.project.path);
+        globals.project.pkg.name = option.name;
+        globals.project.path += '/' + option.name;
+        grunt.file.mkdir(globals.project.path);
         grunt.task.run([
             'copy:structure',
             'replace:structure'
