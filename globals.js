@@ -32,14 +32,8 @@ module.exports = {
         },
         cordova: {
             crosswalk: {
-                arm: {
-                    path: gelatoPath + '/cordova/crosswalk/crosswalk-cordova-' + crosswalkVersion + '-arm'
-                },
                 path: gelatoPath + '/cordova/crosswalk',
-                version: crosswalkVersion,
-                x86: {
-                    path: gelatoPath + '/cordova/crosswalk/crosswalk-cordova-' + crosswalkVersion + '-x86'
-                }
+                version: crosswalkVersion
             },
             path: gelatoPath + '/cordova',
             plugins: {

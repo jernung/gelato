@@ -60,7 +60,7 @@ module.exports = function(grunt) {
             },
             'cordova-android-cordovalib': {
                 src: [
-                    '<%= globals.project.path %>/cordova/platforms/android/CordovaLib/**/*'
+                    '<%= globals.project.cordova.platforms.android.cordovalib.path %>/**/*'
                 ],
                 options: {force: true}
             },
@@ -143,15 +143,15 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '!<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-' + option.architecture + '/framework',
+                        cwd: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-' + option.architecture + '/framework',
                         src: ['**/*'],
-                        dest: '<%= globals.project.cordova.platforms.android.cordovalib %>'
+                        dest: '<%= globals.project.cordova.platforms.android.cordovalib.path %>'
                     },
                     {
                         expand: true,
-                        cwd: '!<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-' + option.architecture,
+                        cwd: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-' + option.architecture,
                         src: ['VERSION'],
-                        dest: '<%= globals.project.cordova.platforms.android %>'
+                        dest: '<%= globals.project.cordova.platforms.android.path %>'
                     },
                 ]
             },
@@ -379,7 +379,7 @@ module.exports = function(grunt) {
             },
             'install-cordova-crosswalk': {
                 command: [
-                    'cd <%= globals.project.cordova.platforms.cordovalib.path %>',
+                    'cd <%= globals.project.cordova.platforms.android.cordovalib.path %>',
                     'android update project --subprojects --path . --target android-19',
                     'ant debug'
                 ].join('&&'),
@@ -415,11 +415,11 @@ module.exports = function(grunt) {
         unzip: {
             'cordova-crosswalk-arm': {
                 src: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-arm.zip',
-                dest: '<%= globals.gelato.crosswalk.path %>'
+                dest: '<%= globals.gelato.cordova.crosswalk.path %>'
             },
             'cordova-crosswalk-x86': {
                 src: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-x86.zip',
-                dest: '<%= globals.gelato.crosswalk.path %>'
+                dest: '<%= globals.gelato.cordova.crosswalk.path %>'
             }
         }
     });
@@ -469,10 +469,14 @@ module.exports = function(grunt) {
      * TASK: install-cordova-android
      */
     grunt.registerTask('install-cordova-android', function() {
-        if (!gelato.project.cordova.isInstalled()) {
+        if (!grunt.file.isFile(globals.project.cordova.path + '/config.xml')) {
             grunt.task.run('install-cordova');
         }
-        if (gelato.crosswalk.isPacked()) {
+        //TODO: figure out a shorter way to call crosswalk file paths
+        if (!grunt.file.isFile(globals.gelato.cordova.crosswalk.path + '/crosswalk-cordova-' + globals.gelato.cordova.crosswalk.version + '-arm/VERSION')) {
+            grunt.task.run('unzip-cordova-crosswalk');
+        }
+        if (!grunt.file.isFile(globals.gelato.cordova.crosswalk.path + '/crosswalk-cordova-' + globals.gelato.cordova.crosswalk.version + '-x86/VERSION')) {
             grunt.task.run('unzip-cordova-crosswalk');
         }
         grunt.task.run([
@@ -489,7 +493,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('run-android', function() {
         grunt.task.run('build-project');
-        if (!gelato.project.cordova.android.isInstalled()) {
+        if (!grunt.file.isFile(globals.project.cordova.platforms.android.path + '/VERSION')) {
             grunt.task.run('install-cordova-android');
         }
         grunt.task.run([
