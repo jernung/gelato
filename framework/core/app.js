@@ -40,7 +40,7 @@ app = (function() {
             async: 'core/libraries/async-0.9.2',
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
-            bootstrap: 'core/libraries/bootstrap-3.3.1',
+            bootstrap: 'core/libraries/bootstrap-3.3.2',
             'createjs.easel': 'core/libraries/createjs.easel-0.8.0',
             'createjs.preload': 'core/libraries/createjs.preload-0.6.0',
             'createjs.sound': 'core/libraries/createjs.sound-0.6.0',
