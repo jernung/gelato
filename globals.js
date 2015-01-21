@@ -62,6 +62,9 @@ module.exports = {
                 path: projectPath + '/cordova/www'
             }
         },
+        gelato: {
+            path: projectPath + '/gelato'
+        },
         path: projectPath,
         pkg: projectPkg,
         src: {

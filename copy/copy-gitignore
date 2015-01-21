@@ -2,6 +2,7 @@
 .idea/
 .sass-cache/
 cordova/
+gelato/
 node_modules/
 nbproject/
 projects/

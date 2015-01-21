@@ -78,9 +78,15 @@ module.exports = function(grunt) {
                 ],
                 options: {force: true}
             },
+            'project-gelato': {
+                src: [
+                    '<%= globals.project.gelato.path %>/**/*'
+                ],
+                options: {force: true}
+            },
             'project-www': {
                 src: [
-                    '<%= globals.project.path %>/www/**/*'
+                    '<%= globals.project.www.path %>/**/*'
                 ],
                 options: {force: true}
             }
@@ -155,6 +161,16 @@ module.exports = function(grunt) {
                     },
                 ]
             },
+            'project-gelato': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= globals.gelato.framework.path %>',
+                        src: ['core/**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
+                        dest: '<%= globals.project.gelato.path %>'
+                    }
+                ]
+            },
             'project-www': {
                 files: [
                     {
@@ -172,7 +188,6 @@ module.exports = function(grunt) {
                 ]
             },
             'structure': {
-                //TODO: copy required framework files into project
                 files: [
                     {
                         expand: true,
@@ -538,6 +553,16 @@ module.exports = function(grunt) {
     grunt.registerTask('run-web', function() {
         grunt.task.run([
             'connect:project-www'
+        ]);
+    });
+
+    /**
+     * TASK: update-gelato
+     */
+    grunt.registerTask('update-gelato', function() {
+        grunt.task.run([
+            'clean:project-gelato',
+            'copy:project-gelato'
         ]);
     });
 
