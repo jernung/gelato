@@ -6,7 +6,6 @@ crosswalkVersion = '10.39.235.16';
 gelatoPath = process.env.gelatoPath = process.env.gelatoPath || __dirname.toString();
 projectPath = process.env.projectPath = process.env.projectPath || process.cwd().toString();
 
-
 if (fs.existsSync(gelatoPath + '/package.json')) {
     gelatoPkg = require(gelatoPath + '/package.json');
 } else {
@@ -14,16 +13,13 @@ if (fs.existsSync(gelatoPath + '/package.json')) {
     process.exit(1);
 }
 
-
 if (fs.existsSync(projectPath + '/package.json')) {
     projectPkg = require(projectPath + '/package.json');
 } else {
     projectPkg = {}
 }
 
-
 shell.cd(gelatoPath);
-
 
 module.exports = {
     gelato: {

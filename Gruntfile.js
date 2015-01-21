@@ -1,12 +1,13 @@
 var globals = require('./globals.js');
+var reload = require('./reload.js');
 
 module.exports = function(grunt) {
 
     /**
-     * @property option
+     * @property options
      * @type Object
      */
-    var option = {
+    var options = {
         appname: grunt.option('appname'),
         architecture: grunt.option('architecture') === undefined ? 'arm' : grunt.option('architecture'),
         hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
@@ -41,7 +42,7 @@ module.exports = function(grunt) {
         /**
          * OPTIONS
          */
-        option: option,
+        options: options,
         /**
          * CLEAN
          */
@@ -121,13 +122,13 @@ module.exports = function(grunt) {
             'project-www': {
                 options: {
                     base: '<%= globals.project.www.path %>',
-                    hostname: '<%= option.hostname %>',
+                    hostname: '<%= options.hostname %>',
                     keepalive: true,
                     open: {
-                        appName: '<%= option.appname %>'
+                        appName: '<%= options.appname %>'
                     },
-                    port: '<%= option.port %>',
-                    protocol: '<%= option.protocol %>'
+                    port: '<%= options.port %>',
+                    protocol: '<%= options.protocol %>'
                 }
             }
         },
@@ -149,13 +150,13 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-' + option.architecture + '/framework',
+                        cwd: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-<%= options.architecture %>/framework',
                         src: ['**/*'],
                         dest: '<%= globals.project.cordova.platforms.android.cordovalib.path %>'
                     },
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-' + option.architecture,
+                        cwd: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-<%= options.architecture %>',
                         src: ['VERSION'],
                         dest: '<%= globals.project.cordova.platforms.android.path %>'
                     },
@@ -328,7 +329,7 @@ module.exports = function(grunt) {
             'structure': {
                 options: {
                     variables: {
-                        'project-name': '<%= globals.project.pkg.name %>'
+                        'project-name': '<%= options.name %>'
                     }
                 },
                 files: [
@@ -487,12 +488,14 @@ module.exports = function(grunt) {
      * TASK: create-project
      */
     grunt.registerTask('create-project', function() {
-        globals.project.pkg.name = option.name;
-        globals.project.path += '/' + option.name;
+        process.env.projectPath = globals.project.path + '/' + options.name;
+        globals = reload('./globals.js');
         grunt.file.mkdir(globals.project.path);
+        grunt.config.set('globals', globals);
         grunt.task.run([
             'copy:structure',
-            'replace:structure'
+            'replace:structure',
+            'install-gelato'
         ]);
     });
 
@@ -532,6 +535,16 @@ module.exports = function(grunt) {
     });
 
     /**
+     * TASK: install-gelato
+     */
+    grunt.registerTask('install-gelato', function() {
+        grunt.task.run([
+            'clean:project-gelato',
+            'copy:project-gelato'
+        ]);
+    });
+
+    /**
      * TASK: run-android
      */
     grunt.registerTask('run-android', function() {
@@ -553,16 +566,6 @@ module.exports = function(grunt) {
     grunt.registerTask('run-web', function() {
         grunt.task.run([
             'connect:project-www'
-        ]);
-    });
-
-    /**
-     * TASK: update-gelato
-     */
-    grunt.registerTask('update-gelato', function() {
-        grunt.task.run([
-            'clean:project-gelato',
-            'copy:project-gelato'
         ]);
     });
 

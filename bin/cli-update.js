@@ -7,7 +7,7 @@ var shell = require('shelljs');
 program.parse(process.argv);
 
 if (globals.project.pkg.type === 'gelato') {
-    shell.exec('grunt update-gelato');
+    shell.exec('grunt install-gelato');
 } else {
     console.log('Not a valid gelato project directory.');
     process.exit(1);
