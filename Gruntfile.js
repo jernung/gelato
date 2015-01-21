@@ -429,6 +429,26 @@ module.exports = function(grunt) {
                 src: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-x86.zip',
                 dest: '<%= globals.gelato.cordova.crosswalk.path %>'
             }
+        },
+        /**
+         * WATCH
+         */
+        watch: {
+            'project-src': {
+                files: [
+                    '<%= globals.project.path %>/**/*.coffee',
+                    '<%= globals.project.path %>/**/*.css',
+                    '<%= globals.project.path %>/**/*.html',
+                    '<%= globals.project.path %>/**/*.jade',
+                    '<%= globals.project.path %>/**/*.js',
+                    '<%= globals.project.path %>/**/*.jsx',
+                    '<%= globals.project.path %>/**/*.scss'
+                ],
+                tasks: ['build-project'],
+                options: {
+                    spawn: false
+                }
+            }
         }
     });
 
@@ -539,6 +559,15 @@ module.exports = function(grunt) {
         grunt.task.run([
             'csslint:project-www',
             'jshint:project-www'
+        ]);
+    });
+
+    /**
+     * TASK: validate
+     */
+    grunt.registerTask('watch-project', function() {
+        grunt.task.run([
+            'watch:project-src'
         ]);
     });
 

@@ -8,6 +8,7 @@ program
     .command('build', 'build current project')
     .command('create [project]', 'create a new project')
     .command('run [platform]', 'run a project')
+    .command('watch', 'watch project for build changes')
     .parse(process.argv);
 
 if (!program.args.length) {
