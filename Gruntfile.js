@@ -398,6 +398,14 @@ module.exports = function(grunt) {
                     stderr: true
                 }
             },
+            'kill-adb': {
+                command: 'taskkill /F /IM adb.exe',
+                options: {
+                    failOnError: false,
+                    stderr: true,
+                    stdout: true
+                }
+            },
             'run-cordova-android': {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
@@ -499,7 +507,8 @@ module.exports = function(grunt) {
         grunt.task.run([
             'clean:cordova-www',
             'copy:cordova-www',
-            'shell:run-cordova-android'
+            'shell:run-cordova-android',
+            'shell:kill-adb'
         ]);
     });
 

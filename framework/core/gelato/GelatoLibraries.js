@@ -11,10 +11,7 @@ define([
     'backbone',
     'backbone.routefilter',
     'bootstrap',
-    'createjs.easel',
-    'createjs.preload',
-    'createjs.sound',
-    'createjs.tween',
+
     'jasmine',
     'jasmine.html',
     'jquery',
