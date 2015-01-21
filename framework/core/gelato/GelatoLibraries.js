@@ -11,12 +11,12 @@ define([
     'backbone',
     'backbone.routefilter',
     'bootstrap',
-
     'jasmine',
     'jasmine.html',
     'jquery',
     'jquery.mobile',
     'jquery.notify',
+    'jquery.ui',
     'modernizr',
     'moment.timezone',
     'require.i18n',

@@ -48,6 +48,7 @@ app = (function() {
             jquery: 'core/libraries/jquery-2.1.3',
             'jquery.mobile': 'core/libraries/jquery.mobile-1.4.5',
             'jquery.notify': 'core/libraries/jquery.notify-0.3.1',
+            'jquery.ui': 'core/libraries/jquery.ui-1.11.2',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.9.0',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
@@ -64,6 +65,7 @@ app = (function() {
             'jasmine.html': ['jasmine'],
             'jquery.mobile': ['jquery'],
             'jquery.notify': ['jquery'],
+            'jquery.ui': ['jquery'],
             'moment.timezones': ['moment']
         }
     };
