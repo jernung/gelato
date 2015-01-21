@@ -1,9 +1,8 @@
 #!/usr/bin/env node
 
-var gelato = require('../gelato.js');
+var globals = require('../globals.js');
 var program = require('commander');
 var shell = require('shelljs');
-var settings = gelato.load().getSettings();
 
 program
     .option('--appname [value]', 'specify web browser to open')
@@ -12,7 +11,7 @@ program
     .option('--protocol [value]', 'set server protocol type [http]', 'http')
     .parse(process.argv);
 
-if (settings.project.type === 'gelato') {
+if (globals.project.pkg.type === 'gelato') {
     var cmd = [];
     switch (program.args[0]) {
         case 'android':
