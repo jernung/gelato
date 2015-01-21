@@ -12,7 +12,6 @@
     "type": "git",
     "url": "https://github.com/jernung/gelato-framework"
   },
-
   "bin": {
     "gelato": "bin/cli.js"
   },
