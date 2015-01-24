@@ -30,7 +30,7 @@
     "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-sass": "0.8.1",
     "grunt-contrib-watch": "0.6.1",
-    "grunt-contrib-yuidoc": "0.6.0",
+    "grunt-contrib-yuidoc": "0.7.0",
     "grunt-react": "0.10.0",
     "grunt-replace": "0.8.0",
     "grunt-shell": "1.1.1",
