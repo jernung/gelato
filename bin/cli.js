@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-console.log('starting cli');
-
 var argv = require('minimist')(process.argv.slice(2));
 var globals = require('./globals.js');
 var fs = require('fs');

@@ -3,7 +3,7 @@ var fs = require('fs');
 var shell = require('shelljs');
 
 crosswalkVersion = '10.39.235.16';
-gelatoPath = process.env.gelatoPath = process.env.gelatoPath || __dirname.toString();
+gelatoPath = process.env.gelatoPath = process.env.gelatoPath || __dirname.toString().replace('\\dir', '');
 projectPath = process.env.projectPath = process.env.projectPath || process.cwd().toString();
 
 if (fs.existsSync(gelatoPath + '/package.json')) {
