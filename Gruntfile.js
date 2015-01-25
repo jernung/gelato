@@ -1,5 +1,5 @@
-var globals = require('./globals.js');
-var reload = require('./reload.js');
+var globals = require('./bin/globals.js');
+var reload = require('./bin/reload.js');
 
 module.exports = function(grunt) {
 
