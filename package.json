@@ -13,10 +13,9 @@
     "url": "https://github.com/jernung/gelato-framework"
   },
   "bin": {
-    "gelato": "bin/cli.js"
+    "gelato": "./bin/cli.js"
   },
   "dependencies": {
-    "commander": "2.6.0",
     "grunt": "0.4.5",
     "grunt-contrib-clean": "0.6.0",
     "grunt-contrib-coffee": "0.12.0",
@@ -35,6 +34,7 @@
     "grunt-replace": "0.8.0",
     "grunt-shell": "1.1.1",
     "grunt-zip": "0.16.2",
+    "minimist": "1.1.0",
     "shelljs": "0.3.0"
   }
 }
