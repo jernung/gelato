@@ -3,17 +3,15 @@ var fs = require('fs');
 var shell = require('shelljs');
 
 crosswalkVersion = '10.39.235.16';
-gelatoPath = process.env.gelatoPath = process.env.gelatoPath || __dirname.toString();
+gelatoPath = process.env.gelatoPath = process.env.gelatoPath || __dirname.toString().replace('\\bin', '');
 projectPath = process.env.projectPath = process.env.projectPath || process.cwd().toString();
-
 
 if (fs.existsSync(gelatoPath + '/package.json')) {
     gelatoPkg = require(gelatoPath + '/package.json');
 } else {
-    console.log('Unable to load gelato package file.', error.code);
+    console.log('Unable to load framework package file.');
     process.exit(1);
 }
-
 
 if (fs.existsSync(projectPath + '/package.json')) {
     projectPkg = require(projectPath + '/package.json');
@@ -21,9 +19,7 @@ if (fs.existsSync(projectPath + '/package.json')) {
     projectPkg = {}
 }
 
-
 shell.cd(gelatoPath);
-
 
 module.exports = {
     gelato: {
@@ -61,6 +57,9 @@ module.exports = {
             www: {
                 path: projectPath + '/cordova/www'
             }
+        },
+        gelato: {
+            path: projectPath + '/gelato'
         },
         path: projectPath,
         pkg: projectPkg,
