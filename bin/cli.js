@@ -35,6 +35,18 @@ if (argv['_'][0] === 'create') {
 }
 
 /**
+ * DOCS
+ */
+if (argv['_'][0] === 'docs') {
+    if (globals.project.pkg.type === 'gelato') {
+        shell.exec('grunt docs');
+    } else {
+        console.log('Not a valid gelato project directory.');
+        process.exit(1);
+    }
+}
+
+/**
  * RUN
  */
 if (argv['_'][0] === 'run') {
@@ -91,4 +103,12 @@ if (argv['_'][0] === 'watch') {
         console.log('Not a valid gelato project directory.');
         process.exit(1);
     }
+}
+
+/**
+ * OPTION: VERSION
+ */
+if (argv.version) {
+    console.log(globals.gelato.pkg.version);
+    process.exit(0);
 }

@@ -3,7 +3,7 @@ var fs = require('fs');
 var shell = require('shelljs');
 
 crosswalkVersion = '10.39.235.16';
-gelatoPath = process.env.gelatoPath = process.env.gelatoPath || __dirname.toString().replace('\\bin', '');
+gelatoPath = process.env.gelatoPath = process.env.gelatoPath || __dirname.toString().slice(0, -4);
 projectPath = process.env.projectPath = process.env.projectPath || process.cwd().toString();
 
 if (fs.existsSync(gelatoPath + '/package.json')) {
@@ -44,6 +44,9 @@ module.exports = {
     },
     project: {
         cordova: {
+            docs: {
+                path: projectPath + '/docs'
+            },
             path: projectPath + '/cordova',
             platforms: {
                 android: {
