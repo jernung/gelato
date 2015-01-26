@@ -104,3 +104,11 @@ if (argv['_'][0] === 'watch') {
         process.exit(1);
     }
 }
+
+/**
+ * OPTION: VERSION
+ */
+if (argv.version) {
+    console.log(globals.gelato.pkg.version);
+    process.exit(0);
+}
