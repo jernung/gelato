@@ -9,7 +9,7 @@ projectPath = process.env.projectPath = process.env.projectPath || process.cwd()
 if (fs.existsSync(gelatoPath + '/package.json')) {
     gelatoPkg = require(gelatoPath + '/package.json');
 } else {
-    console.log('Unable to load gelato package file.', error.code);
+    console.log('Unable to load framework package file.');
     process.exit(1);
 }
 
