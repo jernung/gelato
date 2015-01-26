@@ -35,6 +35,18 @@ if (argv['_'][0] === 'create') {
 }
 
 /**
+ * DOCS
+ */
+if (argv['_'][0] === 'docs') {
+    if (globals.project.pkg.type === 'gelato') {
+        shell.exec('grunt docs');
+    } else {
+        console.log('Not a valid gelato project directory.');
+        process.exit(1);
+    }
+}
+
+/**
  * RUN
  */
 if (argv['_'][0] === 'run') {

@@ -44,6 +44,9 @@ module.exports = {
     },
     project: {
         cordova: {
+            docs: {
+                path: projectPath + '/docs'
+            },
             path: projectPath + '/cordova',
             platforms: {
                 android: {

@@ -79,6 +79,12 @@ module.exports = function(grunt) {
                 ],
                 options: {force: true}
             },
+            'docs': {
+                src: [
+                    '<%= globals.project.docs.path %>'
+                ],
+                options: {force: true}
+            },
             'project-gelato': {
                 src: [
                     '<%= globals.project.gelato.path %>/**/*'
@@ -465,6 +471,21 @@ module.exports = function(grunt) {
                     spawn: false
                 }
             }
+        },
+        /**
+         * YUIDOC
+         */
+        yuidoc: {
+            'default': {
+                name: '<%= globals.project.pkg.name %>',
+                description: '<%= globals.project.pkg.description %>',
+                version: '<%= globals.project.pkg.version %>',
+                options: {
+                    paths: ['<%= globals.gelato.framework.path %>', '<%= globals.project.src.path %>'],
+                    themedir: '<%= globals.project.src.path %>/yuidoc',
+                    outdir: '<%= globals.project.docs.path %>'
+                }
+            }
         }
     });
 
@@ -496,6 +517,16 @@ module.exports = function(grunt) {
             'copy:structure',
             'replace:structure',
             'install-gelato'
+        ]);
+    });
+
+    /**
+     * TASK: docs
+     */
+    grunt.registerTask('docs', function() {
+        grunt.task.run([
+            'clean:docs',
+            'yuidoc:default'
         ]);
     });
 
