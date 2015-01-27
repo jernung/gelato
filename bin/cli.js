@@ -52,7 +52,7 @@ if (argv['_'][0] === 'docs') {
 if (argv['_'][0] === 'run') {
     if (globals.project.pkg.type === 'gelato') {
         var cmd = [];
-        switch (argv['_'][0]) {
+        switch (argv['_'][1]) {
             case 'android':
                 cmd.push('grunt run-android');
                 break;
