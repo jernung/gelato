@@ -199,10 +199,18 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.gelato.copy.path %>/',
-                        src: ['copy-gitignore', 'copy-htaccess', 'copy-package', 'copy-readme'],
+                        src: [
+                            'copy-gitattributes',
+                            'copy-gitignore',
+                            'copy-htaccess',
+                            'copy-package',
+                            'copy-readme'
+                        ],
                         dest: '<%= globals.project.path %>',
                         rename: function(dest, src) {
                             switch (src) {
+                                case 'copy-gitattributes':
+                                    return dest + '/.gitattributes';
                                 case 'copy-gitignore':
                                     return dest + '/.gitignore';
                                 case 'copy-htaccess':
