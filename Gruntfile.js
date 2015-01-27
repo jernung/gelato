@@ -237,9 +237,7 @@ module.exports = function(grunt) {
                 },
                 src: [
                     '<%= globals.project.www.path %>/styles/**/*.css',
-                    '!<%= globals.project.www.path %>/styles/bootstrap.css',
-                    '!<%= globals.project.www.path %>/styles/bootstrap.switch.css',
-                    '!<%= globals.project.www.path %>/styles/font.awesome.css'
+                    '!<%= globals.project.www.path %>/styles/fonts.css'
                 ]
             }
         },
