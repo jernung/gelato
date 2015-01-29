@@ -41,7 +41,8 @@ app = (function() {
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
             bootstrap: 'core/libraries/bootstrap-3.3.2',
-            fastclick: 'core/libraries/fastclick-1.0.3',
+            'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
+            fastclick: 'core/libraries/fastclick-1.0.6',
             handlebars: 'core/libraries/handlebars-2.0.0',
             jasmine: 'core/libraries/jasmine-2.1.3',
             'jasmine.html': 'core/libraries/jasmine.html-2.1.3',
@@ -56,12 +57,13 @@ app = (function() {
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
             underscore: 'core/libraries/lodash.underscore-2.4.1',
-            webfont: 'core/libraries/webfontloader-1.5.13'
+            webfont: 'core/libraries/webfontloader-1.5.14'
         },
         shim: {
             backbone: ['jquery', 'underscore'],
             'backbone.routefilter': ['backbone'],
             bootstrap: ['jquery'],
+            'bootstrap.switch': ['bootstrap'],
             'jasmine.html': ['jasmine'],
             'jquery.mobile': ['jquery'],
             'jquery.notify': ['jquery'],
