@@ -111,6 +111,14 @@ app = (function() {
     }
 
     /**
+     * @method getHeight
+     * @returns {Number}
+     */
+    function getHeight() {
+        return $(window).height();
+    }
+
+    /**
      * @method getPushState
      * @returns {Boolean}
      */
@@ -133,6 +141,14 @@ app = (function() {
      */
     function getSetting(name) {
         return localStorage.getItem('application-' + name);
+    }
+
+    /**
+     * @method getWidth
+     * @returns {Number}
+     */
+    function getWidth() {
+        return $(window).width();
     }
 
     /**
@@ -193,9 +209,11 @@ app = (function() {
         config: config,
         fonts: fonts,
         framework: framework,
+        getHeight: getHeight,
         getPushState: getPushState,
         getRoot: getRoot,
         getSetting: getSetting,
+        getWidth: getWidth,
         isCordova: isCordova,
         isLocal: isLocal,
         mergeObjects: mergeObjects,
