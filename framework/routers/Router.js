@@ -18,8 +18,8 @@ define(['gelato/GelatoRouter', 'pages/Default'], function(GelatoRouter, DefaultP
          * @method showDefault
          */
         showDefault: function() {
-            this.active = new DefaultPage();
-            this.active.render();
+            this.activePage = new DefaultPage();
+            this.activePage.render();
         }
     });
 
