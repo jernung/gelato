@@ -388,7 +388,7 @@ module.exports = function(grunt) {
             'install-cordova': {
                 command: [
                     'cd <%= globals.project.path %>',
-                    'cordova create cordova <%= globals.project.pkg.packageName %> <%= globals.project.pkg.title %>'
+                    'cordova create cordova <%= globals.project.pkg.packageId %> "<%= globals.project.pkg.packageName %>"'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -552,6 +552,7 @@ module.exports = function(grunt) {
      * TASK: install-cordova-android
      */
     grunt.registerTask('install-cordova-android', function() {
+        //TODO: fix issue with crosswalk being unpacked twice on run
         if (!grunt.file.isFile(globals.project.cordova.path + '/config.xml')) {
             grunt.task.run('install-cordova');
         }

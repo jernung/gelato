@@ -2,7 +2,7 @@ define([], {
     root: {
         application: {
             description: '@@application-description',
-            title: '@@application-name'
+            title: '@@application-title'
         }
     }
 });
