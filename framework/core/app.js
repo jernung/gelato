@@ -185,6 +185,18 @@ app = (function() {
     }
 
     /**
+     * @method reload
+     */
+    function reload() {
+        if (app.router) {
+            app.router.navigate('');
+            location.reload(true);
+        } else {
+            location.href = '';
+        }
+    }
+
+    /**
      * @method removeSetting
      * @param {String} name
      */
@@ -217,6 +229,7 @@ app = (function() {
         isCordova: isCordova,
         isLocal: isLocal,
         mergeObjects: mergeObjects,
+        reload: reload,
         removeSetting: removeSetting,
         setSetting: setSetting
     };
