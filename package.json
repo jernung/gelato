@@ -1,5 +1,6 @@
 {
   "name": "gelato-framework",
+  "title": "Gelato Framework",
   "description": "A delectable mixture of mobile friendly libraries.",
   "preferGlobal": true,
   "author": {
