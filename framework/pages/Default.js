@@ -1,18 +1,32 @@
 /**
- * @module Framework
+ * @module Application
+ * @submodule Pages
  */
-define(['gelato/GelatoPage', 'require.text!templates/default.html'], function(GelatoPage, Template) {
+define([
+    'core/views/GelatoPage',
+    'core/components/GelatoNavbar',
+    'require.text!templates/default.html'
+], function(GelatoPage, GelatoNavbar, Template) {
+
     /**
      * @class DefaultView
      * @extends GelatoPage
      */
     var DefaultView = GelatoPage.extend({
         /**
+         * @method initialize
+         * @constructor
+         */
+        initialize: function() {
+            this.navbar = new GelatoNavbar();
+        },
+        /**
          * @method render
          * @returns {GelatoPage}
          */
         render: function() {
             this.renderTemplate(Template);
+            this.navbar.setElement(this.$('.gelato-navbar')).render();
             return this;
         }
     });

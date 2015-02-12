@@ -1,7 +1,9 @@
 /**
- * @module Framework
+ * @module Core
+ * @submodule Views
  */
 define([], function() {
+
     /**
      * @class GelatoView
      * @extends Backbone.View
@@ -13,8 +15,16 @@ define([], function() {
          * @returns {GelatoView}
          */
         renderTemplate: function(template) {
+            var self = this;
+            var resize = null;
             this.$el.html(Handlebars.compile(template)(app.strings));
             this.$('.navigate').on('vclick', this.handleNavigateClicked);
+            $(window).resize(function(event) {
+                clearTimeout(resize);
+                resize = setTimeout(function() {
+                    self.trigger('resize', event);
+                }, 100);
+            });
             return this;
         },
         /**
@@ -30,6 +40,17 @@ define([], function() {
                 replace: replace === undefined ? false : replace,
                 trigger: trigger === undefined ? true : trigger
             });
+        },
+        /**
+         * @method remove
+         * @returns {GelatoView}
+         */
+        remove: function() {
+            this.$el.empty();
+            this.$el.find('*').off();
+            this.stopListening();
+            $(window).off('resize');
+            return this;
         }
     });
 

@@ -1,7 +1,11 @@
 /**
- * @module Framework
+ * @module Core
+ * @submodule Views
  */
-define(['gelato/GelatoView'], function(GelatoView) {
+define([
+    'core/views/GelatoView'
+], function(GelatoView) {
+
     /**
      * @class GelatoPage
      * @extends GelatoView
@@ -17,14 +21,14 @@ define(['gelato/GelatoView'], function(GelatoView) {
          * @returns {Number}
          */
         getContentHeight: function() {
-            return this.$('.content').height();
+            return this.$('.gelato-content').height();
         },
         /**
          * @method getContentWidth
          * @returns {Number}
          */
         getContentWidth: function() {
-            return this.$('.content').width();
+            return this.$('.gelato-content').width();
         }
     });
 

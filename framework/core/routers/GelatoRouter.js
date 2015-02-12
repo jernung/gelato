@@ -1,20 +1,31 @@
 /**
- * @module Framework
+ * @module Core
+ * @submodule Routers
  */
 define([], function() {
+
     /**
      * @class GelatoRouter
      * @extends Backbone.Router
      */
     var GelatoRouter = Backbone.Router.extend({
         /**
+         * @property activePage
+         * @type GelatoPage
+         */
+        activePage: null,
+        /**
          * @method after
          */
-        after: function(route) {},
+        after: function() {},
         /**
          * @method before
          */
-        before: function(route) {},
+        before: function() {
+            if (this.activePage) {
+                this.activePage.remove();
+            }
+        },
         /**
          * @method start
          */

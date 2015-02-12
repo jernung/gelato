@@ -16,36 +16,25 @@ app = (function() {
     var config = {
         modules: [
             {
-                name: 'core/gelato/GelatoLibraries'
+                name: 'core/modules/GelatoLibraries'
             },
             {
-                name: 'core/gelato/GelatoSpecs'
+                name: 'core/tests/GelatoSpecs'
             },
             {
                 name: 'models/Application'
             }
         ],
         paths: {
-            //default directories
-            collections: 'collections',
-            components: 'components',
-            core: 'core',
-            gelato: 'core/gelato',
-            models: 'models',
-            modules: 'modules',
-            router: 'routers',
-            templates: 'templates',
-            views: 'views',
-            //framework libraries
             async: 'core/libraries/async-0.9.2',
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
             bootstrap: 'core/libraries/bootstrap-3.3.2',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
-            handlebars: 'core/libraries/handlebars-2.0.0',
-            jasmine: 'core/libraries/jasmine-2.1.3',
-            'jasmine.html': 'core/libraries/jasmine.html-2.1.3',
+            handlebars: 'core/libraries/handlebars-3.0.0',
+            jasmine: 'core/libraries/jasmine-2.2.0',
+            'jasmine.html': 'core/libraries/jasmine.html-2.2.0',
             jquery: 'core/libraries/jquery-2.1.3',
             'jquery.mobile': 'core/libraries/jquery.mobile-1.4.5',
             'jquery.notify': 'core/libraries/jquery.notify-0.3.1',
@@ -56,7 +45,7 @@ app = (function() {
             react: 'core/libraries/react-0.12.2',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
-            underscore: 'core/libraries/lodash.underscore-2.4.1',
+            underscore: 'core/libraries/lodash.compat-3.1.0',
             webfont: 'core/libraries/webfontloader-1.5.14'
         },
         shim: {
@@ -111,6 +100,14 @@ app = (function() {
     }
 
     /**
+     * @method getHeight
+     * @returns {Number}
+     */
+    function getHeight() {
+        return $(window).height();
+    }
+
+    /**
      * @method getPushState
      * @returns {Boolean}
      */
@@ -133,6 +130,14 @@ app = (function() {
      */
     function getSetting(name) {
         return localStorage.getItem('application-' + name);
+    }
+
+    /**
+     * @method getWidth
+     * @returns {Number}
+     */
+    function getWidth() {
+        return $(window).width();
     }
 
     /**
@@ -169,6 +174,18 @@ app = (function() {
     }
 
     /**
+     * @method reload
+     */
+    function reload() {
+        if (app.router) {
+            app.router.navigate('');
+            location.reload(true);
+        } else {
+            location.href = '';
+        }
+    }
+
+    /**
      * @method removeSetting
      * @param {String} name
      */
@@ -193,12 +210,15 @@ app = (function() {
         config: config,
         fonts: fonts,
         framework: framework,
+        getHeight: getHeight,
         getPushState: getPushState,
         getRoot: getRoot,
         getSetting: getSetting,
+        getWidth: getWidth,
         isCordova: isCordova,
         isLocal: isLocal,
         mergeObjects: mergeObjects,
+        reload: reload,
         removeSetting: removeSetting,
         setSetting: setSetting
     };

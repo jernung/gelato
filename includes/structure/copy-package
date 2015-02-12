@@ -1,0 +1,11 @@
+{
+    "name": "@@project-name",
+    "title": "@@project-name",
+    "description": "A default template for getting started with Gelato.",
+    "version": "0.0.1",
+    "type": "gelato",
+    "license": "MIT",
+    "packageId": "com.gelato.@@project-name",
+    "packageName": "@@project-name",
+    "packageVersion": "1"
+}

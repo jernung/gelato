@@ -67,9 +67,9 @@ module.exports = function(grunt) {
             },
             'cordova-crosswalk': {
                 src: [
-                    '<%= globals.gelato.cordova.crosswalk.path %>/**/*',
-                    '!<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-arm.zip',
-                    '!<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-x86.zip'
+                    '<%= globals.gelato.includes.crosswalk.path %>/**/*',
+                    '!<%= globals.gelato.includes.crosswalk.arm.path %>.zip',
+                    '!<%= globals.gelato.includes.crosswalk.x86.path %>.zip'
                 ],
                 options: {force: true}
             },
@@ -156,13 +156,13 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-<%= options.architecture %>/framework',
+                        cwd: '<%= globals.gelato.includes.crosswalk.base.path %>-<%= options.architecture %>/framework',
                         src: ['**/*'],
                         dest: '<%= globals.project.cordova.platforms.android.cordovalib.path %>'
                     },
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-<%= options.architecture %>',
+                        cwd: '<%= globals.gelato.includes.crosswalk.base.path %>-<%= options.architecture %>',
                         src: ['VERSION'],
                         dest: '<%= globals.project.cordova.platforms.android.path %>'
                     },
@@ -198,7 +198,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.copy.path %>/',
+                        cwd: '<%= globals.gelato.includes.structure.path %>/',
                         src: [
                             'copy-gitattributes',
                             'copy-gitignore',
@@ -388,7 +388,7 @@ module.exports = function(grunt) {
             'install-cordova': {
                 command: [
                     'cd <%= globals.project.path %>',
-                    'cordova create cordova <%= globals.project.pkg.packageName %> <%= globals.project.pkg.title %>'
+                    'cordova create cordova <%= globals.project.pkg.packageId %> "<%= globals.project.pkg.packageName %>"'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -419,7 +419,7 @@ module.exports = function(grunt) {
             'install-cordova-plugins': {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
-                    'cordova plugin add <%= globals.gelato.cordova.plugins.path %>/gelato-core'
+                    'cordova plugin add <%= globals.gelato.includes.plugins.path %>/gelato-core'
                 ].join('&&'),
                 options: {
                     stdout: true,
@@ -450,12 +450,12 @@ module.exports = function(grunt) {
          */
         unzip: {
             'cordova-crosswalk-arm': {
-                src: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-arm.zip',
-                dest: '<%= globals.gelato.cordova.crosswalk.path %>'
+                src: '<%= globals.gelato.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.includes.crosswalk.version %>-arm.zip',
+                dest: '<%= globals.gelato.includes.crosswalk.path %>'
             },
             'cordova-crosswalk-x86': {
-                src: '<%= globals.gelato.cordova.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.cordova.crosswalk.version %>-x86.zip',
-                dest: '<%= globals.gelato.cordova.crosswalk.path %>'
+                src: '<%= globals.gelato.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.includes.crosswalk.version %>-x86.zip',
+                dest: '<%= globals.gelato.includes.crosswalk.path %>'
             }
         },
         /**
@@ -555,11 +555,10 @@ module.exports = function(grunt) {
         if (!grunt.file.isFile(globals.project.cordova.path + '/config.xml')) {
             grunt.task.run('install-cordova');
         }
-        //TODO: figure out a shorter way to call crosswalk file paths
-        if (!grunt.file.isFile(globals.gelato.cordova.crosswalk.path + '/crosswalk-cordova-' + globals.gelato.cordova.crosswalk.version + '-arm/VERSION')) {
+        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.arm.path + '/VERSION')) {
             grunt.task.run('unzip-cordova-crosswalk');
         }
-        if (!grunt.file.isFile(globals.gelato.cordova.crosswalk.path + '/crosswalk-cordova-' + globals.gelato.cordova.crosswalk.version + '-x86/VERSION')) {
+        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.x86.path + '/VERSION')) {
             grunt.task.run('unzip-cordova-crosswalk');
         }
         grunt.task.run([
