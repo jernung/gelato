@@ -3,8 +3,8 @@
  * @submodule Models
  */
 define([
-    'core/models/GelatoApplication',
-    'routers/Router',
+    'core/modules/GelatoApplication',
+    'modules/routers/Router',
     'require.i18n!locale/nls/strings'
 ], function(GelatoApplication, Router, Strings) {
 

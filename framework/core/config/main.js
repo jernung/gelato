@@ -8,7 +8,7 @@
                 });
             } else {
                 console.log('LOADING:', 'application');
-                requirejs(['models/Application'], function(Application) {
+                requirejs(['modules/Application'], function(Application) {
                     FastClick.attach(document.body);
                     window.app = $.extend(true, new Application(), app);
                     window.app.router.start();

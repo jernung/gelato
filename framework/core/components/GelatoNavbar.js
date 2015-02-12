@@ -3,9 +3,9 @@
  * @submodule Components
  */
 define([
-    'core/views/GelatoView',
-    'require.text!core/templates/gelato-navbar.html'
-], function(GelatoView, Template) {
+    'require.text!../../templates/gelato-navbar.html',
+    '../modules/GelatoView'
+], function(Template, GelatoView) {
 
     /**
      * @class GelatoNavbar

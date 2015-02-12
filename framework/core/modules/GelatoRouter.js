@@ -1,6 +1,5 @@
 /**
  * @module Core
- * @submodule Routers
  */
 define([], function() {
 

@@ -3,10 +3,10 @@
  * @submodule Pages
  */
 define([
-    'core/views/GelatoPage',
-    'core/components/GelatoNavbar',
-    'require.text!templates/default.html'
-], function(GelatoPage, GelatoNavbar, Template) {
+    'require.text!templates/default.html',
+    'core/modules/GelatoPage',
+    'core/components/GelatoNavbar'
+], function(Template, GelatoPage, GelatoNavbar) {
 
     /**
      * @class DefaultView

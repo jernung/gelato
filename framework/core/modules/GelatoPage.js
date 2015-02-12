@@ -1,9 +1,8 @@
 /**
  * @module Core
- * @submodule Views
  */
 define([
-    'core/views/GelatoView'
+    'core/modules/GelatoView'
 ], function(GelatoView) {
 
     /**

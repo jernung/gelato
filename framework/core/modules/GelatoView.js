@@ -1,6 +1,5 @@
 /**
  * @module Core
- * @submodule Views
  */
 define([], function() {
 

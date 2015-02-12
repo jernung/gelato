@@ -3,8 +3,8 @@
  * @submodule Routers
  */
 define([
-    'core/routers/GelatoRouter',
-    'pages/Default'
+    'core/modules/GelatoRouter',
+    'modules/pages/Default'
 ], function(GelatoRouter, DefaultPage) {
 
     /**

@@ -19,13 +19,14 @@ app = (function() {
                 name: 'core/modules/GelatoLibraries'
             },
             {
-                name: 'core/tests/GelatoSpecs'
+                name: 'core/modules/GelatoTests'
             },
             {
-                name: 'models/Application'
+                name: 'modules/models/Application'
             }
         ],
         paths: {
+            //framework libraries
             async: 'core/libraries/async-0.9.2',
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
@@ -49,6 +50,7 @@ app = (function() {
             webfont: 'core/libraries/webfontloader-1.5.14'
         },
         shim: {
+            //framework shims
             backbone: ['jquery', 'underscore'],
             'backbone.routefilter': ['backbone'],
             bootstrap: ['jquery'],
