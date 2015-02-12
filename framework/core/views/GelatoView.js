@@ -1,7 +1,9 @@
 /**
- * @module Framework
+ * @module Core
+ * @submodule Views
  */
 define([], function() {
+
     /**
      * @class GelatoView
      * @extends Backbone.View

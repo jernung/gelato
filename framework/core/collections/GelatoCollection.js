@@ -1,5 +1,6 @@
 /**
- * @module Framework
+ * @module Core
+ * @submodule Collections
  */
 define([], function() {
     /**

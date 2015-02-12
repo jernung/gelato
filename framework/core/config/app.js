@@ -16,27 +16,16 @@ app = (function() {
     var config = {
         modules: [
             {
-                name: 'core/gelato/GelatoLibraries'
+                name: 'core/modules/GelatoLibraries'
             },
             {
-                name: 'core/gelato/GelatoSpecs'
+                name: 'core/tests/GelatoSpecs'
             },
             {
                 name: 'models/Application'
             }
         ],
         paths: {
-            //default directories
-            collections: 'collections',
-            components: 'components',
-            core: 'core',
-            gelato: 'core/gelato',
-            models: 'models',
-            modules: 'modules',
-            router: 'routers',
-            templates: 'templates',
-            views: 'views',
-            //framework libraries
             async: 'core/libraries/async-0.9.2',
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',

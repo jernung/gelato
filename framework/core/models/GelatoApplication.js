@@ -1,9 +1,11 @@
 /**
- * @module Framework
+ * @module Core
+ * @submodule Models
  */
 define([], function() {
+
     /**
-     * @class GelatoModel
+     * @class GelatoApplication
      * @extends Backbone.Model
      */
     var GelatoModel = Backbone.Model.extend({});

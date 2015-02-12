@@ -1,7 +1,9 @@
 /**
- * @module Framework
+ * @module Core
+ * @submodule Routers
  */
 define([], function() {
+
     /**
      * @class GelatoRouter
      * @extends Backbone.Router

@@ -1,9 +1,9 @@
 (function() {
 
     function loadApplication() {
-        requirejs(['Libraries'], function() {
+        requirejs(['modules/Libraries'], function() {
             if (location.pathname.indexOf('tests.html') > -1) {
-                requirejs(['gelato/GelatoJasmine', 'gelato/GelatoSpecs'], function(Jasmine) {
+                requirejs(['core/modules/GelatoJasmine', 'core/modules/GelatoTests'], function(Jasmine) {
                     Jasmine.start();
                 });
             } else {
@@ -19,7 +19,7 @@
 
     function loadCoreLibraries() {
         console.log('LOADING:', 'core libraries');
-        requirejs(['gelato/GelatoLibraries'], function() {
+        requirejs(['core/modules/GelatoLibraries'], function() {
             if (app.isCordova()) {
                 requirejs(['cordova'], function() {
                     document.addEventListener('deviceready', loadFonts, false);
