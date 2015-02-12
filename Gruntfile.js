@@ -68,8 +68,8 @@ module.exports = function(grunt) {
             'cordova-crosswalk': {
                 src: [
                     '<%= globals.gelato.includes.crosswalk.path %>/**/*',
-                    '!<%= globals.gelato.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.includes.crosswalk.version %>-arm.zip',
-                    '!<%= globals.gelato.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.includes.crosswalk.version %>-x86.zip'
+                    '!<%= globals.gelato.includes.crosswalk.arm.path %>.zip',
+                    '!<%= globals.gelato.includes.crosswalk.x86.path %>.zip'
                 ],
                 options: {force: true}
             },
@@ -156,13 +156,13 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.includes.crosswalk.version %>-<%= options.architecture %>/framework',
+                        cwd: '<%= globals.gelato.includes.crosswalk.base.path %>-<%= options.architecture %>/framework',
                         src: ['**/*'],
                         dest: '<%= globals.project.cordova.platforms.android.cordovalib.path %>'
                     },
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.includes.crosswalk.version %>-<%= options.architecture %>',
+                        cwd: '<%= globals.gelato.includes.crosswalk.base.path %>-<%= options.architecture %>',
                         src: ['VERSION'],
                         dest: '<%= globals.project.cordova.platforms.android.path %>'
                     },
@@ -552,15 +552,13 @@ module.exports = function(grunt) {
      * TASK: install-cordova-android
      */
     grunt.registerTask('install-cordova-android', function() {
-        //TODO: fix issue with crosswalk being unpacked twice on run
         if (!grunt.file.isFile(globals.project.cordova.path + '/config.xml')) {
             grunt.task.run('install-cordova');
         }
-        //TODO: figure out a shorter way to call crosswalk file paths
-        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.path + '/crosswalk-cordova-' + globals.gelato.includes.crosswalk.version + '-arm/VERSION')) {
+        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.arm.path + '/VERSION')) {
             grunt.task.run('unzip-cordova-crosswalk');
         }
-        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.path + '/crosswalk-cordova-' + globals.gelato.includes.crosswalk.version + '-x86/VERSION')) {
+        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.x86.path + '/VERSION')) {
             grunt.task.run('unzip-cordova-crosswalk');
         }
         grunt.task.run([

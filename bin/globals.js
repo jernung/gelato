@@ -28,8 +28,17 @@ module.exports = {
         },
         includes: {
             crosswalk: {
+                arm: {
+                    path: gelatoPath + '/includes/crosswalk/crosswalk-cordova-' + crosswalkVersion + '-arm'
+                },
+                base: {
+                    path: gelatoPath + '/includes/crosswalk/crosswalk-cordova-' + crosswalkVersion
+                },
                 path: gelatoPath + '/includes/crosswalk',
-                version: crosswalkVersion
+                version: crosswalkVersion,
+                x86: {
+                    path: gelatoPath + '/includes/crosswalk/crosswalk-cordova-' + crosswalkVersion + '-x86'
+                }
             },
             path: gelatoPath + '/includes',
             plugins: {
