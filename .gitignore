@@ -1,7 +1,8 @@
 # Directories #
 .idea/
 .sass-cache/
-cordova/crosswalk/**/
+cordova/
+includes/crosswalk/**/
 node_modules/
 nbproject/
 projects/

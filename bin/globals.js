@@ -23,21 +23,21 @@ shell.cd(gelatoPath);
 
 module.exports = {
     gelato: {
-        copy: {
-            path: gelatoPath + '/copy'
-        },
-        cordova: {
-            crosswalk: {
-                path: gelatoPath + '/cordova/crosswalk',
-                version: crosswalkVersion
-            },
-            path: gelatoPath + '/cordova',
-            plugins: {
-                path: gelatoPath + '/cordova/plugins'
-            }
-        },
         framework: {
             path: gelatoPath + '/framework'
+        },
+        includes: {
+            crosswalk: {
+                path: gelatoPath + '/includes/crosswalk',
+                version: crosswalkVersion
+            },
+            path: gelatoPath + '/includes',
+            plugins: {
+                path: gelatoPath + '/includes/plugins'
+            },
+            structure: {
+                path: gelatoPath + '/includes/structure'
+            }
         },
         path: gelatoPath,
         pkg: gelatoPkg

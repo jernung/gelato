@@ -9,6 +9,7 @@
   },
   "license": "MIT",
   "version": "0.0.11",
+  "type": "gelato",
   "repository": {
     "type": "git",
     "url": "https://github.com/jernung/gelato-framework"
