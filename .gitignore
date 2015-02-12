@@ -11,5 +11,5 @@ www/
 
 # Files #
 !README.md
-!cordova/crosswalk/*.zip
+!includes/crosswalk/*.zip
 npm-debug.log
