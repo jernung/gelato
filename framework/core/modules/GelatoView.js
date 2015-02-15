@@ -17,7 +17,7 @@ define([], function() {
             var self = this;
             var resize = null;
             this.$el.html(Handlebars.compile(template)(app.strings));
-            this.$('.navigate').on('vclick', this.handleNavigateClicked);
+            this.$('.navigate').on('vclick', $.proxy(this.handleNavigateClicked, this));
             $(window).resize(function(event) {
                 clearTimeout(resize);
                 resize = setTimeout(function() {

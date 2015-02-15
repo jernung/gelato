@@ -4,9 +4,8 @@
  */
 define([
     'require.text!templates/default.html',
-    'core/modules/GelatoPage',
-    'core/components/GelatoNavbar'
-], function(Template, GelatoPage, GelatoNavbar) {
+    'core/modules/GelatoPage'
+], function(Template, GelatoPage) {
 
     /**
      * @class DefaultView
@@ -17,16 +16,13 @@ define([
          * @method initialize
          * @constructor
          */
-        initialize: function() {
-            this.navbar = new GelatoNavbar();
-        },
+        initialize: function() {},
         /**
          * @method render
          * @returns {GelatoPage}
          */
         render: function() {
             this.renderTemplate(Template);
-            this.navbar.setElement(this.$('.gelato-navbar')).render();
             return this;
         }
     });

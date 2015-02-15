@@ -2,8 +2,9 @@
  * @module Core
  */
 define([
-    'core/modules/GelatoView'
-], function(GelatoView) {
+    'core/modules/GelatoView',
+    'core/modules/GelatoSidebar'
+], function(GelatoView, GelatoSidebar) {
 
     /**
      * @class GelatoPage
@@ -11,10 +12,27 @@ define([
      */
     var GelatoPage = GelatoView.extend({
         /**
+         * @method initialize
+         * @constructor
+         */
+        initialize: function() {
+            this.sidebar = null;
+        },
+        /**
          * @property el
          * @type String
          */
         el: '#application',
+        /**
+         * @method renderTemplate
+         * @param {String} template
+         * @returns {GelatoPage}
+         */
+        renderTemplate: function(template) {
+            GelatoView.prototype.renderTemplate.call(this, template);
+            this.sidebar = new GelatoSidebar({el: this.$el});
+            return this;
+        },
         /**
          * @method getContentHeight
          * @returns {Number}
@@ -28,6 +46,15 @@ define([
          */
         getContentWidth: function() {
             return this.$('.gelato-content').width();
+        },
+        /**
+         * @method remove
+         * @returns {GelatoPage}
+         */
+        remove: function() {
+            this.sidebar.remove();
+            GelatoView.prototype.remove.call(this);
+            return this;
         }
     });
 
