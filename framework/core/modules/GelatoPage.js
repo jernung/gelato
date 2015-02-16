@@ -45,6 +45,13 @@ define([
             return this;
         },
         /**
+         * @method getName
+         * @returns {String}
+         */
+        getName: function() {
+            return this.$('.gelato-page').attr('class').split(/\s/g)[1];
+        },
+        /**
          * @method remove
          * @returns {GelatoPage}
          */
