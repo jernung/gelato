@@ -4,6 +4,7 @@
 define([
     'core/modules/GelatoView'
 ], function(GelatoView) {
+    //TODO: improve swapping between different sidebars
 
     /**
      * @class GelatoSidebar
@@ -16,8 +17,9 @@ define([
          */
         initialize: function(options) {
             options = options === undefined ? {} : options;
-            this.defaultSpeed = options.speed === undefined ? 300 : options.speed;
-            this.element = options.name === undefined ? this.$('#sidebar-main') : this.$('#sidebar-' + options.name);
+            this.element = options.name === undefined ? $(this.$('.gelato-sidebar').get(0)) : this.$('#sidebar-' + options.name);
+            this.page = options.page;
+            this.speed = options.speed === undefined ? 300 : options.speed;
             if (this.isExpanded()) {
                 this.$('[data-sidebar]').addClass('active').focus();
             } else {
@@ -41,12 +43,29 @@ define([
             return this.element.hasClass('right') ? 'right' : 'left';
         },
         /**
+         * @method getName
+         * @returns {String}
+         */
+        getName: function() {
+            return this.element.get(0).id.replace('sidebar-', '');
+        },
+        /**
+         * @method getSpeed
+         * @returns {Number}
+         */
+        getSpeed: function() {
+            return this.speed;
+        },
+        /**
          * @method handleClickSidebarToggle
          * @param {Event} event
          */
         handleClickSidebarToggle: function(event) {
             event.preventDefault();
-            this.toggle($(event.currentTarget).data('speed'));
+            var name = $(event.currentTarget).data('sidebar');
+            var speed = $(event.currentTarget).data('speed');
+            this.swap(name);
+            this.toggle(speed);
         },
         /**
          * @method handleSwipeLeftSidebar
@@ -71,15 +90,21 @@ define([
         /**
          * @method hide
          * @param {Number} [speed]
+         * @param {Function} [callback]
          * @returns {GelatoSidebar}
          */
-        hide: function(speed) {
+        hide: function(speed, callback) {
             var self = this;
             this.element.addClass('collapsing');
             this.$('[data-sidebar]').removeClass('active').blur();
-            this.element.hide('slide', {direction: this.getDirection()}, speed || this.defaultSpeed, function() {
+            speed = speed === undefined ? this.speed : speed;
+            this.element.hide('slide', {direction: this.getDirection()}, speed, function() {
                 self.element.addClass('collapsed');
                 self.element.removeClass('collapsing expanded');
+                self.$('.gelato-content').css('opacity', 1);
+                if (typeof callback === 'function') {
+                    callback();
+                }
             });
             return this;
         },
@@ -100,15 +125,21 @@ define([
         /**
          * @method show
          * @param {Number} [speed]
+         * @param {Function} [callback]
          * @returns {GelatoSidebar}
          */
-        show: function(speed) {
+        show: function(speed, callback) {
             var self = this;
             this.element.addClass('expanding');
             this.$('[data-sidebar]').addClass('active').focus();
-            this.element.show('slide', {direction: this.getDirection()}, speed || this.defaultSpeed, function() {
+            this.$('.gelato-content').css('opacity', 0.3);
+            speed = speed === undefined ? this.speed : speed;
+            this.element.show('slide', {direction: this.getDirection()}, speed, function() {
                 self.element.addClass('expanded');
                 self.element.removeClass('collapsed expanding');
+                if (typeof callback === 'function') {
+                    callback();
+                }
             });
             return this;
         },
@@ -118,7 +149,10 @@ define([
          * @returns {GelatoSidebar}
          */
         swap: function(name) {
-            this.element = this.$('#sidebar-' + name) || this.$('#sidebar-main');
+            if (this.getName() !== name) {
+                this.hide(0);
+                this.element = this.$('#sidebar-' + name) || $(this.$('.gelato-sidebar').get(0));
+            }
             return this;
         },
         /**

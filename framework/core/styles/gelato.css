@@ -1,3 +1,10 @@
+/**
+9900: DIALOG
+9800: SIDEBAR
+9500: NAVBAR
+**/
+
+
 html, body {
     height: 100%;
     margin: 0;
@@ -5,7 +12,6 @@ html, body {
     position: relative;
     width: 100%;
 }
-
 .fill-parent {
     height: 100%;
     position: absolute;
@@ -21,8 +27,9 @@ html, body {
     -webkit-user-select: none;
 }
 
+
 /*** GELATO NAVBAR ***/
-.gelato-navbar { padding-top: 50px; }
+.gelato-navbar { z-index: 9500; }
 .gelato-navbar .navbar-toggle {
     background-color: transparent;
     float: left;
@@ -32,6 +39,21 @@ html, body {
 .gelato-navbar .navbar-toggle:hover { background-color: transparent; }
 .gelato-navbar .navbar-toggle:focus { background-color: transparent; }
 .gelato-navbar .navbar-toggle.active { background-color: #333333; }
+@media (min-width: 768px) {
+    .gelato-navbar .navbar-toggle {
+        display: block;
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+}
+
+
+/*** GELATO PAGE ***/
+.gelato-page {
+    height: 100%;
+    padding-top: 50px;
+}
+
 
 /*** GELATO SIDEBAR ***/
 .gelato-sidebar {
@@ -43,6 +65,7 @@ html, body {
     padding-top: 5px;
     position: fixed;
     width: 60%;
+    z-index: 9800;
 }
 .gelato-sidebar.collapsed { display: none; }
 .gelato-sidebar.expanded { display: block; }
