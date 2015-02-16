@@ -16,7 +16,9 @@ define([], function() {
         /**
          * @method after
          */
-        after: function() {},
+        after: function() {
+            console.log('PAGE:', this.activePage.getName());
+        },
         /**
          * @method before
          */
