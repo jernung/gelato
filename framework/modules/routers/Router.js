@@ -4,8 +4,9 @@
  */
 define([
     'core/modules/GelatoRouter',
-    'modules/pages/Default'
-], function(GelatoRouter, DefaultPage) {
+    'modules/pages/Default',
+    'modules/pages/Examples'
+], function(GelatoRouter, DefaultPage, ExamplesPage) {
 
     /**
      * @class Router
@@ -17,6 +18,7 @@ define([
          * @type Object
          */
         routes: {
+            'examples': 'showExamples',
             '*route': 'showDefault'
         },
         /**
@@ -24,6 +26,13 @@ define([
          */
         showDefault: function() {
             this.activePage = new DefaultPage();
+            this.activePage.render();
+        },
+        /**
+         * @method showExamples
+         */
+        showExamples: function() {
+            this.activePage = new ExamplesPage();
             this.activePage.render();
         }
     });
