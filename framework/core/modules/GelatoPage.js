@@ -3,8 +3,9 @@
  */
 define([
     'core/modules/GelatoView',
+    'core/modules/GelatoDialog',
     'core/modules/GelatoSidebar'
-], function(GelatoView, GelatoSidebar) {
+], function(GelatoView, GelatoDialog, GelatoSidebar) {
 
     /**
      * @class GelatoPage
@@ -12,17 +13,26 @@ define([
      */
     var GelatoPage = GelatoView.extend({
         /**
-         * @method initialize
-         * @constructor
-         */
-        initialize: function() {
-            this.sidebar = null;
-        },
-        /**
          * @property el
          * @type String
          */
         el: '#application',
+        /**
+         * @method renderDialog
+         * @returns {GelatoPage}
+         */
+        renderDialog: function() {
+            this.dialog = new GelatoDialog({el: this.$el, page: this});
+            return this;
+        },
+        /**
+         * @method renderSidebar
+         * @returns {GelatoPage}
+         */
+        renderSidebar: function() {
+            this.sidebar = new GelatoSidebar({el: this.$el, page: this});
+            return this;
+        },
         /**
          * @method renderTemplate
          * @param {String} template
@@ -30,22 +40,9 @@ define([
          */
         renderTemplate: function(template) {
             GelatoView.prototype.renderTemplate.call(this, template);
-            this.sidebar = new GelatoSidebar({el: this.$el});
+            this.renderDialog();
+            this.renderSidebar();
             return this;
-        },
-        /**
-         * @method getContentHeight
-         * @returns {Number}
-         */
-        getContentHeight: function() {
-            return this.$('.gelato-content').height();
-        },
-        /**
-         * @method getContentWidth
-         * @returns {Number}
-         */
-        getContentWidth: function() {
-            return this.$('.gelato-content').width();
         },
         /**
          * @method remove
