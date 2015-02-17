@@ -18,6 +18,11 @@ define([
          */
         el: '#application',
         /**
+         * @property title
+         * @type String
+         */
+        title: app.strings.application.title,
+        /**
          * @method renderDialog
          * @returns {GelatoPage}
          */

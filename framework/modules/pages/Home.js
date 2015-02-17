@@ -18,6 +18,11 @@ define([
          */
         initialize: function() {},
         /**
+         * @property title
+         * @type String
+         */
+        title: 'Home - ' + app.strings.application.title,
+        /**
          * @method render
          * @returns {PageHome}
          */

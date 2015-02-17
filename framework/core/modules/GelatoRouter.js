@@ -18,6 +18,7 @@ define([], function() {
          */
         after: function() {
             console.log('PAGE:', this.activePage.getName());
+            document.title = this.activePage.title;
         },
         /**
          * @method before
