@@ -1,15 +1,20 @@
 (function() {
 
     function loadApplication() {
-        requirejs(['modules/Libraries'], function() {
+        requirejs(['require.i18n!locale/nls/strings', 'modules/Libraries'], function(Strings) {
+            window.app.strings = Strings;
             if (location.pathname.indexOf('tests.html') > -1) {
                 requirejs(['core/modules/GelatoJasmine', 'core/modules/GelatoTests'], function(Jasmine) {
                     Jasmine.start();
                 });
             } else {
                 console.log('LOADING:', 'application');
-                requirejs(['modules/Application'], function(Application) {
+                requirejs([
+                    'modules/Application',
+                    'modules/routers/Router'
+                ], function(Application, Router) {
                     FastClick.attach(document.body);
+                    window.app.router = new Router();
                     window.app = $.extend(true, new Application(), app);
                     window.app.router.start();
                 });

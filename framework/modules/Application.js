@@ -3,10 +3,8 @@
  * @submodule Models
  */
 define([
-    'core/modules/GelatoApplication',
-    'modules/routers/Router',
-    'require.i18n!locale/nls/strings'
-], function(GelatoApplication, Router, Strings) {
+    'core/modules/GelatoApplication'
+], function(GelatoApplication) {
 
     /**
      * @class Application
@@ -17,10 +15,7 @@ define([
          * @method initialize
          * @constructor
          */
-        initialize: function() {
-            this.router = new Router();
-            this.strings = Strings;
-        }
+        initialize: function() {}
     });
 
     return Application;
