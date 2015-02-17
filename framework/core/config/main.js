@@ -17,6 +17,9 @@
                     window.app.router = new Router();
                     window.app = $.extend(true, new Application(), app);
                     window.app.router.start();
+                    if (typeof window.app.start === 'function') {
+                        window.app.start();
+                    }
                 });
             }
         });
