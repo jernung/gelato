@@ -29,17 +29,38 @@ html, body {
 
 
 /*** GELATO NAVBAR ***/
-.gelato-navbar { z-index: 9500; }
+.gelato-navbar .navbar {
+    height: 50px;
+    overflow: hidden;
+    z-index: 9500;
+}
+.gelato-navbar .navbar-btn {
+    margin-bottom: 0;
+    margin-top: 3px;
+}
+.gelato-navbar .navbar-header {
+    margin: 0;
+    width: 100%;
+}
 .gelato-navbar .navbar-toggle {
     background-color: transparent;
     float: left;
     margin-left: 15px;
     margin-right: 0;
 }
+.gelato-navbar .navbar-nav { margin: 5px 0 0 0; }
+.gelato-navbar .navbar-nav li { float: left; }
+.gelato-navbar .navbar-nav.navbar-left { float: left; }
+.gelato-navbar .navbar-nav.navbar-right { float: right; }
 .gelato-navbar .navbar-toggle:hover { background-color: transparent; }
 .gelato-navbar .navbar-toggle:focus { background-color: transparent; }
 .gelato-navbar .navbar-toggle.active { background-color: #dddddd; }
 @media (min-width: 768px) {
+    .gelato-navbar .navbar-btn {
+        margin-bottom: 8px;
+        margin-top: 8px;
+    }
+    .gelato-navbar .navbar-nav { margin: 0; }
     .gelato-navbar .navbar-toggle {
         display: block;
         margin-left: 15px;
