@@ -1,6 +1,5 @@
 /**
  * @module Core
- * @submodule Modules
  * @class GelatoTests
  */
 define([

@@ -19,13 +19,14 @@ app = (function() {
                 name: 'core/modules/GelatoLibraries'
             },
             {
-                name: 'core/tests/GelatoSpecs'
+                name: 'core/modules/GelatoTests'
             },
             {
-                name: 'models/Application'
+                name: 'modules/models/Application'
             }
         ],
         paths: {
+            //framework libraries
             async: 'core/libraries/async-0.9.2',
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
@@ -45,10 +46,11 @@ app = (function() {
             react: 'core/libraries/react-0.12.2',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
-            underscore: 'core/libraries/lodash.compat-3.1.0',
+            underscore: 'core/libraries/lodash.compat-3.2.0',
             webfont: 'core/libraries/webfontloader-1.5.14'
         },
         shim: {
+            //framework shims
             backbone: ['jquery', 'underscore'],
             'backbone.routefilter': ['backbone'],
             bootstrap: ['jquery'],
@@ -77,7 +79,7 @@ app = (function() {
 
     /**
      * @method addFonts
-     * @param {Object} fonts
+     * @param {Object} [fonts]
      */
     function addFonts(fonts) {
         mergeObjects(this.fonts, fonts);
@@ -85,7 +87,7 @@ app = (function() {
 
     /**
      * @method addPaths
-     * @param {Object} paths
+     * @param {Object} [paths]
      */
     function addPaths(paths) {
         mergeObjects(this.config.paths, paths);
@@ -93,7 +95,7 @@ app = (function() {
 
     /**
      * @method addShim
-     * @param {Object} shim
+     * @param {Object} [shim]
      */
     function addShim(shim) {
         mergeObjects(this.config.shim, shim);
