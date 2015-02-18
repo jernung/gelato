@@ -79,7 +79,7 @@ app = (function() {
 
     /**
      * @method addFonts
-     * @param {Object} fonts
+     * @param {Object} [fonts]
      */
     function addFonts(fonts) {
         mergeObjects(this.fonts, fonts);
@@ -87,7 +87,7 @@ app = (function() {
 
     /**
      * @method addPaths
-     * @param {Object} paths
+     * @param {Object} [paths]
      */
     function addPaths(paths) {
         mergeObjects(this.config.paths, paths);
@@ -95,7 +95,7 @@ app = (function() {
 
     /**
      * @method addShim
-     * @param {Object} shim
+     * @param {Object} [shim]
      */
     function addShim(shim) {
         mergeObjects(this.config.shim, shim);
