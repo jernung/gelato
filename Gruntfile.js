@@ -472,10 +472,14 @@ module.exports = function(grunt) {
                     '<%= globals.project.path %>/**/*.jsx',
                     '<%= globals.project.path %>/**/*.scss'
                 ],
-                tasks: ['build-project'],
-                options: {
-                    spawn: false
-                }
+                tasks: [
+                    'copy:project-www',
+                    'coffee:project-www',
+                    'jade:project-www',
+                    'sass:project-www',
+                    'replace:project-www',
+                    'validate-project'
+                ]
             }
         },
         /**
