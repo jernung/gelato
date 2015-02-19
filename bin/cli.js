@@ -112,3 +112,6 @@ if (argv.version) {
     console.log(globals.gelato.pkg.version);
     process.exit(0);
 }
+
+console.log("If you don't eat your meat, you can't have any pudding!");
+process.exit(0);
