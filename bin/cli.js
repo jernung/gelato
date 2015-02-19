@@ -43,6 +43,7 @@ if (shell.exec('cordova --version', {silent: true}).code !== 0) {
 if (argv['_'][0] === 'build') {
     if (globals.project.pkg.type === 'gelato') {
         shell.exec('grunt build-project');
+        process.exit(0);
     } else {
         console.log('Not a valid gelato project directory.');
         process.exit(1);
@@ -59,6 +60,7 @@ if (argv['_'][0] === 'create') {
             process.exit(1);
         } else {
             shell.exec('grunt create-project --name=' + argv['_'][1]);
+            process.exit(0);
         }
     } else {
         console.log('Project name is required.');
@@ -72,6 +74,7 @@ if (argv['_'][0] === 'create') {
 if (argv['_'][0] === 'docs') {
     if (globals.project.pkg.type === 'gelato') {
         shell.exec('grunt docs');
+        process.exit(0);
     } else {
         console.log('Not a valid gelato project directory.');
         process.exit(1);
