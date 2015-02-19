@@ -110,6 +110,18 @@ app = (function() {
     }
 
     /**
+     * @method getLocalStorageSize
+     * @returns {Number}
+     */
+    function getLocalStorageSize() {
+        var size = 0;
+        for (var x in localStorage) {
+            size += (localStorage[x].length * 2) / 1024 / 1024;
+        }
+        return parseFloat(size.toFixed(2));
+    }
+
+    /**
      * @method getPushState
      * @returns {Boolean}
      */
@@ -213,6 +225,7 @@ app = (function() {
         fonts: fonts,
         framework: framework,
         getHeight: getHeight,
+        getLocalStorageSize: getLocalStorageSize,
         getPushState: getPushState,
         getRoot: getRoot,
         getSetting: getSetting,
