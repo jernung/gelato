@@ -29,6 +29,12 @@
 
     function loadCoreLibraries() {
         console.log('LOADING:', 'core libraries');
+        window.Async = undefined;
+        window.FastClick = undefined;
+        window.Handlebars = undefined;
+        window.Moment = undefined;
+        window.React = undefined;
+        window.WebFont = undefined;
         requirejs(['core/modules/GelatoLibraries'], function() {
             if (app.isCordova()) {
                 requirejs(['cordova'], function() {
