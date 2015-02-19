@@ -21,7 +21,7 @@ define([
          * @property title
          * @type String
          */
-        title: app.strings.application.title,
+        title: app.strings.global.title,
         /**
          * @method renderDialog
          * @returns {GelatoPage}
