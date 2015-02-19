@@ -107,6 +107,7 @@ if (argv['_'][0] === 'run') {
             cmd.push('--protocol=' + argv.protocol);
         }
         shell.exec(cmd.join(' '));
+        process.exit(0);
     } else {
         console.log('Not a valid gelato project directory.');
         process.exit(1);
@@ -119,6 +120,7 @@ if (argv['_'][0] === 'run') {
 if (argv['_'][0] === 'update') {
     if (globals.project.pkg.type === 'gelato') {
         shell.exec('grunt install-gelato');
+        process.exit(0);
     } else {
         console.log('Not a valid gelato project directory.');
         process.exit(1);
@@ -131,6 +133,7 @@ if (argv['_'][0] === 'update') {
 if (argv['_'][0] === 'watch') {
     if (globals.project.pkg.type === 'gelato') {
         shell.exec('grunt watch-project');
+        process.exit(0);
     } else {
         console.log('Not a valid gelato project directory.');
         process.exit(1);
