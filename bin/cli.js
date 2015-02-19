@@ -6,6 +6,38 @@ var fs = require('fs');
 var shell = require('shelljs');
 
 /**
+ * OPTION: VERSION
+ */
+if (argv.version) {
+    console.log(globals.gelato.pkg.version);
+    process.exit(0);
+}
+
+/**
+ * CHECK REQUIREMENT: GRUNT
+ */
+if (shell.exec('grunt --version', {silent: true}).code !== 0) {
+    console.log('Grunt must be installed (http://gruntjs.com).');
+    process.exit(1);
+}
+
+/**
+ * CHECK REQUIREMENT: SASS
+ */
+if (shell.exec('sass --version', {silent: true}).code !== 0) {
+    console.log('Sass must be installed (http://sass-lang.com).');
+    process.exit(1);
+}
+
+/**
+ * CHECK REQUIREMENT: CORDOVA
+ */
+if (shell.exec('cordova --version', {silent: true}).code !== 0) {
+    console.log('Cordova must be installed (https://cordova.apache.org).');
+    process.exit(1);
+}
+
+/**
  * BUILD
  */
 if (argv['_'][0] === 'build') {
@@ -103,14 +135,6 @@ if (argv['_'][0] === 'watch') {
         console.log('Not a valid gelato project directory.');
         process.exit(1);
     }
-}
-
-/**
- * OPTION: VERSION
- */
-if (argv.version) {
-    console.log(globals.gelato.pkg.version);
-    process.exit(0);
 }
 
 console.log("If you don't eat your meat, you can't have any pudding!");
