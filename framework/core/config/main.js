@@ -32,6 +32,7 @@
         window.Async = undefined;
         window.FastClick = undefined;
         window.Handlebars = undefined;
+        window.LZString = undefined;
         window.Moment = undefined;
         window.React = undefined;
         window.WebFont = undefined;

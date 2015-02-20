@@ -18,6 +18,7 @@ define([
     'jquery.mobile',
     'jquery.notify',
     'jquery.ui',
+    'lzstring',
     'modernizr',
     'moment.timezone',
     'require.i18n',

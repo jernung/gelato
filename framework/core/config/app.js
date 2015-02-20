@@ -40,6 +40,7 @@ app = (function() {
             'jquery.mobile': 'core/libraries/jquery.mobile-1.4.5',
             'jquery.notify': 'core/libraries/jquery.notify-0.3.1',
             'jquery.ui': 'core/libraries/jquery.ui-1.11.2',
+            'lzstring': 'core/libraries/lzstring-1.4.0',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.9.0',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
@@ -115,10 +116,10 @@ app = (function() {
      */
     function getLocalStorageSize() {
         var size = 0;
-        for (var x in localStorage) {
-            size += (localStorage[x].length * 2) / 1024 / 1024;
+        for (var key in localStorage) {
+            size += localStorage[key].length * 2;
         }
-        return parseFloat(size.toFixed(2));
+        return parseFloat((size / 1024 / 1024).toFixed(2));
     }
 
     /**
