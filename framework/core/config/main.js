@@ -31,6 +31,7 @@
         console.log('LOADING:', 'core libraries');
         window.Async = undefined;
         window.FastClick = undefined;
+        window.Firebase = undefined;
         window.Handlebars = undefined;
         window.LZString = undefined;
         window.Moment = undefined;
