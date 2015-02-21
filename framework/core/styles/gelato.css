@@ -27,6 +27,8 @@ html, body {
     -webkit-user-select: none;
 }
 
+/*** GELATO DIALOG ***/
+.gelato-dialog .modal { z-index: 9900; }
 
 /*** GELATO NAVBAR ***/
 .gelato-navbar .navbar {
