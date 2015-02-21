@@ -76,6 +76,7 @@ app = (function() {
      * @type {Object}
      */
     var framework = {
+        type: 'gelato',
         version: '@@framework-version'
     };
 
