@@ -169,7 +169,7 @@ app = (function() {
      * @returns {Boolean}
      */
     function isLocal() {
-        return location.hostname === 'localhost';
+        return location.hostname === 'localhost' || location.port !== '';
     }
 
     /**
