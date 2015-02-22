@@ -32,6 +32,7 @@ app = (function() {
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
             bootstrap: 'core/libraries/bootstrap-3.3.2',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
+            dexie: 'core/libraries/dexie-1.0.3',
             fastclick: 'core/libraries/fastclick-1.0.6',
             firebase: 'core/libraries/firebase-2.2.0',
             handlebars: 'core/libraries/handlebars-3.0.0',

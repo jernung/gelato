@@ -12,6 +12,7 @@ define([
     'backbone.routefilter',
     'bootstrap',
     'bootstrap.switch',
+    'dexie',
     'firebase',
     'jasmine',
     'jasmine.html',
