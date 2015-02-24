@@ -30,7 +30,33 @@ define([], function() {
         transaction.objectStore(storeName).openCursor().onsuccess = function (event) {
             var cursor = event.target.result;
             if (cursor) {
-                data.push(cursor.value);
+                objects.push(cursor.value);
+                cursor.continue();
+            }
+        };
+    };
+
+    /**
+     * @method bound
+     * @param {String} storeName
+     * @param {Object} condition
+     * @param {Function} callbackSuccess
+     * @param {Function} callbackError
+     */
+    GelatoStorage.prototype.bound = function(storeName, condition, callbackSuccess, callbackError) {
+        var objects = [];
+        var transaction = this.database.transaction(storeName, 'readonly');
+        var index = transaction.objectStore(storeName).index(condition.name);
+        transaction.oncomplete = function () {
+            callbackSuccess(objects);
+        };
+        transaction.onerror = function (error) {
+            callbackError(error);
+        };
+        index.openCursor(condition.bound).onsuccess = function (event) {
+            var cursor = event.target.result;
+            if (cursor) {
+                objects.push(cursor.value);
                 cursor.continue();
             }
         };
@@ -54,20 +80,6 @@ define([], function() {
         for (var i = 0, length = storeNames.length; i < length; i++) {
             transaction.objectStore(storeNames[i]).clear();
         }
-    };
-
-    /**
-     * @method clearAll
-     * @param {Function} callbackSuccess
-     * @param {Function} callbackError
-     */
-    GelatoStorage.prototype.clearAll = function(callbackSuccess, callbackError) {
-        var storeNames = [];
-        var objectStoreNames = this.database.objectStoreNames;
-        for (var i = 0; i < objectStoreNames.length; i++) {
-            storeNames.push(objectStoreNames[i]);
-        }
-        this.clear(storeNames, callbackSuccess, callbackError);
     };
 
     /**
@@ -161,10 +173,11 @@ define([], function() {
             var database = event.target.result;
             for (var storeName in stores) {
                 var store = stores[storeName];
+                var storeIndex = store.index || [];
                 var storeOptions = {autoIncrement: store.autoIncrement || false, keyPath: store.keyPath || null};
                 var objectStore = database.createObjectStore(storeName, storeOptions);
-                for (var i = 0, length = store.indexes.length; i < length; i++) {
-                    var index = store.indexes[i];
+                for (var i = 0, length = storeIndex.length; i < length; i++) {
+                    var index = storeIndex[i];
                     var indexOptions = {unique: index.unique || false};
                     objectStore.createIndex(index.name, index.name, indexOptions);
                 }
@@ -214,6 +227,20 @@ define([], function() {
         for (var i = 0, length = keys.length; i < length; i++) {
             objectStore.delete(keys[i]);
         }
+    };
+
+    /**
+     * @method reset
+     * @param {Function} callbackSuccess
+     * @param {Function} callbackError
+     */
+    GelatoStorage.prototype.reset = function(callbackSuccess, callbackError) {
+        var storeNames = [];
+        var objectStoreNames = this.database.objectStoreNames;
+        for (var i = 0; i < objectStoreNames.length; i++) {
+            storeNames.push(objectStoreNames[i]);
+        }
+        this.clear(storeNames, callbackSuccess, callbackError);
     };
 
     return GelatoStorage;
