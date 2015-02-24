@@ -13,7 +13,8 @@ module.exports = function(grunt) {
         hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
         name: grunt.option('name'),
         port: grunt.option('port') === undefined ? '8080' : grunt.option('port'),
-        protocol: grunt.option('protocol') === undefined ? 'http' : grunt.option('protocol')
+        protocol: grunt.option('protocol') === undefined ? 'http' : grunt.option('protocol'),
+        novalidate: grunt.option('novalidate')
     };
 
     grunt.loadNpmTasks('grunt-contrib-clean');
@@ -623,10 +624,14 @@ module.exports = function(grunt) {
      * TASK: validate
      */
     grunt.registerTask('validate-project', function() {
-        grunt.task.run([
-            'csslint:project-www',
-            'jshint:project-www'
-        ]);
+        if (options.novalidate) {
+            grunt.log.writeln('Skipping.');
+        } else {
+            grunt.task.run([
+                'csslint:project-www',
+                'jshint:project-www'
+            ]);
+        }
     });
 
     /**

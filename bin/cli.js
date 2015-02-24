@@ -42,7 +42,11 @@ if (shell.exec('cordova --version', {silent: true}).code !== 0) {
  */
 if (argv['_'][0] === 'build') {
     if (globals.project.pkg.type === 'gelato') {
-        shell.exec('grunt build-project');
+        var cmd = ['grunt build-project'];
+        if (argv.novalidate) {
+            cmd.push('--novalidate');
+        }
+        shell.exec(cmd.join(' '));
         process.exit(0);
     } else {
         console.log('Not a valid gelato project directory.');
