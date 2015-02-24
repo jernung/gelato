@@ -17,8 +17,10 @@ define([], function() {
          * @method after
          */
         after: function() {
-            console.log('PAGE:', this.activePage.getName());
-            document.title = this.activePage.title;
+            if (this.activePage) {
+                console.log('PAGE:', this.activePage.getName());
+                document.title = this.activePage.title;
+            }
         },
         /**
          * @method before
@@ -26,6 +28,7 @@ define([], function() {
         before: function() {
             if (this.activePage) {
                 this.activePage.remove();
+                this.activePage = null;
             }
         },
         /**

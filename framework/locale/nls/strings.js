@@ -1,6 +1,6 @@
 define([], {
     root: {
-        application: {
+        global: {
             description: '@@application-description',
             title: '@@application-title'
         }

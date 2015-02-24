@@ -1,8 +1,8 @@
-<div class="gelato-page examples">
+<div class="gelato-page home">
 
     <!-- NAVBAR: MAIN -->
     <div id="navbar-main" class="gelato-navbar">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
+        <nav class="navbar navbar-default navbar-fixed-top">
             <div class="container">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-sidebar="main-left" aria-expanded="false" aria-controls="navbar">
@@ -11,42 +11,50 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">{{application.title}}</a>
+                    <a class="navbar-brand" href="#">{{global.title}}</a>
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a class="navigate text-uppercase" data-url="login" href="#">Text Left</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a class="navigate text-uppercase" data-url="login" href="#">Text Right</a></li>
+                        <li><button type="submit" class="btn btn-default navbar-btn">Submit</button></li>
+                    </ul>
                 </div>
             </div>
         </nav>
     </div>
 
     <!-- SIDEBAR: MAIN-LEFT -->
-    <div id="sidebar-main-left" class="gelato-sidebar left collapsed">
+    <div id="main-left" class="gelato-sidebar left collapsed">
         <ul class="nav nav-pills nav-stacked">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#examples"><i class="fa fa-flask"></i> Examples</a></li>
+            <li><a class="navigate" data-url="#" href="#"><i class="fa fa-dashboard"></i> Link 1</a></li>
+            <li><a class="navigate" data-url="#" href="#"><i class="fa fa-flask"></i> Link 2</a></li>
+            <hr>
+            <li><a class="navigate" data-url="#" href="#"><i class="fa fa-line-chart"></i> Link 3</a></li>
         </ul>
     </div>
 
     <!-- SIDEBAR: MAIN-RIGHT -->
-    <div id="sidebar-main-right" class="gelato-sidebar right collapsed">
+    <div id="main-right" class="gelato-sidebar right collapsed">
         <ul class="nav nav-pills nav-stacked">
             <li><a href="#">Look! It's a sidebar on the right!</a></li>
         </ul>
     </div>
 
     <!-- DIALOG: EXAMPLE1 --->
-    <div class="dialog-example1">
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div id="dialog-example1" class="gelato-dialog">
+        <div class="modal fade" id="example1" tabindex="-1" role="dialog" aria-labelledby="example1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                        <h4 class="modal-title">Modal title</h4>
                     </div>
                     <div class="modal-body">
                         Stuff stuff stuff!
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
@@ -57,13 +65,13 @@
     <div id="content-main" class="gelato-content container text-center">
         <h3>Dialogs</h3>
         <p>Dialogs are useful when popup data or selections need to be made.</p>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+        <button type="button" class="btn btn-primary" data-dialog="dialog-example1">
             Open Dialog
         </button>
         <hr>
         <h3>Sidebars</h3>
         <p>Sidebars are the bread and butter on quick navigation.</p>
-        <button id="open-left-sidebar" type="button" class="btn btn-primary" data-sidebar="main-left">
+        <button id="open-left-sidebar" type="button" class="btn btn-primary" data-sidebar="main-left" data-keyboard="true">
             <i class="fa fa-arrow-left"></i>
             Toggle Left
         </button>

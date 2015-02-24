@@ -17,7 +17,7 @@ define([
          */
         initialize: function(options) {
             options = options === undefined ? {} : options;
-            this.element = options.name === undefined ? $(this.$('.gelato-sidebar').get(0)) : this.$('#sidebar-' + options.name);
+            this.element = options.name === undefined ? $(this.$('.gelato-sidebar').get(0)) : this.$('#' + options.name);
             this.page = options.page;
             this.speed = options.speed === undefined ? 300 : options.speed;
             if (this.isExpanded()) {
@@ -151,7 +151,7 @@ define([
         swap: function(name) {
             if (this.getName() !== name) {
                 this.hide(0);
-                this.element = this.$('#sidebar-' + name) || $(this.$('.gelato-sidebar').get(0));
+                this.element = this.$('#' + name) || $(this.$('.gelato-sidebar').get(0));
             }
             return this;
         },

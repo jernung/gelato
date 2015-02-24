@@ -75,11 +75,25 @@ define([], function() {
         };
     }
 
+    /**
+     * @method parseBoolean
+     * @param {String} value
+     */
+    function parseBoolean(value) {
+        switch (value) {
+            case 'true':
+                return true;
+            case 'false':
+                return false;
+        }
+    }
+
     return {
         cloneJSON: cloneJSON,
         getBoundingRectangle: getBoundingRectangle,
         getDistance: getDistance,
-        getMidPoint: getMidPoint
+        getMidPoint: getMidPoint,
+        parseBoolean: parseBoolean
     };
 
 });

@@ -33,20 +33,22 @@ app = (function() {
             bootstrap: 'core/libraries/bootstrap-3.3.2',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
+            firebase: 'core/libraries/firebase-2.2.0',
             handlebars: 'core/libraries/handlebars-3.0.0',
             jasmine: 'core/libraries/jasmine-2.2.0',
             'jasmine.html': 'core/libraries/jasmine.html-2.2.0',
             jquery: 'core/libraries/jquery-2.1.3',
-            'jquery.mobile': 'core/libraries/jquery.mobile-1.4.5',
+            'jquery.mobile': 'core/libraries/jquery.mobile.custom-1.4.5',
             'jquery.notify': 'core/libraries/jquery.notify-0.3.1',
-            'jquery.ui': 'core/libraries/jquery.ui-1.11.2',
+            'jquery.ui': 'core/libraries/jquery.ui.custom-1.11.3',
+            'lzstring': 'core/libraries/lzstring-1.4.0',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.9.0',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
             react: 'core/libraries/react-0.12.2',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
-            underscore: 'core/libraries/lodash.compat-3.2.0',
+            underscore: 'core/libraries/lodash.compat-3.3.0',
             webfont: 'core/libraries/webfontloader-1.5.14'
         },
         shim: {
@@ -74,6 +76,7 @@ app = (function() {
      * @type {Object}
      */
     var framework = {
+        type: 'gelato',
         version: '@@framework-version'
     };
 
@@ -107,6 +110,18 @@ app = (function() {
      */
     function getHeight() {
         return $(window).height();
+    }
+
+    /**
+     * @method getLocalStorageSize
+     * @returns {Number}
+     */
+    function getLocalStorageSize() {
+        var size = 0;
+        for (var key in localStorage) {
+            size += localStorage[key].length * 2;
+        }
+        return parseFloat((size / 1024 / 1024).toFixed(2));
     }
 
     /**
@@ -155,7 +170,7 @@ app = (function() {
      * @returns {Boolean}
      */
     function isLocal() {
-        return location.hostname === 'localhost';
+        return location.hostname === 'localhost' || location.port !== '';
     }
 
     /**
@@ -213,6 +228,7 @@ app = (function() {
         fonts: fonts,
         framework: framework,
         getHeight: getHeight,
+        getLocalStorageSize: getLocalStorageSize,
         getPushState: getPushState,
         getRoot: getRoot,
         getSetting: getSetting,

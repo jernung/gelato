@@ -21,7 +21,25 @@ define([
          * @property title
          * @type String
          */
-        title: app.strings.application.title,
+        title: app.strings.global.title,
+        /**
+         * @method disableForm
+         * @param {String} [selector]
+         * @returns {GelatoPage}
+         */
+        disableForm: function(selector) {
+            this.$((selector ? selector + ' ': '') + ':input').prop('disabled', true);
+            return this;
+        },
+        /**
+         * @method enableForm
+         * @param {String} [selector]
+         * @returns {GelatoPage}
+         */
+        enableForm: function(selector) {
+            this.$((selector ? selector: ' ') + ':input').prop('disabled', false);
+            return this;
+        },
         /**
          * @method renderDialog
          * @returns {GelatoPage}
