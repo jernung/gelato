@@ -12,6 +12,7 @@ html, body {
     position: relative;
     width: 100%;
 }
+.cursor { cursor: pointer; }
 .fill-parent {
     height: 100%;
     position: absolute;
