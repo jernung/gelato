@@ -192,15 +192,15 @@ define([], function() {
      * @param {Function} callbackSuccess
      * @param {Function} callbackError
      */
-    GelatoStorage.prototype.put = function(storeName, objects, callback) {
+    GelatoStorage.prototype.put = function(storeName, objects, callbackSuccess, callbackError) {
         var transaction = this.database.transaction(storeName, 'readwrite');
         var objectStore = transaction.objectStore(storeName);
         objects = Array.isArray(objects) ? objects : [objects];
         transaction.oncomplete = function () {
-            callback();
+            callbackSuccess();
         };
         transaction.onerror = function (error) {
-            callback(error);
+            callbackError(error);
         };
         for (var i = 0, length = objects.length; i < length; i++) {
             objectStore.put(objects[i]);
