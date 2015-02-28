@@ -12,6 +12,8 @@ module.exports = function(grunt) {
         architecture: grunt.option('architecture') === undefined ? 'arm' : grunt.option('architecture'),
         hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
         name: grunt.option('name'),
+        noclean: grunt.option('noclean'),
+        novalidate: grunt.option('novalidate'),
         port: grunt.option('port') === undefined ? '8080' : grunt.option('port'),
         protocol: grunt.option('protocol') === undefined ? 'http' : grunt.option('protocol')
     };
@@ -472,14 +474,10 @@ module.exports = function(grunt) {
                     '<%= globals.project.path %>/**/*.jsx',
                     '<%= globals.project.path %>/**/*.scss'
                 ],
-                tasks: [
-                    'copy:project-www',
-                    'coffee:project-www',
-                    'jade:project-www',
-                    'sass:project-www',
-                    'replace:project-www',
-                    'validate-project'
-                ]
+                tasks: ['build-project'],
+                options: {
+                    spawn: false
+                }
             }
         },
         /**
@@ -503,15 +501,23 @@ module.exports = function(grunt) {
      * TASK: build-project
      */
     grunt.registerTask('build-project', function() {
+        if (options.noclean) {
+            grunt.log.writeln('Skipping clean.');
+        } else {
+            grunt.task.run('clean:project-www');
+        }
         grunt.task.run([
-            'clean:project-www',
             'copy:project-www',
             'coffee:project-www',
             'jade:project-www',
             'sass:project-www',
-            'replace:project-www',
-            'validate-project'
+            'replace:project-www'
         ]);
+        if (options.novalidate) {
+            grunt.log.writeln('Skipping validation.');
+        } else {
+            grunt.task.run('validate-project');
+        }
     });
 
     /**

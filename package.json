@@ -8,7 +8,7 @@
     "url": "http://www.joshmcfarland.net/"
   },
   "license": "MIT",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "type": "gelato",
   "packageId": "com.gelato.framework.test",
   "packageName": "Gelato Test",
@@ -37,7 +37,7 @@
     "grunt-contrib-yuidoc": "0.7.0",
     "grunt-react": "0.10.0",
     "grunt-replace": "0.8.0",
-    "grunt-shell": "1.1.1",
+    "grunt-shell": "1.1.2",
     "grunt-zip": "0.16.2",
     "minimist": "1.1.0",
     "shelljs": "0.3.0"
