@@ -640,6 +640,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('watch-project', function() {
         grunt.task.run([
+            'build-project',
             'watch:project-src'
         ]);
     });
