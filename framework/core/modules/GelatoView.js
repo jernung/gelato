@@ -41,6 +41,14 @@ define([], function() {
             });
         },
         /**
+         * @method hide
+         * @returns {GelatoView}
+         */
+        hide: function() {
+            this.$el.hide();
+            return this;
+        },
+        /**
          * @method remove
          * @returns {GelatoView}
          */
@@ -49,6 +57,21 @@ define([], function() {
             this.$el.find('*').off();
             this.stopListening();
             $(window).off('resize');
+            return this;
+        },
+        /**
+         * @method resize
+         * @returns {GelatoView}
+         */
+        resize: function() {
+            return this;
+        },
+        /**
+         * @method show
+         * @returns {GelatoView}
+         */
+        show: function() {
+            this.$el.show();
             return this;
         }
     });
