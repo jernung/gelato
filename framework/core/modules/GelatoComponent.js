@@ -1,14 +1,16 @@
 /**
  * @module Core
  */
-define([], function() {
+define([
+    'core/modules/GelatoView'
+], function(GelatoView) {
 
     /**
-     * @class GelatoModel
-     * @extends Backbone.Model
+     * @class GelatoComponent
+     * @extends GelatoView
      */
-    var GelatoModel = Backbone.Model.extend({});
+    var GelatoComponent = GelatoView.extend({});
 
-    return GelatoModel;
+    return GelatoComponent;
 
 });
