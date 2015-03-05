@@ -365,7 +365,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.gelato.framework.path %>',
-                        src: ['**/*.scss'],
+                        src: ['styles/imports.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
 
@@ -373,7 +373,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.project.src.path %>',
-                        src: ['**/*.scss'],
+                        src: ['styles/imports.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
                     }
