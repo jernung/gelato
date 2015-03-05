@@ -410,7 +410,7 @@ module.exports = function(grunt) {
             'install-cordova-crosswalk': {
                 command: [
                     'cd <%= globals.project.cordova.platforms.android.cordovalib.path %>',
-                    'android update project --subprojects --path . --target android-19',
+                    'android update project --subprojects --path . --target android-21',
                     'ant debug'
                 ].join('&&'),
                 options: {
