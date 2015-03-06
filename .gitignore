@@ -5,7 +5,6 @@ cordova/
 includes/crosswalk/**/
 node_modules/
 nbproject/
-projects/
 test/
 www/
 
