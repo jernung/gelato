@@ -33,7 +33,6 @@ app = (function() {
             bootstrap: 'core/libraries/bootstrap-3.3.2',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
-            firebase: 'core/libraries/firebase-2.2.1',
             handlebars: 'core/libraries/handlebars-3.0.0',
             jasmine: 'core/libraries/jasmine-2.2.0',
             'jasmine.html': 'core/libraries/jasmine.html-2.2.0',
