@@ -144,13 +144,13 @@ module.exports = function(grunt) {
          * COPY
          */
         copy: {
-            'cordova-www': {
+            'cordova-config': {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.project.www.path %>',
+                        cwd: '<%= globals.project.www.path %>/cordova',
                         src: ['**/*'],
-                        dest: '<%= globals.project.cordova.www.path %>'
+                        dest: '<%= globals.project.cordova.path %>'
                     }
                 ]
             },
@@ -168,6 +168,16 @@ module.exports = function(grunt) {
                         src: ['VERSION'],
                         dest: '<%= globals.project.cordova.platforms.android.path %>'
                     },
+                ]
+            },
+            'cordova-www': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= globals.project.www.path %>',
+                        src: ['**/*', '!cordova/**/*'],
+                        dest: '<%= globals.project.cordova.www.path %>'
+                    }
                 ]
             },
             'project-gelato': {
@@ -309,6 +319,25 @@ module.exports = function(grunt) {
          * REPLACE
          */
         replace: {
+            'cordova-config': {
+                options: {
+                    variables: {
+                        'description': '<%= globals.project.pkg.description %>',
+                        'packageId': '<%= globals.project.pkg.packageId %>',
+                        'packageName': '<%= globals.project.pkg.packageName %>',
+                        'packageVersion': '<%= globals.project.pkg.packageVersion %>',
+                        'version': '<%= globals.project.pkg.version %>'
+                    }
+                },
+                files: [
+                    {
+                        expand: true,
+                        src: ['config.xml'],
+                        cwd: '<%= globals.project.cordova.path %>',
+                        dest: '<%= globals.project.cordova.path %>'
+                    }
+                ]
+            },
             'project-www': {
                 options: {
                     variables: {
@@ -600,6 +629,8 @@ module.exports = function(grunt) {
         grunt.task.run([
             'clean:cordova-www',
             'copy:cordova-www',
+            'copy:cordova-config',
+            'replace:cordova-config',
             'shell:run-cordova-android',
             'shell:kill-adb'
         ]);
