@@ -1,12 +1,12 @@
 # Directories #
-.idea/
-.sass-cache/
-cordova/
-docs/
-gelato/
-node_modules/
-nbproject/
-www/
+/.idea
+/.sass-cache
+/cordova
+/docs
+/gelato
+/node_modules
+/nbproject
+/www
 
 # Files #
 npm-debug.log
