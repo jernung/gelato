@@ -12,7 +12,6 @@ define([
     'backbone.routefilter',
     'bootstrap',
     'bootstrap.switch',
-    'firebase',
     'jasmine',
     'jasmine.html',
     'jquery',

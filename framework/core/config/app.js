@@ -33,7 +33,6 @@ app = (function() {
             bootstrap: 'core/libraries/bootstrap-3.3.2',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
-            firebase: 'core/libraries/firebase-2.2.0',
             handlebars: 'core/libraries/handlebars-3.0.0',
             jasmine: 'core/libraries/jasmine-2.2.0',
             'jasmine.html': 'core/libraries/jasmine.html-2.2.0',
@@ -45,10 +44,10 @@ app = (function() {
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.9.0',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
-            react: 'core/libraries/react-0.12.2',
+            react: 'core/libraries/react-0.13.0',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
-            underscore: 'core/libraries/lodash.compat-3.3.0',
+            underscore: 'core/libraries/lodash.compat-3.5.0',
             webfont: 'core/libraries/webfontloader-1.5.14'
         },
         shim: {
