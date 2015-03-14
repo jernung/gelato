@@ -1,12 +1,12 @@
 # Directories #
-.idea/
-.sass-cache/
-cordova/
-includes/crosswalk/**/
-node_modules/
-nbproject/
-test/
-www/
+/.idea
+/.sass-cache
+/cordova
+/includes/crosswalk/**
+/node_modules
+/nbproject
+/test
+/www
 
 # Files #
 !README.md
