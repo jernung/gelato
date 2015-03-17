@@ -44,7 +44,7 @@ app = (function() {
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.9.0',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
-            react: 'core/libraries/react-0.13.0',
+            react: 'core/libraries/react-0.13.1',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
             underscore: 'core/libraries/lodash.compat-3.5.0',
