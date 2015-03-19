@@ -14,6 +14,9 @@ app = (function() {
      * @type {Object}
      */
     var config = {
+        cordova: {
+            plugins: []
+        },
         modules: [
             {
                 name: 'core/modules/GelatoLibraries'
@@ -83,11 +86,27 @@ app = (function() {
     };
 
     /**
+     * @method addCordovaPlugins
+     * @param {Array|Object} [plugins]
+     */
+    function addCordovaPlugins(plugins) {
+        this.config.cordova.plugins = mergeArrays(this.config.cordova.plugins, Array.isArray(plugins) ? plugins : [plugins]);
+    }
+
+    /**
      * @method addFonts
      * @param {Object} [fonts]
      */
     function addFonts(fonts) {
         mergeObjects(this.fonts, fonts);
+    }
+
+    /**
+     * @method addModules
+     * @param {Array|Object} [modules]
+     */
+    function addModules(modules) {
+        this.config.modules = mergeArrays(this.config.modules, Array.isArray(modules) ? modules : [modules]);
     }
 
     /**
@@ -184,6 +203,16 @@ app = (function() {
     }
 
     /**
+     * @method mergeArrays
+     * @param {Array} array1
+     * @param {Array} array2
+     * @returns {Array}
+     */
+    function mergeArrays (array1, array2) {
+       return array1.concat(array2);
+    }
+
+    /**
      * @method mergeObjects
      * @param {Object} object1
      * @param {Object} object2
@@ -230,7 +259,9 @@ app = (function() {
     }
 
     return {
+        addCordovaPlugins: addCordovaPlugins,
         addFonts: addFonts,
+        addModules: addModules,
         addPaths: addPaths,
         addShim: addShim,
         attributes: attributes,
@@ -246,6 +277,7 @@ app = (function() {
         getWidth: getWidth,
         isCordova: isCordova,
         isLocal: isLocal,
+        mergeArrays: mergeArrays,
         mergeObjects: mergeObjects,
         reload: reload,
         removeSetting: removeSetting,
