@@ -386,6 +386,43 @@ module.exports = function(grunt) {
             }
         },
         /**
+         * REQUIREJS
+         */
+        requirejs: {
+            'cordova-www': {
+                options: {
+                    baseUrl: globals.project.www.path,
+                    dir: globals.project.cordova.path + '/www',
+                    fileExclusionRegExp: null,
+                    generateSourceMaps: false,
+                    keepBuildDir: false,
+                    modules: globals.project.config.modules,
+                    optimize: 'uglify',
+                    optimizeCss: 'standard',
+                    paths: globals.project.config.paths,
+                    preserveLicenseComments: false,
+                    removeCombined: true,
+                    shim: globals.project.config.shim
+                }
+            },
+            'web-www': {
+                options: {
+                    baseUrl: globals.project.www.path,
+                    dir: globals.project.build.path + '/web',
+                    fileExclusionRegExp: null,
+                    generateSourceMaps: false,
+                    keepBuildDir: false,
+                    modules: globals.project.config.modules,
+                    optimize: 'uglify',
+                    optimizeCss: 'standard',
+                    paths: globals.project.config.paths,
+                    preserveLicenseComments: false,
+                    removeCombined: true,
+                    shim: globals.project.config.shim
+                }
+            }
+        },
+        /**
          * SASS
          */
         sass: {
@@ -628,7 +665,7 @@ module.exports = function(grunt) {
         }
         grunt.task.run([
             'clean:cordova-www',
-            'copy:cordova-www',
+            'requirejs:cordova-www',
             'copy:cordova-config',
             'replace:cordova-config',
             'shell:run-cordova-android',

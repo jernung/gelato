@@ -22,7 +22,10 @@ app = (function() {
                 name: 'core/modules/GelatoTests'
             },
             {
-                name: 'modules/models/Application'
+                name: 'modules/Application'
+            },
+            {
+                name: 'modules/Router'
             }
         ],
         paths: {
@@ -101,6 +104,14 @@ app = (function() {
      */
     function addShim(shim) {
         mergeObjects(this.config.shim, shim);
+    }
+
+    /**
+     * @method getConfig
+     * @returns {Object}
+     */
+    function getConfig() {
+        return config;
     }
 
     /**
@@ -226,6 +237,7 @@ app = (function() {
         config: config,
         fonts: fonts,
         framework: framework,
+        getConfig: getConfig,
         getHeight: getHeight,
         getLocalStorageSize: getLocalStorageSize,
         getPushState: getPushState,

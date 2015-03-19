@@ -12,7 +12,7 @@
                 console.log('LOADING:', 'application');
                 requirejs([
                     'modules/Application',
-                    'modules/routers/Router'
+                    'modules/Router'
                 ], function(Application, Router) {
                     FastClick.attach(document.body);
                     window.app = $.extend(true, new Application(), app);
