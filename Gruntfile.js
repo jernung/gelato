@@ -167,7 +167,7 @@ module.exports = function(grunt) {
                         cwd: '<%= globals.gelato.includes.crosswalk.base.path %>-<%= options.architecture %>',
                         src: ['VERSION'],
                         dest: '<%= globals.project.cordova.platforms.android.path %>'
-                    },
+                    }
                 ]
             },
             'cordova-www': {
@@ -488,7 +488,10 @@ module.exports = function(grunt) {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
                     'cordova plugin add <%= globals.gelato.includes.plugins.path %>/gelato-core'
-                ].join('&&'),
+                ].concat(globals.project.config.cordova.plugins.map(function(plugin) {
+                        return 'cordova plugin add ' + plugin;
+                    })
+                ).join('&&'),
                 options: {
                     stdout: true,
                     stderr: true
@@ -616,32 +619,18 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('install-cordova', function() {
         grunt.task.run([
+            //install cordova
             'clean:cordova',
             'shell:install-cordova',
-            'shell:install-cordova-plugins',
-            'install-cordova-android'
-        ]);
-    });
-
-    /**
-     * TASK: install-cordova-android
-     */
-    grunt.registerTask('install-cordova-android', function() {
-        if (!grunt.file.isFile(globals.project.cordova.path + '/config.xml')) {
-            grunt.task.run('install-cordova');
-        }
-        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.arm.path + '/VERSION')) {
-            grunt.task.run('unzip-cordova-crosswalk');
-        }
-        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.x86.path + '/VERSION')) {
-            grunt.task.run('unzip-cordova-crosswalk');
-        }
-        grunt.task.run([
+            //install cordova android
             'clean:cordova-android',
+            'unzip-cordova-crosswalk',
             'shell:install-cordova-android',
             'clean:cordova-android-cordovalib',
             'copy:cordova-crosswalk',
-            'shell:install-cordova-crosswalk'
+            'shell:install-cordova-crosswalk',
+            //install cordova plugins
+            'shell:install-cordova-plugins'
         ]);
     });
 
@@ -660,12 +649,12 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('run-android', function() {
         grunt.task.run('build-project');
-        if (!grunt.file.isFile(globals.project.cordova.platforms.android.path + '/VERSION')) {
-            grunt.task.run('install-cordova-android');
+        if (!grunt.file.isFile(globals.project.cordova.path + '/config.xml')) {
+            grunt.task.run('install-cordova');
         }
         grunt.task.run([
             'clean:cordova-www',
-            'requirejs:cordova-www',
+            'copy:cordova-www',
             'copy:cordova-config',
             'replace:cordova-config',
             'shell:run-cordova-android',
