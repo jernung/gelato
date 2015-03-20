@@ -64,6 +64,7 @@ define([], function() {
             this.$el.empty();
             this.$el.find('*').off();
             this.stopListening();
+            this.undelegateEvents();
             $(window).off('resize');
             return this;
         },

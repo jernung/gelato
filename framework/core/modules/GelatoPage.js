@@ -76,12 +76,12 @@ define([
         },
         /**
          * @method remove
-         * @returns {GelatoPage}
+         * @returns {GelatoView}
          */
         remove: function() {
+            this.dialog.remove();
             this.sidebar.remove();
-            GelatoView.prototype.remove.call(this);
-            return this;
+            return GelatoView.prototype.remove.call(this);
         }
     });
 
