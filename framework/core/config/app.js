@@ -36,7 +36,7 @@ app = (function() {
             async: 'core/libraries/async-0.9.2',
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
-            bootstrap: 'core/libraries/bootstrap-3.3.2',
+            bootstrap: 'core/libraries/bootstrap-3.3.4',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
             handlebars: 'core/libraries/handlebars-3.0.0',
