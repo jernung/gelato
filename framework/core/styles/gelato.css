@@ -114,11 +114,8 @@ html, body {
 .gelato-sidebar {
     background-color: #ffffff;
     height: 100%;
-    margin-top: 1px;
     max-width: 400px;
     min-width: 250px;
-    padding-bottom: 5px;
-    padding-top: 5px;
     position: fixed;
     width: 60%;
     z-index: 9800;
