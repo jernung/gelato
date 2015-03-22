@@ -158,10 +158,7 @@ module.exports = function(grunt) {
                         src: ['MainActivity-debug.apk', 'MainActivity-release-unsigned.apk'],
                         dest: '<%= globals.project.build.path %>/android',
                         rename: function(dest, src) {
-                            var replace = globals.project.pkg.name + '-';
-                            replace += options.architecture + '-';
-                            replace += globals.project.pkg['packageVersionCode-' + options.architecture] + '-';
-                            return dest + '/' + src.replace('MainActivity-', replace);
+                            return dest + '/' + src.replace('MainActivity-', globals.project.pkg.name + '-' + options.architecture + '-');
                         }
                     }
                 ]
@@ -360,6 +357,23 @@ module.exports = function(grunt) {
                         src: ['config.xml'],
                         cwd: '<%= globals.project.cordova.path %>',
                         dest: '<%= globals.project.cordova.path %>'
+                    }
+                ]
+            },
+            'cordova-manifest': {
+                options: {
+                    patterns: [{
+                        match: '"10" android:targetSdkVersion',
+                        replacement: '"16" android:targetSdkVersion'
+                    }],
+                    usePrefix: false
+                },
+                files: [
+                    {
+                        src: 'AndroidManifest.xml',
+                        dest: '<%= globals.project.cordova.platforms.android.path %>',
+                        expand: true,
+                        cwd: '<%= globals.project.cordova.platforms.android.path %>'
                     }
                 ]
             },
@@ -620,8 +634,7 @@ module.exports = function(grunt) {
             'clean:cordova-www',
             'copy:cordova-www',
             'copy:cordova-config',
-            'replace:cordova-config',
-            'shell:build-cordova-android'
+            'replace:cordova-config'
         ]);
     });
 
@@ -684,6 +697,7 @@ module.exports = function(grunt) {
             //install cordova android
             'clean:cordova-android',
             'shell:install-cordova-android',
+            'replace:cordova-manifest',
             //install cordova crosswalk
             'install-crosswalk',
             //install cordova plugins
@@ -729,15 +743,18 @@ module.exports = function(grunt) {
      * TASK: run-android
      */
     grunt.registerTask('run-android', function() {
-        grunt.task.run('build-www');
-        if (!grunt.file.isFile(globals.project.cordova.path + '/config.xml')) {
-            grunt.task.run('install-cordova');
+        var cordovaPath = grunt.file.isFile(globals.project.cordova.path + '/config.xml');
+        if (cordovaPath) {
+            grunt.task.run([
+                'build-www',
+                'build-android',
+                'install-crosswalk',
+                'shell:run-cordova-android',
+                'shell:kill-adb'
+            ]);
+        } else {
+            grunt.log.error('Cordova is not installed for this project.');
         }
-        grunt.task.run([
-            'build-android',
-            'shell:run-cordova-android',
-            'shell:kill-adb'
-        ]);
     });
 
     /**
