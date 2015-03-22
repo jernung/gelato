@@ -12,7 +12,8 @@
   "type": "gelato",
   "packageId": "com.gelato.framework.test",
   "packageName": "Gelato Test",
-  "packageVersion": "1",
+  "packageVersionCode-arm": "1",
+  "packageVersionCode-x86": "2",
   "repository": {
     "type": "git",
     "url": "https://github.com/jernung/gelato-framework"

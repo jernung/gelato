@@ -5,7 +5,9 @@
     "version": "0.0.1",
     "type": "gelato",
     "license": "MIT",
-    "packageId": "com.gelato.@@project-name",
+    "packageBundleVersion": "0.0.1",
+    "packageId": "com.jernung.gelato.@@project-name",
     "packageName": "@@project-name",
-    "packageVersion": "1"
+    "packageVersionCode-arm": "1",
+    "packageVersionCode-x86": "2"
 }
