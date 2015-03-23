@@ -535,7 +535,7 @@ module.exports = function(grunt) {
             'install-cordova-crosswalk': {
                 command: [
                     'cd <%= globals.project.cordova.platforms.android.cordovalib.path %>',
-                    'android update project --subprojects --path . --target android-21',
+                    'android update project --subprojects --path . --target "android-21"',
                     'ant debug'
                 ].join(' && '),
                 options: {
@@ -556,8 +556,11 @@ module.exports = function(grunt) {
                     stderr: true
                 }
             },
-            'kill-adb': {
-                command: 'taskkill /F /IM adb.exe',
+            'restart-adb': {
+                command: [
+                    'adb kill-server',
+                    'adb start-server'
+                ].join(' && '),
                 options: {
                     failOnError: false,
                     stderr: true,
@@ -750,7 +753,7 @@ module.exports = function(grunt) {
                 'build-android',
                 'install-crosswalk',
                 'shell:run-cordova-android',
-                'shell:kill-adb'
+                'shell:restart-adb'
             ]);
         } else {
             grunt.log.error('Cordova is not installed for this project.');
