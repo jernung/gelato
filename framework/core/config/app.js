@@ -45,7 +45,7 @@ app = (function() {
             jquery: 'core/libraries/jquery-2.1.3',
             'jquery.mobile': 'core/libraries/jquery.mobile.custom-1.4.5',
             'jquery.ui': 'core/libraries/jquery.ui.custom-1.11.3',
-            'lzstring': 'core/libraries/lzstring-1.4.0',
+            'lzstring': 'core/libraries/lzstring-1.4.1',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.9.0',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
