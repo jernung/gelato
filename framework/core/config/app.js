@@ -174,7 +174,7 @@ app = (function() {
      * @returns {String}
      */
     function getSetting(name) {
-        return localStorage.getItem('application-' + name);
+        return JSON.parse(localStorage.getItem('application-' + name));
     }
 
     /**
@@ -251,10 +251,10 @@ app = (function() {
     /**
      * @method setSetting
      * @param {String} name
-     * @param {String} value
+     * @param {Boolean|Object|String} value
      */
     function setSetting(name, value) {
-        localStorage.setItem('application-' + name, value);
+        localStorage.setItem('application-' + name, JSON.stringify(value));
     }
 
     return {
