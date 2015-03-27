@@ -1,4 +1,4 @@
-package com.jernung.gelato.core;
+package com.jernung.gelato.plugin.core;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaInterface;
@@ -7,23 +7,25 @@ import org.apache.cordova.CordovaWebView;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 
-public class GelatoCorePlugin extends CordovaPlugin {
+public class GelatoPluginCore extends CordovaPlugin {
 
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
 		super.initialize(cordova, webView);
 	}
 
 	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+		Context context = cordova.getActivity().getApplicationContext();
 		if (action.equals("openGooglePlay")) {
 			String packageName = args.getString(0);
-			loadGooglePlay(packageName);
+			if (isPackageInstalled("com.android.vending", context)) {
+				loadGooglePlay(packageName);
+			}
 			return true;
 		}
 		return false;
