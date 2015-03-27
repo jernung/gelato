@@ -16,10 +16,10 @@
                 ], function(Application, Router) {
                     FastClick.attach(document.body);
                     window.app = $.extend(true, new Application(), app);
-                    window.app.router = new Router();
                     if (typeof window.app.start === 'function') {
                         window.app.start();
                     } else {
+                        window.app.router = new Router();
                         window.app.router.start();
                     }
                 });
