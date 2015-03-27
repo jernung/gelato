@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="com.jernung.gelato.plugin.google.analytics"
+        version="0.0.1">
+
+    <name>Google Analytics</name>
+
+    <author>Jernung</author>
+    <description>Google Analytics Plugin</description>
+    <license>MIT</license>
+    <keywords>cordova,plugin,google,analytics</keywords>
+
+    <engines>
+        <engine name="cordova" version=">=3.6.0" />
+    </engines>
+
+    <js-module src="www/analytics.js" name="GelatoPluginGoogleAnalytics">
+        <clobbers target="plugin.google.analytics" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="GelatoPluginGoogleAnalytics" >
+                <param name="android-package" value="com.jernung.gelato.plugin.google.analytics.GelatoPluginGoogleAnalytics"/>
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+            <uses-permission android:name="android.permission.INTERNET" />
+        </config-file>
+
+        <source-file src="src/android/GelatoPluginGoogleAnalytics.java" target-dir="src/com/jernung/gelato/plugin/google/analytics" />
+
+    </platform>
+
+</plugin>
