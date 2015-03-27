@@ -5,7 +5,7 @@
   "preferGlobal": true,
   "author": {
     "name": "Joshua McFarland",
-    "url": "http://www.joshmcfarland.net/"
+    "url": "http://www.jernung.com"
   },
   "license": "MIT",
   "version": "0.0.17",
@@ -16,7 +16,7 @@
   "packageVersionCode-x86": "2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jernung/gelato-framework"
+    "url": "https://www.github.com/jernung/gelato-framework"
   },
   "bin": {
     "gelato": "./bin/cli.js"
