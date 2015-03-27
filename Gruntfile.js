@@ -552,9 +552,7 @@ module.exports = function(grunt) {
             'install-cordova-plugins': {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
-                    'cordova plugin add <%= globals.gelato.includes.plugins.path %>/core',
-                    'cordova plugin add <%= globals.gelato.includes.plugins.path %>/google-playservices',
-                    'cordova plugin add <%= globals.gelato.includes.plugins.path %>/mobfox'
+                    'cordova plugin add <%= globals.gelato.includes.plugins.path %>/core'
                 ].concat(globals.project.config.cordova.plugins.map(function(plugin) {
                         return 'cordova plugin add ' + plugin;
                     })
