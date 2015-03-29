@@ -68,7 +68,7 @@ public class GelatoPluginGoogleBilling extends CordovaPlugin {
 	 * @return {String}
 	 */
 	private String getPublicKey() {
-		return cordova.getActivity().getResources().getString(R.string.billing_key_param);
+		return cordova.getActivity().getResources().getString(R.string.google_public_key);
     }
 	
 	/**
