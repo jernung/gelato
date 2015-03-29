@@ -15,6 +15,7 @@
                     'modules/Router'
                 ], function(Application, Router) {
                     FastClick.attach(document.body);
+                    window.plugin = window.plugin || {};
                     window.app = $.extend(true, new Application(), app);
                     if (typeof window.app.start === 'function') {
                         window.app.start();
