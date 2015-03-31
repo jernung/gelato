@@ -1,0 +1,13 @@
+.gelato-dialog {
+
+  .modal { z-index: 9900; }
+
+  .modal.transparent .modal-content {
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    border: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+}

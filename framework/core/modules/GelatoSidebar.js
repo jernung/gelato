@@ -123,6 +123,17 @@ define([
             return this.element.hasClass('expanded');
         },
         /**
+         * @method remove
+         * @returns {GelatoSidebar}
+         */
+        remove: function() {
+            this.$el.find('*').off();
+            this.stopListening();
+            this.undelegateEvents();
+            $(window).off('resize');
+            return this;
+        },
+        /**
          * @method show
          * @param {Number} [speed]
          * @param {Function} [callback]

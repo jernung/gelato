@@ -63,8 +63,6 @@ define([
          */
         renderTemplate: function(template) {
             GelatoView.prototype.renderTemplate.call(this, template);
-            this.renderDialog();
-            this.renderSidebar();
             return this;
         },
         /**
@@ -76,12 +74,16 @@ define([
         },
         /**
          * @method remove
-         * @returns {GelatoPage}
+         * @returns {GelatoView}
          */
         remove: function() {
-            this.sidebar.remove();
-            GelatoView.prototype.remove.call(this);
-            return this;
+            if (this.dialog) {
+                this.dialog.remove();
+            }
+            if (this.sidebar) {
+                this.sidebar.remove();
+            }
+            return GelatoView.prototype.remove.call(this);
         }
     });
 

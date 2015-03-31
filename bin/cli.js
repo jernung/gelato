@@ -42,7 +42,14 @@ if (shell.exec('cordova --version', {silent: true}).code !== 0) {
  */
 if (argv['_'][0] === 'build') {
     if (globals.project.pkg.type === 'gelato') {
-        var cmd = ['grunt build-project'];
+        var cmd = [];
+        switch (argv['_'][1]) {
+            case 'android':
+                cmd.push('grunt build-android');
+                break;
+            default:
+                cmd.push('grunt build-www');
+        }
         if (argv.noclean) {
             cmd.push('--noclean=true');
         }
@@ -81,6 +88,67 @@ if (argv['_'][0] === 'create') {
 if (argv['_'][0] === 'docs') {
     if (globals.project.pkg.type === 'gelato') {
         shell.exec('grunt docs');
+        process.exit(0);
+    } else {
+        console.log('Not a valid gelato project directory.');
+        process.exit(1);
+    }
+}
+
+/**
+ * INSTALL
+ */
+if (argv['_'][0] === 'install') {
+    if (globals.project.pkg.type === 'gelato') {
+        var cmd = [];
+        switch (argv['_'][1]) {
+            case 'cordova':
+                cmd.push('grunt install-cordova');
+                break;
+            case 'crosswalk':
+                cmd.push('grunt install-crosswalk');
+                break;
+            default:
+                console.log('Select installation target (crosswalk).');
+                process.exit(1);
+                break;
+        }
+        if (argv.arm) {
+            cmd.push('--architecture=arm');
+        }
+        if (argv.x86) {
+            cmd.push('--architecture=x86');
+        }
+        shell.exec(cmd.join(' '));
+        process.exit(0);
+    } else {
+        console.log('Not a valid gelato project directory.');
+        process.exit(1);
+    }
+}
+
+/**
+ * RELEASE
+ */
+if (argv['_'][0] === 'release') {
+    if (globals.project.pkg.type === 'gelato') {
+        var cmd = [];
+        switch (argv['_'][1]) {
+            case 'android':
+                cmd.push('grunt release-android');
+                break;
+            default:
+                console.log('Select release platform (android).');
+                process.exit(1);
+                break;
+        }
+        if (argv.arm) {
+            cmd.push('--architecture=arm');
+        }
+        if (argv.x86) {
+            cmd.push('--architecture=x86');
+        }
+        shell.exec(cmd.join(' '));
         process.exit(0);
     } else {
         console.log('Not a valid gelato project directory.');

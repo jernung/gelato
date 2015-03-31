@@ -1,6 +1,7 @@
 # Directories #
 /.idea
 /.sass-cache
+/build
 /cordova
 /docs
 /gelato

@@ -8,6 +8,7 @@ projectPath = process.env.projectPath = process.env.projectPath || process.cwd()
 
 if (fs.existsSync(gelatoPath + '/package.json')) {
     gelatoPkg = require(gelatoPath + '/package.json');
+    require(gelatoPath + '/framework/core/config/app.js');
 } else {
     console.log('Unable to load framework package file.');
     process.exit(1);
@@ -17,6 +18,10 @@ if (fs.existsSync(projectPath + '/package.json')) {
     projectPkg = require(projectPath + '/package.json');
 } else {
     projectPkg = {}
+}
+
+if (fs.existsSync(projectPath + '/src/config.js')) {
+    require(projectPath + '/src/config.js');
 }
 
 shell.cd(gelatoPath);
@@ -52,6 +57,10 @@ module.exports = {
         pkg: gelatoPkg
     },
     project: {
+        build: {
+            path: projectPath + '/build'
+        },
+        config: app.getConfig(),
         cordova: {
             docs: {
                 path: projectPath + '/docs'

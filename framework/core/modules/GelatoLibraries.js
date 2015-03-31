@@ -16,7 +16,6 @@ define([
     'jasmine.html',
     'jquery',
     'jquery.mobile',
-    'jquery.notify',
     'jquery.ui',
     'lzstring',
     'modernizr',

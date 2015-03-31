@@ -86,6 +86,17 @@ define([
             return this;
         },
         /**
+         * @method remove
+         * @returns {GelatoDialog}
+         */
+        remove: function() {
+            this.$el.find('*').off();
+            this.stopListening();
+            this.undelegateEvents();
+            $(window).off('resize');
+            return this;
+        },
+        /**
          * @method show
          * @param {String} name
          * @param {Object} [options]

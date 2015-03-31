@@ -14,6 +14,9 @@ app = (function() {
      * @type {Object}
      */
     var config = {
+        cordova: {
+            plugins: []
+        },
         modules: [
             {
                 name: 'core/modules/GelatoLibraries'
@@ -22,7 +25,10 @@ app = (function() {
                 name: 'core/modules/GelatoTests'
             },
             {
-                name: 'modules/models/Application'
+                name: 'modules/Application'
+            },
+            {
+                name: 'modules/Router'
             }
         ],
         paths: {
@@ -30,7 +36,7 @@ app = (function() {
             async: 'core/libraries/async-0.9.2',
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
-            bootstrap: 'core/libraries/bootstrap-3.3.2',
+            bootstrap: 'core/libraries/bootstrap-3.3.4',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
             handlebars: 'core/libraries/handlebars-3.0.0',
@@ -38,17 +44,16 @@ app = (function() {
             'jasmine.html': 'core/libraries/jasmine.html-2.2.0',
             jquery: 'core/libraries/jquery-2.1.3',
             'jquery.mobile': 'core/libraries/jquery.mobile.custom-1.4.5',
-            'jquery.notify': 'core/libraries/jquery.notify-0.3.1',
             'jquery.ui': 'core/libraries/jquery.ui.custom-1.11.3',
-            'lzstring': 'core/libraries/lzstring-1.4.0',
+            'lzstring': 'core/libraries/lzstring-1.4.1',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.9.0',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
-            react: 'core/libraries/react-0.13.0',
+            react: 'core/libraries/react-0.13.1',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
-            underscore: 'core/libraries/lodash.compat-3.5.0',
-            webfont: 'core/libraries/webfontloader-1.5.14'
+            underscore: 'core/libraries/lodash.compat-3.6.0',
+            webfont: 'core/libraries/webfontloader-1.5.15'
         },
         shim: {
             //framework shims
@@ -80,11 +85,27 @@ app = (function() {
     };
 
     /**
+     * @method addCordovaPlugins
+     * @param {Array|Object} [plugins]
+     */
+    function addCordovaPlugins(plugins) {
+        this.config.cordova.plugins = mergeArrays(this.config.cordova.plugins, Array.isArray(plugins) ? plugins : [plugins]);
+    }
+
+    /**
      * @method addFonts
      * @param {Object} [fonts]
      */
     function addFonts(fonts) {
         mergeObjects(this.fonts, fonts);
+    }
+
+    /**
+     * @method addModules
+     * @param {Array|Object} [modules]
+     */
+    function addModules(modules) {
+        this.config.modules = mergeArrays(this.config.modules, Array.isArray(modules) ? modules : [modules]);
     }
 
     /**
@@ -101,6 +122,14 @@ app = (function() {
      */
     function addShim(shim) {
         mergeObjects(this.config.shim, shim);
+    }
+
+    /**
+     * @method getConfig
+     * @returns {Object}
+     */
+    function getConfig() {
+        return config;
     }
 
     /**
@@ -145,7 +174,7 @@ app = (function() {
      * @returns {String}
      */
     function getSetting(name) {
-        return localStorage.getItem('application-' + name);
+        return JSON.parse(localStorage.getItem('application-' + name));
     }
 
     /**
@@ -170,6 +199,16 @@ app = (function() {
      */
     function isLocal() {
         return location.hostname === 'localhost' || location.port !== '';
+    }
+
+    /**
+     * @method mergeArrays
+     * @param {Array} array1
+     * @param {Array} array2
+     * @returns {Array}
+     */
+    function mergeArrays (array1, array2) {
+       return array1.concat(array2);
     }
 
     /**
@@ -212,20 +251,23 @@ app = (function() {
     /**
      * @method setSetting
      * @param {String} name
-     * @param {String} value
+     * @param {Boolean|Object|String} value
      */
     function setSetting(name, value) {
-        localStorage.setItem('application-' + name, value);
+        localStorage.setItem('application-' + name, JSON.stringify(value));
     }
 
     return {
+        addCordovaPlugins: addCordovaPlugins,
         addFonts: addFonts,
+        addModules: addModules,
         addPaths: addPaths,
         addShim: addShim,
         attributes: attributes,
         config: config,
         fonts: fonts,
         framework: framework,
+        getConfig: getConfig,
         getHeight: getHeight,
         getLocalStorageSize: getLocalStorageSize,
         getPushState: getPushState,
@@ -234,6 +276,7 @@ app = (function() {
         getWidth: getWidth,
         isCordova: isCordova,
         isLocal: isLocal,
+        mergeArrays: mergeArrays,
         mergeObjects: mergeObjects,
         reload: reload,
         removeSetting: removeSetting,

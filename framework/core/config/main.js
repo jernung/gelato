@@ -12,14 +12,15 @@
                 console.log('LOADING:', 'application');
                 requirejs([
                     'modules/Application',
-                    'modules/routers/Router'
+                    'modules/Router'
                 ], function(Application, Router) {
                     FastClick.attach(document.body);
+                    window.plugin = window.plugin || {};
                     window.app = $.extend(true, new Application(), app);
-                    window.app.router = new Router();
                     if (typeof window.app.start === 'function') {
                         window.app.start();
                     } else {
+                        window.app.router = new Router();
                         window.app.router.start();
                     }
                 });
@@ -30,7 +31,6 @@
     function loadCoreLibraries() {
         window.Async = undefined;
         window.FastClick = undefined;
-        window.Firebase = undefined;
         window.Handlebars = undefined;
         window.LZString = undefined;
         window.Moment = undefined;

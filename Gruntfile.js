@@ -11,9 +11,9 @@ module.exports = function(grunt) {
         appname: grunt.option('appname'),
         architecture: grunt.option('architecture') === undefined ? 'arm' : grunt.option('architecture'),
         hostname: grunt.option('hostname') === undefined ? 'localhost' : grunt.option('hostname'),
-        name: grunt.option('name'),
-        noclean: grunt.option('noclean'),
-        novalidate: grunt.option('novalidate'),
+        name: grunt.option('name') || false,
+        noclean: grunt.option('noclean') || false,
+        novalidate: grunt.option('novalidate') || false,
         port: grunt.option('port') === undefined ? '8080' : grunt.option('port'),
         protocol: grunt.option('protocol') === undefined ? 'http' : grunt.option('protocol')
     };
@@ -49,6 +49,12 @@ module.exports = function(grunt) {
          * CLEAN
          */
         clean: {
+            'build-android': {
+                src: [
+                    '<%= globals.project.build.path %>/android/**/*'
+                ],
+                options: {force: true}
+            },
             'cordova': {
                 src: [
                     '<%= globals.project.path %>/cordova'
@@ -144,6 +150,19 @@ module.exports = function(grunt) {
          * COPY
          */
         copy: {
+            'cordova-android-apk': {
+                files: [
+                    {
+                        expand: true,
+                        cwd: '<%= globals.project.cordova.platforms.android.path %>/ant-build',
+                        src: ['MainActivity-debug.apk', 'MainActivity-release-unsigned.apk'],
+                        dest: '<%= globals.project.build.path %>/android',
+                        rename: function(dest, src) {
+                            return dest + '/' + src.replace('MainActivity-', globals.project.pkg.name + '-' + options.architecture + '-');
+                        }
+                    }
+                ]
+            },
             'cordova-config': {
                 files: [
                     {
@@ -167,7 +186,7 @@ module.exports = function(grunt) {
                         cwd: '<%= globals.gelato.includes.crosswalk.base.path %>-<%= options.architecture %>',
                         src: ['VERSION'],
                         dest: '<%= globals.project.cordova.platforms.android.path %>'
-                    },
+                    }
                 ]
             },
             'cordova-www': {
@@ -186,6 +205,12 @@ module.exports = function(grunt) {
                         expand: true,
                         cwd: '<%= globals.gelato.framework.path %>',
                         src: ['core/**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
+                        dest: '<%= globals.project.gelato.path %>'
+                    },
+                    {
+                        expand: true,
+                        cwd: '<%= globals.gelato.includes.path %>',
+                        src: ['plugins/**/*'],
                         dest: '<%= globals.project.gelato.path %>'
                     }
                 ]
@@ -323,9 +348,12 @@ module.exports = function(grunt) {
                 options: {
                     variables: {
                         'description': '<%= globals.project.pkg.description %>',
+                        'packageBundleVersion': '<%= globals.project.pkg.version %>',
                         'packageId': '<%= globals.project.pkg.packageId %>',
                         'packageName': '<%= globals.project.pkg.packageName %>',
-                        'packageVersion': '<%= globals.project.pkg.packageVersion %>',
+                        'packageVersionCode': function() {
+                            return globals.project.pkg['packageVersionCode-' + options.architecture];
+                        },
                         'version': '<%= globals.project.pkg.version %>'
                     }
                 },
@@ -335,6 +363,23 @@ module.exports = function(grunt) {
                         src: ['config.xml'],
                         cwd: '<%= globals.project.cordova.path %>',
                         dest: '<%= globals.project.cordova.path %>'
+                    }
+                ]
+            },
+            'cordova-manifest': {
+                options: {
+                    patterns: [{
+                        match: '"10" android:targetSdkVersion',
+                        replacement: '"16" android:targetSdkVersion'
+                    }],
+                    usePrefix: false
+                },
+                files: [
+                    {
+                        src: 'AndroidManifest.xml',
+                        dest: '<%= globals.project.cordova.platforms.android.path %>',
+                        expand: true,
+                        cwd: '<%= globals.project.cordova.platforms.android.path %>'
                     }
                 ]
             },
@@ -386,6 +431,43 @@ module.exports = function(grunt) {
             }
         },
         /**
+         * REQUIREJS
+         */
+        requirejs: {
+            'cordova-www': {
+                options: {
+                    baseUrl: globals.project.www.path,
+                    dir: globals.project.cordova.path + '/www',
+                    fileExclusionRegExp: null,
+                    generateSourceMaps: false,
+                    keepBuildDir: false,
+                    modules: globals.project.config.modules,
+                    optimize: 'uglify',
+                    optimizeCss: 'standard',
+                    paths: globals.project.config.paths,
+                    preserveLicenseComments: false,
+                    removeCombined: true,
+                    shim: globals.project.config.shim
+                }
+            },
+            'web-www': {
+                options: {
+                    baseUrl: globals.project.www.path,
+                    dir: globals.project.build.path + '/web',
+                    fileExclusionRegExp: null,
+                    generateSourceMaps: false,
+                    keepBuildDir: false,
+                    modules: globals.project.config.modules,
+                    optimize: 'uglify',
+                    optimizeCss: 'standard',
+                    paths: globals.project.config.paths,
+                    preserveLicenseComments: false,
+                    removeCombined: true,
+                    shim: globals.project.config.shim
+                }
+            }
+        },
+        /**
          * SASS
          */
         sass: {
@@ -394,7 +476,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.gelato.framework.path %>',
-                        src: ['styles/imports.scss'],
+                        src: ['core/styles/gelato.scss', 'styles/imports.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
 
@@ -416,11 +498,31 @@ module.exports = function(grunt) {
          * SHELL
          */
         shell: {
+            'build-cordova-android': {
+                command: [
+                    'cd <%= globals.project.cordova.path %>',
+                    'cordova build android'
+                ].join(' && '),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
+            'build-cordova-android-release': {
+                command: [
+                    'cd <%= globals.project.cordova.path %>',
+                    'cordova build android --release'
+                ].join(' && '),
+                options: {
+                    stdout: true,
+                    stderr: true
+                }
+            },
             'install-cordova': {
                 command: [
                     'cd <%= globals.project.path %>',
                     'cordova create cordova <%= globals.project.pkg.packageId %> "<%= globals.project.pkg.packageName %>"'
-                ].join('&&'),
+                ].join(' && '),
                 options: {
                     stdout: true,
                     stderr: true
@@ -430,7 +532,7 @@ module.exports = function(grunt) {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
                     'cordova platform add android'
-                ].join('&&'),
+                ].join(' && '),
                 options: {
                     stdout: true,
                     stderr: true
@@ -439,9 +541,9 @@ module.exports = function(grunt) {
             'install-cordova-crosswalk': {
                 command: [
                     'cd <%= globals.project.cordova.platforms.android.cordovalib.path %>',
-                    'android update project --subprojects --path . --target android-21',
+                    'android update project --subprojects --path . --target "android-21"',
                     'ant debug'
-                ].join('&&'),
+                ].join(' && '),
                 options: {
                     stdout: true,
                     stderr: true
@@ -450,15 +552,21 @@ module.exports = function(grunt) {
             'install-cordova-plugins': {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
-                    'cordova plugin add <%= globals.gelato.includes.plugins.path %>/gelato-core'
-                ].join('&&'),
+                    'cordova plugin add <%= globals.gelato.includes.plugins.path %>/core'
+                ].concat(globals.project.config.cordova.plugins.map(function(plugin) {
+                        return 'cordova plugin add ' + plugin;
+                    })
+                ).join(' && '),
                 options: {
                     stdout: true,
                     stderr: true
                 }
             },
-            'kill-adb': {
-                command: 'taskkill /F /IM adb.exe',
+            'restart-adb': {
+                command: [
+                    'adb kill-server',
+                    'adb start-server'
+                ].join(' && '),
                 options: {
                     failOnError: false,
                     stderr: true,
@@ -469,7 +577,7 @@ module.exports = function(grunt) {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
                     'cordova run android'
-                ].join('&&'),
+                ].join(' && '),
                 options: {
                     stdout: true,
                     stderr: true
@@ -503,7 +611,7 @@ module.exports = function(grunt) {
                     '<%= globals.project.path %>/**/*.jsx',
                     '<%= globals.project.path %>/**/*.scss'
                 ],
-                tasks: ['build-project'],
+                tasks: ['build-www'],
                 options: {
                     spawn: false
                 }
@@ -527,9 +635,22 @@ module.exports = function(grunt) {
     });
 
     /**
-     * TASK: build-project
+     * TASK: build-android
      */
-    grunt.registerTask('build-project', function() {
+    grunt.registerTask('build-android', function() {
+        grunt.task.run([
+            'build-www',
+            'clean:cordova-www',
+            'copy:cordova-www',
+            'copy:cordova-config',
+            'replace:cordova-config'
+        ]);
+    });
+
+    /**
+     * TASK: build-www
+     */
+    grunt.registerTask('build-www', function() {
         if (options.noclean) {
             grunt.log.writeln('Skipping clean.');
         } else {
@@ -579,29 +700,26 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('install-cordova', function() {
         grunt.task.run([
+            //install cordova
             'clean:cordova',
             'shell:install-cordova',
-            'shell:install-cordova-plugins',
-            'install-cordova-android'
+            //install cordova android
+            'clean:cordova-android',
+            'shell:install-cordova-android',
+            'replace:cordova-manifest',
+            //install cordova crosswalk
+            'install-crosswalk',
+            //install cordova plugins
+            'shell:install-cordova-plugins'
         ]);
     });
 
     /**
-     * TASK: install-cordova-android
+     * TASK: install-crosswalk
      */
-    grunt.registerTask('install-cordova-android', function() {
-        if (!grunt.file.isFile(globals.project.cordova.path + '/config.xml')) {
-            grunt.task.run('install-cordova');
-        }
-        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.arm.path + '/VERSION')) {
-            grunt.task.run('unzip-cordova-crosswalk');
-        }
-        if (!grunt.file.isFile(globals.gelato.includes.crosswalk.x86.path + '/VERSION')) {
-            grunt.task.run('unzip-cordova-crosswalk');
-        }
+    grunt.registerTask('install-crosswalk', function() {
         grunt.task.run([
-            'clean:cordova-android',
-            'shell:install-cordova-android',
+            'unzip-cordova-crosswalk',
             'clean:cordova-android-cordovalib',
             'copy:cordova-crosswalk',
             'shell:install-cordova-crosswalk'
@@ -619,21 +737,33 @@ module.exports = function(grunt) {
     });
 
     /**
+     * TASK: RELEASE-ANDROID
+     */
+    grunt.registerTask('release-android', function() {
+        grunt.task.run([
+            'build-android',
+            'install-crosswalk',
+            'shell:build-cordova-android-release',
+            'copy:cordova-android-apk'
+        ]);
+    });
+
+    /**
      * TASK: run-android
      */
     grunt.registerTask('run-android', function() {
-        grunt.task.run('build-project');
-        if (!grunt.file.isFile(globals.project.cordova.platforms.android.path + '/VERSION')) {
-            grunt.task.run('install-cordova-android');
+        var cordovaPath = grunt.file.isFile(globals.project.cordova.path + '/config.xml');
+        if (cordovaPath) {
+            grunt.task.run([
+                'build-www',
+                'build-android',
+                'install-crosswalk',
+                'shell:run-cordova-android',
+                'shell:restart-adb'
+            ]);
+        } else {
+            grunt.log.error('Cordova is not installed for this project.');
         }
-        grunt.task.run([
-            'clean:cordova-www',
-            'copy:cordova-www',
-            'copy:cordova-config',
-            'replace:cordova-config',
-            'shell:run-cordova-android',
-            'shell:kill-adb'
-        ]);
     });
 
     /**
@@ -649,11 +779,15 @@ module.exports = function(grunt) {
      * TASK: unzip-cordova-crosswalk
      */
     grunt.registerTask('unzip-cordova-crosswalk', function() {
-        grunt.task.run([
-            'clean:cordova-crosswalk',
-            'unzip:cordova-crosswalk-arm',
-            'unzip:cordova-crosswalk-x86'
-        ]);
+        var armPath = grunt.file.isFile(globals.gelato.includes.crosswalk.arm.path + '/VERSION');
+        var x86Path = grunt.file.isFile(globals.gelato.includes.crosswalk.x86.path + '/VERSION');
+        if (!armPath || !x86Path) {
+            grunt.task.run([
+                'clean:cordova-crosswalk',
+                'unzip:cordova-crosswalk-arm',
+                'unzip:cordova-crosswalk-x86'
+            ]);
+        }
     });
 
     /**
@@ -671,7 +805,7 @@ module.exports = function(grunt) {
      */
     grunt.registerTask('watch-project', function() {
         grunt.task.run([
-            'build-project',
+            'build-www',
             'watch:project-src'
         ]);
     });

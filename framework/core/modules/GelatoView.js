@@ -9,6 +9,14 @@ define([], function() {
      */
     var GelatoView = Backbone.View.extend({
         /**
+         * @method renderEvents
+         * @returns {GelatoView}
+         */
+        renderEvents: function() {
+            this.$('[data-url]').off().on('vclick', $.proxy(this.handleNavigateClicked, this));
+            return this;
+        },
+        /**
          * @method renderTemplate
          * @param {String} template
          * @returns {GelatoView}
@@ -17,7 +25,7 @@ define([], function() {
             var self = this;
             var resize = null;
             this.$el.html(Handlebars.compile(template)(app.strings));
-            this.$('[data-url]').on('vclick', $.proxy(this.handleNavigateClicked, this));
+            this.renderEvents();
             $(window).resize(function(event) {
                 clearTimeout(resize);
                 resize = setTimeout(function() {
@@ -56,6 +64,7 @@ define([], function() {
             this.$el.empty();
             this.$el.find('*').off();
             this.stopListening();
+            this.undelegateEvents();
             $(window).off('resize');
             return this;
         },
