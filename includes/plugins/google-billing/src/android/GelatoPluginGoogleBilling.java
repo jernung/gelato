@@ -16,7 +16,7 @@ import com.jernung.gelato.plugin.google.billing.util.IabResult;
 import com.jernung.gelato.plugin.google.billing.util.Inventory;
 import com.jernung.gelato.plugin.google.billing.util.Purchase;
 import com.jernung.gelato.plugin.google.billing.util.SkuDetails;
-import com.jernung.writeit.klingon.R;
+import com.jernung.gelato.test.R;
 
 public class GelatoPluginGoogleBilling extends CordovaPlugin {
 	

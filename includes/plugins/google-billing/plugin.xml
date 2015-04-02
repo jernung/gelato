@@ -32,7 +32,7 @@
             <uses-permission android:name="com.android.vending.BILLING" />
         </config-file>
 
-        <source-file src="res/values/billing_key_param.xml" target-dir="res/values" />
+        <source-file src="res/values/google_public_key.xml" target-dir="res/values" />
 
         <source-file src="libs/IInAppBillingService.aidl" target-dir="src/com/android/vending/billing" />
 
