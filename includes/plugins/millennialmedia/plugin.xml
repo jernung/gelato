@@ -35,7 +35,6 @@
             <uses-permission android:name="android.permission.INTERNET" />
             <uses-permission android:name="android.permission.RECORD_AUDIO" />
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-            <uses-feature android:name="android.hardware.microphone" android:required="false" />
         </config-file>
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
@@ -44,13 +43,8 @@
                       android:configChanges="keyboardHidden|orientation|keyboard" ></activity>
         </config-file>
 
-        <source-file src="libs/android/cordova-generic-ad.jar" target-dir="libs" />
-        <source-file src="libs/android/MMSDK.jar" target-dir="libs" />
-        <source-file src="libs/android/nmdp_speech_kit.jar" target-dir="libs" />
-        <source-file src="libs/android/armeabi/libnmsp_speex.so" target-dir="libs/armeabi" />
+        <source-file src="libs/MMSDK.jar" target-dir="libs" />
 
-        <source-file src="src/android/PluginAdapterDelegate.java" target-dir="src/com/rjfun/cordova/ext" />
-        <source-file src="src/android/CordovaPluginExt.java" target-dir="src/com/rjfun/cordova/ext" />
         <source-file src="src/android/GelatoPluginMillennialMedia.java" target-dir="src/com/jernung/gelato/plugin/millennialmedia" />
 
     </platform>
