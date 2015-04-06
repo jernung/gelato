@@ -312,8 +312,7 @@ module.exports = function(grunt) {
                 src: [
                     'Gruntfile.js',
                     '<%= globals.project.www.path %>/**/*.js',
-                    '!<%= globals.project.www.path %>/libraries/**/*.js',
-                    '!<%= globals.project.www.path %>/core/libraries/**/*.js'
+                    '!<%= globals.project.www.path %>/**/libraries/**/*.js'
                 ]
             }
         },
