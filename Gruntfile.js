@@ -440,13 +440,13 @@ module.exports = function(grunt) {
                     fileExclusionRegExp: null,
                     generateSourceMaps: false,
                     keepBuildDir: false,
-                    modules: globals.project.config.modules,
+                    modules: globals.project.app.config.modules,
                     optimize: 'uglify',
                     optimizeCss: 'standard',
-                    paths: globals.project.config.paths,
+                    paths: globals.project.app.config.paths,
                     preserveLicenseComments: false,
                     removeCombined: true,
-                    shim: globals.project.config.shim
+                    shim: globals.project.app.config.shim
                 }
             },
             'web-www': {
@@ -456,13 +456,13 @@ module.exports = function(grunt) {
                     fileExclusionRegExp: null,
                     generateSourceMaps: false,
                     keepBuildDir: false,
-                    modules: globals.project.config.modules,
+                    modules: globals.project.app.config.modules,
                     optimize: 'uglify',
                     optimizeCss: 'standard',
-                    paths: globals.project.config.paths,
+                    paths: globals.project.app.config.paths,
                     preserveLicenseComments: false,
                     removeCombined: true,
-                    shim: globals.project.config.shim
+                    shim: globals.project.app.config.shim
                 }
             }
         },
@@ -552,7 +552,7 @@ module.exports = function(grunt) {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
                     'cordova plugin add <%= globals.gelato.includes.plugins.path %>/core'
-                ].concat(globals.project.config.cordova.plugins.map(function(plugin) {
+                ].concat(globals.project.app.config.cordova.plugins.map(function(plugin) {
                         return 'cordova plugin add ' + plugin;
                     })
                 ).join(' && '),

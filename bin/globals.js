@@ -57,10 +57,10 @@ module.exports = {
         pkg: gelatoPkg
     },
     project: {
+        app: app,
         build: {
             path: projectPath + '/build'
         },
-        config: app.getConfig(),
         cordova: {
             docs: {
                 path: projectPath + '/docs'
