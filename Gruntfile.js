@@ -273,8 +273,7 @@ module.exports = function(grunt) {
                     import: 2
                 },
                 src: [
-                    '<%= globals.project.www.path %>/styles/**/*.css',
-                    '!<%= globals.project.www.path %>/styles/fonts.css'
+                    '<%= globals.project.www.path %>/styles/main.css'
                 ]
             }
         },
@@ -475,7 +474,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.gelato.framework.path %>',
-                        src: ['core/styles/gelato.scss', 'styles/imports.scss'],
+                        src: ['core/styles/gelato.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
 
@@ -483,7 +482,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.project.src.path %>',
-                        src: ['styles/imports.scss'],
+                        src: ['styles/imports.scss', 'styles/main.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
                     }
