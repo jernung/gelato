@@ -89,7 +89,7 @@ app = (function() {
      * @param {Array|Object} [plugins]
      */
     function addCordovaPlugins(plugins) {
-        this.config.cordova.plugins = mergeArrays(this.config.cordova.plugins, Array.isArray(plugins) ? plugins : [plugins]);
+        config.cordova.plugins = mergeArrays(config.cordova.plugins, sanitizeArray(plugins));
     }
 
     /**
@@ -97,7 +97,7 @@ app = (function() {
      * @param {Object} [fonts]
      */
     function addFonts(fonts) {
-        mergeObjects(this.fonts, fonts);
+        mergeObjects(fonts, sanitizeObject(fonts));
     }
 
     /**
@@ -105,7 +105,7 @@ app = (function() {
      * @param {Array|Object} [modules]
      */
     function addModules(modules) {
-        this.config.modules = mergeArrays(this.config.modules, Array.isArray(modules) ? modules : [modules]);
+        config.modules = mergeArrays(config.modules, sanitizeArray(modules));
     }
 
     /**
@@ -113,7 +113,7 @@ app = (function() {
      * @param {Object} [paths]
      */
     function addPaths(paths) {
-        mergeObjects(this.config.paths, paths);
+        mergeObjects(config.paths, sanitizeObject(paths));
     }
 
     /**
@@ -121,15 +121,7 @@ app = (function() {
      * @param {Object} [shim]
      */
     function addShim(shim) {
-        mergeObjects(this.config.shim, shim);
-    }
-
-    /**
-     * @method getConfig
-     * @returns {Object}
-     */
-    function getConfig() {
-        return config;
+        mergeObjects(config.shim, sanitizeObject(shim));
     }
 
     /**
@@ -249,6 +241,22 @@ app = (function() {
     }
 
     /**
+     * @method sanitizeArray
+     * @param {Array} array
+     */
+    function sanitizeArray(array) {
+        return Array.isArray(array) ? array : [];
+    }
+
+    /**
+     * @method sanitizeObject
+     * @param {Object} object
+     */
+    function sanitizeObject(object) {
+        return Object.prototype.toString.call(object) === '[object Object]' ? object : {};
+    }
+
+    /**
      * @method setSetting
      * @param {String} name
      * @param {Boolean|Object|String} value
@@ -267,7 +275,6 @@ app = (function() {
         config: config,
         fonts: fonts,
         framework: framework,
-        getConfig: getConfig,
         getHeight: getHeight,
         getLocalStorageSize: getLocalStorageSize,
         getPushState: getPushState,
