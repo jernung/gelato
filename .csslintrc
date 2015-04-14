@@ -1,3 +1,5 @@
 {
-  "adjoining-classes": false
+  "adjoining-classes": false,
+  "font-sizes": false,
+  "ids": false
 }
