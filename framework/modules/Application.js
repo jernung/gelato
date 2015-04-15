@@ -3,8 +3,10 @@
  * @submodule Models
  */
 define([
-    'core/modules/GelatoApplication'
-], function(GelatoApplication) {
+    'core/modules/GelatoApplication',
+    'core/modules/GelatoDialog',
+    'core/modules/GelatoSidebar'
+], function(GelatoApplication, GelatoDialog, GelatoSidebar) {
 
     /**
      * @class Application
@@ -15,7 +17,10 @@ define([
          * @method initialize
          * @constructor
          */
-        initialize: function() {}
+        initialize: function() {
+            this.dialog = new GelatoDialog();
+            this.sidebar = new GelatoSidebar();
+        }
     });
 
     return Application;

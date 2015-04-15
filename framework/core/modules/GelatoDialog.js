@@ -2,8 +2,9 @@
  * @module Core
  */
 define([
+    'require.text!templates/components/dialogs.html',
     'core/modules/GelatoView'
-], function(GelatoView) {
+], function(Template, GelatoView) {
 
     /**
      * @class GelatoDialog
@@ -14,34 +15,23 @@ define([
          * @method initialize
          * @constructor
          */
-        initialize: function(options) {
-            options = options || {};
+        initialize: function() {
             this.element = null;
-            this.page = options.page;
             this.state = 'hidden';
+            this.render();
         },
         /**
-         * @property events
-         * @type Object
+         * @property el
+         * @type String
          */
-        events: {
-            'vclick [data-dialog]': 'handleClickDialogToggle'
-        },
+        el: '#gelato-dialog',
         /**
-         * @method handleClickDialogToggle
-         * @param {Event} event
+         * @method render
+         * @returns {GelatoDialog}
          */
-        handleClickDialogToggle: function(event) {
-            event.preventDefault();
-            var options = {};
-            var target = $(event.currentTarget);
-            var name = target.data('dialog');
-            //TODO: parse keyboard, show and remote as boolean
-            options.backdrop = target.data('backdrop');
-            options.keyboard = target.data('keyboard');
-            options.show = target.data('show');
-            options.remote = target.data('remote');
-            this.show(name, options);
+        render: function() {
+            this.renderTemplate(Template);
+            return this;
         },
         /**
          * @method handleModalHide
@@ -86,17 +76,6 @@ define([
             return this;
         },
         /**
-         * @method remove
-         * @returns {GelatoDialog}
-         */
-        remove: function() {
-            this.$el.find('*').off();
-            this.stopListening();
-            this.undelegateEvents();
-            $(window).off('resize');
-            return this;
-        },
-        /**
          * @method show
          * @param {String} name
          * @param {Object} [options]
@@ -109,7 +88,7 @@ define([
             options.show = options.show || true;
             options.remote = options.remote || false;
             if (this.state === 'hidden') {
-                this.element = this.$('#' + name + ' .modal');
+                this.element = this.$('#' + name);
                 this.element.one('show.bs.modal', $.proxy(this.handleModalShow, this));
                 this.element.one('shown.bs.modal', $.proxy(this.handleModalShown, this));
                 this.element.one('hide.bs.modal', $.proxy(this.handleModalHide, this));
