@@ -16,7 +16,7 @@ define([
          * @property el
          * @type String
          */
-        el: '#application',
+        el: '#gelato-application',
         /**
          * @property title
          * @type String
