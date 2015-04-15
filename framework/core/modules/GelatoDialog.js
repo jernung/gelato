@@ -46,9 +46,10 @@ define([
          * @param {Event} event
          */
         handleModalHidden: function(event) {
+            $(event.target).find('*').off();
             this.state = 'hidden';
             this.element = null;
-            $(event.target).find('*').off();
+            this.$el.removeClass('active');
             this.trigger('hidden', event);
         },
         /**
@@ -88,6 +89,7 @@ define([
             options.show = options.show || true;
             options.remote = options.remote || false;
             if (this.state === 'hidden') {
+                this.$el.addClass('active');
                 this.element = this.$('#' + name);
                 this.element.one('show.bs.modal', $.proxy(this.handleModalShow, this));
                 this.element.one('shown.bs.modal', $.proxy(this.handleModalShown, this));
