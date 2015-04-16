@@ -34,6 +34,35 @@ define([
             return this;
         },
         /**
+         * @property events
+         * @type Object
+         */
+        events: {
+            'vclick button': 'handleClickButton'
+        },
+        /**
+         * @method getName
+         * @returns {String}
+         */
+        getName: function() {
+          return this.element ? this.element.get(0).id : null;
+        },
+        /**
+         * @method handleClickButton
+         * @param event
+         */
+        handleClickButton: function(event) {
+            event.preventDefault();
+            var buttonAction = $(event.currentTarget).data('action');
+            var dialogName = this.getName();
+            if (buttonAction) {
+                this.trigger(dialogName + ':' + buttonAction + ':click', event);
+                this.trigger('button:click', dialogName + ':' + buttonAction, event);
+            } else {
+                this.trigger('button:click', dialogName, event);
+            }
+        },
+        /**
          * @method handleModalHide
          * @param {Event} event
          */
