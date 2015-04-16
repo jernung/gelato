@@ -3,7 +3,7 @@
  * @submodule Routers
  */
 define([
-    '../core/modules/GelatoRouter',
+    'core/modules/GelatoRouter',
     'modules/pages/Home'
 ], function(GelatoRouter, PageHome) {
 
@@ -23,8 +23,8 @@ define([
          * @method showDefault
          */
         showDefault: function() {
-            this.activePage = new PageHome();
-            this.activePage.render();
+            this.page = new PageHome();
+            this.page.render();
         }
     });
 

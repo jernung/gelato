@@ -2,10 +2,8 @@
  * @module Core
  */
 define([
-    'core/modules/GelatoView',
-    'core/modules/GelatoDialog',
-    'core/modules/GelatoSidebar'
-], function(GelatoView, GelatoDialog, GelatoSidebar) {
+    'core/modules/GelatoView'
+], function(GelatoView) {
 
     /**
      * @class GelatoPage
@@ -21,34 +19,7 @@ define([
          * @property title
          * @type String
          */
-        title: app.strings.global.title,
-        /**
-         * @method disableForm
-         * @param {String} [selector]
-         * @returns {GelatoPage}
-         */
-        disableForm: function(selector) {
-            this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
-            return this;
-        },
-        /**
-         * @method enableForm
-         * @param {String} [selector]
-         * @returns {GelatoPage}
-         */
-        enableForm: function(selector) {
-            this.$((selector ? selector : ' ') + ':input').prop('disabled', false);
-            return this;
-        },
-        /**
-         * @method renderTemplate
-         * @param {String} template
-         * @returns {GelatoPage}
-         */
-        renderTemplate: function(template) {
-            GelatoView.prototype.renderTemplate.call(this, template);
-            return this;
-        },
+        title: i18n.global.title,
         /**
          * @method getName
          * @returns {String}
