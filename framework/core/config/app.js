@@ -39,7 +39,7 @@ app = (function() {
             bootstrap: 'core/libraries/bootstrap-3.3.4',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
-            handlebars: 'core/libraries/handlebars-3.0.0',
+            handlebars: 'core/libraries/handlebars-3.0.1',
             jasmine: 'core/libraries/jasmine-2.2.0',
             'jasmine.html': 'core/libraries/jasmine.html-2.2.0',
             jquery: 'core/libraries/jquery-2.1.3',
@@ -47,13 +47,13 @@ app = (function() {
             'jquery.ui': 'core/libraries/jquery.ui.custom-1.11.3',
             'lzstring': 'core/libraries/lzstring-1.4.1',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
-            moment: 'core/libraries/moment-2.9.0',
+            moment: 'core/libraries/moment-2.10.2',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
             react: 'core/libraries/react-0.13.1',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
             underscore: 'core/libraries/lodash.compat-3.6.0',
-            webfont: 'core/libraries/webfontloader-1.5.16'
+            webfont: 'core/libraries/webfontloader-1.5.18'
         },
         shim: {
             //framework shims
@@ -89,7 +89,7 @@ app = (function() {
      * @param {Array|Object} [plugins]
      */
     function addCordovaPlugins(plugins) {
-        this.config.cordova.plugins = mergeArrays(this.config.cordova.plugins, Array.isArray(plugins) ? plugins : [plugins]);
+        config.cordova.plugins = mergeArrays(config.cordova.plugins, sanitizeArray(plugins));
     }
 
     /**
@@ -97,7 +97,7 @@ app = (function() {
      * @param {Object} [fonts]
      */
     function addFonts(fonts) {
-        mergeObjects(this.fonts, fonts);
+        mergeObjects(fonts, sanitizeObject(fonts));
     }
 
     /**
@@ -105,7 +105,7 @@ app = (function() {
      * @param {Array|Object} [modules]
      */
     function addModules(modules) {
-        this.config.modules = mergeArrays(this.config.modules, Array.isArray(modules) ? modules : [modules]);
+        config.modules = mergeArrays(config.modules, sanitizeArray(modules));
     }
 
     /**
@@ -113,7 +113,7 @@ app = (function() {
      * @param {Object} [paths]
      */
     function addPaths(paths) {
-        mergeObjects(this.config.paths, paths);
+        mergeObjects(config.paths, sanitizeObject(paths));
     }
 
     /**
@@ -121,15 +121,7 @@ app = (function() {
      * @param {Object} [shim]
      */
     function addShim(shim) {
-        mergeObjects(this.config.shim, shim);
-    }
-
-    /**
-     * @method getConfig
-     * @returns {Object}
-     */
-    function getConfig() {
-        return config;
+        mergeObjects(config.shim, sanitizeObject(shim));
     }
 
     /**
@@ -249,6 +241,22 @@ app = (function() {
     }
 
     /**
+     * @method sanitizeArray
+     * @param {Array} array
+     */
+    function sanitizeArray(array) {
+        return Array.isArray(array) ? array : [];
+    }
+
+    /**
+     * @method sanitizeObject
+     * @param {Object} object
+     */
+    function sanitizeObject(object) {
+        return Object.prototype.toString.call(object) === '[object Object]' ? object : {};
+    }
+
+    /**
      * @method setSetting
      * @param {String} name
      * @param {Boolean|Object|String} value
@@ -267,7 +275,6 @@ app = (function() {
         config: config,
         fonts: fonts,
         framework: framework,
-        getConfig: getConfig,
         getHeight: getHeight,
         getLocalStorageSize: getLocalStorageSize,
         getPushState: getPushState,

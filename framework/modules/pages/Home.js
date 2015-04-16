@@ -21,7 +21,7 @@ define([
          * @property title
          * @type String
          */
-        title: 'Home - ' + app.strings.global.title,
+        title: 'Home - ' + i18n.global.title,
         /**
          * @method render
          * @returns {PageHome}

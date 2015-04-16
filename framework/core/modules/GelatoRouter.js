@@ -9,33 +9,38 @@ define([], function() {
      */
     var GelatoRouter = Backbone.Router.extend({
         /**
-         * @property activePage
+         * @property page
          * @type GelatoPage
          */
-        activePage: null,
+        page: null,
         /**
          * @method after
          */
         after: function() {
-            if (this.activePage) {
-                console.log('PAGE:', this.activePage.getName());
-                document.title = this.activePage.title;
+            if (this.page) {
+                console.log('PAGE:', this.page.getName());
+                document.title = this.page.title;
             }
         },
         /**
          * @method before
          */
         before: function() {
-            if (this.activePage) {
-                this.activePage.remove();
-                this.activePage = null;
+            if (this.page) {
+                this.page.remove();
+                this.page = null;
             }
         },
         /**
          * @method start
+         * @returns {GelatoRouter}
          */
         start: function() {
-            Backbone.history.start({pushState: app.getPushState(), root: app.getRoot()});
+            Backbone.history.start({
+                pushState: app.getPushState(),
+                root: app.getRoot()
+            });
+            return this;
         }
     });
 

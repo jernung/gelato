@@ -2,8 +2,9 @@
  * @module Core
  */
 define([
+    'require.text!templates/components/dialogs.html',
     'core/modules/GelatoView'
-], function(GelatoView) {
+], function(Template, GelatoView) {
 
     /**
      * @class GelatoDialog
@@ -14,34 +15,51 @@ define([
          * @method initialize
          * @constructor
          */
-        initialize: function(options) {
-            options = options || {};
+        initialize: function() {
             this.element = null;
-            this.page = options.page;
             this.state = 'hidden';
+            this.render();
+        },
+        /**
+         * @property el
+         * @type String
+         */
+        el: '#gelato-dialog',
+        /**
+         * @method render
+         * @returns {GelatoDialog}
+         */
+        render: function() {
+            this.renderTemplate(Template);
+            return this;
         },
         /**
          * @property events
          * @type Object
          */
         events: {
-            'vclick [data-dialog]': 'handleClickDialogToggle'
+            'vclick button': 'handleClickButton'
         },
         /**
-         * @method handleClickDialogToggle
-         * @param {Event} event
+         * @method getName
+         * @returns {String}
          */
-        handleClickDialogToggle: function(event) {
-            event.preventDefault();
-            var options = {};
-            var target = $(event.currentTarget);
-            var name = target.data('dialog');
-            //TODO: parse keyboard, show and remote as boolean
-            options.backdrop = target.data('backdrop');
-            options.keyboard = target.data('keyboard');
-            options.show = target.data('show');
-            options.remote = target.data('remote');
-            this.show(name, options);
+        getName: function() {
+          return this.element ? this.element.get(0).id : null;
+        },
+        /**
+         * @method handleClickButton
+         * @param event
+         */
+        handleClickButton: function(event) {
+            var buttonAction = $(event.currentTarget).data('action');
+            var dialogName = this.getName();
+            if (buttonAction) {
+                this.trigger(dialogName + ':' + buttonAction, event);
+                this.trigger('button:click', dialogName + ':' + buttonAction, event);
+            } else {
+                this.trigger('button:click', dialogName, event);
+            }
         },
         /**
          * @method handleModalHide
@@ -56,9 +74,10 @@ define([
          * @param {Event} event
          */
         handleModalHidden: function(event) {
+            $(event.target).find('*').off();
             this.state = 'hidden';
             this.element = null;
-            $(event.target).find('*').off();
+            this.$el.removeClass('active');
             this.trigger('hidden', event);
         },
         /**
@@ -86,17 +105,6 @@ define([
             return this;
         },
         /**
-         * @method remove
-         * @returns {GelatoDialog}
-         */
-        remove: function() {
-            this.$el.find('*').off();
-            this.stopListening();
-            this.undelegateEvents();
-            $(window).off('resize');
-            return this;
-        },
-        /**
          * @method show
          * @param {String} name
          * @param {Object} [options]
@@ -109,7 +117,8 @@ define([
             options.show = options.show || true;
             options.remote = options.remote || false;
             if (this.state === 'hidden') {
-                this.element = this.$('#' + name + ' .modal');
+                this.$el.addClass('active');
+                this.element = this.$('#' + name);
                 this.element.one('show.bs.modal', $.proxy(this.handleModalShow, this));
                 this.element.one('shown.bs.modal', $.proxy(this.handleModalShown, this));
                 this.element.one('hide.bs.modal', $.proxy(this.handleModalHide, this));

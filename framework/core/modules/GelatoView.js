@@ -8,24 +8,17 @@ define([], function() {
      * @extends Backbone.View
      */
     var GelatoView = Backbone.View.extend({
+
         /**
          * @method renderEvents
          * @returns {GelatoView}
          */
         renderEvents: function() {
-            this.$('[data-url]').off().on('vclick', $.proxy(this.handleNavigateClicked, this));
-            return this;
-        },
-        /**
-         * @method renderTemplate
-         * @param {String} template
-         * @returns {GelatoView}
-         */
-        renderTemplate: function(template) {
             var self = this;
             var resize = null;
-            this.$el.html(Handlebars.compile(template)(app.strings));
-            this.renderEvents();
+            this.$('[data-dialog]').off().on('vclick', $.proxy(this.handleClickDataDialog, this));
+            this.$('[data-sidebar]').off().on('vclick', $.proxy(this.handleClickDataSidebar, this));
+            this.$('[data-url]').off().on('vclick', $.proxy(this.handleClickDataUrl, this));
             $(window).resize(function(event) {
                 clearTimeout(resize);
                 resize = setTimeout(function() {
@@ -35,10 +28,60 @@ define([], function() {
             return this;
         },
         /**
-         * @method handleNavigateClicked
+         * @method renderTemplate
+         * @param {String} template
+         * @returns {GelatoView}
+         */
+        renderTemplate: function(template) {
+            this.$el.html(Handlebars.compile(template)(i18n));
+            this.renderEvents();
+            return this;
+        },
+        /**
+         * @method disableForm
+         * @param {String} [selector]
+         * @returns {GelatoView}
+         */
+        disableForm: function(selector) {
+            this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
+            return this;
+        },
+        /**
+         * @method enableForm
+         * @param {String} [selector]
+         * @returns {GelatoView}
+         */
+        enableForm: function(selector) {
+            this.$((selector ? selector : ' ') + ':input').prop('disabled', false);
+            return this;
+        },
+        /**
+         * @method handleClickDataDialog
          * @param {Event} event
          */
-        handleNavigateClicked: function(event) {
+        handleClickDataDialog: function(event) {
+            event.preventDefault();
+            var dialogName = $(event.currentTarget).data('dialog');
+            if (app.dialog) {
+                app.dialog.show(dialogName);
+            }
+        },
+        /**
+         * @method handleClickDataSidebar
+         * @param {Event} event
+         */
+        handleClickDataSidebar: function(event) {
+            event.preventDefault();
+            var sidebarName = $(event.currentTarget).data('sidebar');
+            if (app.sidebar) {
+                app.sidebar.show(sidebarName);
+            }
+        },
+        /**
+         * @method handleClickDataUrl
+         * @param {Event} event
+         */
+        handleClickDataUrl: function(event) {
             event.preventDefault();
             var url = $(event.currentTarget).data('url').replace('#', app.isLocal() ? '/#' : '');
             var replace = $(event.currentTarget).data('replace');
@@ -66,13 +109,6 @@ define([], function() {
             this.stopListening();
             this.undelegateEvents();
             $(window).off('resize');
-            return this;
-        },
-        /**
-         * @method resize
-         * @returns {GelatoView}
-         */
-        resize: function() {
             return this;
         },
         /**

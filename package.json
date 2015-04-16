@@ -8,7 +8,7 @@
     "url": "http://www.jernung.com"
   },
   "license": "MIT",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "type": "gelato",
   "packageId": "com.gelato.framework.test",
   "packageName": "Gelato Test",
@@ -31,7 +31,7 @@
     "grunt-contrib-csslint": "0.4.0",
     "grunt-contrib-htmlmin": "0.4.0",
     "grunt-contrib-jade": "0.14.1",
-    "grunt-contrib-jshint": "0.11.1",
+    "grunt-contrib-jshint": "0.11.2",
     "grunt-contrib-requirejs": "0.4.4",
     "grunt-contrib-sass": "0.9.2",
     "grunt-contrib-watch": "0.6.1",
