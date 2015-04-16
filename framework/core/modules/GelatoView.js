@@ -8,14 +8,23 @@ define([], function() {
      * @extends Backbone.View
      */
     var GelatoView = Backbone.View.extend({
+
         /**
          * @method renderEvents
          * @returns {GelatoView}
          */
         renderEvents: function() {
+            var self = this;
+            var resize = null;
             this.$('[data-dialog]').off().on('vclick', $.proxy(this.handleClickDataDialog, this));
             this.$('[data-sidebar]').off().on('vclick', $.proxy(this.handleClickDataSidebar, this));
             this.$('[data-url]').off().on('vclick', $.proxy(this.handleClickDataUrl, this));
+            $(window).resize(function(event) {
+                clearTimeout(resize);
+                resize = setTimeout(function() {
+                    self.trigger('resize', event);
+                }, 100);
+            });
             return this;
         },
         /**
@@ -24,16 +33,26 @@ define([], function() {
          * @returns {GelatoView}
          */
         renderTemplate: function(template) {
-            var self = this;
-            var resize = null;
-            this.$el.html(Handlebars.compile(template)(app.strings));
+            this.$el.html(Handlebars.compile(template)(i18n));
             this.renderEvents();
-            $(window).resize(function(event) {
-                clearTimeout(resize);
-                resize = setTimeout(function() {
-                    self.trigger('resize', event);
-                }, 100);
-            });
+            return this;
+        },
+        /**
+         * @method disableForm
+         * @param {String} [selector]
+         * @returns {GelatoView}
+         */
+        disableForm: function(selector) {
+            this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
+            return this;
+        },
+        /**
+         * @method enableForm
+         * @param {String} [selector]
+         * @returns {GelatoView}
+         */
+        enableForm: function(selector) {
+            this.$((selector ? selector : ' ') + ':input').prop('disabled', false);
             return this;
         },
         /**
@@ -90,13 +109,6 @@ define([], function() {
             this.stopListening();
             this.undelegateEvents();
             $(window).off('resize');
-            return this;
-        },
-        /**
-         * @method resize
-         * @returns {GelatoView}
-         */
-        resize: function() {
             return this;
         },
         /**

@@ -52,11 +52,10 @@ define([
          * @param event
          */
         handleClickButton: function(event) {
-            event.preventDefault();
             var buttonAction = $(event.currentTarget).data('action');
             var dialogName = this.getName();
             if (buttonAction) {
-                this.trigger(dialogName + ':' + buttonAction + ':click', event);
+                this.trigger(dialogName + ':' + buttonAction, event);
                 this.trigger('button:click', dialogName + ':' + buttonAction, event);
             } else {
                 this.trigger('button:click', dialogName, event);
