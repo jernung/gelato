@@ -13,7 +13,9 @@ define([], function() {
          * @returns {GelatoView}
          */
         renderEvents: function() {
-            this.$('[data-url]').off().on('vclick', $.proxy(this.handleNavigateClicked, this));
+            this.$('[data-dialog]').off().on('vclick', $.proxy(this.handleClickDataDialog, this));
+            this.$('[data-sidebar]').off().on('vclick', $.proxy(this.handleClickDataSidebar, this));
+            this.$('[data-url]').off().on('vclick', $.proxy(this.handleClickDataUrl, this));
             return this;
         },
         /**
@@ -35,10 +37,32 @@ define([], function() {
             return this;
         },
         /**
-         * @method handleNavigateClicked
+         * @method handleClickDataDialog
          * @param {Event} event
          */
-        handleNavigateClicked: function(event) {
+        handleClickDataDialog: function(event) {
+            event.preventDefault();
+            var dialogName = $(event.currentTarget).data('dialog');
+            if (app.dialog) {
+                app.dialog.show(dialogName);
+            }
+        },
+        /**
+         * @method handleClickDataSidebar
+         * @param {Event} event
+         */
+        handleClickDataSidebar: function(event) {
+            event.preventDefault();
+            var sidebarName = $(event.currentTarget).data('sidebar');
+            if (app.sidebar) {
+                app.sidebar.show(sidebarName);
+            }
+        },
+        /**
+         * @method handleClickDataUrl
+         * @param {Event} event
+         */
+        handleClickDataUrl: function(event) {
             event.preventDefault();
             var url = $(event.currentTarget).data('url').replace('#', app.isLocal() ? '/#' : '');
             var replace = $(event.currentTarget).data('replace');
