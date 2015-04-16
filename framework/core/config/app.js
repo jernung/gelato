@@ -47,7 +47,7 @@ app = (function() {
             'jquery.ui': 'core/libraries/jquery.ui.custom-1.11.3',
             'lzstring': 'core/libraries/lzstring-1.4.1',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
-            moment: 'core/libraries/moment-2.9.0',
+            moment: 'core/libraries/moment-2.10.2',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
             react: 'core/libraries/react-0.13.1',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
