@@ -2,7 +2,7 @@ var crosswalkVersion, gelato, gelatoPath, gelatoPkg, projectPkg, projectPath;
 var fs = require('fs');
 var shell = require('shelljs');
 
-crosswalkVersion = '11.40.277.7';
+crosswalkVersion = '12.41.296.9';
 gelatoPath = process.env.gelatoPath = process.env.gelatoPath || __dirname.toString().slice(0, -4);
 projectPath = process.env.projectPath = process.env.projectPath || process.cwd().toString();
 
