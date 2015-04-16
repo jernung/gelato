@@ -28,7 +28,7 @@ define([
          * @returns {GelatoPage}
          */
         disableForm: function(selector) {
-            this.$((selector ? selector + ' ': '') + ':input').prop('disabled', true);
+            this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
             return this;
         },
         /**
@@ -37,23 +37,7 @@ define([
          * @returns {GelatoPage}
          */
         enableForm: function(selector) {
-            this.$((selector ? selector: ' ') + ':input').prop('disabled', false);
-            return this;
-        },
-        /**
-         * @method renderDialog
-         * @returns {GelatoPage}
-         */
-        renderDialog: function() {
-            this.dialog = new GelatoDialog({el: this.$el, page: this});
-            return this;
-        },
-        /**
-         * @method renderSidebar
-         * @returns {GelatoPage}
-         */
-        renderSidebar: function() {
-            this.sidebar = new GelatoSidebar({el: this.$el, page: this});
+            this.$((selector ? selector : ' ') + ':input').prop('disabled', false);
             return this;
         },
         /**
@@ -71,19 +55,6 @@ define([
          */
         getName: function() {
             return this.$('.gelato-page').attr('class').split(/\s/g)[1];
-        },
-        /**
-         * @method remove
-         * @returns {GelatoView}
-         */
-        remove: function() {
-            if (this.dialog) {
-                this.dialog.remove();
-            }
-            if (this.sidebar) {
-                this.sidebar.remove();
-            }
-            return GelatoView.prototype.remove.call(this);
         }
     });
 
