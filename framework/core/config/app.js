@@ -39,7 +39,7 @@ app = (function() {
             bootstrap: 'core/libraries/bootstrap-3.3.4',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
-            handlebars: 'core/libraries/handlebars-3.0.0',
+            handlebars: 'core/libraries/handlebars-3.0.1',
             jasmine: 'core/libraries/jasmine-2.2.0',
             'jasmine.html': 'core/libraries/jasmine.html-2.2.0',
             jquery: 'core/libraries/jquery-2.1.3',
