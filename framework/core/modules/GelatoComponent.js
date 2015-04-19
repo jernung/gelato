@@ -9,7 +9,15 @@ define([
      * @class GelatoComponent
      * @extends GelatoView
      */
-    var GelatoComponent = GelatoView.extend({});
+    var GelatoComponent = GelatoView.extend({
+        /**
+         * @method getName
+         * @returns {String}
+         */
+        getName: function() {
+            return this.$('gelato-component').data('name');
+        }
+    });
 
     return GelatoComponent;
 
