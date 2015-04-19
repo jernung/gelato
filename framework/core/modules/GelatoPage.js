@@ -37,12 +37,12 @@ define([
         adjustNavbarPadding: function() {
             var navbarFixedBottom = this.$('.navbar-fixed-bottom');
             var navbarFixedTop = this.$('.navbar-fixed-top');
-            if (navbarFixedBottom) {
+            if (navbarFixedBottom.length) {
                 this.$el.css('padding-bottom', navbarFixedBottom.height());
             } else {
                 this.$el.css('padding-bottom', '');
             }
-            if (navbarFixedTop) {
+            if (navbarFixedTop.length) {
                 this.$el.css('padding-top', navbarFixedTop.height());
             } else {
                 this.$el.css('padding-top', '');
