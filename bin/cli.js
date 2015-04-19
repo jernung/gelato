@@ -211,12 +211,8 @@ if (argv['_'][0] === 'update') {
 if (argv['_'][0] === 'watch') {
     if (globals.project.pkg.type === 'gelato') {
         var cmd = ['grunt watch-project'];
-        if (argv.noclean) {
-            cmd.push('--noclean=true');
-        }
-        if (argv.novalidate) {
-            cmd.push('--novalidate=true');
-        }
+        cmd.push('--noclean=true');
+        cmd.push('--novalidate=true');
         shell.exec(cmd.join(' '));
     } else {
         console.log('Not a valid gelato project directory.');
