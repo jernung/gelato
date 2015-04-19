@@ -14,7 +14,7 @@ define([
          * @property el
          * @type String
          */
-        el: '#gelato-application',
+        el: 'gelato-application',
         /**
          * @property title
          * @type String
@@ -25,7 +25,7 @@ define([
          * @returns {String}
          */
         getName: function() {
-            return this.$('.gelato-page').attr('class').split(/\s/g)[1];
+            return this.$('gelato-page').data('name');
         }
     });
 
