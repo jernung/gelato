@@ -24,7 +24,7 @@ define([
          * @property el
          * @type String
          */
-        el: '#gelato-dialog',
+        el: 'gelato-dialog',
         /**
          * @method render
          * @returns {GelatoDialog}
