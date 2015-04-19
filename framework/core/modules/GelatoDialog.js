@@ -38,7 +38,8 @@ define([
          * @type Object
          */
         events: {
-            'vclick button': 'handleClickButton'
+            'vclick button': 'handleClickButton',
+            'vclick .button': 'handleClickButton'
         },
         /**
          * @method getName
