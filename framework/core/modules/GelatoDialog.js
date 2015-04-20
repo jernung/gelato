@@ -24,7 +24,7 @@ define([
          * @property el
          * @type String
          */
-        el: '#gelato-dialog',
+        el: 'gelato-dialog',
         /**
          * @method render
          * @returns {GelatoDialog}
@@ -38,7 +38,8 @@ define([
          * @type Object
          */
         events: {
-            'vclick button': 'handleClickButton'
+            'vclick button': 'handleClickButton',
+            'vclick .button': 'handleClickButton'
         },
         /**
          * @method getName

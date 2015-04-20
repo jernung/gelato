@@ -42,7 +42,10 @@ html, body {
 
 
 /*** COMPONENTS ***/
-@import "components/dialog";
-@import "components/navbar";
-@import "components/page";
-@import "components/sidebar";
+@import "components/gelato-application";
+@import "components/gelato-component";
+@import "components/gelato-content";
+@import "components/gelato-dialog";
+@import "components/gelato-navbar";
+@import "components/gelato-page";
+@import "components/gelato-sidebar";

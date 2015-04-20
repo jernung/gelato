@@ -25,7 +25,7 @@ define([
          * @property el
          * @type String
          */
-        el: '#gelato-sidebar',
+        el: 'gelato-sidebar',
         /**
          * @method render
          * @returns {GelatoSidebar}
