@@ -39,9 +39,6 @@ define([], function() {
             it('should include the bootstrap plugin.', function() {
                 expect($.fn.modal).toBeDefined();
             });
-            it('should include the notify plugin.', function() {
-                expect($.notify).toBeDefined();
-            });
         });
         describe('Modernizr', function() {
             it('should be defined in the global scope.', function() {
@@ -50,7 +47,6 @@ define([], function() {
         });
         describe('Moment', function() {
             it('should be defined in the global scope.', function() {
-                expect(moment).toBeUndefined();
                 expect(Moment).toBeDefined();
             });
             it('should include custom timezone data.', function() {

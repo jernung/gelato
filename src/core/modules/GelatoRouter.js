@@ -32,13 +32,25 @@ define([], function() {
             }
         },
         /**
+         * @method navigate
+         * @param {String} fragment
+         * @param {Object} [options]
+         * @returns {GelatoRouter}
+         */
+        navigate: function(fragment, options) {
+            options = options || {};
+            options.replace = options.replace === undefined ? false : options.replace;
+            options.trigger = options.trigger === undefined ? true : options.trigger;
+            return Backbone.Router.prototype.navigate.call(this, fragment, options);
+        },
+        /**
          * @method start
          * @returns {GelatoRouter}
          */
         start: function() {
             Backbone.history.start({
-                pushState: app.getPushState(),
-                root: app.getRoot()
+                pushState: gelato.getPushState(),
+                root: gelato.getRoot()
             });
             return this;
         }

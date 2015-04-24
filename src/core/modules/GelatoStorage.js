@@ -125,22 +125,27 @@ define([], function() {
      */
     GelatoStorage.prototype.destroy = function(callbackSuccess, callbackError) {
         var self = this;
-        this.database.close();
-        var request = indexedDB.deleteDatabase(this.databaseName);
-        request.onsuccess = function() {
-            self.database = null;
-            self.databaseName = null;
-            self.databaseVersion = 1;
-            if (typeof callbackSuccess === 'function') {
-                callbackSuccess();
-            }
-        };
-        request.onerror = function(error) {
+        try {
+            this.database.close();
+            var request = indexedDB.deleteDatabase(this.databaseName);
+            request.onsuccess = function() {
+                self.database = null;
+                self.databaseName = null;
+                self.databaseVersion = 1;
+                if (typeof callbackSuccess === 'function') {
+                    callbackSuccess();
+                }
+            };
+            request.onerror = function(error) {
+                if (typeof callbackError === 'function') {
+                    callbackError(error);
+                }
+            };
+        } catch (error) {
             if (typeof callbackError === 'function') {
                 callbackError(error);
             }
-        };
-
+        }
     };
 
     /**

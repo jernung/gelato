@@ -8,30 +8,17 @@ html, body {
 }
 .content-block {
     background-color: #ffffff;
-    margin-top: 15px;
+    margin-bottom: 15px;
     padding: 15px;
     position: relative;
 }
+.content-block.no-margin { margin-bottom: 0; }
 .content-block.no-padding { padding: 0; }
 .cursor { cursor: pointer; }
 .fill-parent {
     height: 100%;
     position: absolute;
     width: 100%;
-}
-.flip-90 {
-    -ms-transform: rotate(90deg);
-    -moz-transform: rotate(90deg);
-    -o-transform: rotate(90deg);
-    -webkit-transform: rotate(90deg);
-    transform: rotate(90deg);
-}
-.flip-180 {
-    -ms-transform: rotate(180deg);
-    -moz-transform: rotate(180deg);
-    -o-transform: rotate(180deg);
-    -webkit-transform: rotate(180deg);
-    transform: rotate(180deg);
 }
 .no-select {
     -moz-user-select: none;

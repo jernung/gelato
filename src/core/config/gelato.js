@@ -1,22 +1,15 @@
-app = (function() {
-
-    /**
-     * @property attributes
-     * @type {Object}
-     */
-    var attributes = {
-        name: '@@application-name',
-        version: '@@application-version'
-    };
+gelato = (function() {
 
     /**
      * @property config
      * @type {Object}
      */
     var config = {
-        cordova: {
-            plugins: []
+        attributes: {
+            name: '@@application-name',
+            version: '@@application-version'
         },
+        fonts: {},
         modules: [
             {
                 name: 'core/modules/GelatoLibraries'
@@ -55,6 +48,7 @@ app = (function() {
             underscore: 'core/libraries/lodash.compat-3.7.0',
             webfont: 'core/libraries/webfontloader-1.5.18'
         },
+        plugins: [],
         shim: {
             //framework shims
             backbone: ['jquery', 'underscore'],
@@ -70,26 +64,17 @@ app = (function() {
     };
 
     /**
-     * @property fonts
-     * @type {Object}
+     * @property version
+     * @type {String}
      */
-    var fonts = {};
-
-    /**
-     * @property framework
-     * @type {Object}
-     */
-    var framework = {
-        type: 'gelato',
-        version: '@@framework-version'
-    };
+    var version = '@@framework-version';
 
     /**
      * @method addCordovaPlugins
      * @param {Array|Object} [plugins]
      */
     function addCordovaPlugins(plugins) {
-        config.cordova.plugins = mergeArrays(config.cordova.plugins, sanitizeArray(plugins));
+        config.plugins = mergeArrays(config.plugins, sanitizeArray(plugins));
     }
 
     /**
@@ -97,7 +82,7 @@ app = (function() {
      * @param {Object} [fonts]
      */
     function addFonts(fonts) {
-        mergeObjects(fonts, sanitizeObject(fonts));
+        config.fonts = mergeObjects(config.fonts, sanitizeObject(fonts));
     }
 
     /**
@@ -113,7 +98,7 @@ app = (function() {
      * @param {Object} [paths]
      */
     function addPaths(paths) {
-        mergeObjects(config.paths, sanitizeObject(paths));
+        config.paths = mergeObjects(config.paths, sanitizeObject(paths));
     }
 
     /**
@@ -121,27 +106,16 @@ app = (function() {
      * @param {Object} [shim]
      */
     function addShim(shim) {
-        mergeObjects(config.shim, sanitizeObject(shim));
+        config.shim = mergeObjects(config.shim, sanitizeObject(shim));
     }
 
     /**
-     * @method getHeight
-     * @returns {Number}
+     * @method getConfig
+     * @param {String} [key]
+     * @returns {Array|Object|String}
      */
-    function getHeight() {
-        return $(window).height();
-    }
-
-    /**
-     * @method getLocalStorageSize
-     * @returns {Number}
-     */
-    function getLocalStorageSize() {
-        var size = 0;
-        for (var key in localStorage) {
-            size += localStorage[key].length * 2;
-        }
-        return parseFloat((size / 1024 / 1024).toFixed(2));
+    function getConfig(key) {
+        return key ? config[key] : config;
     }
 
     /**
@@ -158,23 +132,6 @@ app = (function() {
      */
     function getRoot() {
         return location.pathname;
-    }
-
-    /**
-     * @method getSetting
-     * @param {String} name
-     * @returns {String}
-     */
-    function getSetting(name) {
-        return JSON.parse(localStorage.getItem('application-' + name));
-    }
-
-    /**
-     * @method getWidth
-     * @returns {Number}
-     */
-    function getWidth() {
-        return $(window).width();
     }
 
     /**
@@ -200,7 +157,7 @@ app = (function() {
      * @returns {Array}
      */
     function mergeArrays (array1, array2) {
-       return array1.concat(array2);
+        return array1.concat(array2);
     }
 
     /**
@@ -221,26 +178,6 @@ app = (function() {
     }
 
     /**
-     * @method reload
-     */
-    function reload() {
-        if (app.router) {
-            app.router.navigate('');
-            location.reload(true);
-        } else {
-            location.href = '';
-        }
-    }
-
-    /**
-     * @method removeSetting
-     * @param {String} name
-     */
-    function removeSetting(name) {
-        localStorage.removeItem('application-' + name);
-    }
-
-    /**
      * @method sanitizeArray
      * @param {Array} array
      */
@@ -256,38 +193,18 @@ app = (function() {
         return Object.prototype.toString.call(object) === '[object Object]' ? object : {};
     }
 
-    /**
-     * @method setSetting
-     * @param {String} name
-     * @param {Boolean|Object|String} value
-     */
-    function setSetting(name, value) {
-        localStorage.setItem('application-' + name, JSON.stringify(value));
-    }
-
     return {
         addCordovaPlugins: addCordovaPlugins,
         addFonts: addFonts,
         addModules: addModules,
         addPaths: addPaths,
         addShim: addShim,
-        attributes: attributes,
-        config: config,
-        fonts: fonts,
-        framework: framework,
-        getHeight: getHeight,
-        getLocalStorageSize: getLocalStorageSize,
+        getConfig: getConfig,
         getPushState: getPushState,
         getRoot: getRoot,
-        getSetting: getSetting,
-        getWidth: getWidth,
         isCordova: isCordova,
         isLocal: isLocal,
-        mergeArrays: mergeArrays,
-        mergeObjects: mergeObjects,
-        reload: reload,
-        removeSetting: removeSetting,
-        setSetting: setSetting
+        version: version
     };
 
 })();

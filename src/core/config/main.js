@@ -12,9 +12,10 @@
             } else {
                 console.log('LOADING:', 'application');
                 requirejs(['modules/Application'], function(Application) {
+                    window.cordova = window.cordova || {};
+                    window.gelato = window.gelato || {};
                     window.plugin = window.plugin || {};
-                    window.app = $.extend(true, new Application(), window.app);
-                    window.app.start();
+                    new Application(gelato.getConfig('attributes')).start();
                 });
             }
         });
@@ -30,7 +31,7 @@
         window.WebFont = undefined;
         console.log('LOADING:', 'core libraries');
         requirejs(['core/modules/GelatoLibraries'], function() {
-            if (app.isCordova()) {
+            if (gelato.isCordova()) {
                 requirejs(['cordova'], function() {
                     document.addEventListener('deviceready', loadFonts, false);
                 });
@@ -41,11 +42,12 @@
     }
 
     function loadFonts() {
-        if (Object.keys(app.fonts).length) {
+        var fonts = gelato.getConfig('fonts');
+        if (Object.keys(fonts).length) {
             console.log('LOADING:', 'fonts');
-            app.fonts.active = loadApplication;
-            app.fonts.inactive = loadApplication;
-            WebFont.load(app.fonts);
+            fonts.active = loadApplication;
+            fonts.inactive = loadApplication;
+            WebFont.load(fonts);
         } else {
             loadApplication();
         }
@@ -57,10 +59,10 @@
         config: {
             moment: {noGlobal: true}
         },
-        locale: app.getSetting('locale') || 'en-us',
-        paths: app.config.paths,
-        shim: app.config.shim,
-        urlArgs: app.isLocal() ? 'bust=' + (new Date()).getTime() : undefined,
+        locale: localStorage.getItem('application-locale') || 'en-us',
+        paths: gelato.getConfig('paths'),
+        shim: gelato.getConfig('shim'),
+        urlArgs: gelato.isLocal() ? 'bust=' + (new Date()).getTime() : undefined,
         waitSeconds: 120
     });
 

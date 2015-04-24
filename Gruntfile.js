@@ -75,9 +75,9 @@ module.exports = function(grunt) {
             },
             'cordova-crosswalk': {
                 src: [
-                    '<%= globals.gelato.includes.crosswalk.path %>/**/*',
-                    '!<%= globals.gelato.includes.crosswalk.arm.path %>.zip',
-                    '!<%= globals.gelato.includes.crosswalk.x86.path %>.zip'
+                    '<%= globals.framework.includes.crosswalk.path %>/**/*',
+                    '!<%= globals.framework.includes.crosswalk.arm.path %>.zip',
+                    '!<%= globals.framework.includes.crosswalk.x86.path %>.zip'
                 ],
                 options: {force: true}
             },
@@ -114,7 +114,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.framework.path %>',
+                        cwd: '<%= globals.framework.src.path %>',
                         src: '**/*.coffee',
                         dest: '<%= globals.project.www.path %>',
                         ext: '.js'
@@ -177,13 +177,13 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.includes.crosswalk.base.path %>-<%= options.architecture %>/framework',
+                        cwd: '<%= globals.framework.includes.crosswalk.base.path %>-<%= options.architecture %>/framework',
                         src: ['**/*'],
                         dest: '<%= globals.project.cordova.platforms.android.cordovalib.path %>'
                     },
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.includes.crosswalk.base.path %>-<%= options.architecture %>',
+                        cwd: '<%= globals.framework.includes.crosswalk.base.path %>-<%= options.architecture %>',
                         src: ['VERSION'],
                         dest: '<%= globals.project.cordova.platforms.android.path %>'
                     }
@@ -203,13 +203,13 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.framework.path %>',
+                        cwd: '<%= globals.framework.src.path %>',
                         src: ['core/**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: '<%= globals.project.gelato.path %>'
                     },
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.includes.path %>',
+                        cwd: '<%= globals.framework.includes.path %>',
                         src: ['plugins/**/*'],
                         dest: '<%= globals.project.gelato.path %>'
                     }
@@ -219,7 +219,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.framework.path %>',
+                        cwd: '<%= globals.framework.src.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: '<%= globals.project.www.path %>'
                     },
@@ -235,7 +235,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.includes.structure.path %>/',
+                        cwd: '<%= globals.framework.includes.structure.path %>/',
                         src: [
                             'copy-gitattributes',
                             'copy-gitignore',
@@ -285,7 +285,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.framework.path %>',
+                        cwd: '<%= globals.framework.src.path %>',
                         src: ['**/*.jade'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.html'
@@ -323,7 +323,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.framework.path %>',
+                        cwd: '<%= globals.framework.src.path %>',
                         src: '**/*.jsx',
                         dest: '<%= globals.project.www.path %>',
                         ext: '.js'
@@ -388,7 +388,7 @@ module.exports = function(grunt) {
                         'application-name': '<%= globals.project.pkg.name %>',
                         'application-title': '<%= globals.project.pkg.title %>',
                         'application-version': '<%= globals.project.pkg.version %>',
-                        'framework-version': '<%= globals.gelato.pkg.version %>'
+                        'framework-version': '<%= globals.framework.pkg.version %>'
                     }
                 },
                 files: [
@@ -400,7 +400,7 @@ module.exports = function(grunt) {
                     },
                     {
                         expand: true,
-                        src: 'core/config/app.js',
+                        src: 'core/config/gelato.js',
                         cwd: '<%= globals.project.www.path %>',
                         dest: '<%= globals.project.www.path %>'
                     },
@@ -439,13 +439,13 @@ module.exports = function(grunt) {
                     fileExclusionRegExp: null,
                     generateSourceMaps: false,
                     keepBuildDir: false,
-                    modules: globals.project.app.config.modules,
+                    modules: globals.project.config.modules,
                     optimize: 'uglify',
                     optimizeCss: 'standard',
-                    paths: globals.project.app.config.paths,
+                    paths: globals.project.config.paths,
                     preserveLicenseComments: false,
                     removeCombined: true,
-                    shim: globals.project.app.config.shim
+                    shim: globals.project.config.shim
                 }
             },
             'web-www': {
@@ -455,13 +455,13 @@ module.exports = function(grunt) {
                     fileExclusionRegExp: null,
                     generateSourceMaps: false,
                     keepBuildDir: false,
-                    modules: globals.project.app.config.modules,
+                    modules: globals.project.config.modules,
                     optimize: 'uglify',
                     optimizeCss: 'standard',
-                    paths: globals.project.app.config.paths,
+                    paths: globals.project.config.paths,
                     preserveLicenseComments: false,
                     removeCombined: true,
-                    shim: globals.project.app.config.shim
+                    shim: globals.project.config.shim
                 }
             }
         },
@@ -473,7 +473,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        cwd: '<%= globals.gelato.framework.path %>',
+                        cwd: '<%= globals.framework.src.path %>',
                         src: ['core/styles/gelato.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
@@ -550,8 +550,8 @@ module.exports = function(grunt) {
             'install-cordova-plugins': {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
-                    'cordova plugin add <%= globals.gelato.includes.plugins.path %>/core'
-                ].concat(globals.project.app.config.cordova.plugins.map(function(plugin) {
+                    'cordova plugin add <%= globals.framework.includes.plugins.path %>/core'
+                ].concat(globals.project.config.plugins.map(function(plugin) {
                         return 'cordova plugin add ' + plugin;
                     })
                 ).join(' && '),
@@ -587,12 +587,12 @@ module.exports = function(grunt) {
          */
         unzip: {
             'cordova-crosswalk-arm': {
-                src: '<%= globals.gelato.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.includes.crosswalk.version %>-arm.zip',
-                dest: '<%= globals.gelato.includes.crosswalk.path %>'
+                src: '<%= globals.framework.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.framework.includes.crosswalk.version %>-arm.zip',
+                dest: '<%= globals.framework.includes.crosswalk.path %>'
             },
             'cordova-crosswalk-x86': {
-                src: '<%= globals.gelato.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.gelato.includes.crosswalk.version %>-x86.zip',
-                dest: '<%= globals.gelato.includes.crosswalk.path %>'
+                src: '<%= globals.framework.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.framework.includes.crosswalk.version %>-x86.zip',
+                dest: '<%= globals.framework.includes.crosswalk.path %>'
             }
         },
         /**
@@ -624,7 +624,7 @@ module.exports = function(grunt) {
                 description: '<%= globals.project.pkg.description %>',
                 version: '<%= globals.project.pkg.version %>',
                 options: {
-                    paths: ['<%= globals.gelato.framework.path %>', '<%= globals.project.src.path %>'],
+                    paths: ['<%= globals.framework.src.path %>', '<%= globals.project.src.path %>'],
                     themedir: '<%= globals.project.src.path %>/yuidoc',
                     outdir: '<%= globals.project.docs.path %>'
                 }
@@ -777,8 +777,8 @@ module.exports = function(grunt) {
      * TASK: unzip-cordova-crosswalk
      */
     grunt.registerTask('unzip-cordova-crosswalk', function() {
-        var armPath = grunt.file.isFile(globals.gelato.includes.crosswalk.arm.path + '/VERSION');
-        var x86Path = grunt.file.isFile(globals.gelato.includes.crosswalk.x86.path + '/VERSION');
+        var armPath = grunt.file.isFile(globals.framework.includes.crosswalk.arm.path + '/VERSION');
+        var x86Path = grunt.file.isFile(globals.framework.includes.crosswalk.x86.path + '/VERSION');
         if (!armPath || !x86Path) {
             grunt.task.run([
                 'clean:cordova-crosswalk',

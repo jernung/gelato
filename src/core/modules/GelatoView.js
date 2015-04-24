@@ -8,7 +8,15 @@ define([], function() {
      * @extends Backbone.View
      */
     var GelatoView = Backbone.View.extend({
-
+        /**
+         * @method initialize
+         * @param {Object} [options]
+         * @constructor
+         */
+        initialize: function(options) {
+            options = options || {};
+            this.app = options.app;
+        },
         /**
          * @method renderEvents
          * @returns {GelatoView}
@@ -55,6 +63,7 @@ define([], function() {
             this.$((selector ? selector : ' ') + ':input').prop('disabled', false);
             return this;
         },
+
         /**
          * @method handleClickDataDialog
          * @param {Event} event
@@ -62,8 +71,8 @@ define([], function() {
         handleClickDataDialog: function(event) {
             event.preventDefault();
             var dialogName = $(event.currentTarget).data('dialog');
-            if (app.dialog) {
-                app.dialog.show(dialogName);
+            if (this.app && this.app.dialog) {
+                this.app.dialog.show(dialogName);
             }
         },
         /**
@@ -73,8 +82,8 @@ define([], function() {
         handleClickDataSidebar: function(event) {
             event.preventDefault();
             var sidebarName = $(event.currentTarget).data('sidebar');
-            if (app.sidebar) {
-                app.sidebar.show(sidebarName);
+            if (this.app && this.app.sidebar) {
+                this.app.sidebar.show(sidebarName);
             }
         },
         /**
@@ -83,10 +92,10 @@ define([], function() {
          */
         handleClickDataUrl: function(event) {
             event.preventDefault();
-            var url = $(event.currentTarget).data('url').replace('#', app.isLocal() ? '/#' : '');
+            var url = $(event.currentTarget).data('url').replace('#', gelato.isLocal() ? '/#' : '');
             var replace = $(event.currentTarget).data('replace');
             var trigger = $(event.currentTarget).data('trigger');
-            app.router.navigate(url, {
+            this.app.router.navigate(url, {
                 replace: replace === undefined ? false : replace,
                 trigger: trigger === undefined ? true : trigger
             });
