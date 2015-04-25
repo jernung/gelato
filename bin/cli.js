@@ -206,6 +206,19 @@ if (argv['_'][0] === 'update') {
 }
 
 /**
+ * VALIDATE
+ */
+if (argv['_'][0] === 'validate') {
+    if (globals.project.pkg.type === 'gelato') {
+        shell.exec('grunt validate-www');
+        process.exit(0);
+    } else {
+        console.log('Not a valid gelato project directory.');
+        process.exit(1);
+    }
+}
+
+/**
  * WATCH
  */
 if (argv['_'][0] === 'watch') {

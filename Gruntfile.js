@@ -664,7 +664,7 @@ module.exports = function(grunt) {
         if (options.novalidate) {
             grunt.log.writeln('Skipping validation.');
         } else {
-            grunt.task.run('validate-project');
+            grunt.task.run('validate-www');
         }
     });
 
@@ -791,7 +791,7 @@ module.exports = function(grunt) {
     /**
      * TASK: validate
      */
-    grunt.registerTask('validate-project', function() {
+    grunt.registerTask('validate-www', function() {
         grunt.task.run([
             'csslint:project-www',
             'jshint:project-www'
