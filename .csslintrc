@@ -1,5 +1,7 @@
 {
   "adjoining-classes": false,
+  "duplicate-background-images": false,
   "font-sizes": false,
-  "ids": false
+  "ids": false,
+  "unqualified-attributes": false
 }
