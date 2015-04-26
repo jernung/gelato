@@ -9,7 +9,7 @@ var shell = require('shelljs');
  * OPTION: VERSION
  */
 if (argv.version) {
-    console.log(globals.gelato.pkg.version);
+    console.log(globals.framework.pkg.version);
     process.exit(0);
 }
 
