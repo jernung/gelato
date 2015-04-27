@@ -17,17 +17,13 @@ define([
          * @constructor
          */
         initialize: function() {
-            this.router = new Router({app: this});
+            this.router = new Router();
         },
         /**
          * @method start
          */
         start: function() {
             this.router.start();
-            //DEBUGGING: append app namespace to window
-            if (gelato.isCordova() || gelato.isLocal()) {
-                window.app = this;
-            }
         }
     });
 

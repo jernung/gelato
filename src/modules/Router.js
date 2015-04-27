@@ -14,13 +14,9 @@ define([
     var Router = GelatoRouter.extend({
         /**
          * @method initialize
-         * @param {Object} [options]
          * @constructor
          */
-        initialize: function(options) {
-            options = options || {};
-            this.app = options.app;
-        },
+        initialize: function() {},
         /**
          * @property routes
          * @type Object
@@ -32,7 +28,7 @@ define([
          * @method showDefault
          */
         showDefault: function() {
-            this.page = new PageHome({app: this.app});
+            this.page = new PageHome();
             this.page.render();
         }
     });
