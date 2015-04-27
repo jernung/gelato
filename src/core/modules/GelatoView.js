@@ -10,13 +10,9 @@ define([], function() {
     var GelatoView = Backbone.View.extend({
         /**
          * @method initialize
-         * @param {Object} [options]
          * @constructor
          */
-        initialize: function(options) {
-            options = options || {};
-            this.app = options.app;
-        },
+        initialize: function() {},
         /**
          * @method renderEvents
          * @returns {GelatoView}
@@ -71,8 +67,8 @@ define([], function() {
         handleClickDataDialog: function(event) {
             event.preventDefault();
             var dialogName = $(event.currentTarget).data('dialog');
-            if (this.app && this.app.dialog) {
-                this.app.dialog.show(dialogName);
+            if (app.dialog) {
+                app.dialog.show(dialogName);
             }
         },
         /**
@@ -82,8 +78,8 @@ define([], function() {
         handleClickDataSidebar: function(event) {
             event.preventDefault();
             var sidebarName = $(event.currentTarget).data('sidebar');
-            if (this.app && this.app.sidebar) {
-                this.app.sidebar.show(sidebarName);
+            if (app.sidebar) {
+                app.sidebar.show(sidebarName);
             }
         },
         /**
@@ -95,7 +91,7 @@ define([], function() {
             var url = $(event.currentTarget).data('url').replace('#', gelato.isLocal() ? '/#' : '');
             var replace = $(event.currentTarget).data('replace');
             var trigger = $(event.currentTarget).data('trigger');
-            this.app.router.navigate(url, {
+            app.router.navigate(url, {
                 replace: replace === undefined ? false : replace,
                 trigger: trigger === undefined ? true : trigger
             });

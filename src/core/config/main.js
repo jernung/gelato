@@ -15,7 +15,8 @@
                     window.cordova = window.cordova || {};
                     window.gelato = window.gelato || {};
                     window.plugin = window.plugin || {};
-                    new Application(gelato.getConfig('attributes')).start();
+                    window.app = new Application(gelato.getConfig('attributes'));
+                    window.app.start();
                 });
             }
         });
