@@ -9,7 +9,7 @@ var shell = require('shelljs');
  * OPTION: VERSION
  */
 if (argv.version) {
-    console.log(globals.gelato.pkg.version);
+    console.log(globals.framework.pkg.version);
     process.exit(0);
 }
 
@@ -198,6 +198,19 @@ if (argv['_'][0] === 'run') {
 if (argv['_'][0] === 'update') {
     if (globals.project.pkg.type === 'gelato') {
         shell.exec('grunt install-gelato');
+        process.exit(0);
+    } else {
+        console.log('Not a valid gelato project directory.');
+        process.exit(1);
+    }
+}
+
+/**
+ * VALIDATE
+ */
+if (argv['_'][0] === 'validate') {
+    if (globals.project.pkg.type === 'gelato') {
+        shell.exec('grunt validate-www');
         process.exit(0);
     } else {
         console.log('Not a valid gelato project directory.');
