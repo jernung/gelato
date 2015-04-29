@@ -3,5 +3,6 @@
   "duplicate-background-images": false,
   "font-sizes": false,
   "ids": false,
+  "overqualified-elements": false,
   "unqualified-attributes": false
 }
