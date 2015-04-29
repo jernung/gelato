@@ -12,4 +12,5 @@
 # Files #
 !README.md
 !includes/crosswalk/*.zip
+.DS_Store
 npm-debug.log
