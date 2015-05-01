@@ -50,6 +50,20 @@ define([
             return $(window).width();
         },
         /**
+         * @method isLandscape
+         * @returns {Boolean}
+         */
+        isLandscape: function() {
+            return this.getWidth() > this.getHeight();
+        },
+        /**
+         * @method isPortrait
+         * @returns {Boolean}
+         */
+        isPortrait: function() {
+            return this.getWidth() <= this.getHeight();
+        },
+        /**
          * @method reload
          */
         reload: function() {
