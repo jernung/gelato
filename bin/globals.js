@@ -2,7 +2,7 @@ var crosswalkVersion, frameworkPath, frameworkPkg, projectPkg, projectPath;
 var fs = require('fs');
 var shell = require('shelljs');
 
-crosswalkVersion = '12.41.296.9';
+crosswalkVersion = '10.39.235.17';
 frameworkPath = process.env.frameworkPath = process.env.frameworkPath || __dirname.toString().slice(0, -4);
 projectPath = process.env.projectPath = process.env.projectPath || process.cwd().toString();
 
