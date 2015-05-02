@@ -45,7 +45,7 @@ gelato = (function() {
             react: 'core/libraries/react-0.13.2',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
-            underscore: 'core/libraries/lodash.compat-3.7.0',
+            underscore: 'core/libraries/lodash.compat-3.8.0',
             webfont: 'core/libraries/webfontloader-1.5.18'
         },
         plugins: [],
