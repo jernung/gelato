@@ -15,6 +15,7 @@ define([
     'jasmine',
     'jasmine.html',
     'jquery',
+    'jquery.chosen',
     'jquery.mobile',
     'jquery.ui',
     'lzstring',
