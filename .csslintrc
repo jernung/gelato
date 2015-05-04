@@ -1,5 +1,6 @@
 {
   "adjoining-classes": false,
+  "box-model": false,
   "duplicate-background-images": false,
   "font-sizes": false,
   "ids": false,

@@ -28,6 +28,13 @@ html, body {
 }
 
 
+/*** LIBRARIES ***/
+@import "bootstrap";
+@import "bootstrap.switch";
+@import "jquery.chosen";
+@import "fontawesome";
+
+
 /*** COMPONENTS ***/
 @import "components/gelato-application";
 @import "components/gelato-component";
