@@ -35,8 +35,8 @@ define([
          * @returns {GelatoPage}
          */
         adjustNavbarPadding: function() {
-            var navbarFixedBottom = this.$('.navbar-fixed-bottom');
-            var navbarFixedTop = this.$('.navbar-fixed-top');
+            var navbarFixedBottom = this.$('.fixed-bottom');
+            var navbarFixedTop = this.$('.fixed-top');
             if (navbarFixedBottom.length) {
                 this.$el.css('padding-bottom', navbarFixedBottom.height());
             } else {
