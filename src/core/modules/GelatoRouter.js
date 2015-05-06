@@ -29,6 +29,7 @@ define([], function() {
             if (this.page) {
                 this.page.remove();
                 this.page = null;
+                window.scrollTo(0, 0);
             }
         },
         /**
