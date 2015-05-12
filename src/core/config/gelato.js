@@ -35,7 +35,7 @@ gelato = (function() {
             handlebars: 'core/libraries/handlebars-3.0.1',
             jasmine: 'core/libraries/jasmine-2.2.0',
             'jasmine.html': 'core/libraries/jasmine.html-2.2.0',
-            jquery: 'core/libraries/jquery-2.1.3',
+            jquery: 'core/libraries/jquery-1.11.3',
             'jquery.chosen': 'core/libraries/jquery.chosen-1.4.2',
             'jquery.mobile': 'core/libraries/jquery.mobile.custom-1.4.5',
             'jquery.ui': 'core/libraries/jquery.ui.custom-1.11.4',
@@ -121,6 +121,14 @@ gelato = (function() {
     }
 
     /**
+     * @method getPlatform
+     * @returns {String}
+     */
+    function getPlatform() {
+        return window.device ? window.device.platform : 'Web';
+    }
+
+    /**
      * @method getPushState
      * @returns {Boolean}
      */
@@ -202,6 +210,7 @@ gelato = (function() {
         addPaths: addPaths,
         addShim: addShim,
         getConfig: getConfig,
+        getPlatform: getPlatform,
         getPushState: getPushState,
         getRoot: getRoot,
         isCordova: isCordova,
