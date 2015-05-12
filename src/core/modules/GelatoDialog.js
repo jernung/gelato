@@ -57,6 +57,7 @@ define([
             var dialogName = this.getName();
             if (buttonAction) {
                 this.trigger(dialogName + ':' + buttonAction, event);
+                this.trigger(dialogName + ':click', buttonAction, event);
                 this.trigger('button:click', dialogName + ':' + buttonAction, event);
             } else {
                 this.trigger('button:click', dialogName, event);
