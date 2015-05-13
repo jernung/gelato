@@ -44,7 +44,7 @@ gelato = (function() {
             moment: 'core/libraries/moment-2.10.3',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.1',
             react: 'core/libraries/react-0.13.3',
-            'require.i18n': 'core/libraries/require.i18n-2.0.4',
+            'require.i18n': 'core/libraries/require.i18n-2.0.5',
             'require.text': 'core/libraries/require.text-2.0.12',
             underscore: 'core/libraries/lodash.compat-3.8.0',
             webfont: 'core/libraries/webfontloader-1.5.18'
