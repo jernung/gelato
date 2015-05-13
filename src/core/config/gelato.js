@@ -43,7 +43,7 @@ gelato = (function() {
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.10.2',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.0',
-            react: 'core/libraries/react-0.13.2',
+            react: 'core/libraries/react-0.13.3',
             'require.i18n': 'core/libraries/require.i18n-2.0.4',
             'require.text': 'core/libraries/require.text-2.0.12',
             underscore: 'core/libraries/lodash.compat-3.8.0',
