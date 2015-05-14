@@ -204,7 +204,6 @@ gelato = (function() {
         addPaths: addPaths,
         addShim: addShim,
         getConfig: getConfig,
-        getPlatform: getPlatform,
         getPushState: getPushState,
         getRoot: getRoot,
         isCordova: isCordova,
