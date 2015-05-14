@@ -21,11 +21,17 @@ define([
          */
         title: i18n.global.title,
         /**
+         * @property bodyClass
+         * @type String
+         */
+        bodyClass: null,
+        /**
          * @method renderTemplate
          * @param {String} template
          * @returns {GelatoView}
          */
         renderTemplate: function(template) {
+            $('body').addClass(this.bodyClass);
             GelatoView.prototype.renderTemplate.call(this, template);
             this.adjustNavbarPadding();
             return this;
@@ -55,6 +61,14 @@ define([
          */
         getName: function() {
             return this.$('gelato-page').data('name');
+        },
+        /**
+         * @method remove
+         * @returns {GelatoPage}
+         */
+        remove: function() {
+            $('body').removeClass(this.bodyClass);
+            return GelatoView.prototype.remove.call(this);
         }
     });
 
