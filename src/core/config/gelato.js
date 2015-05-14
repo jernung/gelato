@@ -30,6 +30,7 @@ gelato = (function() {
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
             bootstrap: 'core/libraries/bootstrap-3.3.4',
+            'bootstrap.notify': 'core/libraries/bootstrap.notify-3.1.3',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
             handlebars: 'core/libraries/handlebars-3.0.3',
@@ -55,6 +56,7 @@ gelato = (function() {
             backbone: ['jquery', 'underscore'],
             'backbone.routefilter': ['backbone'],
             bootstrap: ['jquery'],
+            'bootstrap.notify': ['bootstrap'],
             'bootstrap.switch': ['bootstrap'],
             'jasmine.html': ['jasmine'],
             'jquery.chosen': ['jquery'],
@@ -118,14 +120,6 @@ gelato = (function() {
      */
     function getConfig(key) {
         return key ? config[key] : config;
-    }
-
-    /**
-     * @method getPlatform
-     * @returns {String}
-     */
-    function getPlatform() {
-        return window.device ? window.device.platform : 'Web';
     }
 
     /**
