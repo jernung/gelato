@@ -363,7 +363,8 @@ module.exports = function(grunt) {
                         'application-name': '<%= globals.project.pkg.name %>',
                         'application-title': '<%= globals.project.pkg.title %>',
                         'application-version': '<%= globals.project.pkg.version %>',
-                        'framework-version': '<%= globals.framework.pkg.version %>'
+                        'framework-version': '<%= globals.framework.pkg.version %>',
+                        'security-policy': '<%= globals.project.pkg.securityPolicy %>'
                     }
                 },
                 files: [
