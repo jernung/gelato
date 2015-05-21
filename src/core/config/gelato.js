@@ -26,7 +26,7 @@ gelato = (function() {
         ],
         paths: {
             //framework libraries
-            async: 'core/libraries/async-0.9.2',
+            async: 'core/libraries/async-1.0.0',
             backbone: 'core/libraries/backbone-1.1.2',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
             bootstrap: 'core/libraries/bootstrap-3.3.4',
