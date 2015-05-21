@@ -474,7 +474,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.framework.src.path %>',
-                        src: ['core/styles/gelato.scss', 'core/styles/jasmine.scss'],
+                        src: ['core/styles/gelato.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
 
