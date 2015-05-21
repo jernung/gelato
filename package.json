@@ -39,7 +39,6 @@
     "grunt-react": "0.12.2",
     "grunt-replace": "0.9.2",
     "grunt-shell": "1.1.2",
-    "grunt-zip": "0.16.2",
     "minimist": "1.1.1",
     "shelljs": "0.5.0"
   }

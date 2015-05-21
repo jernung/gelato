@@ -34,7 +34,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-react');
     grunt.loadNpmTasks('grunt-replace');
     grunt.loadNpmTasks('grunt-shell');
-    grunt.loadNpmTasks('grunt-zip');
 
     grunt.initConfig({
         /**
