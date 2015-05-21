@@ -14,10 +14,6 @@
     </author>
     <content src="index.html" />
     <preference name="xwalkCommandLine" value="--ignore-gpu-blacklist" />
-    <preference name="AndroidLaunchMode" value="singleTop" />
-    <preference name="Fullscreen" value="false" />
-    <preference name="KeepRunning" value="true" />
-    <preference name="Orientation" value="default" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <access origin="*" />
     <allow-intent href="*" />
