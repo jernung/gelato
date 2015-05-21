@@ -73,14 +73,6 @@ module.exports = function(grunt) {
                 ],
                 options: {force: true}
             },
-            'cordova-crosswalk': {
-                src: [
-                    '<%= globals.framework.includes.crosswalk.path %>/**/*',
-                    '!<%= globals.framework.includes.crosswalk.arm.path %>.zip',
-                    '!<%= globals.framework.includes.crosswalk.x86.path %>.zip'
-                ],
-                options: {force: true}
-            },
             'cordova-www': {
                 src: [
                     '<%= globals.project.path %>/cordova/www/**/*'
@@ -170,22 +162,6 @@ module.exports = function(grunt) {
                         cwd: '<%= globals.project.www.path %>/cordova',
                         src: ['**/*'],
                         dest: '<%= globals.project.cordova.path %>'
-                    }
-                ]
-            },
-            'cordova-crosswalk': {
-                files: [
-                    {
-                        expand: true,
-                        cwd: '<%= globals.framework.includes.crosswalk.base.path %>-<%= options.architecture %>/framework',
-                        src: ['**/*'],
-                        dest: '<%= globals.project.cordova.platforms.android.cordovalib.path %>'
-                    },
-                    {
-                        expand: true,
-                        cwd: '<%= globals.framework.includes.crosswalk.base.path %>-<%= options.architecture %>',
-                        src: ['VERSION'],
-                        dest: '<%= globals.project.cordova.platforms.android.path %>'
                     }
                 ]
             },
@@ -536,20 +512,10 @@ module.exports = function(grunt) {
                     stderr: true
                 }
             },
-            'install-cordova-crosswalk': {
-                command: [
-                    'cd <%= globals.project.cordova.platforms.android.cordovalib.path %>',
-                    'android update project --subprojects --path . --target "android-21"',
-                    'ant debug'
-                ].join(' && '),
-                options: {
-                    stdout: true,
-                    stderr: true
-                }
-            },
             'install-cordova-plugins': {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
+                    'cordova plugin add cordova-plugin-crosswalk-webview',
                     'cordova plugin add <%= globals.framework.includes.plugins.path %>/core'
                 ].concat(globals.project.config.plugins.map(function(plugin) {
                         return 'cordova plugin add ' + plugin;
@@ -580,19 +546,6 @@ module.exports = function(grunt) {
                     stdout: true,
                     stderr: true
                 }
-            }
-        },
-        /**
-         * UNZIP
-         */
-        unzip: {
-            'cordova-crosswalk-arm': {
-                src: '<%= globals.framework.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.framework.includes.crosswalk.version %>-arm.zip',
-                dest: '<%= globals.framework.includes.crosswalk.path %>'
-            },
-            'cordova-crosswalk-x86': {
-                src: '<%= globals.framework.includes.crosswalk.path %>/crosswalk-cordova-<%= globals.framework.includes.crosswalk.version %>-x86.zip',
-                dest: '<%= globals.framework.includes.crosswalk.path %>'
             }
         },
         /**
@@ -705,22 +658,8 @@ module.exports = function(grunt) {
             'clean:cordova-android',
             'shell:install-cordova-android',
             'replace:cordova-manifest',
-            //install cordova crosswalk
-            'install-crosswalk',
             //install cordova plugins
             'shell:install-cordova-plugins'
-        ]);
-    });
-
-    /**
-     * TASK: install-crosswalk
-     */
-    grunt.registerTask('install-crosswalk', function() {
-        grunt.task.run([
-            'unzip-cordova-crosswalk',
-            'clean:cordova-android-cordovalib',
-            'copy:cordova-crosswalk',
-            'shell:install-cordova-crosswalk'
         ]);
     });
 
@@ -740,7 +679,6 @@ module.exports = function(grunt) {
     grunt.registerTask('release-android', function() {
         grunt.task.run([
             'build-android',
-            'install-crosswalk',
             'shell:build-cordova-android-release',
             'copy:cordova-android-apk'
         ]);
@@ -755,7 +693,6 @@ module.exports = function(grunt) {
             grunt.task.run([
                 'build-www',
                 'build-android',
-                'install-crosswalk',
                 'shell:run-cordova-android',
                 'shell:restart-adb'
             ]);
@@ -771,21 +708,6 @@ module.exports = function(grunt) {
         grunt.task.run([
             'connect:project-www'
         ]);
-    });
-
-    /**
-     * TASK: unzip-cordova-crosswalk
-     */
-    grunt.registerTask('unzip-cordova-crosswalk', function() {
-        var armPath = grunt.file.isFile(globals.framework.includes.crosswalk.arm.path + '/VERSION');
-        var x86Path = grunt.file.isFile(globals.framework.includes.crosswalk.x86.path + '/VERSION');
-        if (!armPath || !x86Path) {
-            grunt.task.run([
-                'clean:cordova-crosswalk',
-                'unzip:cordova-crosswalk-arm',
-                'unzip:cordova-crosswalk-x86'
-            ]);
-        }
     });
 
     /**

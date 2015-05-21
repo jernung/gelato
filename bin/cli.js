@@ -105,19 +105,10 @@ if (argv['_'][0] === 'install') {
             case 'cordova':
                 cmd.push('grunt install-cordova');
                 break;
-            case 'crosswalk':
-                cmd.push('grunt install-crosswalk');
-                break;
             default:
-                console.log('Select installation target (crosswalk).');
+                console.log('Select installation target (cordova).');
                 process.exit(1);
                 break;
-        }
-        if (argv.arm) {
-            cmd.push('--architecture=arm');
-        }
-        if (argv.x86) {
-            cmd.push('--architecture=x86');
         }
         shell.exec(cmd.join(' '));
         process.exit(0);
@@ -141,12 +132,6 @@ if (argv['_'][0] === 'release') {
                 console.log('Select release platform (android).');
                 process.exit(1);
                 break;
-        }
-        if (argv.arm) {
-            cmd.push('--architecture=arm');
-        }
-        if (argv.x86) {
-            cmd.push('--architecture=x86');
         }
         shell.exec(cmd.join(' '));
         process.exit(0);

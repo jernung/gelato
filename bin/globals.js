@@ -29,19 +29,6 @@ shell.cd(frameworkPath);
 module.exports = {
     framework: {
         includes: {
-            crosswalk: {
-                arm: {
-                    path: frameworkPath + '/includes/crosswalk/crosswalk-cordova-' + crosswalkVersion + '-arm'
-                },
-                base: {
-                    path: frameworkPath + '/includes/crosswalk/crosswalk-cordova-' + crosswalkVersion
-                },
-                path: frameworkPath + '/includes/crosswalk',
-                version: crosswalkVersion,
-                x86: {
-                    path: frameworkPath + '/includes/crosswalk/crosswalk-cordova-' + crosswalkVersion + '-x86'
-                }
-            },
             path: frameworkPath + '/includes',
             plugins: {
                 path: frameworkPath + '/includes/plugins'
@@ -68,9 +55,6 @@ module.exports = {
             path: projectPath + '/cordova',
             platforms: {
                 android: {
-                    cordovalib: {
-                        path: projectPath + '/cordova/platforms/android/CordovaLib'
-                    },
                     path: projectPath + '/cordova/platforms/android'
                 },
                 path: projectPath + '/cordova/platforms'
