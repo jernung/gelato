@@ -5,6 +5,7 @@
   "font-sizes": false,
   "ids": false,
   "important": false,
+  "known-properties": false,
   "overqualified-elements": false,
   "unqualified-attributes": false
 }
