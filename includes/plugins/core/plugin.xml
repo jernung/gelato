@@ -12,25 +12,25 @@
     <license>MIT</license>
 
     <engines>
-        <engine name="cordova" version=">=3.6.0" />
+        <engine name="cordova" version=">=4.0.0" />
     </engines>
 
-    <js-module src="www/core.js" name="GelatoPluginCore">
+    <js-module src="www/core.js" name="GelatoCorePlugin">
         <clobbers target="plugin.gelato.core" />
     </js-module>
 
     <!-- android -->
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="GelatoPluginCore" >
-                <param name="android-package" value="com.jernung.gelato.plugin.core.GelatoPluginCore"/>
+            <feature name="GelatoCorePlugin" >
+                <param name="android-package" value="com.jernung.gelato.plugin.core.GelatoCorePlugin"/>
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest">
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
         </config-file>
-        <source-file src="src/android/GelatoPluginCore.java" target-dir="src/com/jernung/gelato/plugin/core" />
+        <source-file src="src/android/GelatoCorePlugin.java" target-dir="src/com/jernung/gelato/plugin/core" />
     </platform>
 
 </plugin>

@@ -285,8 +285,9 @@ module.exports = function(grunt) {
                 },
                 src: [
                     'Gruntfile.js',
-                    '<%= globals.project.www.path %>/**/*.js',
-                    '!<%= globals.project.www.path %>/**/libraries/**/*.js'
+                    '<%= globals.project.www.path %>/core/config/**/*.js',
+                    '<%= globals.project.www.path %>/core/modules/**/*.js',
+                    '<%= globals.project.www.path %>/modules/**/*.js'
                 ]
             }
         },
@@ -363,7 +364,8 @@ module.exports = function(grunt) {
                         'application-name': '<%= globals.project.pkg.name %>',
                         'application-title': '<%= globals.project.pkg.title %>',
                         'application-version': '<%= globals.project.pkg.version %>',
-                        'framework-version': '<%= globals.framework.pkg.version %>'
+                        'framework-version': '<%= globals.framework.pkg.version %>',
+                        'security-policy': '<%= globals.project.pkg.securityPolicy %>'
                     }
                 },
                 files: [
@@ -517,6 +519,9 @@ module.exports = function(grunt) {
                     'cordova plugin add cordova-plugin-crosswalk-webview',
                     'cordova plugin add <%= globals.framework.includes.plugins.path %>/core'
                 ].concat(globals.project.config.plugins.map(function(plugin) {
+                        if (['chartboost', 'google-analytics', 'google-playservices'].indexOf(plugin) > -1) {
+                            return 'cordova plugin add ' + globals.framework.includes.plugins.path + '/' + plugin;
+                        }
                         return 'cordova plugin add ' + plugin;
                     })
                 ).join(' && '),

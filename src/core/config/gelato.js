@@ -26,16 +26,16 @@ gelato = (function() {
         ],
         paths: {
             //framework libraries
-            async: 'core/libraries/async-0.9.2',
-            backbone: 'core/libraries/backbone-1.1.2',
+            async: 'core/libraries/async-1.0.0',
+            backbone: 'core/libraries/backbone-1.2.0',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
             bootstrap: 'core/libraries/bootstrap-3.3.4',
             'bootstrap.notify': 'core/libraries/bootstrap.notify-3.1.3',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
             fastclick: 'core/libraries/fastclick-1.0.6',
             handlebars: 'core/libraries/handlebars-3.0.3',
-            jasmine: 'core/libraries/jasmine-2.3.3',
-            'jasmine.html': 'core/libraries/jasmine.html-2.3.3',
+            jasmine: 'core/libraries/jasmine-2.3.4',
+            'jasmine.html': 'core/libraries/jasmine.html-2.3.4',
             jquery: 'core/libraries/jquery-1.11.3',
             'jquery.chosen': 'core/libraries/jquery.chosen-1.4.2',
             'jquery.mobile': 'core/libraries/jquery.mobile.custom-1.4.5',
@@ -47,8 +47,8 @@ gelato = (function() {
             react: 'core/libraries/react-0.13.3',
             'require.i18n': 'core/libraries/require.i18n-2.0.5',
             'require.text': 'core/libraries/require.text-2.0.12',
-            underscore: 'core/libraries/lodash.compat-3.8.0',
-            webfont: 'core/libraries/webfontloader-1.5.18'
+            underscore: 'core/libraries/lodash.compat-3.9.3',
+            webfontloader: 'core/libraries/webfontloader-1.5.21'
         },
         plugins: [],
         shim: {

@@ -8,6 +8,7 @@ define([
     'handlebars',
     'moment',
     'react',
+    'webfontloader',
     'backbone',
     'backbone.routefilter',
     'bootstrap',
@@ -24,12 +25,12 @@ define([
     'moment.timezone',
     'require.i18n',
     'require.text',
-    'underscore',
-    'webfont'
-], function(Async, FastClick, Handlebars, Moment, React) {
+    'underscore'
+], function(Async, FastClick, Handlebars, Moment, React, WebFont) {
     window.Async = Async;
     window.FastClick = FastClick;
     window.Handlebars = Handlebars;
     window.Moment = Moment;
     window.React = React;
+    window.WebFont = WebFont;
 });

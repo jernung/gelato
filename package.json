@@ -8,7 +8,7 @@
     "url": "http://www.jernung.com"
   },
   "license": "MIT",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "type": "gelato",
   "packageId": "com.gelato.framework.test",
   "packageName": "Gelato Test",

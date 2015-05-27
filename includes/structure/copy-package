@@ -8,5 +8,6 @@
     "packageId": "com.jernung.gelato.@@project-name",
     "packageName": "@@project-name",
     "packageVersionCode-arm": "1",
-    "packageVersionCode-x86": "2"
+    "packageVersionCode-x86": "2",
+    "securityPolicy": "default-src * 'unsafe-eval' 'unsafe-inline';"
 }
