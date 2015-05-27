@@ -48,7 +48,7 @@ gelato = (function() {
             'require.i18n': 'core/libraries/require.i18n-2.0.5',
             'require.text': 'core/libraries/require.text-2.0.12',
             underscore: 'core/libraries/lodash.compat-3.9.3',
-            webfont: 'core/libraries/webfontloader-1.5.18'
+            webfontloader: 'core/libraries/webfontloader-1.5.21'
         },
         plugins: [],
         shim: {

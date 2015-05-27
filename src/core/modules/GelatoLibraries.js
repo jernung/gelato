@@ -25,7 +25,7 @@ define([
     'require.i18n',
     'require.text',
     'underscore',
-    'webfont'
+    'webfontloader'
 ], function(Async, FastClick, Handlebars, Moment, React) {
     window.Async = Async;
     window.FastClick = FastClick;
