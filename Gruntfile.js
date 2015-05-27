@@ -285,8 +285,9 @@ module.exports = function(grunt) {
                 },
                 src: [
                     'Gruntfile.js',
-                    '<%= globals.project.www.path %>/**/*.js',
-                    '!<%= globals.project.www.path %>/**/libraries/**/*.js'
+                    '<%= globals.project.www.path %>/core/config/**/*.js',
+                    '<%= globals.project.www.path %>/core/modules/**/*.js',
+                    '<%= globals.project.www.path %>/modules/**/*.js'
                 ]
             }
         },
