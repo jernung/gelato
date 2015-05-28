@@ -28,13 +28,13 @@ define([
          * @property el
          * @type String
          */
-        el: 'gelato-dialogs',
+        el: 'body',
         /**
          * @method render
          * @returns {GelatoDialogs}
          */
         render: function() {
-            this.renderTemplate(Template);
+            this.renderTemplate(Template, 'gelato-dialogs');
             return this;
         },
         /**
@@ -92,7 +92,6 @@ define([
             this.state = 'hidden';
             this.dialog = null;
             this.element = null;
-            this.$el.removeClass('active');
             this.trigger('hidden', event);
         },
         /**
@@ -124,7 +123,6 @@ define([
             options.show = options.show || true;
             options.remote = options.remote || false;
             if (this.state === 'hidden') {
-                this.$el.addClass('active');
                 this.element = this.$('gelato-dialog[data-name="' + name + '"]');
                 if (this.element.length) {
                     this.dialog = this.element.find('[role="dialog"]');

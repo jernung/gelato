@@ -28,13 +28,13 @@ define([
          * @property el
          * @type String
          */
-        el: 'gelato-sidebars',
+        el: 'body',
         /**
          * @method render
          * @returns {GelatoSidebars}
          */
         render: function() {
-            this.renderTemplate(Template);
+            this.renderTemplate(Template, 'gelato-sidebars');
             return this;
         },
         /**
