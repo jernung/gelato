@@ -459,7 +459,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.project.src.path %>',
-                        src: ['styles.scss'],
+                        src: ['fonts.scss', 'styles.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
                     }
