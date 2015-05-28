@@ -4,8 +4,8 @@
  */
 define([
     'core/modules/GelatoRouter',
-    'modules/pages/Home'
-], function(GelatoRouter, PageHome) {
+    'modules/pages/default/DefaultPage'
+], function(GelatoRouter, DefaultPage) {
 
     /**
      * @class Router
@@ -28,7 +28,7 @@ define([
          * @method showDefault
          */
         showDefault: function() {
-            this.page = new PageHome();
+            this.page = new DefaultPage();
             this.page.render();
         }
     });
