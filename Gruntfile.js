@@ -612,10 +612,10 @@ module.exports = function(grunt) {
             grunt.task.run('clean:project-www');
         }
         grunt.task.run([
-            'copy:project-www',
             'coffee:project-www',
             'jade:project-www',
             'sass:project-www',
+            'copy:project-www',
             'replace:project-www'
         ]);
         if (options.novalidate) {
