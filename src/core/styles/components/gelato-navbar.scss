@@ -34,6 +34,7 @@ gelato-navbar {
       padding: 8px 10px;
     }
     &.item-icon {
+      cursor: pointer;
       font-size: 28px;
       font-weight: 400;
       padding: 11px;
@@ -50,9 +51,9 @@ gelato-navbar {
       padding: 14px 7px;
     }
     &.item-text {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 400;
-      padding: 12.5px 7px;
+      padding: 11px 7px;
     }
   }
 
