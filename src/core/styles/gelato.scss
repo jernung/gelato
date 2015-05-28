@@ -9,6 +9,7 @@ html, body {
 
 
 /*** LIBRARIES ***/
+@import "libraries/bootstrap.jasny";
 @import "libraries/bootstrap.switch";
 @import "libraries/jquery.chosen";
 
@@ -17,7 +18,7 @@ html, body {
 @import "components/gelato-application";
 @import "components/gelato-component";
 @import "components/gelato-content";
-@import "components/gelato-dialog";
+@import "components/gelato-dialogs";
 @import "components/gelato-navbar";
 @import "components/gelato-page";
-@import "components/gelato-sidebar";
+@import "components/gelato-sidebars";
