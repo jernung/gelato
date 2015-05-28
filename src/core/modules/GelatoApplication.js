@@ -2,8 +2,8 @@
  * @module Core
  */
 define([
-    'core/modules/GelatoDialog',
-    'core/modules/GelatoSidebar',
+    'core/modules/GelatoDialogs',
+    'core/modules/GelatoSidebars',
     'modules/Router'
 ], function(GelatoDialog, GelatoSidebar, Router) {
 
@@ -13,20 +13,20 @@ define([
      */
     var GelatoApplication = Backbone.Model.extend({
         /**
-         * @property dialog
+         * @property dialogs
          * @type {GelatoDialog}
          */
-        dialog: new GelatoDialog(),
+        dialogs: new GelatoDialog(),
         /**
          * @property router
          * @type {Router}
          */
         router: new Router(),
         /**
-         * @property sidebar
+         * @property sidebars
          * @type {GelatoSidebar}
          */
-        sidebar: new GelatoSidebar(),
+        sidebars: new GelatoSidebar(),
         /**
          * @method getHeight
          * @returns {Number}
