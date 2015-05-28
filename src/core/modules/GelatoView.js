@@ -34,10 +34,15 @@ define([], function() {
         /**
          * @method renderTemplate
          * @param {String} template
+         * @param {String} [selector]
          * @returns {GelatoView}
          */
-        renderTemplate: function(template) {
-            this.$el.html(Handlebars.compile(template)(i18n));
+        renderTemplate: function(template, selector) {
+            if (selector) {
+                this.$(selector).html(Handlebars.compile(template)(i18n));
+            } else {
+                this.$el.html(Handlebars.compile(template)(i18n));
+            }
             this.renderEvents();
             return this;
         },
