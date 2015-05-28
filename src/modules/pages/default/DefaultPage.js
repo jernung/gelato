@@ -3,15 +3,15 @@
  * @submodule Pages
  */
 define([
-    'require.text!templates/home.html',
+    'require.text!modules/pages/default/default-template.html',
     'core/modules/GelatoPage'
 ], function(Template, GelatoPage) {
 
     /**
-     * @class PageHome
+     * @class DefaultPage
      * @extends GelatoPage
      */
-    var PageHome = GelatoPage.extend({
+    var DefaultPage = GelatoPage.extend({
         /**
          * @method initialize
          * @constructor
@@ -21,10 +21,10 @@ define([
          * @property title
          * @type String
          */
-        title: 'Home - ' + i18n.global.title,
+        title: 'Default - ' + i18n.global.title,
         /**
          * @method render
-         * @returns {PageHome}
+         * @returns {DefaultPage}
          */
         render: function() {
             this.renderTemplate(Template);
@@ -32,6 +32,6 @@ define([
         }
     });
 
-    return PageHome;
+    return DefaultPage;
 
 });
