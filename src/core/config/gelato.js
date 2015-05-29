@@ -41,7 +41,7 @@ gelato = (function() {
             'jquery.chosen': 'core/libraries/jquery.chosen-1.4.2',
             'jquery.mobile': 'core/libraries/jquery.mobile.custom-1.4.5',
             'jquery.ui': 'core/libraries/jquery.ui.custom-1.11.4',
-            'lzstring': 'core/libraries/lzstring-1.4.3',
+            lzstring: 'core/libraries/lzstring-1.4.4',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.10.3',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.1',
