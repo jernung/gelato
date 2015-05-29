@@ -100,6 +100,8 @@ define([
          */
         open: function(name, options) {
             options = options || {};
+            options.canvas = options.canvas || 'body';
+            options.toggle = false;
             this.element = this.$('gelato-sidebar[data-name="' + name + '"]');
             if (this.element.length) {
                 this.sidebar = this.element.find('[role="navigation"]');
@@ -108,6 +110,7 @@ define([
                 this.sidebar.one('hide.bs.offcanvas', $.proxy(this.handleSidebarHide, this));
                 this.sidebar.one('hidden.bs.offcanvas', $.proxy(this.handleSidebarHidden, this));
                 this.sidebar.offcanvas(options);
+                this.sidebar.offcanvas('show');
             } else {
                 console.error(new Error('Sidebar "' + name +  '" does not exist.'));
             }
