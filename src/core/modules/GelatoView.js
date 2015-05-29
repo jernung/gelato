@@ -34,10 +34,15 @@ define([], function() {
         /**
          * @method renderTemplate
          * @param {String} template
+         * @param {String} [selector]
          * @returns {GelatoView}
          */
-        renderTemplate: function(template) {
-            this.$el.html(Handlebars.compile(template)(i18n));
+        renderTemplate: function(template, selector) {
+            if (selector) {
+                this.$(selector).html(Handlebars.compile(template)(i18n));
+            } else {
+                this.$el.html(Handlebars.compile(template)(i18n));
+            }
             this.renderEvents();
             return this;
         },
@@ -67,8 +72,8 @@ define([], function() {
         handleClickDataDialog: function(event) {
             event.preventDefault();
             var dialogName = $(event.currentTarget).data('dialog');
-            if (app.dialog) {
-                app.dialog.show(dialogName);
+            if (app.dialogs) {
+                app.dialogs.open(dialogName);
             }
         },
         /**
@@ -78,8 +83,8 @@ define([], function() {
         handleClickDataSidebar: function(event) {
             event.preventDefault();
             var sidebarName = $(event.currentTarget).data('sidebar');
-            if (app.sidebar) {
-                app.sidebar.show(sidebarName);
+            if (app.sidebars) {
+                app.sidebars.open(sidebarName);
             }
         },
         /**

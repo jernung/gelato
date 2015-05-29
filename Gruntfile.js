@@ -20,7 +20,6 @@ module.exports = function(grunt) {
 
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-coffee');
-    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-csslint');
@@ -459,7 +458,7 @@ module.exports = function(grunt) {
                     {
                         expand: true,
                         cwd: '<%= globals.project.src.path %>',
-                        src: ['styles/fonts.scss', 'styles/imports.scss', 'styles/main.scss'],
+                        src: ['fonts.scss', 'styles.scss'],
                         dest: '<%= globals.project.www.path %>',
                         ext: '.css'
                     }
@@ -612,10 +611,10 @@ module.exports = function(grunt) {
             grunt.task.run('clean:project-www');
         }
         grunt.task.run([
-            'copy:project-www',
             'coffee:project-www',
             'jade:project-www',
             'sass:project-www',
+            'copy:project-www',
             'replace:project-www'
         ]);
         if (options.novalidate) {
