@@ -42,14 +42,27 @@ if (shell.exec('cordova --version', {silent: true}).code !== 0) {
  */
 if (argv['_'][0] === 'build') {
     if (globals.project.pkg.type === 'gelato') {
-        var cmd = [];
-        switch (argv['_'][1]) {
-            case 'android':
-                cmd.push('grunt build-android');
-                break;
-            default:
-                cmd.push('grunt build-www');
+        var cmd = ['grunt build-www'];
+        if (argv.noclean) {
+            cmd.push('--noclean=true');
         }
+        if (argv.novalidate) {
+            cmd.push('--novalidate=true');
+        }
+        shell.exec(cmd.join(' '));
+        process.exit(0);
+    } else {
+        console.log('Not a valid gelato project directory.');
+        process.exit(1);
+    }
+}
+
+/**
+ * COMPILE
+ */
+if (argv['_'][0] === 'compile') {
+    if (globals.project.pkg.type === 'gelato') {
+        var cmd = ['grunt compile-www'];
         if (argv.noclean) {
             cmd.push('--noclean=true');
         }

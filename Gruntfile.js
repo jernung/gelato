@@ -47,9 +47,17 @@ module.exports = function(grunt) {
          * CLEAN
          */
         clean: {
-            'build-android': {
+            'compile-build': {
                 src: [
-                    '<%= globals.project.build.path %>/android/**/*'
+                    '<%= globals.project.build.path %>/cordova',
+                    '<%= globals.project.build.path %>/core/modules/**/*',
+                    '!<%= globals.project.build.path %>/core/modules/GelatoJasmine.js',
+                    '!<%= globals.project.build.path %>/core/modules/GelatoLibraries.js',
+                    '!<%= globals.project.build.path %>/core/modules/GelatoTests.js',
+                    '<%= globals.project.build.path %>/modules/**/*',
+                    '!<%= globals.project.build.path %>/modules/Application.js',
+                    '!<%= globals.project.build.path %>/modules/Libraries.js',
+                    '!<%= globals.project.build.path %>/modules/Tests.js'
                 ],
                 options: {force: true}
             },
@@ -409,26 +417,10 @@ module.exports = function(grunt) {
          * REQUIREJS
          */
         requirejs: {
-            'cordova-www': {
+            'compile-build': {
                 options: {
                     baseUrl: globals.project.www.path,
-                    dir: globals.project.cordova.path + '/www',
-                    fileExclusionRegExp: null,
-                    generateSourceMaps: false,
-                    keepBuildDir: false,
-                    modules: globals.project.config.modules,
-                    optimize: 'uglify',
-                    optimizeCss: 'standard',
-                    paths: globals.project.config.paths,
-                    preserveLicenseComments: false,
-                    removeCombined: true,
-                    shim: globals.project.config.shim
-                }
-            },
-            'web-www': {
-                options: {
-                    baseUrl: globals.project.www.path,
-                    dir: globals.project.build.path + '/web',
+                    dir: globals.project.build.path,
                     fileExclusionRegExp: null,
                     generateSourceMaps: false,
                     keepBuildDir: false,
@@ -623,6 +615,17 @@ module.exports = function(grunt) {
         } else {
             grunt.task.run('validate-www');
         }
+    });
+
+    /**
+     * TASK: compile-www
+     */
+    grunt.registerTask('compile-www', function() {
+        grunt.task.run([
+            'build-www',
+            'requirejs:compile-build',
+            'clean:compile-build'
+        ]);
     });
 
     /**

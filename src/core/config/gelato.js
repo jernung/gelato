@@ -22,7 +22,10 @@ gelato = (function() {
                 name: 'modules/Application'
             },
             {
-                name: 'modules/Router'
+                name: 'modules/Libraries'
+            },
+            {
+                name: 'modules/Tests'
             }
         ],
         paths: {
