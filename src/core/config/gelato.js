@@ -7,7 +7,8 @@ gelato = (function() {
     var config = {
         attributes: {
             name: '@@application-name',
-            version: '@@application-version'
+            buildDate: '@@application-date',
+            buildVersion: '@@application-version'
         },
         fonts: {},
         modules: [

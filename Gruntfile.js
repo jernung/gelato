@@ -359,6 +359,7 @@ module.exports = function(grunt) {
             'project-www': {
                 options: {
                     variables: {
+                        'application-date': new Date().toISOString(),
                         'application-description': '<%= globals.project.pkg.description %>',
                         'application-name': '<%= globals.project.pkg.name %>',
                         'application-title': '<%= globals.project.pkg.title %>',
