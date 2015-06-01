@@ -12,4 +12,6 @@
 *.woff binary
 *.woff2 binary
 
+*.jar binary
+*.mp3 binary
 *.zip binary
