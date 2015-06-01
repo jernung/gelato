@@ -15,6 +15,7 @@ define([
     'bootstrap.jasny',
     'bootstrap.notify',
     'bootstrap.switch',
+    'bootstrap.table',
     'jasmine',
     'jasmine.html',
     'jquery',
