@@ -143,7 +143,7 @@ gelato = (function() {
      * @returns {String}
      */
     function getRoot() {
-        return location.pathname;
+        return isCordova() || isLocal() ? location.pathname : '/';
     }
 
     /**
