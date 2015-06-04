@@ -509,6 +509,7 @@ module.exports = function(grunt) {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
                     'cordova plugin add cordova-plugin-crosswalk-webview',
+                    'cordova plugin add cordova-plugin-device',
                     'cordova plugin add <%= globals.framework.includes.plugins.path %>/core'
                 ].concat(globals.project.config.plugins.map(function(plugin) {
                         if (['chartboost', 'google-analytics', 'google-playservices'].indexOf(plugin) > -1) {
