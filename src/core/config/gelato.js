@@ -131,6 +131,14 @@ gelato = (function() {
     }
 
     /**
+     * @method getPlatform
+     * @returns {String}
+     */
+    function getPlatform() {
+        return window.device ? window.device.platform : 'Desktop';
+    }
+
+    /**
      * @method getPushState
      * @returns {Boolean}
      */
@@ -147,11 +155,27 @@ gelato = (function() {
     }
 
     /**
+     * @method isAndroid
+     * @returns {Boolean}
+     */
+    function isAndroid() {
+        return getPlatform() === 'Android';
+    }
+
+    /**
      * @method isCordova
      * @returns {Boolean}
      */
     function isCordova() {
         return location.protocol === 'file:';
+    }
+
+    /**
+     * @method isIOS
+     * @returns {Boolean}
+     */
+    function isIOS() {
+        return getPlatform() === 'iOS';
     }
 
     /**
@@ -212,9 +236,12 @@ gelato = (function() {
         addPaths: addPaths,
         addShim: addShim,
         getConfig: getConfig,
+        getPlatform: getPlatform,
         getPushState: getPushState,
         getRoot: getRoot,
+        isAndroid: isAndroid,
         isCordova: isCordova,
+        isIOS: isIOS,
         isLocal: isLocal,
         version: version
     };
