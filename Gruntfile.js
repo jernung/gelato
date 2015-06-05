@@ -698,7 +698,6 @@ module.exports = function(grunt) {
         var cordovaPath = grunt.file.isFile(globals.project.cordova.path + '/config.xml');
         if (cordovaPath) {
             grunt.task.run([
-                'build-www',
                 'build-android',
                 'shell:run-cordova-android',
                 'shell:restart-adb'
