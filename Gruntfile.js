@@ -201,12 +201,14 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
+                        dot: true,
                         cwd: '<%= globals.framework.src.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: '<%= globals.project.www.path %>'
                     },
                     {
                         expand: true,
+                        dot: true,
                         cwd: '<%= globals.project.src.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: '<%= globals.project.www.path %>'
@@ -221,7 +223,6 @@ module.exports = function(grunt) {
                         src: [
                             'copy-gitattributes',
                             'copy-gitignore',
-                            'copy-htaccess',
                             'copy-package',
                             'copy-readme'
                         ],
@@ -232,8 +233,6 @@ module.exports = function(grunt) {
                                     return dest + '/.gitattributes';
                                 case 'copy-gitignore':
                                     return dest + '/.gitignore';
-                                case 'copy-htaccess':
-                                    return dest + '/.htaccess';
                                 case 'copy-package':
                                     return dest + '/package.json';
                                 case 'copy-readme':
