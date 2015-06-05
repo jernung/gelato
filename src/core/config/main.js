@@ -12,8 +12,6 @@
             } else {
                 console.log('LOADING:', 'application');
                 requirejs(['modules/Application'], function(Application) {
-                    window.cordova = window.cordova || {};
-                    window.gelato = window.gelato || {};
                     window.plugin = window.plugin || {};
                     window.app = new Application(gelato.getConfig('attributes'));
                     window.app.start();
@@ -32,7 +30,7 @@
         window.WebFont = undefined;
         console.log('LOADING:', 'core libraries');
         requirejs(['core/modules/GelatoLibraries'], function() {
-            if (gelato.isCordova()) {
+            if (location.protocol === 'file:') {
                 requirejs(['cordova'], function() {
                     document.addEventListener('deviceready', loadFonts, false);
                 });
@@ -63,7 +61,9 @@
         locale: localStorage.getItem('application-locale') || 'en-us',
         paths: gelato.getConfig('paths'),
         shim: gelato.getConfig('shim'),
-        urlArgs: gelato.isLocal() ? 'bust=' + (new Date()).getTime() : undefined,
+        urlArgs: function() {
+            return location.href.indexOf('dev.') > -1 ? 'bust=' + (new Date()).getTime() : null;
+        }(),
         waitSeconds: 120
     });
 

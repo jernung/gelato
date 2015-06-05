@@ -131,62 +131,6 @@ gelato = (function() {
     }
 
     /**
-     * @method getPlatform
-     * @returns {String}
-     */
-    function getPlatform() {
-        return window.device ? window.device.platform : 'Desktop';
-    }
-
-    /**
-     * @method getPushState
-     * @returns {Boolean}
-     */
-    function getPushState() {
-        return isCordova() || isLocal() ? false : true;
-    }
-
-    /**
-     * @method getRoot
-     * @returns {String}
-     */
-    function getRoot() {
-        return isCordova() || isLocal() ? location.pathname : '/';
-    }
-
-    /**
-     * @method isAndroid
-     * @returns {Boolean}
-     */
-    function isAndroid() {
-        return getPlatform() === 'Android';
-    }
-
-    /**
-     * @method isCordova
-     * @returns {Boolean}
-     */
-    function isCordova() {
-        return location.protocol === 'file:';
-    }
-
-    /**
-     * @method isIOS
-     * @returns {Boolean}
-     */
-    function isIOS() {
-        return getPlatform() === 'iOS';
-    }
-
-    /**
-     * @method isLocal
-     * @returns {Boolean}
-     */
-    function isLocal() {
-        return location.hostname === 'localhost' || location.port !== '';
-    }
-
-    /**
      * @method mergeArrays
      * @param {Array} array1
      * @param {Array} array2
@@ -236,13 +180,6 @@ gelato = (function() {
         addPaths: addPaths,
         addShim: addShim,
         getConfig: getConfig,
-        getPlatform: getPlatform,
-        getPushState: getPushState,
-        getRoot: getRoot,
-        isAndroid: isAndroid,
-        isCordova: isCordova,
-        isIOS: isIOS,
-        isLocal: isLocal,
         version: version
     };
 

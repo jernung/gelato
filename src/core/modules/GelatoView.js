@@ -93,7 +93,7 @@ define([], function() {
          */
         handleClickDataUrl: function(event) {
             event.preventDefault();
-            var url = $(event.currentTarget).data('url').replace('#', gelato.isLocal() ? '/#' : '');
+            var url = $(event.currentTarget).data('url').replace('#', '');
             var replace = $(event.currentTarget).data('replace');
             var trigger = $(event.currentTarget).data('trigger');
             app.router.navigate(url, {

@@ -35,6 +35,13 @@ define([
             return $(window).height();
         },
         /**
+         * @method getPlatform
+         * @returns {String}
+         */
+        getPlatform: function() {
+            return window.device ? window.device.platform : 'Desktop';
+        },
+        /**
          * @method getSetting
          * @param {String} name
          * @returns {String}
@@ -48,6 +55,27 @@ define([
          */
         getWidth: function() {
             return $(window).width();
+        },
+        /**
+         * @method isAndroid
+         * @returns {Boolean}
+         */
+        isAndroid: function() {
+            return this.getPlatform() === 'Android';
+        },
+        /**
+         * @method isCordova
+         * @returns {Boolean}
+         */
+        isCordova: function() {
+            return location.protocol === 'file:';
+        },
+        /**
+         * @method isIOS
+         * @returns {Boolean}
+         */
+        isIOS: function() {
+            return getPlatform() === 'iOS';
         },
         /**
          * @method isLandscape
