@@ -55,7 +55,7 @@
     }
 
     requirejs.config({
-        baseUrl: './',
+        baseUrl: '/',
         callback: loadCoreLibraries,
         config: {
             moment: {noGlobal: true}
