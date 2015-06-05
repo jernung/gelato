@@ -1,5 +1,9 @@
 (function() {
 
+    function isCordova() {
+        return location.protocol === 'file:';
+    }
+
     function loadApplication() {
         FastClick.attach(document.body);
         requirejs(['require.i18n!locale/nls/strings', 'modules/Libraries'], function(Strings) {
@@ -30,7 +34,7 @@
         window.WebFont = undefined;
         console.log('LOADING:', 'core libraries');
         requirejs(['core/modules/GelatoLibraries'], function() {
-            if (location.protocol === 'file:') {
+            if (isCordova()) {
                 requirejs(['cordova'], function() {
                     document.addEventListener('deviceready', loadFonts, false);
                 });
@@ -42,6 +46,9 @@
 
     function loadFonts() {
         var fonts = gelato.getConfig('fonts');
+        if (fonts.custom) {
+            fonts.custom.urls = isCordova() ? ['fonts.css'] : ['/fonts.css'];
+        }
         if (Object.keys(fonts).length) {
             console.log('LOADING:', 'fonts');
             fonts.active = loadApplication;
@@ -53,7 +60,7 @@
     }
 
     requirejs.config({
-        baseUrl: '/',
+        baseUrl: isCordova() ? './' : '/',
         callback: loadCoreLibraries,
         config: {
             moment: {noGlobal: true}
