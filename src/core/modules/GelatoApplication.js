@@ -64,6 +64,13 @@ define([
             return this.getPlatform() === 'Android';
         },
         /**
+         * @method isDevelopment
+         * @returns {Boolean}
+         */
+        isDevelopment: function() {
+            return location.href.indexOf('http://dev.')> -1;
+        },
+        /**
          * @method isCordova
          * @returns {Boolean}
          */
