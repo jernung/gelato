@@ -30,7 +30,7 @@ gelato = (function() {
         ],
         paths: {
             //framework libraries
-            async: 'core/libraries/async-1.0.0',
+            async: 'core/libraries/async-1.2.1',
             backbone: 'core/libraries/backbone-1.2.1',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
             bootstrap: 'core/libraries/bootstrap-3.3.4',
