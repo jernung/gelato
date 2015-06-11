@@ -64,18 +64,18 @@ define([
             return this.getPlatform() === 'Android';
         },
         /**
-         * @method isDevelopment
-         * @returns {Boolean}
-         */
-        isDevelopment: function() {
-            return location.href.indexOf('http://dev.')> -1;
-        },
-        /**
          * @method isCordova
          * @returns {Boolean}
          */
         isCordova: function() {
             return location.protocol === 'file:';
+        },
+        /**
+         * @method isDevelopment
+         * @returns {Boolean}
+         */
+        isDevelopment: function() {
+            return location.href.indexOf('http://dev.') > -1;
         },
         /**
          * @method isIOS
@@ -97,6 +97,13 @@ define([
          */
         isPortrait: function() {
             return this.getWidth() <= this.getHeight();
+        },
+        /**
+         * @method isProduction
+         * @returns {Boolean}
+         */
+        isProduction: function() {
+            return !this.isDevelopment();
         },
         /**
          * @method reload
