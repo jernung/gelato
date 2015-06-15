@@ -68,11 +68,11 @@ define([
             var buttonAction = $(event.currentTarget).data('action');
             var dialogName = this.getName();
             if (buttonAction) {
-                this.trigger(dialogName + ':' + buttonAction, event);
-                this.trigger(dialogName + ':click', buttonAction, event);
-                this.trigger('button:click', dialogName + ':' + buttonAction, event);
+                this.trigger(dialogName + ':' + buttonAction, this.dialog);
+                this.trigger(dialogName + ':click', buttonAction, this.dialog);
+                this.trigger('button:click', dialogName + ':' + buttonAction, this.dialog);
             } else {
-                this.trigger('button:click', dialogName, event);
+                this.trigger('button:click', dialogName, this.dialog);
             }
         },
         /**
