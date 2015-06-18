@@ -35,6 +35,13 @@ define([
             return $(window).height();
         },
         /**
+         * @method getPlatform
+         * @returns {String}
+         */
+        getPlatform: function() {
+            return window.device ? window.device.platform : 'Desktop';
+        },
+        /**
          * @method getSetting
          * @param {String} name
          * @returns {String}
@@ -50,6 +57,34 @@ define([
             return $(window).width();
         },
         /**
+         * @method isAndroid
+         * @returns {Boolean}
+         */
+        isAndroid: function() {
+            return this.getPlatform() === 'Android';
+        },
+        /**
+         * @method isCordova
+         * @returns {Boolean}
+         */
+        isCordova: function() {
+            return location.protocol === 'file:';
+        },
+        /**
+         * @method isDevelopment
+         * @returns {Boolean}
+         */
+        isDevelopment: function() {
+            return location.href.indexOf('http://dev.') > -1;
+        },
+        /**
+         * @method isIOS
+         * @returns {Boolean}
+         */
+        isIOS: function() {
+            return getPlatform() === 'iOS';
+        },
+        /**
          * @method isLandscape
          * @returns {Boolean}
          */
@@ -62,6 +97,13 @@ define([
          */
         isPortrait: function() {
             return this.getWidth() <= this.getHeight();
+        },
+        /**
+         * @method isProduction
+         * @returns {Boolean}
+         */
+        isProduction: function() {
+            return !this.isDevelopment();
         },
         /**
          * @method reload

@@ -44,14 +44,14 @@ define([
             var navbarFixedBottom = this.$('.fixed-bottom');
             var navbarFixedTop = this.$('.fixed-top');
             if (navbarFixedBottom.length) {
-                this.$el.css('padding-bottom', navbarFixedBottom.height());
+                $('body').css('padding-bottom', navbarFixedBottom.height());
             } else {
-                this.$el.css('padding-bottom', '');
+                $('body').css('padding-bottom', '');
             }
             if (navbarFixedTop.length) {
-                this.$el.css('padding-top', navbarFixedTop.height());
+                $('body').css('padding-top', navbarFixedTop.height());
             } else {
-                this.$el.css('padding-top', '');
+                $('body').css('padding-top', '');
             }
             return this;
         },

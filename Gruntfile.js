@@ -47,9 +47,17 @@ module.exports = function(grunt) {
          * CLEAN
          */
         clean: {
-            'build-android': {
+            'compile-build': {
                 src: [
-                    '<%= globals.project.build.path %>/android/**/*'
+                    '<%= globals.project.build.path %>/cordova',
+                    '<%= globals.project.build.path %>/core/modules/**/*',
+                    '!<%= globals.project.build.path %>/core/modules/GelatoJasmine.js',
+                    '!<%= globals.project.build.path %>/core/modules/GelatoLibraries.js',
+                    '!<%= globals.project.build.path %>/core/modules/GelatoTests.js',
+                    '<%= globals.project.build.path %>/modules/**/*',
+                    '!<%= globals.project.build.path %>/modules/Application.js',
+                    '!<%= globals.project.build.path %>/modules/Libraries.js',
+                    '!<%= globals.project.build.path %>/modules/Tests.js'
                 ],
                 options: {force: true}
             },
@@ -193,12 +201,14 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
+                        dot: true,
                         cwd: '<%= globals.framework.src.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: '<%= globals.project.www.path %>'
                     },
                     {
                         expand: true,
+                        dot: true,
                         cwd: '<%= globals.project.src.path %>',
                         src: ['**/*', '!**/*.coffee', '!**/*.jade', '!**/*.jsx', '!**/*.scss', '!README.md'],
                         dest: '<%= globals.project.www.path %>'
@@ -213,7 +223,6 @@ module.exports = function(grunt) {
                         src: [
                             'copy-gitattributes',
                             'copy-gitignore',
-                            'copy-htaccess',
                             'copy-package',
                             'copy-readme'
                         ],
@@ -224,8 +233,6 @@ module.exports = function(grunt) {
                                     return dest + '/.gitattributes';
                                 case 'copy-gitignore':
                                     return dest + '/.gitignore';
-                                case 'copy-htaccess':
-                                    return dest + '/.htaccess';
                                 case 'copy-package':
                                     return dest + '/package.json';
                                 case 'copy-readme':
@@ -359,6 +366,7 @@ module.exports = function(grunt) {
             'project-www': {
                 options: {
                     variables: {
+                        'application-date': new Date().toISOString(),
                         'application-description': '<%= globals.project.pkg.description %>',
                         'application-name': '<%= globals.project.pkg.name %>',
                         'application-title': '<%= globals.project.pkg.title %>',
@@ -370,7 +378,7 @@ module.exports = function(grunt) {
                 files: [
                     {
                         expand: true,
-                        src: ['index.html', 'tests.html'],
+                        src: ['cordova.html', 'index.html', 'tests.html'],
                         cwd: '<%= globals.project.www.path %>',
                         dest: '<%= globals.project.www.path %>'
                     },
@@ -408,26 +416,10 @@ module.exports = function(grunt) {
          * REQUIREJS
          */
         requirejs: {
-            'cordova-www': {
+            'compile-build': {
                 options: {
                     baseUrl: globals.project.www.path,
-                    dir: globals.project.cordova.path + '/www',
-                    fileExclusionRegExp: null,
-                    generateSourceMaps: false,
-                    keepBuildDir: false,
-                    modules: globals.project.config.modules,
-                    optimize: 'uglify',
-                    optimizeCss: 'standard',
-                    paths: globals.project.config.paths,
-                    preserveLicenseComments: false,
-                    removeCombined: true,
-                    shim: globals.project.config.shim
-                }
-            },
-            'web-www': {
-                options: {
-                    baseUrl: globals.project.www.path,
-                    dir: globals.project.build.path + '/web',
+                    dir: globals.project.build.path,
                     fileExclusionRegExp: null,
                     generateSourceMaps: false,
                     keepBuildDir: false,
@@ -516,6 +508,7 @@ module.exports = function(grunt) {
                 command: [
                     'cd <%= globals.project.cordova.path %>',
                     'cordova plugin add cordova-plugin-crosswalk-webview',
+                    'cordova plugin add cordova-plugin-device',
                     'cordova plugin add <%= globals.framework.includes.plugins.path %>/core'
                 ].concat(globals.project.config.plugins.map(function(plugin) {
                         if (['chartboost', 'google-analytics', 'google-playservices'].indexOf(plugin) > -1) {
@@ -625,6 +618,17 @@ module.exports = function(grunt) {
     });
 
     /**
+     * TASK: compile-www
+     */
+    grunt.registerTask('compile-www', function() {
+        grunt.task.run([
+            'build-www',
+            'requirejs:compile-build',
+            'clean:compile-build'
+        ]);
+    });
+
+    /**
      * TASK: create-project
      */
     grunt.registerTask('create-project', function() {
@@ -694,7 +698,6 @@ module.exports = function(grunt) {
         var cordovaPath = grunt.file.isFile(globals.project.cordova.path + '/config.xml');
         if (cordovaPath) {
             grunt.task.run([
-                'build-www',
                 'build-android',
                 'shell:run-cordova-android',
                 'shell:restart-adb'

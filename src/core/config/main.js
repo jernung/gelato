@@ -1,5 +1,9 @@
 (function() {
 
+    function isCordova() {
+        return location.protocol === 'file:';
+    }
+
     function loadApplication() {
         FastClick.attach(document.body);
         requirejs(['require.i18n!locale/nls/strings', 'modules/Libraries'], function(Strings) {
@@ -12,8 +16,6 @@
             } else {
                 console.log('LOADING:', 'application');
                 requirejs(['modules/Application'], function(Application) {
-                    window.cordova = window.cordova || {};
-                    window.gelato = window.gelato || {};
                     window.plugin = window.plugin || {};
                     window.app = new Application(gelato.getConfig('attributes'));
                     window.app.start();
@@ -32,7 +34,7 @@
         window.WebFont = undefined;
         console.log('LOADING:', 'core libraries');
         requirejs(['core/modules/GelatoLibraries'], function() {
-            if (gelato.isCordova()) {
+            if (isCordova()) {
                 requirejs(['cordova'], function() {
                     document.addEventListener('deviceready', loadFonts, false);
                 });
@@ -44,6 +46,9 @@
 
     function loadFonts() {
         var fonts = gelato.getConfig('fonts');
+        if (fonts.custom) {
+            fonts.custom.urls = isCordova() ? ['fonts.css'] : ['/fonts.css'];
+        }
         if (Object.keys(fonts).length) {
             console.log('LOADING:', 'fonts');
             fonts.active = loadApplication;
@@ -55,7 +60,7 @@
     }
 
     requirejs.config({
-        baseUrl: './',
+        baseUrl: isCordova() ? './' : '/',
         callback: loadCoreLibraries,
         config: {
             moment: {noGlobal: true}
@@ -63,7 +68,9 @@
         locale: localStorage.getItem('application-locale') || 'en-us',
         paths: gelato.getConfig('paths'),
         shim: gelato.getConfig('shim'),
-        urlArgs: gelato.isLocal() ? 'bust=' + (new Date()).getTime() : undefined,
+        urlArgs: function() {
+            return location.href.indexOf('dev.') > -1 ? 'bust=' + (new Date()).getTime() : null;
+        }(),
         waitSeconds: 120
     });
 

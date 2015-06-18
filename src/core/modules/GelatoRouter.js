@@ -49,10 +49,7 @@ define([], function() {
          * @returns {GelatoRouter}
          */
         start: function() {
-            Backbone.history.start({
-                pushState: gelato.getPushState(),
-                root: gelato.getRoot()
-            });
+            Backbone.history.start({pushState: true, root: '/'});
             return this;
         }
     });

@@ -12,7 +12,7 @@
     <author email="josh@jernung.com" href="http://www.jernung.com">
         Joshua McFarland
     </author>
-    <content src="index.html" />
+    <content src="cordova.html" />
     <preference name="xwalkCommandLine" value="--ignore-gpu-blacklist" />
     <plugin name="cordova-plugin-whitelist" version="1" />
     <access origin="*" />

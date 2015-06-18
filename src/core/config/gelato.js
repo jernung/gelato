@@ -7,7 +7,8 @@ gelato = (function() {
     var config = {
         attributes: {
             name: '@@application-name',
-            version: '@@application-version'
+            buildDate: '@@application-date',
+            buildVersion: '@@application-version'
         },
         fonts: {},
         modules: [
@@ -21,18 +22,22 @@ gelato = (function() {
                 name: 'modules/Application'
             },
             {
-                name: 'modules/Router'
+                name: 'modules/Libraries'
+            },
+            {
+                name: 'modules/Tests'
             }
         ],
         paths: {
             //framework libraries
-            async: 'core/libraries/async-1.0.0',
-            backbone: 'core/libraries/backbone-1.2.0',
+            async: 'core/libraries/async-1.2.1',
+            backbone: 'core/libraries/backbone-1.2.1',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
             bootstrap: 'core/libraries/bootstrap-3.3.4',
             'bootstrap.jasny': 'core/libraries/bootstrap.jasny-3.1.3',
             'bootstrap.notify': 'core/libraries/bootstrap.notify-3.1.3',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
+            'bootstrap.table': 'core/libraries/bootstrap.table-1.8.1',
             fastclick: 'core/libraries/fastclick-1.0.6',
             handlebars: 'core/libraries/handlebars-3.0.3',
             jasmine: 'core/libraries/jasmine-2.3.4',
@@ -41,7 +46,7 @@ gelato = (function() {
             'jquery.chosen': 'core/libraries/jquery.chosen-1.4.2',
             'jquery.mobile': 'core/libraries/jquery.mobile.custom-1.4.5',
             'jquery.ui': 'core/libraries/jquery.ui.custom-1.11.4',
-            'lzstring': 'core/libraries/lzstring-1.4.3',
+            lzstring: 'core/libraries/lzstring-1.4.4',
             modernizr: 'core/libraries/modernizr.custom-2.8.3',
             moment: 'core/libraries/moment-2.10.3',
             'moment.timezone': 'core/libraries/moment.timezone-0.3.1',
@@ -49,7 +54,7 @@ gelato = (function() {
             'require.i18n': 'core/libraries/require.i18n-2.0.5',
             'require.text': 'core/libraries/require.text-2.0.12',
             underscore: 'core/libraries/lodash.compat-3.9.3',
-            webfontloader: 'core/libraries/webfontloader-1.5.21'
+            webfontloader: 'core/libraries/webfontloader-1.6.2'
         },
         plugins: [],
         shim: {
@@ -60,6 +65,7 @@ gelato = (function() {
             'bootstrap.jasny': ['bootstrap'],
             'bootstrap.notify': ['bootstrap'],
             'bootstrap.switch': ['bootstrap'],
+            'bootstrap.table': ['bootstrap'],
             'jasmine.html': ['jasmine'],
             'jquery.chosen': ['jquery'],
             'jquery.mobile': ['jquery'],
@@ -125,38 +131,6 @@ gelato = (function() {
     }
 
     /**
-     * @method getPushState
-     * @returns {Boolean}
-     */
-    function getPushState() {
-        return isCordova() || isLocal() ? false : true;
-    }
-
-    /**
-     * @method getRoot
-     * @returns {String}
-     */
-    function getRoot() {
-        return location.pathname;
-    }
-
-    /**
-     * @method isCordova
-     * @returns {Boolean}
-     */
-    function isCordova() {
-        return location.protocol === 'file:';
-    }
-
-    /**
-     * @method isLocal
-     * @returns {Boolean}
-     */
-    function isLocal() {
-        return location.hostname === 'localhost' || location.port !== '';
-    }
-
-    /**
      * @method mergeArrays
      * @param {Array} array1
      * @param {Array} array2
@@ -206,10 +180,6 @@ gelato = (function() {
         addPaths: addPaths,
         addShim: addShim,
         getConfig: getConfig,
-        getPushState: getPushState,
-        getRoot: getRoot,
-        isCordova: isCordova,
-        isLocal: isLocal,
         version: version
     };
 

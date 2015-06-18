@@ -54,10 +54,10 @@ define([
             return this;
         },
         /**
-         * @method getName
+         * @method getDialogName
          * @returns {String}
          */
-        getName: function() {
+        getDialogName: function() {
             return this.element ? this.element.data('name') : null;
         },
         /**
@@ -66,22 +66,22 @@ define([
          */
         handleClickButton: function(event) {
             var buttonAction = $(event.currentTarget).data('action');
-            var dialogName = this.getName();
+            var dialogName = this.getDialogName();
             if (buttonAction) {
-                this.trigger(dialogName + ':' + buttonAction, event);
-                this.trigger(dialogName + ':click', buttonAction, event);
-                this.trigger('button:click', dialogName + ':' + buttonAction, event);
+                this.trigger(dialogName + ':' + buttonAction, this.dialog);
+                this.trigger(dialogName + ':click', buttonAction, this.dialog);
+                this.trigger('button:click', dialogName + ':' + buttonAction, this.dialog);
             } else {
-                this.trigger('button:click', dialogName, event);
+                this.trigger('button:click', dialogName, this.dialog);
             }
         },
         /**
          * @method handleModalHide
-         * @param {Event} event
          */
-        handleModalHide: function(event) {
+        handleModalHide: function() {
             this.state = 'hide';
-            this.trigger('hide', event);
+            this.trigger(this.getDialogName() + ':hide', this.dialog);
+            this.trigger('hide', this.dialog);
         },
         /**
          * @method handleModalHidden
@@ -89,26 +89,28 @@ define([
          */
         handleModalHidden: function(event) {
             $(event.target).find('*').off();
+            var dialogName = this.getDialogName();
             this.state = 'hidden';
             this.dialog = null;
             this.element = null;
-            this.trigger('hidden', event);
+            this.trigger(dialogName + ':hidden', this.dialog);
+            this.trigger('hidden');
         },
         /**
          * @method handleModalShow
-         * @param {Event} event
          */
-        handleModalShow: function(event) {
+        handleModalShow: function() {
             this.state = 'show';
-            this.trigger('show', event);
+            this.trigger(this.getDialogName() + ':show', this.dialog);
+            this.trigger('show', this.dialog);
         },
         /**
          * @method handleModalShown
-         * @param {Event} event
          */
-        handleModalShown: function(event) {
+        handleModalShown: function() {
             this.state = 'shown';
-            this.trigger('shown', event);
+            this.trigger(this.getDialogName() + ':shown', this.dialog);
+            this.trigger('shown', this.dialog);
         },
         /**
          * @method open
