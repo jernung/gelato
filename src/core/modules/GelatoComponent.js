@@ -26,13 +26,6 @@ define([
             return this;
         },
         /**
-         * @method getComponent
-         * @returns {jQuery}
-         */
-        getComponent: function() {
-            return this.$component;
-        },
-        /**
          * @method getName
          * @returns {String}
          */
@@ -46,6 +39,22 @@ define([
          */
         height: function(size) {
             return this.$component.height(size);
+        },
+        /**
+         * @method hide
+         * @returns {GelatoView}
+         */
+        hide: function() {
+            this.$component.hide();
+            return this;
+        },
+        /**
+         * @method show
+         * @returns {GelatoView}
+         */
+        show: function() {
+            this.$component.show();
+            return this;
         },
         /**
          * @method width
