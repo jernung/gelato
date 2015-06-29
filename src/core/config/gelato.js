@@ -33,7 +33,7 @@ gelato = (function() {
             async: 'core/libraries/async-1.2.1',
             backbone: 'core/libraries/backbone-1.2.1',
             'backbone.routefilter': 'core/libraries/backbone.routefilter-0.2.0',
-            bootstrap: 'core/libraries/bootstrap-3.3.4',
+            bootstrap: 'core/libraries/bootstrap-3.3.5',
             'bootstrap.jasny': 'core/libraries/bootstrap.jasny-3.1.3',
             'bootstrap.notify': 'core/libraries/bootstrap.notify-3.1.3',
             'bootstrap.switch': 'core/libraries/bootstrap.switch-3.3.2',
