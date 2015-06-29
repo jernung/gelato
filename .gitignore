@@ -1,16 +1,8 @@
-# Directories #
+# Directories
 /.idea
 /.sass-cache
-/build
-/cordova
-/includes/crosswalk/**
-/node_modules
 /nbproject
-/test
-/www
 
-# Files #
-!README.md
-!includes/crosswalk/*.zip
-.DS_Store
-npm-debug.log
+# Files
+*.DS_Store
+*.log
