@@ -1,0 +1,8 @@
+# Directories
+/.idea
+/.sass-cache
+/nbproject
+
+# Files
+*.DS_Store
+*.log

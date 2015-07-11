@@ -1,0 +1,40 @@
+{
+  "name": "my-project",
+  "main": [
+    "public/js/application.js",
+    "public/js/libraries.js",
+    "public/styles/application.css",
+    "public/styles/libraries.css"
+  ],
+  "dependencies": {
+    "async": "1.3.0",
+    "backbone": "1.2.1",
+    "bootstrap": "3.3.5",
+    "jquery": "2.1.4",
+    "lodash": "3.10.0"
+  },
+  "overrides": {
+    "async": {
+      "main": "lib/async.js"
+    },
+    "backbone": {
+      "dependencies": {
+        "lodash": "*",
+        "jquery": "*"
+      },
+      "main": "backbone.js"
+    },
+    "bootstrap": {
+      "main": [
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js"
+      ]
+    },
+    "jquery": {
+      "main": "dist/jquery.js"
+    },
+    "lodash": {
+      "main": "lodash.js"
+    }
+  }
+}
