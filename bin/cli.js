@@ -30,7 +30,7 @@ try {
     process.exit(0);
 }
 
-if (project.type !== 'gelato') {
+if (project.framework !== 'gelato') {
     console.log("Directory is not gelato project.");
     process.exit(0);
 }
