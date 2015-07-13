@@ -8,7 +8,7 @@ exports.config =
   files:
     javascripts:
       joinTo:
-        'js/application.js': /^app/
+        'js/application.js': /^(app)/
         'js/libraries.js': /^(bower_components|vendor)/
       order:
         before: [
@@ -26,7 +26,7 @@ exports.config =
         'styles/libraries.css': /^(bower_components|vendor)/
     templates:
       joinTo:
-        'js/application.js': /^app/
+        'js/application.js': /^(app)/
   keyword:
     filePattern: /\.(js|css|html)$/
     map:

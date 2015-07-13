@@ -1,5 +1,5 @@
 {
-  "name": "gelato",
+  "name": "gelato-framework",
   "description": "A light wrapper adding Gelato support to Brunch.",
   "preferGlobal": true,
   "author": "Joshua McFarland",

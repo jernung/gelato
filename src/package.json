@@ -3,7 +3,7 @@
   "description": "A blank Gelato project.",
   "author": "",
   "version": "0.0.1",
-  "type": "gelato",
+  "framework": "gelato",
   "license": "MIT",
   "repository": {
     "type": "git",
