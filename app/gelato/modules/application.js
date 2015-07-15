@@ -13,6 +13,13 @@ module.exports = Backbone.Model.extend({
         }
     },
     /**
+     * @property gelato
+     * @type {Object}
+     */
+    gelato: {
+        version: '{!gelato-version!}'
+    },
+    /**
      * @method getHeight
      * @returns {Number}
      */
