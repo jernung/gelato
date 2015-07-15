@@ -3,7 +3,6 @@ var FRAMEWORK_PATH = __dirname.toString().slice(0, -4);
 var PROJECT_PATH = process.cwd().toString();
 var BRUNCH_PATH = FRAMEWORK_PATH + '/node_modules/.bin/brunch';
 var CORDOVA_PATH = FRAMEWORK_PATH + '/node_modules/.bin/cordova';
-var SOURCE_PATH = FRAMEWORK_PATH + '/src';
 
 var minimist = require('minimist');
 var shell = require('shelljs');
@@ -11,7 +10,7 @@ var arguments = minimist(process.argv.slice(2));
 var commands = arguments['_'];
 
 if (['n', 'new'].indexOf(commands[0]) > -1) {
-    var createCommand = [BRUNCH_PATH, 'new', SOURCE_PATH];
+    var createCommand = [BRUNCH_PATH, 'new', FRAMEWORK_PATH + '/skeletons/default'];
     if (commands[1]) {
         createCommand.push(commands[1]);
     }
@@ -48,8 +47,12 @@ if (['b', 'build'].indexOf(commands[0]) > -1) {
 }
 
 if (['u', 'update'].indexOf(commands[0]) > -1) {
-    shell.rm('-rf', PROJECT_PATH + '/app/gelato');
-    shell.cp('-r', SOURCE_PATH + '/app/gelato', PROJECT_PATH + '/app');
+    var updateCommand = [BRUNCH_PATH, 'build'];
+    shell.cd(FRAMEWORK_PATH);
+    shell.exec(updateCommand.join(' '));
+    shell.mkdir('-p', PROJECT_PATH + '/vendor/gelato');
+    shell.rm('-rf', PROJECT_PATH + '/vendor/gelato/*');
+    shell.cp('-rf', FRAMEWORK_PATH + '/public/*', PROJECT_PATH + '/vendor/gelato');
     process.exit(1);
 }
 
