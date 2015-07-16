@@ -1,4 +1,4 @@
-var GelatoApplication = require('gelato/modules/application');
+var GelatoApplication = require('gelato/application');
 
 /**
  * @class Application
