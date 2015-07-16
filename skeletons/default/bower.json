@@ -1,0 +1,11 @@
+{
+  "name": "my-project",
+  "main": [
+    "public/js/application.js",
+    "public/js/libraries.js",
+    "public/styles/application.css",
+    "public/styles/libraries.css"
+  ],
+  "dependencies": {},
+  "overrides": {}
+}

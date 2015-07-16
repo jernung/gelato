@@ -1,22 +1,16 @@
 {
-  "name": "gelato-framework",
-  "description": "A light wrapper adding Gelato support to Brunch.",
-  "preferGlobal": true,
-  "author": "Joshua McFarland",
+  "name": "my-project",
+  "description": "A blank Gelato project.",
+  "author": "",
   "version": "0.0.1",
+  "framework": "gelato",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/jernung/gelato.git"
-  },
-  "bin": {
-    "gelato": "bin/cli.js"
+    "url": ""
   },
   "dependencies": {
-    "brunch": "1.8.3",
-    "cordova": "5.1.1",
-    "minimist": "1.1.1",
-    "shelljs": "0.5.1",
+    "auto-reload-brunch": "1.8.0",
     "clean-css-brunch": "1.7.2",
     "coffee-script-brunch": "1.8.2",
     "css-brunch": "1.7.0",

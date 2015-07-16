@@ -2,9 +2,11 @@
 /.idea
 /.sass-cache
 /bower_components
-/node_modules
+/cordova
 /nbproject
+/node_modules
 /public
+/vendor/gelato
 
 # Files
 *.DS_Store
