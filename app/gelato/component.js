@@ -1,4 +1,4 @@
-var GelatoView = require('gelato/modules/view');
+var GelatoView = require('gelato/view');
 
 /**
  * @class GelatoComponent
