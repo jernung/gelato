@@ -21,6 +21,7 @@ if (['n', 'new'].indexOf(commands[0]) > -1) {
         createCommand.push('gelato-default');
     }
     gelato.brunch(createCommand);
+    gelato.framework.update();
     process.exit(1);
 }
 
@@ -48,12 +49,12 @@ if (['b', 'build'].indexOf(commands[0]) > -1) {
     if (arguments['P'] || arguments['production']) {
         buildCommand.push('--production');
     }
+    gelato.framework.update();
     gelato.brunch(buildCommand);
     process.exit(1);
 }
 
 if (['u', 'update'].indexOf(commands[0]) > -1) {
-    gelato.framework.build();
     gelato.framework.update();
     process.exit(1);
 }
@@ -66,6 +67,7 @@ if (['w', 'watch'].indexOf(commands[0]) > -1) {
     if (arguments['s'] || arguments['server']) {
         watchCommand.push('--server');
     }
+    gelato.framework.update();
     gelato.brunch(watchCommand);
     process.exit(1);
 }

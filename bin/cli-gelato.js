@@ -13,11 +13,15 @@ module.exports = {
             shell.cd(path.framework);
             shell.exec([path.brunch, 'build'].join(' '));
         },
-        update: function() {
+        copy: function() {
             shell.cd(path.framework);
             shell.mkdir('-p', path.project + '/vendor/gelato');
             shell.rm('-rf', path.project + '/vendor/gelato/*');
             shell.cp('-rf', path.framework + '/public/*', path.project + '/vendor/gelato');
+        },
+        update: function() {
+            this.build();
+            this.copy();
         }
     },
     path: path
