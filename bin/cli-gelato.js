@@ -6,6 +6,7 @@ var shell = require('shelljs');
 module.exports = {
     brunch: function(commands) {
         commands.unshift(path.brunch);
+        shell.cd(path.project);
         shell.exec(commands.join(' '));
     },
     framework: {
