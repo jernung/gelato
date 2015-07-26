@@ -11,15 +11,10 @@ module.exports = GelatoView.extend({
      */
     el: 'gelato-dialogs',
     /**
-     * @property dialog
+     * @property element
      * @type {jQuery}
      */
-    dialog: null,
-    /**
-     * @property $dialog
-     * @type {jQuery}
-     */
-    $dialog: null,
+    element: null,
     /**
      * @method renderTemplate
      * @param {Object} [options]
@@ -27,7 +22,11 @@ module.exports = GelatoView.extend({
      */
     renderTemplate: function(options) {
         GelatoView.prototype.renderTemplate.call(this, options);
-        this.$dialog = $(this.$('gelato-dialog').get(0));
+        this.element = this.$('[role="dialog"]');
+        this.element.on('hide.bs.modal', $.proxy(this.handleElementHide, this));
+        this.element.on('hidden.bs.modal', $.proxy(this.handleElementHidden, this));
+        this.element.on('show.bs.modal', $.proxy(this.handleElementShow, this));
+        this.element.on('shown.bs.modal', $.proxy(this.handleElementShown, this));
         return this;
     },
     /**
@@ -35,8 +34,34 @@ module.exports = GelatoView.extend({
      * @returns {GelatoDialog}
      */
     close: function() {
-        this.dialog.modal('hide');
+        this.element.modal('hide');
         return this;
+    },
+    /**
+     * @method handleElementHide
+     */
+    handleElementHide: function() {
+        this.trigger('hide');
+    },
+    /**
+     * @method handleElementHidden
+     */
+    handleElementHidden: function() {
+        this.trigger('hidden');
+        app.dialog = null;
+    },
+    /**
+     * @method handleElementShow
+     */
+    handleElementShow: function() {
+        this.trigger('show');
+        app.dialog = this;
+    },
+    /**
+     * @method handleElementShown
+     */
+    handleElementShown: function() {
+        this.trigger('shown');
     },
     /**
      * @method open
@@ -49,8 +74,7 @@ module.exports = GelatoView.extend({
         options.keyboard = options.keyboard || false;
         options.show = options.show || true;
         options.remote = options.remote || false;
-        this.dialog = this.$('[role="dialog"]');
-        this.dialog.modal(options);
+        this.element.modal(options);
         return this;
     }
 });
