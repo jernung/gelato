@@ -14,6 +14,8 @@ exports.config =
           'bower_components/backbone/backbone.js',
           'bower_components/bootstrap/dist/js/bootstrap.js',
           'vendor/backbone/backbone.routefilter-0.2.0.js',
+          'vendor/bootstrap/bootstrap.jasny-3.1.3.js',
+          'vendor/bootstrap/bootstrap.notify-3.1.3.js',
           'vendor/jquery/jquery.mobile.events-1.4.5.js',
           'vendor/jquery/jquery.ui.events-1.11.4.js'
         ]
