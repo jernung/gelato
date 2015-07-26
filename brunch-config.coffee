@@ -16,6 +16,7 @@ exports.config =
           'vendor/backbone/backbone.routefilter-0.2.0.js',
           'vendor/bootstrap/bootstrap.jasny-3.1.3.js',
           'vendor/bootstrap/bootstrap.notify-3.1.3.js',
+          'vendor/bootstrap/bootstrap.switch-3.3.2.js',
           'vendor/jquery/jquery.mobile.events-1.4.5.js',
           'vendor/jquery/jquery.ui.events-1.11.4.js'
         ]
