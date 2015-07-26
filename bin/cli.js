@@ -16,7 +16,7 @@ if (['n', 'new'].indexOf(commands[0]) > -1) {
         createCommand.push('gh:jernung/gelato-default');
     }
     if (commands[2]) {
-        createCommand.push(commands[1]);
+        createCommand.push(commands[2]);
     } else {
         createCommand.push('gelato-default');
     }
