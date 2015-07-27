@@ -3,4 +3,8 @@ gelato-page {
   display: block;
   padding-top: 30px;
 
+  @media (max-width: 767px) {
+    padding-top: 15px;
+  }
+
 }
