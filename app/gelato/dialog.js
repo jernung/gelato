@@ -17,11 +17,10 @@ module.exports = GelatoView.extend({
     element: null,
     /**
      * @method renderTemplate
-     * @param {Object} [options]
      * @returns {GelatoView}
      */
-    renderTemplate: function(options) {
-        GelatoView.prototype.renderTemplate.call(this, options);
+    renderTemplate: function() {
+        GelatoView.prototype.renderTemplate.call(this);
         this.element = this.$('[role="dialog"]');
         this.element.on('hide.bs.modal', $.proxy(this.handleElementHide, this));
         this.element.on('hidden.bs.modal', $.proxy(this.handleElementHidden, this));

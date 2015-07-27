@@ -17,11 +17,10 @@ module.exports = GelatoView.extend({
     element: null,
     /**
      * @method renderTemplate
-     * @param {Object} [options]
      * @returns {GelatoSidebar}
      */
-    renderTemplate: function(options) {
-        GelatoView.prototype.renderTemplate.call(this, options);
+    renderTemplate: function() {
+        GelatoView.prototype.renderTemplate.call(this);
         this.element = this.$('[role="navigation"]');
         this.element.on('hide.bs.offcanvas', $.proxy(this.handleElementHide, this));
         this.element.on('hidden.bs.offcanvas', $.proxy(this.handleElementHidden, this));

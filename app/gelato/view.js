@@ -1,3 +1,5 @@
+var globals = require('globals');
+
 /**
  * @class GelatoView
  * @extends {Backbone.View}
@@ -27,11 +29,10 @@ module.exports = Backbone.View.extend({
     },
     /**
      * @method renderTemplate
-     * @param {Object} [options]
      * @returns {GelatoView}
      */
-    renderTemplate: function(options) {
-        this.$el.html(this.template(options));
+    renderTemplate: function() {
+        this.$el.html(this.template(globals));
         this.renderEvents();
         return this;
     },
