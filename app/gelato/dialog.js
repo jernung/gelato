@@ -47,6 +47,7 @@ module.exports = GelatoView.extend({
      */
     handleElementHidden: function() {
         this.trigger('hidden');
+        this.remove();
         app.dialog = null;
     },
     /**

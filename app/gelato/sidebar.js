@@ -16,6 +16,11 @@ module.exports = GelatoView.extend({
      */
     element: null,
     /**
+     * @property navigation
+     * @type {jQuery}
+     */
+    navigation: null,
+    /**
      * @method renderTemplate
      * @returns {GelatoSidebar}
      */
@@ -52,6 +57,9 @@ module.exports = GelatoView.extend({
      */
     handleElementHidden: function() {
         this.trigger('hidden');
+        this.navigation.remove();
+        this.navigation.find('*').off();
+        this.remove();
         app.sidebar = null;
     },
     /**
@@ -76,6 +84,7 @@ module.exports = GelatoView.extend({
         options = options || {};
         this.element.offcanvas({canvas: 'body', toggle: false});
         this.element.offcanvas('show');
+        this.navigation = $('body > [role="navigation"]');
         return this;
     }
 });
