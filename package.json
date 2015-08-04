@@ -15,7 +15,7 @@
   "dependencies": {
     "brunch": "1.8.4",
     "cordova": "5.1.1",
-    "lodash": "3.10.0",
+    "lodash": "3.10.1",
     "minimist": "1.1.2",
     "shelljs": "0.5.1",
     "clean-css-brunch": "1.7.2",
