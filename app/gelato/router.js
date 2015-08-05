@@ -23,5 +23,11 @@ module.exports = Backbone.Router.extend({
         if (this.page) {
             this.page.remove();
         }
+    },
+    /**
+     * @method start
+     */
+    start: function() {
+        Backbone.history.start({pushState: location.protocol !== 'file:'});
     }
 });
