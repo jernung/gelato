@@ -9,10 +9,14 @@
     "type": "git",
     "url": "https://www.github.com/jernung/gelato.git"
   },
+  "scripts": {
+    "install": "node_modules/bower/bin/bower install"
+  },
   "bin": {
     "gelato": "bin/cli.js"
   },
   "dependencies": {
+    "bower": "1.4.1",
     "brunch": "1.8.4",
     "cordova": "5.1.1",
     "lodash": "3.10.1",
