@@ -11,6 +11,11 @@ var commands = minimist(process.argv.slice(2))['_'];
 
 //TODO: command for creating new projects
 
+if (arguments.version) {
+    console.log(gelato.framework.version);
+    process.exit(1);
+}
+
 try {
     var project = require(gelato.path.project + '/package.json');
 } catch (error) {
