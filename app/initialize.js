@@ -8,7 +8,14 @@ module.exports = (function() {
     }
 
     if (location.protocol === 'file:') {
-        document.addEventListener('deviceready', start, false);
+        $.ajax({
+            url: 'cordova.js',
+            dataType: 'script'
+        }).done(function() {
+            document.addEventListener('deviceready', start, false);
+        }).fail(function() {
+            console.error('Unable to load cordova.js file.')
+        });
     } else {
         $(document).ready(start);
     }

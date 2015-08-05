@@ -1,3 +1,5 @@
+var globals = require('globals');
+
 /**
  * @class GelatoView
  * @extends {Backbone.View}
@@ -17,6 +19,7 @@ module.exports = Backbone.View.extend({
         var resize = null;
         this.$('[data-dialog]').off().on('vclick', $.proxy(this.handleClickDataDialog, this));
         this.$('[data-navigate]').off().on('vclick', $.proxy(this.handleClickDataNavigate, this));
+        this.$('[data-sidebar]').off().on('vclick', $.proxy(this.handleClickDataSidebar, this));
         $(window).resize(function(event) {
             clearTimeout(resize);
             resize = setTimeout(function() {
@@ -26,11 +29,10 @@ module.exports = Backbone.View.extend({
     },
     /**
      * @method renderTemplate
-     * @param {Object} [options]
      * @returns {GelatoView}
      */
-    renderTemplate: function(options) {
-        this.$el.html(this.template(options));
+    renderTemplate: function() {
+        this.$el.html(this.template(globals));
         this.renderEvents();
         return this;
     },
@@ -50,9 +52,7 @@ module.exports = Backbone.View.extend({
     handleClickDataDialog: function(event) {
         event.preventDefault();
         var dialogName = $(event.currentTarget).data('dialog');
-        if (!app.dialog) {
-            app.openDialog(dialogName);
-        }
+        app.openDialog(dialogName);
     },
     /**
      * @method handleClickDataNavigate
@@ -64,6 +64,15 @@ module.exports = Backbone.View.extend({
         var replace = $(event.currentTarget).data('replace') || false;
         var trigger = $(event.currentTarget).data('trigger') || true;
         app.router.navigate(route, {replace: replace, trigger: trigger});
+    },
+    /**
+     * @method handleClickDataSidebar
+     * @param {Event} event
+     */
+    handleClickDataSidebar: function(event) {
+        event.preventDefault();
+        var sidebarName = $(event.currentTarget).data('sidebar');
+        app.openSidebar(sidebarName);
     },
     /**
      * @method enableForm

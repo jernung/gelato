@@ -12,11 +12,10 @@ module.exports = GelatoView.extend({
     $component: null,
     /**
      * @method renderTemplate
-     * @param {Object} [options]
      * @returns {GelatoView}
      */
-    renderTemplate: function(options) {
-        GelatoView.prototype.renderTemplate.call(this, options);
+    renderTemplate: function() {
+        GelatoView.prototype.renderTemplate.call(this);
         this.$component = $(this.$('gelato-component').get(0));
         return this;
     },

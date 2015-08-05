@@ -1,46 +1,24 @@
 # Commands
 
-## `gelato new`
+## `gelato android`
 
-Full syntax: `gelato new <url-or-path> [rootPath]`
+Full syntax: `gelato android <command> [options]`
 
-Create new brunch project. Options:
+* `build`: build the project to the android platform directory
+* `install`: installs android to the cordova project 
+* `run`: runs the project on either the device or emulator
 
-* `url-or-path`: (required) skeleton (path or
-git / github repo address of project), contents of which will be copied to new dir.
-* `rootPath`: name of project directory that would be created. Default: '.'.
+## `gelato ios`
 
-`.git` directory is automatically removed when copying.
+Full syntax: `gelato ios <command> [options]`
 
-Short-cut: `gelato n`.
+* `build`: build the project to the ios platform directory
+* `install`: installs ios to the cordova project 
+* `run`: runs the project on either the device or emulator
 
-## `gelato build`
+## `gelato web`
 
-Full syntax: `gelato build`
+Full syntax: `gelato web <command> [options]`
 
-Build a brunch project. Options:
-
-* `-e SETTING, --env SETTING`: apply settings from `config.overrides[SETTING]`
-* `-P, --production`: run optimize/minify plugins during compilation, disable source maps and auto-reload; same as `-e production` and settings can be modified in `config.overrides.production`
-
-Short-cut: `gelato b`.
-
-## `gelato update`
-
-Full syntax: `gelato update`
-
-Force project to update with latest Gelato core.
-
-Short-cut: `gelato u`.
-
-## `gelato watch`
-
-Full syntax: `gelato watch`
-
-Watch brunch directory and rebuild if something changed. Options:
-
-* all the same options available in `gelato build`, plus:
-* `-s, --server`: run a simple http server that would serve `public` dir in `/` and `test` dir in `/test/`
-* `-p PORT, --port PORT`: if a `server` option was specified, define on which port the server would run
-
-Short-cut: `gelato w`.
+* `build`: builds the project to the public directory
+* `run`: runs a simple http server while watching for changes

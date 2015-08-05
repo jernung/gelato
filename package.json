@@ -3,7 +3,7 @@
   "description": "A light wrapper adding Gelato support to Brunch.",
   "preferGlobal": true,
   "author": "Joshua McFarland",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -13,8 +13,9 @@
     "gelato": "bin/cli.js"
   },
   "dependencies": {
-    "brunch": "1.8.3",
+    "brunch": "1.8.4",
     "cordova": "5.1.1",
+    "lodash": "3.10.1",
     "minimist": "1.1.2",
     "shelljs": "0.5.1",
     "clean-css-brunch": "1.7.2",

@@ -4,20 +4,37 @@
  */
 module.exports = Backbone.Model.extend({
     /**
-     * @method closeDialog
-     */
-    closeDialog: function() {
-        if (this.dialog) {
-            this.dialog.close();
-            this.dialog = null;
-        }
-    },
-    /**
      * @property gelato
      * @type {Object}
      */
     gelato: {
         version: '{!gelato-version!}'
+    },
+    /**
+     * @property dialog
+     * @type {GelatoDialog}
+     */
+    dialog: null,
+    /**
+     * @property sidebar
+     * @type {GelatoSidebar}
+     */
+    sidebar: null,
+    /**
+     * @method closeDialog
+     */
+    closeDialog: function() {
+        if (this.dialog) {
+            this.dialog.close();
+        }
+    },
+    /**
+     * @method closeSidebar
+     */
+    closeSidebar: function() {
+        if (this.sidebar) {
+            this.sidebar.close();
+        }
     },
     /**
      * @method getHeight
@@ -57,11 +74,24 @@ module.exports = Backbone.Model.extend({
     },
     /**
      * @method openDialog
+     * @param {String} name
+     * @param {Object} [options]
      */
     openDialog: function(name, options) {
-        if (!this.dialog) {
-            this.dialog = new (require('dialogs/' + name + '/view'));
-            this.dialog.render().open(options);
+        var dialog = new (require('dialogs/' + name + '/view'));
+        if (!this.dialog && dialog) {
+            dialog.render().open(options);
+        }
+    },
+    /**
+     * @method openSidebar
+     * @param {String} name
+     * @param {Object} [options]
+     */
+    openSidebar: function(name, options) {
+        var sidebar = new (require('sidebars/' + name + '/view'));
+        if (!this.sidebar && sidebar) {
+            sidebar.render().open(options);
         }
     },
     /**

@@ -3,34 +3,20 @@
 process.env.framework = __dirname.toString().slice(0, -4);
 process.env.project = process.cwd().toString();
 
-var gelato = require(process.env.framework + '/bin/cli-gelato');
+var lodash = require('lodash');
 var minimist = require('minimist');
-var arguments = minimist(process.argv.slice(2));
-var commands = arguments['_'];
+var gelato = require(process.env.framework + '/bin/cli-gelato');
+var arguments = lodash.omit(minimist(process.argv.slice(2)), '_');
+var commands = minimist(process.argv.slice(2))['_'];
 
-if (['n', 'new'].indexOf(commands[0]) > -1) {
-    var createCommand = ['new'];
-    if (commands[1]) {
-        createCommand.push(commands[1]);
-    } else {
-        createCommand.push('gh:jernung/gelato-default');
-    }
-    if (commands[2]) {
-        createCommand.push(commands[1]);
-    } else {
-        createCommand.push('gelato-default');
-    }
-    gelato.brunch(createCommand);
-    gelato.framework.update();
-    process.exit(1);
-}
+//TODO: commands for creating new projects
 
 try {
     var project = require(gelato.path.project + '/package.json');
 } catch (error) {
     switch (error.code) {
         case 'MODULE_NOT_FOUND':
-            console.log("Directory package.json not found.");
+            console.log("Directory package.json file not found.");
             break;
     }
     process.exit(0);
@@ -41,35 +27,82 @@ if (project.framework !== 'gelato') {
     process.exit(0);
 }
 
-if (['b', 'build'].indexOf(commands[0]) > -1) {
-    var buildCommand = ['build'];
-    if (arguments['e'] || arguments['env']) {
-        buildCommand.push('--env ' + arguments['e'] || arguments['env']);
-    }
-    if (arguments['P'] || arguments['production']) {
-        buildCommand.push('--production');
-    }
-    gelato.framework.update();
-    gelato.brunch(buildCommand);
+if (['install'].indexOf(commands[0]) > -1) {
+    gelato.cordova.install();
     process.exit(1);
 }
 
-if (['u', 'update'].indexOf(commands[0]) > -1) {
-    gelato.framework.update();
-    process.exit(1);
+if (['android'].indexOf(commands[0]) > -1) {
+    if (!gelato.cordova.isInstalled()) {
+        gelato.cordova.install();
+    }
+    if (!gelato.cordova.hasAndroid()) {
+        gelato.cordova.addAndroid();
+    }
+    switch (commands[1]) {
+        case 'build':
+            gelato.framework.update();
+            gelato.brunch.build();
+            gelato.cordova.copy();
+            gelato.cordova.exec(['build', 'android']);
+            process.exit(1);
+            break;
+        case 'install':
+            gelato.cordova.addAndroid();
+            process.exit(1);
+            break;
+        case 'run':
+            gelato.framework.update();
+            gelato.brunch.build();
+            gelato.cordova.copy();
+            gelato.cordova.exec(['run', 'android']);
+            process.exit(1);
+            break;
+    }
 }
 
-if (['w', 'watch'].indexOf(commands[0]) > -1) {
-    var watchCommand = ['watch'];
-    if (arguments['p'] || arguments['port']) {
-        watchCommand.push('--port ' + arguments['p'] || arguments['port']);
+if (['ios'].indexOf(commands[0]) > -1) {
+    if (!gelato.cordova.isInstalled()) {
+        gelato.cordova.install();
     }
-    if (arguments['s'] || arguments['server']) {
-        watchCommand.push('--server');
+    if (!gelato.cordova.hasIos()) {
+        gelato.cordova.addIos();
     }
-    gelato.framework.update();
-    gelato.brunch(watchCommand);
-    process.exit(1);
+    switch (commands[1]) {
+        case 'build':
+            gelato.framework.update();
+            gelato.brunch.build();
+            gelato.cordova.copy();
+            gelato.cordova.exec(['build', 'ios']);
+            process.exit(1);
+            break;
+        case 'install':
+            gelato.cordova.addIos();
+            process.exit(1);
+            break;
+        case 'run':
+            gelato.framework.update();
+            gelato.brunch.build();
+            gelato.cordova.copy();
+            gelato.cordova.exec(['run', 'ios']);
+            process.exit(1);
+            break;
+    }
+}
+
+if (['web'].indexOf(commands[0]) > -1) {
+    switch (commands[1]) {
+        case 'build':
+            gelato.framework.update();
+            gelato.brunch.build();
+            process.exit(1);
+            break;
+        case 'run':
+            gelato.framework.update();
+            gelato.brunch.exec(['watch', '--server']);
+            process.exit(1);
+            break;
+    }
 }
 
 console.log("If you don't eat your meat, you can't have any pudding!");

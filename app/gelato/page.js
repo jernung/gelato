@@ -22,11 +22,10 @@ module.exports = GelatoView.extend({
     $page: null,
     /**
      * @method renderTemplate
-     * @param {Object} [options]
      * @returns {GelatoView}
      */
-    renderTemplate: function(options) {
-        GelatoView.prototype.renderTemplate.call(this, options);
+    renderTemplate: function() {
+        GelatoView.prototype.renderTemplate.call(this);
         this.$page = $(this.$('gelato-page').get(0));
         this.adjustNavbarPadding();
         return this;

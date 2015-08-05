@@ -1,7 +1,7 @@
 var GelatoView = require('gelato/view');
 
 /**
- * @class GelatoDialog
+ * @class GelatoSidebar
  * @extends {GelatoView}
  */
 module.exports = GelatoView.extend({
@@ -9,31 +9,41 @@ module.exports = GelatoView.extend({
      * @property el
      * @type {String}
      */
-    el: 'gelato-dialogs',
+    el: 'gelato-sidebars',
     /**
      * @property element
      * @type {jQuery}
      */
     element: null,
     /**
+     * @property navigation
+     * @type {jQuery}
+     */
+    navigation: null,
+    /**
      * @method renderTemplate
-     * @returns {GelatoView}
+     * @returns {GelatoSidebar}
      */
     renderTemplate: function() {
         GelatoView.prototype.renderTemplate.call(this);
-        this.element = this.$('[role="dialog"]');
-        this.element.on('hide.bs.modal', $.proxy(this.handleElementHide, this));
-        this.element.on('hidden.bs.modal', $.proxy(this.handleElementHidden, this));
-        this.element.on('show.bs.modal', $.proxy(this.handleElementShow, this));
-        this.element.on('shown.bs.modal', $.proxy(this.handleElementShown, this));
+        this.element = this.$('[role="navigation"]');
+        this.element.on('hide.bs.offcanvas', $.proxy(this.handleElementHide, this));
+        this.element.on('hidden.bs.offcanvas', $.proxy(this.handleElementHidden, this));
+        this.element.on('show.bs.offcanvas', $.proxy(this.handleElementShow, this));
+        this.element.on('shown.bs.offcanvas', $.proxy(this.handleElementShown, this));
         return this;
     },
     /**
+     * @property events
+     * @type Object
+     */
+    events: {},
+    /**
      * @method close
-     * @returns {GelatoDialog}
+     * @returns {GelatoSidebar}
      */
     close: function() {
-        this.element.modal('hide');
+        this.element.offcanvas('hide');
         return this;
     },
     /**
@@ -47,15 +57,17 @@ module.exports = GelatoView.extend({
      */
     handleElementHidden: function() {
         this.trigger('hidden');
+        this.navigation.remove();
+        this.navigation.find('*').off();
         this.remove();
-        app.dialog = null;
+        app.sidebar = null;
     },
     /**
      * @method handleElementShow
      */
     handleElementShow: function() {
         this.trigger('show');
-        app.dialog = this;
+        app.sidebar = this;
     },
     /**
      * @method handleElementShown
@@ -66,15 +78,13 @@ module.exports = GelatoView.extend({
     /**
      * @method open
      * @param {Object} [options]
-     * @returns {GelatoDialog}
+     * @returns {GelatoSidebar}
      */
     open: function(options) {
         options = options || {};
-        options.backdrop = options.backdrop || 'static';
-        options.keyboard = options.keyboard || false;
-        options.show = options.show || true;
-        options.remote = options.remote || false;
-        this.element.modal(options);
+        this.element.offcanvas({canvas: 'body', toggle: false});
+        this.element.offcanvas('show');
+        this.navigation = $('body > [role="navigation"]');
         return this;
     }
 });
