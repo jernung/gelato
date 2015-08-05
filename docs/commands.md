@@ -1,5 +1,11 @@
 # Commands
 
+## `gelato`
+
+Full syntax: `gelato [options]`
+
+* `--version`: prints out the framework version
+
 ## `gelato android`
 
 Full syntax: `gelato android <command> [options]`

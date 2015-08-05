@@ -66,7 +66,8 @@ module.exports = {
         update: function() {
             this.build();
             this.copy();
-        }
+        },
+        version: framework.version
     },
     path: path
 };

@@ -9,7 +9,12 @@ var gelato = require(process.env.framework + '/bin/cli-gelato');
 var arguments = lodash.omit(minimist(process.argv.slice(2)), '_');
 var commands = minimist(process.argv.slice(2))['_'];
 
-//TODO: commands for creating new projects
+//TODO: command for creating new projects
+
+if (arguments.version) {
+    console.log(gelato.framework.version);
+    process.exit(1);
+}
 
 try {
     var project = require(gelato.path.project + '/package.json');
@@ -26,6 +31,8 @@ if (project.framework !== 'gelato') {
     console.log("Directory is not gelato project.");
     process.exit(0);
 }
+
+//TODO: command for updating framework bower dependencies
 
 if (['install'].indexOf(commands[0]) > -1) {
     gelato.cordova.install();
