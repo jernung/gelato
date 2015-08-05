@@ -32,6 +32,7 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderTemplate: function() {
+        globals.view = this;
         this.$el.html(this.template(globals));
         this.renderEvents();
         return this;
