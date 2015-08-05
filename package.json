@@ -10,7 +10,8 @@
     "url": "https://www.github.com/jernung/gelato.git"
   },
   "scripts": {
-    "install": "node_modules/bower/bin/bower install"
+    "postinstall": "node_modules/bower/bin/bower install",
+    "postversion": "node_modules/bower/bin/bower update"
   },
   "bin": {
     "gelato": "bin/cli.js"
