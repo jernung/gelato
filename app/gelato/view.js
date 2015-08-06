@@ -26,13 +26,16 @@ module.exports = Backbone.View.extend({
                 self.trigger('resize', event);
             }, 100);
         });
+        return this;
     },
     /**
      * @method renderTemplate
+     * @param {Object} [properties]
      * @returns {GelatoView}
      */
-    renderTemplate: function() {
+    renderTemplate: function(properties) {
         globals.view = this;
+        globals = $.extend(true, globals, properties || {});
         this.$el.html(this.template(globals));
         this.renderEvents();
         return this;
