@@ -22,6 +22,10 @@ Full syntax: `gelato ios <command> [options]`
 * `install`: installs ios to the cordova project 
 * `run`: runs the project on either the device or emulator
 
+## `gelato test`
+
+Full syntax: `gelato test`
+
 ## `gelato web`
 
 Full syntax: `gelato web <command> [options]`
