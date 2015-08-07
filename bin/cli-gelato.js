@@ -69,5 +69,15 @@ module.exports = {
         },
         version: framework.version
     },
+    mocha: {
+        exec: function(commands) {
+            commands.unshift(path.mocha);
+            shell.cd(path.project);
+            shell.exec(commands.join(' '));
+        },
+        test: function() {
+            this.exec(['$(find test -name "**/*.js")']);
+        }
+    },
     path: path
 };
