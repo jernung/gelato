@@ -4,7 +4,7 @@
     "public/js/gelato.js"
   ],
   "dependencies": {
-    "async": "1.4.1",
+    "async": "1.4.2",
     "backbone": "1.2.1",
     "bootstrap": "3.3.5",
     "jquery": "2.1.4",
