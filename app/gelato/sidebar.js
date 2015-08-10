@@ -61,14 +61,12 @@ module.exports = GelatoView.extend({
         this.navigation.remove();
         this.navigation.find('*').off();
         this.remove();
-        app.sidebar = null;
     },
     /**
      * @method handleElementShow
      */
     handleElementShow: function() {
         this.trigger('show');
-        app.sidebar = this;
     },
     /**
      * @method handleElementShown
@@ -78,11 +76,10 @@ module.exports = GelatoView.extend({
     },
     /**
      * @method open
-     * @param {Object} [options]
      * @returns {GelatoSidebar}
      */
-    open: function(options) {
-        options = options || {};
+    open: function() {
+        this.render();
         this.element.offcanvas({canvas: 'body', toggle: false});
         this.element.offcanvas('show');
         this.navigation = $('body > [role="navigation"]');

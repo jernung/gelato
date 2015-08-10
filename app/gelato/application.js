@@ -11,19 +11,6 @@ module.exports = Backbone.Model.extend({
         version: '{!gelato-version!}'
     },
     /**
-     * @property sidebar
-     * @type {GelatoSidebar}
-     */
-    sidebar: null,
-    /**
-     * @method closeSidebar
-     */
-    closeSidebar: function() {
-        if (this.sidebar) {
-            this.sidebar.close();
-        }
-    },
-    /**
      * @method getHeight
      * @returns {Number}
      */
@@ -58,17 +45,6 @@ module.exports = Backbone.Model.extend({
      */
     isProduction: function() {
         return location.hostname !== 'localhost';
-    },
-    /**
-     * @method openSidebar
-     * @param {String} name
-     * @param {Object} [options]
-     */
-    openSidebar: function(name, options) {
-        var sidebar = new (require('sidebars/' + name + '/view'));
-        if (!this.sidebar && sidebar) {
-            sidebar.render().open(options);
-        }
     },
     /**
      * @method reload
