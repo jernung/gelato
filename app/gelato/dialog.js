@@ -49,14 +49,12 @@ module.exports = GelatoView.extend({
     handleElementHidden: function() {
         this.trigger('hidden');
         this.remove();
-        app.dialog = null;
     },
     /**
      * @method handleElementShow
      */
     handleElementShow: function() {
         this.trigger('show');
-        app.dialog = this;
     },
     /**
      * @method handleElementShown
@@ -75,7 +73,7 @@ module.exports = GelatoView.extend({
         options.keyboard = options.keyboard || false;
         options.show = options.show || true;
         options.remote = options.remote || false;
-        this.element.modal(options);
+        this.render().element.modal(options);
         return this;
     }
 });

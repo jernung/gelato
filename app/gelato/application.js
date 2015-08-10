@@ -11,23 +11,10 @@ module.exports = Backbone.Model.extend({
         version: '{!gelato-version!}'
     },
     /**
-     * @property dialog
-     * @type {GelatoDialog}
-     */
-    dialog: null,
-    /**
      * @property sidebar
      * @type {GelatoSidebar}
      */
     sidebar: null,
-    /**
-     * @method closeDialog
-     */
-    closeDialog: function() {
-        if (this.dialog) {
-            this.dialog.close();
-        }
-    },
     /**
      * @method closeSidebar
      */
@@ -71,17 +58,6 @@ module.exports = Backbone.Model.extend({
      */
     isProduction: function() {
         return location.hostname !== 'localhost';
-    },
-    /**
-     * @method openDialog
-     * @param {String} name
-     * @param {Object} [options]
-     */
-    openDialog: function(name, options) {
-        var dialog = new (require('dialogs/' + name + '/view'));
-        if (!this.dialog && dialog) {
-            dialog.render().open(options);
-        }
     },
     /**
      * @method openSidebar
