@@ -18,6 +18,13 @@ module.exports = Backbone.Model.extend({
         return $(window).height();
     },
     /**
+     * @method getPlatform
+     * @returns {String}
+     */
+    getPlatform: function() {
+        return window.device ? window.device.platform : 'Web';
+    },
+    /**
      * @method getSetting
      * @param {String} key
      * @returns {Boolean|Number|Object|String}
