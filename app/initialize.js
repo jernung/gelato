@@ -14,7 +14,7 @@ module.exports = (function() {
         }).done(function() {
             document.addEventListener('deviceready', start, false);
         }).fail(function() {
-            console.error('Unable to load cordova.js file.')
+            console.error(new Error('Unable to load cordova.js file.'));
         });
     } else {
         $(document).ready(start);

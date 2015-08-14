@@ -15,12 +15,9 @@ module.exports = Backbone.Model.extend({
      * @param {Object} [options]
      */
     fetch: function(options) {
-        options = options || {};
         this.state = 'fetching';
-        this.trigger('state', 'fetching', this);
-        this.trigger('state:fetching', this);
-        options.error = this._onRequestError.bind(this);
-        options.success = this._onRequestSuccess.bind(this);
+        this._triggerState();
+        this._handleRequestEvent(options);
         return Backbone.Model.prototype.fetch.call(this, options);
     },
     /**
@@ -29,35 +26,44 @@ module.exports = Backbone.Model.extend({
      * @param [options]
      */
     save: function(attributes, options) {
-        options = options || {};
         this.state = 'saving';
-        this.trigger('state', 'saving', this);
-        this.trigger('state:saving', this);
-        options.error = this._onRequestError.bind(this);
-        options.success = this._onRequestSuccess.bind(this);
+        this._triggerState();
+        this._handleRequestEvent(options);
         return Backbone.Model.prototype.save.call(this, attributes, options);
     },
     /**
-     * @property standby
-     * @type {String}
-     */
-    state: 'standby',
-    /**
-     * @method _onRequestError
+     * @method _handleRequestEvent
+     * @param {Object} options
      * @private
      */
-    _onRequestError: function() {
-        this.state = 'standby';
-        this.trigger('state', 'standby', this);
-        this.trigger('state:standby', this);
+    _handleRequestEvent: function(options) {
+        var internalOptions = options || {};
+        var originalOptions = _.clone(options || {});
+        internalOptions.complete = (function() {
+            this._triggerState();
+            if (typeof originalOptions.complete === 'function') {
+                originalOptions.complete.apply(originalOptions, arguments);
+            }
+        }).bind(this);
+        internalOptions.error = (function() {
+            this.state = 'standby';
+            if (typeof originalOptions.error === 'function') {
+                originalOptions.error.apply(originalOptions, arguments);
+            }
+        }).bind(this);
+        internalOptions.success = (function() {
+            this.state = 'standby';
+            if (typeof originalOptions.complete === 'function') {
+                originalOptions.success.apply(original, arguments);
+            }
+        }).bind(this);
     },
     /**
-     * @method _onRequestSuccess
+     * @method _triggerState
      * @private
      */
-    _onRequestSuccess: function() {
-        this.state = 'standby';
-        this.trigger('state', 'standby', this);
-        this.trigger('state:standby', this);
+    _triggerState: function() {
+        this.trigger('state', this.state, this);
+        this.trigger('state:' + this.state, this);
     }
 });
