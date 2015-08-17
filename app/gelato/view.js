@@ -15,16 +15,13 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderEvents: function() {
-        var self = this;
         var resize = null;
-        //TODO: depreciate usage of navigate data attribute
-        this.$('[data-navigate]').off().on('vclick', $.proxy(this.handleClickDataNavigate, this));
-        $(window).resize(function(event) {
+        $(window).resize((function(event) {
             clearTimeout(resize);
-            resize = setTimeout(function() {
-                self.trigger('resize', event);
-            }, 100);
-        });
+            resize = setTimeout((function() {
+                this.trigger('resize', event);
+            }).bind(this), 100);
+        }).bind(this));
         return this;
     },
     /**
