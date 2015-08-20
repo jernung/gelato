@@ -53,8 +53,8 @@ module.exports = Backbone.Model.extend({
         }).bind(this);
         internalOptions.success = (function() {
             this.state = 'standby';
-            if (typeof originalOptions.complete === 'function') {
-                originalOptions.success.apply(original, arguments);
+            if (typeof originalOptions.success === 'function') {
+                originalOptions.success.apply(originalOptions, arguments);
             }
         }).bind(this);
     },
