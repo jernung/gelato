@@ -2,7 +2,16 @@ var Application = require('application');
 
 module.exports = (function() {
 
+    function prepareDOM() {
+        document.body.innerHTML = '';
+        document.body.appendChild(document.createElement('gelato-application'));
+        document.body.appendChild(document.createElement('gelato-dialogs'));
+        document.body.appendChild(document.createElement('gelato-navbars'));
+        document.body.appendChild(document.createElement('gelato-sidebars'));
+    }
+
     function start() {
+        prepareDOM();
         window.app = new Application();
         window.app.start();
     }
