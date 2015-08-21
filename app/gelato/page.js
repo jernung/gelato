@@ -23,12 +23,11 @@ module.exports = GelatoView.extend({
     /**
      * @method renderTemplate
      * @param {Object} [properties]
-     * @returns {GelatoView}
+     * @returns {GelatoPage}
      */
     renderTemplate: function(properties) {
         GelatoView.prototype.renderTemplate.call(this, properties);
         this.$page = $(this.$('gelato-page').get(0));
-        this.adjustNavbarPadding();
         return this;
     },
     /**
@@ -59,7 +58,7 @@ module.exports = GelatoView.extend({
     },
     /**
      * @method hide
-     * @returns {GelatoComponent}
+     * @returns {GelatoPage}
      */
     hide: function() {
         this.$page.hide();
@@ -74,7 +73,7 @@ module.exports = GelatoView.extend({
     },
     /**
      * @method show
-     * @returns {GelatoComponent}
+     * @returns {GelatoPage}
      */
     show: function() {
         this.$page.show();
