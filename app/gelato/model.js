@@ -20,6 +20,7 @@ module.exports = Backbone.Model.extend({
      * @param {Object} [options]
      */
     fetch: function(options) {
+        options = options || {};
         this.state = 'fetching';
         this._triggerState();
         this._handleRequestEvent(options);
@@ -31,6 +32,7 @@ module.exports = Backbone.Model.extend({
      * @param [options]
      */
     save: function(attributes, options) {
+        options = options || {};
         this.state = 'saving';
         this._triggerState();
         this._handleRequestEvent(options);
@@ -42,21 +44,22 @@ module.exports = Backbone.Model.extend({
      * @private
      */
     _handleRequestEvent: function(options) {
-        var internalOptions = options || {};
-        var originalOptions = _.clone(options || {});
-        internalOptions.complete = (function() {
+        var originalOptions = _.clone(options);
+        options.complete = (function() {
+            console.log('model:complete');
             this._triggerState();
             if (typeof originalOptions.complete === 'function') {
                 originalOptions.complete.apply(originalOptions, arguments);
             }
         }).bind(this);
-        internalOptions.error = (function() {
+        options.error = (function() {
             this.state = 'standby';
             if (typeof originalOptions.error === 'function') {
                 originalOptions.error.apply(originalOptions, arguments);
             }
         }).bind(this);
-        internalOptions.success = (function() {
+        options.success = (function() {
+            console.log('model:success');
             this.state = 'standby';
             if (typeof originalOptions.success === 'function') {
                 originalOptions.success.apply(originalOptions, arguments);

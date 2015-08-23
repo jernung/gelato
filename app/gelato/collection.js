@@ -20,6 +20,7 @@ module.exports = Backbone.Collection.extend({
      * @param {Object} [options]
      */
     fetch: function(options) {
+        options = options || {};
         this.state = 'fetching';
         this._triggerState();
         this._handleRequestEvent(options);
@@ -31,21 +32,20 @@ module.exports = Backbone.Collection.extend({
      * @private
      */
     _handleRequestEvent: function(options) {
-        var internalOptions = options || {};
-        var originalOptions = _.clone(options || {});
-        internalOptions.complete = (function() {
+        var originalOptions = _.clone(options);
+        options.complete = (function() {
             this._triggerState();
             if (typeof originalOptions.complete === 'function') {
                 originalOptions.complete.apply(originalOptions, arguments);
             }
         }).bind(this);
-        internalOptions.error = (function() {
+        options.error = (function() {
             this.state = 'standby';
             if (typeof originalOptions.error === 'function') {
                 originalOptions.error.apply(originalOptions, arguments);
             }
         }).bind(this);
-        internalOptions.success = (function() {
+        options.success = (function() {
             this.state = 'standby';
             if (typeof originalOptions.success === 'function') {
                 originalOptions.success.apply(originalOptions, arguments);
