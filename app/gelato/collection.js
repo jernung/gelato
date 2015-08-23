@@ -11,6 +11,11 @@ module.exports = Backbone.Collection.extend({
         Backbone.Collection.apply(this, arguments);
     },
     /**
+     * @property state
+     * @type {String}
+     */
+    state: 'standby',
+    /**
      * @method fetch
      * @param {Object} [options]
      */
@@ -20,11 +25,6 @@ module.exports = Backbone.Collection.extend({
         this._handleRequestEvent(options);
         return Backbone.Collection.prototype.fetch.call(this, options);
     },
-    /**
-     * @property standby
-     * @type {String}
-     */
-    state: 'standby',
     /**
      * @method _handleRequestEvent
      * @param {Object} options

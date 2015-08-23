@@ -11,6 +11,11 @@ module.exports = Backbone.Model.extend({
         Backbone.Model.apply(this, arguments);
     },
     /**
+     * @property state
+     * @type {String}
+     */
+    state: 'standby',
+    /**
      * @method fetch
      * @param {Object} [options]
      */
