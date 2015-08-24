@@ -18,6 +18,13 @@ module.exports = Backbone.Model.extend({
         return $(window).height();
     },
     /**
+     * @method getLocalStorage
+     * @param {String} key
+     */
+    getLocalStorage: function(key) {
+        return JSON.parse(localStorage.getItem(key));
+    },
+    /**
      * @method getPlatform
      * @returns {String}
      */
@@ -60,11 +67,26 @@ module.exports = Backbone.Model.extend({
         location.reload(true);
     },
     /**
+     * @method getLocalStorage
+     * @param {String} key
+     */
+    removeLocalStorage: function(key) {
+        localStorage.removeItem(key);
+    },
+    /**
      * @method removeSetting
      * @param {String} key
      */
     removeSetting: function(key) {
         localStorage.removeItem('application-' + key);
+    },
+    /**
+     * @method setLocalStorage
+     * @param {String} key
+     * @param {Array|Number|Object|String} value
+     */
+    setLocalStorage: function(key, value) {
+        return localStorage.setItem(key, JSON.stringify(value));
     },
     /**
      * @method setSetting
