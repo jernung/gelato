@@ -21,6 +21,9 @@ module.exports = Backbone.Collection.extend({
      */
     fetch: function(options) {
         options = options || {};
+        if (this.state !== 'standby') {
+            throw new Error('Unable to fetch while syncing.');
+        }
         this.state = 'fetching';
         this._triggerState();
         this._handleRequestEvent(options);

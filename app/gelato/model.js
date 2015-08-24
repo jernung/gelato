@@ -21,6 +21,9 @@ module.exports = Backbone.Model.extend({
      */
     fetch: function(options) {
         options = options || {};
+        if (this.state !== 'standby') {
+            throw new Error('Unable to fetch while syncing.');
+        }
         this.state = 'fetching';
         this._triggerState();
         this._handleRequestEvent(options);
@@ -33,6 +36,9 @@ module.exports = Backbone.Model.extend({
      */
     save: function(attributes, options) {
         options = options || {};
+        if (this.state !== 'standby') {
+            throw new Error('Unable to save while syncing.');
+        }
         this.state = 'saving';
         this._triggerState();
         this._handleRequestEvent(options);
@@ -46,7 +52,6 @@ module.exports = Backbone.Model.extend({
     _handleRequestEvent: function(options) {
         var originalOptions = _.clone(options);
         options.complete = (function() {
-            console.log('model:complete');
             this._triggerState();
             if (typeof originalOptions.complete === 'function') {
                 originalOptions.complete.apply(originalOptions, arguments);
@@ -59,7 +64,6 @@ module.exports = Backbone.Model.extend({
             }
         }).bind(this);
         options.success = (function() {
-            console.log('model:success');
             this.state = 'standby';
             if (typeof originalOptions.success === 'function') {
                 originalOptions.success.apply(originalOptions, arguments);
