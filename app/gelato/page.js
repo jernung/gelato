@@ -11,6 +11,11 @@ module.exports = GelatoView.extend({
      */
     title: null,
     /**
+     * @property bodyClass
+     * @type {String}
+     */
+    bodyClass: null,
+    /**
      * @property el
      * @type {String}
      */
@@ -28,6 +33,9 @@ module.exports = GelatoView.extend({
     renderTemplate: function(properties) {
         GelatoView.prototype.renderTemplate.call(this, properties);
         this.$page = $(this.$('gelato-page').get(0));
+        if (this.bodyClass) {
+            $('body').addClass(this.bodyClass);
+        }
         return this;
     },
     /**
@@ -69,6 +77,9 @@ module.exports = GelatoView.extend({
      * @returns {GelatoPage}
      */
     remove: function() {
+        if (this.bodyClass) {
+            $('body').removeClass(this.bodyClass);
+        }
         return GelatoView.prototype.remove.call(this);
     },
     /**
