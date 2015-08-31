@@ -83,6 +83,16 @@ module.exports = GelatoView.extend({
         return GelatoView.prototype.remove.call(this);
     },
     /**
+     * @method setTitle
+     * @param {String} value
+     * @returns {GelatoPage}
+     */
+    setTitle: function(value) {
+        this.title = value;
+        document.title = value;
+        return this;
+    },
+    /**
      * @method show
      * @returns {GelatoPage}
      */
