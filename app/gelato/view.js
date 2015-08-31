@@ -30,9 +30,7 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderTemplate: function(properties) {
-        globals.view = this;
-        globals = $.extend(true, globals, properties || {});
-        this.$el.html(this.template(globals));
+        this.$el.html(this.template(this.getContext(properties)));
         this.renderEvents();
         return this;
     },
@@ -64,6 +62,16 @@ module.exports = Backbone.View.extend({
     enableForm: function(selector) {
         this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', false);
         return this;
+    },
+    /**
+     * @method getContext
+     * @param {Object} [properties]
+     * @returns {Object}
+     */
+    getContext: function(properties) {
+        globals.view = this;
+        globals = $.extend(true, globals, properties || {});
+        return globals;
     },
     /**
      * @method hide
