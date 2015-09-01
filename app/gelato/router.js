@@ -14,6 +14,7 @@ module.exports = Backbone.Router.extend({
     after: function() {
         if (this.page) {
             document.title = this.page.title || app.get('name');
+            window.scrollTo(0, 0);
         }
     },
     /**
