@@ -26,7 +26,6 @@
     "minimist": "1.2.0",
     "shelljs": "0.5.3",
     "clean-css-brunch": "1.7.2",
-    "coffee-script-brunch": "1.8.2",
     "css-brunch": "1.7.0",
     "jade-brunch": "1.8.1",
     "javascript-brunch": "1.7.1",

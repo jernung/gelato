@@ -22,6 +22,7 @@ module.exports = Backbone.View.extend({
                 this.trigger('resize', event);
             }).bind(this), 100);
         }).bind(this));
+        this.$('a[href]').on('vclick', this.handleClickHref);
         return this;
     },
     /**
@@ -44,15 +45,20 @@ module.exports = Backbone.View.extend({
         return this;
     },
     /**
-     * @method handleClickDataNavigate
+     * @method handleClickHref
      * @param {Event} event
      */
-    handleClickDataNavigate: function(event) {
-        event.preventDefault();
-        var route = $(event.currentTarget).data('navigate') || '';
-        var replace = $(event.currentTarget).data('replace') || false;
-        var trigger = $(event.currentTarget).data('trigger') || true;
-        app.router.navigate(route, {replace: replace, trigger: trigger});
+    handleClickHref: function(event) {
+        var target = $(event.target);
+        var href = target.attr('href');
+        if (href.indexOf('http://') !== 0 &&
+            href.indexOf('https://') !== 0) {
+            event.preventDefault();
+            app.router.navigate(href, {
+                replace: target.data('replace') || false,
+                trigger: target.data('trigger') || true
+            });
+        }
     },
     /**
      * @method enableForm
