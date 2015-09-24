@@ -11,6 +11,9 @@ module.exports = {
         build: function() {
             this.exec(['build']);
         },
+        buildProduction: function() {
+            this.exec(['build', '--production']);
+        },
         exec: function(commands) {
             commands.unshift(path.brunch);
             shell.cd(path.project);
@@ -56,7 +59,7 @@ module.exports = {
     framework: {
         build: function () {
             shell.cd(path.framework);
-            shell.exec([path.brunch, 'build'].join(' '));
+            shell.exec([path.brunch, 'build', '--production'].join(' '));
         },
         copy: function() {
             shell.mkdir('-p', path.project + '/vendor/gelato');

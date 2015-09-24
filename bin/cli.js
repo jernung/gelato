@@ -97,16 +97,16 @@ if (['ios'].indexOf(commands[0]) > -1) {
     }
 }
 
-if (['test'].indexOf(commands[0]) > -1) {
-    gelato.mocha.test();
-    process.exit(1);
-}
-
 if (['web'].indexOf(commands[0]) > -1) {
     switch (commands[1]) {
         case 'build':
             gelato.framework.update();
             gelato.brunch.build();
+            process.exit(1);
+            break;
+        case 'build-production':
+            gelato.framework.update();
+            gelato.brunch.buildProduction();
             process.exit(1);
             break;
         case 'run':
