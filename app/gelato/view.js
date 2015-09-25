@@ -49,9 +49,11 @@ module.exports = Backbone.View.extend({
      * @param {Event} event
      */
     handleClickHref: function(event) {
-        var target = $(event.target);
+        var target = $(event.currentTarget);
         var href = target.attr('href');
-        if (href.indexOf('http://') !== 0 &&
+        var ignore = target.data('ignore');
+        if (!ignore &&
+            href.indexOf('http://') !== 0 &&
             href.indexOf('https://') !== 0) {
             event.preventDefault();
             app.router.navigate(href, {
