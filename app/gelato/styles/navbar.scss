@@ -21,10 +21,17 @@ gelato-navbar {
 
   .item {
     float: left;
+    position: relative;
     &.item-button {
       font-size: 16px;
       font-weight: 400;
       padding: 7px;
+    }
+    &.item-dropdown {
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: 400;
+      padding: 11px 14px;
     }
     &.item-header {
       cursor: pointer;
