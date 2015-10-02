@@ -109,9 +109,9 @@ if (['web'].indexOf(commands[0]) > -1) {
             project.build(arguments);
             process.exit(1);
             break;
-        case 'run':
+        case 'watch':
             framework.update(arguments);
-            project.run(arguments);
+            project.watch(arguments);
             process.exit(1);
             break;
         default:
@@ -120,6 +120,5 @@ if (['web'].indexOf(commands[0]) > -1) {
     }
 }
 
-console.log(this);
 console.log("If you don't eat your meat, you can't have any pudding!");
 process.exit(0);
