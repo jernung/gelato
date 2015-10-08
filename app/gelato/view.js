@@ -6,6 +6,25 @@ var globals = require('globals');
  */
 module.exports = Backbone.View.extend({
     /**
+     * @method constructor
+     * @param {Object} [options]
+     * @param {GelatoApplication} [application]
+     */
+    constructor: function(options, application) {
+        this.app = application;
+        Backbone.View.prototype.constructor.call(this, options);
+    },
+    /**
+     * @property app
+     * @type {GelatoApplication}
+     */
+    app: null,
+    /**
+     * @property resize
+     * @type {Object}
+     */
+    resize: null,
+    /**
      * @property template
      * @type {Function}
      */
@@ -15,14 +34,13 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderEvents: function() {
-        var resize = null;
         $(window).resize((function(event) {
-            clearTimeout(resize);
-            resize = setTimeout((function() {
+            clearTimeout(this.resize);
+            this.resize = setTimeout((function() {
                 this.trigger('resize', event);
             }).bind(this), 100);
         }).bind(this));
-        this.$('a[href]').on('vclick', this.handleClickHref);
+        this.$('a[href]').on('click', this.handleClickHref);
         return this;
     },
     /**
@@ -43,6 +61,20 @@ module.exports = Backbone.View.extend({
     disableForm: function(selector) {
         this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
         return this;
+    },
+    /**
+     * @method getHeight
+     * @returns {Number}
+     */
+    getHeight: function() {
+        return this.$element.height();
+    },
+    /**
+     * @method getWidth
+     * @returns {Number}
+     */
+    getWidth: function() {
+        return this.$element.width();
     },
     /**
      * @method handleClickHref
@@ -77,36 +109,19 @@ module.exports = Backbone.View.extend({
      * @returns {Object}
      */
     getContext: function(properties) {
+        globals.app = this.app;
         globals.view = this;
         globals = $.extend(true, globals, properties || {});
         return globals;
-    },
-    /**
-     * @method hide
-     * @returns {GelatoView}
-     */
-    hide: function() {
-        this.$el.hide();
-        return this;
     },
     /**
      * @method remove
      * @returns {GelatoView}
      */
     remove: function() {
-        this.$el.empty();
-        this.$el.find('*').off();
         this.stopListening();
         this.undelegateEvents();
         $(window).off('resize');
-        return this;
-    },
-    /**
-     * @method show
-     * @returns {GelatoView}
-     */
-    show: function() {
-        this.$el.show();
         return this;
     }
 });

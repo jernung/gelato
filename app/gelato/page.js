@@ -6,25 +6,30 @@ var GelatoView = require('gelato/view');
  */
 module.exports = GelatoView.extend({
     /**
-     * @property title
-     * @type {String}
+     * @property $element
+     * @type {jQuery}
      */
-    title: null,
+    $element: null,
     /**
      * @property bodyClass
      * @type {String}
      */
     bodyClass: null,
     /**
+     * @property application
+     * @type {GelatoApplication}
+     */
+    app: null,
+    /**
      * @property el
      * @type {String}
      */
     el: 'gelato-application',
     /**
-     * @property $page
-     * @type {jQuery}
+     * @property title
+     * @type {String}
      */
-    $page: null,
+    title: null,
     /**
      * @method renderTemplate
      * @param {Object} [properties]
@@ -32,44 +37,34 @@ module.exports = GelatoView.extend({
      */
     renderTemplate: function(properties) {
         GelatoView.prototype.renderTemplate.call(this, properties);
-        this.$page = $(this.$('gelato-page').get(0));
+        this.$element = $(this.$('gelato-page').get(0));
         if (this.bodyClass) {
             $('body').addClass(this.bodyClass);
         }
         return this;
     },
     /**
-     * @method adjustNavbarPadding
-     * @returns {GelatoPage}
+     * @method createComponent
+     * @param {String} name
+     * @param {Object} [options]
+     * @returns {GelatoComponent}
      */
-    adjustNavbarPadding: function() {
-        var navbarFixedBottom = this.$('.fixed-bottom');
-        var navbarFixedTop = this.$('.fixed-top');
-        if (navbarFixedBottom.length) {
-            $('body').css('padding-bottom', navbarFixedBottom.height());
-        } else {
-            $('body').css('padding-bottom', '');
-        }
-        if (navbarFixedTop.length) {
-            $('body').css('padding-top', navbarFixedTop.height());
-        } else {
-            $('body').css('padding-top', '');
-        }
-        return this;
+    createComponent: function(name, options) {
+        return new (require('components/' + name + '/view'))(options, this.app);
     },
     /**
      * @method getName
      * @returns {String}
      */
     getName: function() {
-        return this.$('gelato-page').data('name');
+        return this.$element.data('name');
     },
     /**
      * @method hide
      * @returns {GelatoPage}
      */
     hide: function() {
-        this.$page.hide();
+        this.$element.hide();
         return this;
     },
     /**
@@ -80,6 +75,8 @@ module.exports = GelatoView.extend({
         if (this.bodyClass) {
             $('body').removeClass(this.bodyClass);
         }
+        this.$element.empty();
+        this.$element.find('*').off();
         return GelatoView.prototype.remove.call(this);
     },
     /**
@@ -88,8 +85,7 @@ module.exports = GelatoView.extend({
      * @returns {GelatoPage}
      */
     setTitle: function(value) {
-        this.title = value;
-        document.title = value;
+        document.title = this.title = value;
         return this;
     },
     /**
@@ -97,7 +93,7 @@ module.exports = GelatoView.extend({
      * @returns {GelatoPage}
      */
     show: function() {
-        this.$page.show();
+        this.$element.show();
         return this;
     }
 });

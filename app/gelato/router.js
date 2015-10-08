@@ -4,6 +4,20 @@
  */
 module.exports = Backbone.Router.extend({
     /**
+     * @method constructor
+     * @param {Object} [options]
+     * @param {GelatoApplication} [application]
+     */
+    constructor: function(options, application) {
+        this.app = application;
+        Backbone.Router.prototype.constructor.call(this, options);
+    },
+    /**
+     * @property app
+     * @type {GelatoApplication}
+     */
+    app: null,
+    /**
      * @property page
      * @type {String}
      */
@@ -13,7 +27,7 @@ module.exports = Backbone.Router.extend({
      */
     after: function() {
         if (this.page) {
-            document.title = this.page.title || app.get('name');
+            document.title = this.page.title || this.app.get('name');
             window.scrollTo(0, 0);
         }
     },
@@ -26,9 +40,22 @@ module.exports = Backbone.Router.extend({
         }
     },
     /**
+     * @method createPage
+     * @param {String} name
+     * @param {Object} [options]
+     * @returns {GelatoPage}
+     */
+    createPage: function(name, options) {
+        return new (require('pages/' + name + '/view'))(options, this.app);
+    },
+    /**
      * @method start
+     * @returns {Boolean}
      */
     start: function() {
-        Backbone.history.start({pushState: location.protocol !== 'file:'});
+        return Backbone.history.start({
+            pushState: location.protocol !== 'file:',
+            root: '/'
+        });
     }
 });
