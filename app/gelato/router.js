@@ -4,31 +4,54 @@
  */
 module.exports = Backbone.Router.extend({
     /**
+     * @method constructor
+     * @param {Object} [options]
+     * @param {GelatoApplication} [application]
+     */
+    constructor: function(options, application) {
+        this.app = application;
+        Backbone.Router.prototype.constructor.call(this, options);
+    },
+    /**
+     * @property app
+     * @type {GelatoApplication}
+     */
+    app: null,
+    /**
      * @property page
      * @type {String}
      */
     page: null,
     /**
-     * @method after
+     * @method createPage
+     * @param {String} path
+     * @param {Object} [options]
+     * @returns {GelatoPage}
      */
-    after: function() {
-        if (this.page) {
-            document.title = this.page.title || app.get('name');
-            window.scrollTo(0, 0);
-        }
+    createPage: function(path, options) {
+        return new (require(path + '/view'))(options, this.app);
     },
     /**
-     * @method before
+     * @method go
+     * @param {String} path
+     * @param {Object} [options]
+     * @returns {GelatoPage}
      */
-    before: function() {
+    go: function(path, options) {
         if (this.page) {
             this.page.remove();
         }
+        this.page = this.createPage(path, options);
+        return this.page.render();
     },
     /**
      * @method start
+     * @returns {Boolean}
      */
     start: function() {
-        Backbone.history.start({pushState: location.protocol !== 'file:'});
+        return Backbone.history.start({
+            pushState: location.protocol !== 'file:',
+            root: '/'
+        });
     }
 });

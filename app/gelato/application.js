@@ -11,11 +11,40 @@ module.exports = Backbone.Model.extend({
         version: '{!gelato-version!}'
     },
     /**
+     * @method createCollection
+     * @param {String} path
+     * @param {Array} [models]
+     * @param {Object} [options]
+     * @returns {GelatoCollection}
+     */
+    createCollection: function(path, models, options) {
+        return new (require(path))(models, options, this);
+    },
+    /**
+     * @method createModel
+     * @param {String} path
+     * @param {Object} [attributes]
+     * @param {Object} [options]
+     * @returns {GelatoModel}
+     */
+    createModel: function(path, attributes, options) {
+        return new (require(path))(attributes, options, this);
+    },
+    /**
+     * @method createRouter
+     * @param {String} path
+     * @param {Object} [options]
+     * @returns {GelatoRouter}
+     */
+    createRouter: function(path, options) {
+        return new (require(path))(options, this);
+    },
+    /**
      * @method getHeight
      * @returns {Number}
      */
     getHeight: function() {
-        return $(window).height();
+        return Backbone.$('gelato-application').height();
     },
     /**
      * @method getLocalStorage
@@ -29,7 +58,7 @@ module.exports = Backbone.Model.extend({
      * @returns {String}
      */
     getPlatform: function() {
-        return window.device ? window.device.platform : 'Web';
+        return window.device ? window.device.platform : 'Website';
     },
     /**
      * @method getSetting
@@ -44,7 +73,14 @@ module.exports = Backbone.Model.extend({
      * @returns {Number}
      */
     getWidth: function() {
-        return $(window).width();
+        return Backbone.$('gelato-application').width();
+    },
+    /**
+     * @method isAndroid
+     * @returns {Boolean}
+     */
+    isAndroid: function() {
+        return this.getPlatform() === 'Android';
     },
     /**
      * @method isDevelopment
@@ -54,11 +90,25 @@ module.exports = Backbone.Model.extend({
         return location.hostname === 'localhost';
     },
     /**
+     * @method isIOS
+     * @returns {Boolean}
+     */
+    isIOS: function() {
+        return this.getPlatform() === 'iOS';
+    },
+    /**
      * @method isProduction
      * @returns {Boolean}
      */
     isProduction: function() {
         return location.hostname !== 'localhost';
+    },
+    /**
+     * @method isWebsite
+     * @returns {Boolean}
+     */
+    isWebsite: function() {
+        return this.getPlatform() === 'Website';
     },
     /**
      * @method reload

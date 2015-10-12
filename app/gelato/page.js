@@ -6,11 +6,6 @@ var GelatoView = require('gelato/view');
  */
 module.exports = GelatoView.extend({
     /**
-     * @property title
-     * @type {String}
-     */
-    title: null,
-    /**
      * @property bodyClass
      * @type {String}
      */
@@ -21,56 +16,23 @@ module.exports = GelatoView.extend({
      */
     el: 'gelato-application',
     /**
-     * @property $page
-     * @type {jQuery}
+     * @property title
+     * @type {String}
      */
-    $page: null,
+    title: null,
     /**
      * @method renderTemplate
-     * @param {Object} [properties]
+     * @param {Object} [context]
      * @returns {GelatoPage}
      */
-    renderTemplate: function(properties) {
-        GelatoView.prototype.renderTemplate.call(this, properties);
-        this.$page = $(this.$('gelato-page').get(0));
+    renderTemplate: function(context) {
         if (this.bodyClass) {
             $('body').addClass(this.bodyClass);
         }
-        return this;
-    },
-    /**
-     * @method adjustNavbarPadding
-     * @returns {GelatoPage}
-     */
-    adjustNavbarPadding: function() {
-        var navbarFixedBottom = this.$('.fixed-bottom');
-        var navbarFixedTop = this.$('.fixed-top');
-        if (navbarFixedBottom.length) {
-            $('body').css('padding-bottom', navbarFixedBottom.height());
-        } else {
-            $('body').css('padding-bottom', '');
+        if (this.title) {
+            document.title = this.title;
         }
-        if (navbarFixedTop.length) {
-            $('body').css('padding-top', navbarFixedTop.height());
-        } else {
-            $('body').css('padding-top', '');
-        }
-        return this;
-    },
-    /**
-     * @method getName
-     * @returns {String}
-     */
-    getName: function() {
-        return this.$('gelato-page').data('name');
-    },
-    /**
-     * @method hide
-     * @returns {GelatoPage}
-     */
-    hide: function() {
-        this.$page.hide();
-        return this;
+        return GelatoView.prototype.renderTemplate.call(this, context);
     },
     /**
      * @method remove
@@ -80,6 +42,9 @@ module.exports = GelatoView.extend({
         if (this.bodyClass) {
             $('body').removeClass(this.bodyClass);
         }
+        if (this.title) {
+            document.title = '';
+        }
         return GelatoView.prototype.remove.call(this);
     },
     /**
@@ -88,16 +53,8 @@ module.exports = GelatoView.extend({
      * @returns {GelatoPage}
      */
     setTitle: function(value) {
-        this.title = value;
         document.title = value;
-        return this;
-    },
-    /**
-     * @method show
-     * @returns {GelatoPage}
-     */
-    show: function() {
-        this.$page.show();
+        this.title = value;
         return this;
     }
 });

@@ -6,34 +6,18 @@ var GelatoView = require('gelato/view');
  */
 module.exports = GelatoView.extend({
     /**
-     * @property $component
-     * @type {jQuery}
-     */
-    $component: null,
-    /**
      * @method renderTemplate
-     * @param {Object} [properties]
-     * @returns {GelatoView}
+     * @param {Object} [context]
+     * @returns {GelatoPage}
      */
-    renderTemplate: function(properties) {
-        GelatoView.prototype.renderTemplate.call(this, properties);
-        this.$component = $(this.$('gelato-component').get(0));
-        return this;
+    renderTemplate: function(context) {
+        return GelatoView.prototype.renderTemplate.call(this, context);
     },
     /**
-     * @method hide
-     * @returns {GelatoComponent}
+     * @method remove
+     * @returns {GelatoPage}
      */
-    hide: function() {
-        this.$component.hide();
-        return this;
-    },
-    /**
-     * @method show
-     * @returns {GelatoComponent}
-     */
-    show: function() {
-        this.$component.show();
-        return this;
+    remove: function() {
+        return GelatoView.prototype.remove.call(this);
     }
 });
