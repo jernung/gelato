@@ -5,11 +5,20 @@
 module.exports = Backbone.Model.extend({
     /**
      * @method constructor
+     * @param {Object} [attributes]
+     * @param {Object} [options]
+     * @param {GelatoApplication} [application]
      * @constructor
      */
-    constructor: function() {
-        Backbone.Model.apply(this, arguments);
+    constructor: function(attributes, options, application) {
+        this.app = application;
+        Backbone.Model.prototype.constructor.call(this, attributes, options);
     },
+    /**
+     * @property app
+     * @type {GelatoApplication}
+     */
+    app: null,
     /**
      * @property state
      * @type {String}

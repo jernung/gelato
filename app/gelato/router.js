@@ -23,30 +23,26 @@ module.exports = Backbone.Router.extend({
      */
     page: null,
     /**
-     * @method after
-     */
-    after: function() {
-        if (this.page) {
-            document.title = this.page.title || this.app.get('name');
-            window.scrollTo(0, 0);
-        }
-    },
-    /**
-     * @method before
-     */
-    before: function() {
-        if (this.page) {
-            this.page.remove();
-        }
-    },
-    /**
      * @method createPage
-     * @param {String} name
+     * @param {String} path
      * @param {Object} [options]
      * @returns {GelatoPage}
      */
-    createPage: function(name, options) {
-        return new (require('pages/' + name + '/view'))(options, this.app);
+    createPage: function(path, options) {
+        return new (require(path + '/view'))(options, this.app);
+    },
+    /**
+     * @method go
+     * @param {String} path
+     * @param {Object} [options]
+     * @returns {GelatoPage}
+     */
+    go: function(path, options) {
+        if (this.page) {
+            this.page.remove();
+        }
+        this.page = this.createPage(path, options);
+        return this.page.render();
     },
     /**
      * @method start

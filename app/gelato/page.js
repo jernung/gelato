@@ -6,20 +6,10 @@ var GelatoView = require('gelato/view');
  */
 module.exports = GelatoView.extend({
     /**
-     * @property $element
-     * @type {jQuery}
-     */
-    $element: null,
-    /**
      * @property bodyClass
      * @type {String}
      */
     bodyClass: null,
-    /**
-     * @property application
-     * @type {GelatoApplication}
-     */
-    app: null,
     /**
      * @property el
      * @type {String}
@@ -32,40 +22,17 @@ module.exports = GelatoView.extend({
     title: null,
     /**
      * @method renderTemplate
-     * @param {Object} [properties]
+     * @param {Object} [context]
      * @returns {GelatoPage}
      */
-    renderTemplate: function(properties) {
-        GelatoView.prototype.renderTemplate.call(this, properties);
-        this.$element = $(this.$('gelato-page').get(0));
+    renderTemplate: function(context) {
         if (this.bodyClass) {
             $('body').addClass(this.bodyClass);
         }
-        return this;
-    },
-    /**
-     * @method createComponent
-     * @param {String} name
-     * @param {Object} [options]
-     * @returns {GelatoComponent}
-     */
-    createComponent: function(name, options) {
-        return new (require('components/' + name + '/view'))(options, this.app);
-    },
-    /**
-     * @method getName
-     * @returns {String}
-     */
-    getName: function() {
-        return this.$element.data('name');
-    },
-    /**
-     * @method hide
-     * @returns {GelatoPage}
-     */
-    hide: function() {
-        this.$element.hide();
-        return this;
+        if (this.title) {
+            document.title = this.title;
+        }
+        return GelatoView.prototype.renderTemplate.call(this, context);
     },
     /**
      * @method remove
@@ -75,8 +42,9 @@ module.exports = GelatoView.extend({
         if (this.bodyClass) {
             $('body').removeClass(this.bodyClass);
         }
-        this.$element.empty();
-        this.$element.find('*').off();
+        if (this.title) {
+            document.title = '';
+        }
         return GelatoView.prototype.remove.call(this);
     },
     /**
@@ -85,15 +53,8 @@ module.exports = GelatoView.extend({
      * @returns {GelatoPage}
      */
     setTitle: function(value) {
-        document.title = this.title = value;
-        return this;
-    },
-    /**
-     * @method show
-     * @returns {GelatoPage}
-     */
-    show: function() {
-        this.$element.show();
+        document.title = value;
+        this.title = value;
         return this;
     }
 });

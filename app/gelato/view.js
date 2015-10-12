@@ -30,51 +30,61 @@ module.exports = Backbone.View.extend({
      */
     template: null,
     /**
-     * @method renderEvents
+     * @method createCollection
+     * @param {String} path
+     * @param {Array} [models]
+     * @param {Object} [options]
+     * @returns {GelatoCollection}
+     */
+    createCollection: function(path, models, options) {
+        return new (require(path))(models, options, this.app);
+    },
+    /**
+     * @method createComponent
+     * @param {String} path
+     * @param {Object} [options]
+     * @returns {GelatoComponent}
+     */
+    createComponent: function(path, options) {
+        return new (require(path + '/view'))(options, this.app);
+    },
+    /**
+     * @method createModel
+     * @param {String} path
+     * @param {Object} [attributes]
+     * @param {Object} [options]
+     * @returns {GelatoModel}
+     */
+    createModel: function(path, attributes, options) {
+        return new (require(path))(attributes, options, this.app);
+    },
+    /**
+     * @method delegateEvents
      * @returns {GelatoView}
      */
-    renderEvents: function() {
-        $(window).resize((function(event) {
+    delegateEvents: function() {
+        Backbone.$(window).resize((function(event) {
             clearTimeout(this.resize);
             this.resize = setTimeout((function() {
                 this.trigger('resize', event);
             }).bind(this), 100);
         }).bind(this));
         this.$('a[href]').on('click', this.handleClickHref);
-        return this;
-    },
-    /**
-     * @method renderTemplate
-     * @param {Object} [properties]
-     * @returns {GelatoView}
-     */
-    renderTemplate: function(properties) {
-        this.$el.html(this.template(this.getContext(properties)));
-        this.renderEvents();
-        return this;
-    },
-    /**
-     * @method disableForm
-     * @param {String} [selector]
-     * @returns {GelatoView}
-     */
-    disableForm: function(selector) {
-        this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
-        return this;
+        return Backbone.View.prototype.delegateEvents.call(this);
     },
     /**
      * @method getHeight
      * @returns {Number}
      */
     getHeight: function() {
-        return this.$element.height();
+        return this.$el.height();
     },
     /**
      * @method getWidth
      * @returns {Number}
      */
     getWidth: function() {
-        return this.$element.width();
+        return this.$el.width();
     },
     /**
      * @method handleClickHref
@@ -83,8 +93,7 @@ module.exports = Backbone.View.extend({
     handleClickHref: function(event) {
         var target = $(event.currentTarget);
         var href = target.attr('href');
-        var ignore = target.data('ignore');
-        if (!ignore &&
+        if (href.indexOf('#') !== 0 &&
             href.indexOf('http://') !== 0 &&
             href.indexOf('https://') !== 0) {
             event.preventDefault();
@@ -95,24 +104,36 @@ module.exports = Backbone.View.extend({
         }
     },
     /**
-     * @method enableForm
-     * @param {String} [selector]
-     * @returns {GelatoView}
-     */
-    enableForm: function(selector) {
-        this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', false);
-        return this;
-    },
-    /**
      * @method getContext
-     * @param {Object} [properties]
+     * @param {Object} [context]
      * @returns {Object}
      */
-    getContext: function(properties) {
-        globals.app = this.app;
+    getContext: function(context) {
         globals.view = this;
-        globals = $.extend(true, globals, properties || {});
+        globals = $.extend(true, globals, context || {});
         return globals;
+    },
+    /**
+     * @method getName
+     * @returns {String}
+     */
+    getName: function() {
+        return this.$el.data('name');
+    },
+    /**
+     * @method getType
+     * @returns {String}
+     */
+    getType: function() {
+        return this.$el.data('type');
+    },
+    /**
+     * @method hide
+     * @returns {GelatoPage}
+     */
+    hide: function() {
+        Backbone.$.fn.hide.apply(this.$el, arguments);
+        return this;
     },
     /**
      * @method remove
@@ -121,7 +142,43 @@ module.exports = Backbone.View.extend({
     remove: function() {
         this.stopListening();
         this.undelegateEvents();
-        $(window).off('resize');
+        if (this.$el) {
+            this.$el.remove();
+        }
         return this;
+    },
+    /**
+     * @method renderTemplate
+     * @param {Object} [context]
+     * @returns {GelatoView}
+     */
+    renderTemplate: function(context) {
+        this.undelegateEvents();
+        this.$el.html(this.template(this.getContext(context)));
+        this.$el = this.$el.children();
+        this.el = this.$el.get(0);
+        this.delegateEvents();
+        return this;
+    },
+    /**
+     * @method show
+     * @returns {GelatoPage}
+     */
+    show: function() {
+        Backbone.$.fn.show.apply(this.$el, arguments);
+        return this;
+    },
+    /**
+     * @method undelegateEvents
+     * @returns {GelatoView}
+     */
+    undelegateEvents: function() {
+        if (this.$el) {
+            this.$el.find('*').off();
+        }
+        if (this.resize) {
+            Backbone.$(window).off('resize', this.resize);
+        }
+        return Backbone.View.prototype.undelegateEvents.call(this);
     }
 });
