@@ -4,6 +4,8 @@ module.exports = (function() {
 
     function start() {
         document.body.appendChild(document.createElement('gelato-application'));
+        document.body.appendChild(document.createElement('bootstrap-dialogs'));
+        document.body.appendChild(document.createElement('bootstrap-navbars'));
         new Application().start();
     }
 
