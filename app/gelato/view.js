@@ -63,6 +63,7 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     delegateEvents: function() {
+        Backbone.View.prototype.delegateEvents.call(this);
         Backbone.$(window).resize((function(event) {
             clearTimeout(this.resize);
             this.resize = setTimeout((function() {
@@ -70,7 +71,7 @@ module.exports = Backbone.View.extend({
             }).bind(this), 100);
         }).bind(this));
         this.$('a[href]').on('click', this.handleClickHref);
-        return Backbone.View.prototype.delegateEvents.call(this);
+        return this;
     },
     /**
      * @method getHeight
