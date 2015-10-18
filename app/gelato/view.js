@@ -15,6 +15,11 @@ module.exports = Backbone.View.extend({
         Backbone.View.prototype.constructor.call(this, options);
     },
     /**
+     * @property $view
+     * @type {jQuery}
+     */
+    $view: null,
+    /**
      * @property app
      * @type {GelatoApplication}
      */
@@ -59,33 +64,18 @@ module.exports = Backbone.View.extend({
         return new (require(path))(attributes, options, this.app);
     },
     /**
-     * @method delegateEvents
-     * @returns {GelatoView}
-     */
-    delegateEvents: function() {
-        Backbone.View.prototype.delegateEvents.call(this);
-        Backbone.$(window).resize((function(event) {
-            clearTimeout(this.resize);
-            this.resize = setTimeout((function() {
-                this.trigger('resize', event);
-            }).bind(this), 100);
-        }).bind(this));
-        this.$('a[href]').on('click', this.handleClickHref);
-        return this;
-    },
-    /**
      * @method getHeight
      * @returns {Number}
      */
     getHeight: function() {
-        return this.$el.height();
+        return this.$view.height();
     },
     /**
      * @method getWidth
      * @returns {Number}
      */
     getWidth: function() {
-        return this.$el.width();
+        return this.$view.width();
     },
     /**
      * @method handleClickHref
@@ -143,8 +133,10 @@ module.exports = Backbone.View.extend({
     remove: function() {
         this.stopListening();
         this.undelegateEvents();
-        if (this.$el) {
-            this.$el.remove();
+        this.$el.find('*').off();
+        this.$el.empty();
+        if (this.resize) {
+            Backbone.$(window).off('resize', this.resize);
         }
         return this;
     },
@@ -154,11 +146,15 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderTemplate: function(context) {
-        this.undelegateEvents();
         this.$el.html(this.template(this.getContext(context)));
-        this.$el = this.$el.children();
-        this.el = this.$el.get(0);
-        this.delegateEvents();
+        this.$view = this.$el.children();
+        this.$('a[href]').on('click', this.handleClickHref);
+        Backbone.$(window).resize((function(event) {
+            clearTimeout(this.resize);
+            this.resize = setTimeout((function() {
+                this.trigger('resize', event);
+            }).bind(this), 100);
+        }).bind(this));
         return this;
     },
     /**
@@ -168,18 +164,5 @@ module.exports = Backbone.View.extend({
     show: function() {
         Backbone.$.fn.show.apply(this.$el, arguments);
         return this;
-    },
-    /**
-     * @method undelegateEvents
-     * @returns {GelatoView}
-     */
-    undelegateEvents: function() {
-        if (this.$el) {
-            this.$el.find('*').off();
-        }
-        if (this.resize) {
-            Backbone.$(window).off('resize', this.resize);
-        }
-        return Backbone.View.prototype.undelegateEvents.call(this);
     }
 });
