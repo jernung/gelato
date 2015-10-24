@@ -18,7 +18,7 @@
     "gelato": "bin/cli.js"
   },
   "dependencies": {
-    "bower": "1.6.2",
+    "bower": "1.6.5",
     "brunch": "1.8.5",
     "cordova": "5.3.3",
     "jasmine": "2.3.2",
