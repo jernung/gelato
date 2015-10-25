@@ -97,6 +97,20 @@ module.exports = Backbone.Model.extend({
         return this.getPlatform() === 'iOS';
     },
     /**
+     * @method isLandscape
+     * @returns {Boolean}
+     */
+    isLandscape: function() {
+        return this.getWidth() > this.getHeight();
+    },
+    /**
+     * @method isPortrait
+     * @returns {Boolean}
+     */
+    isPortrait: function() {
+        return this.getWidth() <= this.getHeight();
+    },
+    /**
      * @method isProduction
      * @returns {Boolean}
      */
