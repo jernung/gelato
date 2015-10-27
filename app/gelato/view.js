@@ -11,24 +11,14 @@ module.exports = Backbone.View.extend({
      * @param {GelatoApplication} [application]
      */
     constructor: function(options, application) {
-        this.app = application;
+        this.app = application || window.app;
         Backbone.View.prototype.constructor.call(this, options);
     },
-    /**
-     * @property $view
-     * @type {jQuery}
-     */
-    $view: null,
     /**
      * @property app
      * @type {GelatoApplication}
      */
     app: null,
-    /**
-     * @property resize
-     * @type {Object}
-     */
-    resize: null,
     /**
      * @property template
      * @type {Function}
@@ -68,14 +58,14 @@ module.exports = Backbone.View.extend({
      * @returns {Number}
      */
     getHeight: function() {
-        return this.$view.height();
+        return this.$el.height();
     },
     /**
      * @method getWidth
      * @returns {Number}
      */
     getWidth: function() {
-        return this.$view.width();
+        return this.$el.width();
     },
     /**
      * @method handleClickHref
@@ -84,15 +74,23 @@ module.exports = Backbone.View.extend({
     handleClickHref: function(event) {
         var target = $(event.currentTarget);
         var href = target.attr('href');
-        if (href.indexOf('#') !== 0 &&
+        if (this.app !== undefined &&
+            href.indexOf('#') !== 0 &&
             href.indexOf('http://') !== 0 &&
             href.indexOf('https://') !== 0) {
             event.preventDefault();
-            app.router.navigate(href, {
+            this.app.router.navigate(href, {
                 replace: target.data('replace') || false,
                 trigger: target.data('trigger') || true
             });
         }
+    },
+    /**
+     * @method handleResize
+     * @param {Event} event
+     */
+    handleResize: function(event) {
+        this.trigger('resize', event);
     },
     /**
      * @method getContext
@@ -100,30 +98,17 @@ module.exports = Backbone.View.extend({
      * @returns {Object}
      */
     getContext: function(context) {
+        globals.app = this.app;
         globals.view = this;
         globals = $.extend(true, globals, context || {});
         return globals;
-    },
-    /**
-     * @method getName
-     * @returns {String}
-     */
-    getName: function() {
-        return this.$el.data('name');
-    },
-    /**
-     * @method getType
-     * @returns {String}
-     */
-    getType: function() {
-        return this.$el.data('type');
     },
     /**
      * @method hide
      * @returns {GelatoPage}
      */
     hide: function() {
-        Backbone.$.fn.hide.apply(this.$el, arguments);
+        this.$el.hide(arguments.length ? arguments : 0);
         return this;
     },
     /**
@@ -135,9 +120,7 @@ module.exports = Backbone.View.extend({
         this.undelegateEvents();
         this.$el.find('*').off();
         this.$el.empty();
-        if (this.resize) {
-            Backbone.$(window).off('resize', this.resize);
-        }
+        Backbone.$(window).off('resize', this.handleResize.bind(this));
         return this;
     },
     /**
@@ -146,23 +129,23 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderTemplate: function(context) {
+        /***
+         * TODO: review this concept for implementation
+        this.$view = $(document.createElement('gelato-view'));
+        this.$view.html(this.template(this.getContext(context)));
+         ***/
         this.$el.html(this.template(this.getContext(context)));
-        this.$view = this.$el.children();
-        this.$('a[href]').on('click', this.handleClickHref);
-        Backbone.$(window).resize((function(event) {
-            clearTimeout(this.resize);
-            this.resize = setTimeout((function() {
-                this.trigger('resize', event);
-            }).bind(this), 100);
-        }).bind(this));
+        this.$('a[href]').on('click vclick', this.handleClickHref.bind(this));
+        Backbone.$(window).off('resize', this.handleResize.bind(this));
+        Backbone.$(window).on('resize', this.handleResize.bind(this));
         return this;
     },
     /**
      * @method show
-     * @returns {GelatoPage}
+     * @returns {GelatoView}
      */
     show: function() {
-        Backbone.$.fn.show.apply(this.$el, arguments);
+        this.$el.show(arguments.length ? arguments : 0);
         return this;
     }
 });
