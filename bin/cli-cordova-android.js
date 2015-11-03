@@ -18,6 +18,12 @@ module.exports = {
         }
     },
     /**
+     * @method copy
+     */
+    copy: function() {
+        shell.cp('-rf', global.project + '/app/cordova/config.xml', global.project + '/cordova');
+    },
+    /**
      * @method install
      */
     install: function() {
@@ -39,6 +45,7 @@ module.exports = {
      */
     run: function() {
         if (this.isInstalled()) {
+            this.copy();
             cordova.copy();
             cordova.exec(['run', 'android']);
         } else {
