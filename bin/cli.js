@@ -109,6 +109,11 @@ if (['web'].indexOf(commands[0]) > -1) {
             project.build(arguments);
             process.exit(1);
             break;
+        case 'run':
+            framework.update(arguments);
+            project.exec(['watch', '--server']);
+            process.exit(1);
+            break;
         case 'watch':
             framework.update(arguments);
             project.watch(arguments);
