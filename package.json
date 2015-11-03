@@ -5,6 +5,10 @@
   "author": "Joshua McFarland",
   "version": "0.1.2",
   "license": "MIT",
+  "engines": {
+    "node": "4.2.1",
+    "npm": "2.14.8"
+  },
   "bin": {
     "gelato": "bin/cli.js"
   },
