@@ -5,23 +5,21 @@
   "author": "Joshua McFarland",
   "version": "0.1.2",
   "license": "MIT",
+  "bin": {
+    "gelato": "bin/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://www.github.com/jernung/gelato.git"
   },
   "scripts": {
     "postinstall": "node_modules/.bin/bower install",
-    "postversion": "node_modules/.bin/bower update",
-    "test": "node_modules/.bin/jasmine"
-  },
-  "bin": {
-    "gelato": "bin/cli.js"
+    "postversion": "node_modules/.bin/bower update"
   },
   "dependencies": {
     "bower": "1.6.5",
     "brunch": "1.8.5",
     "cordova": "5.3.3",
-    "jasmine": "2.3.2",
     "lodash": "3.10.1",
     "minimist": "1.2.0",
     "shelljs": "0.5.3",
