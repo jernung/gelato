@@ -23,7 +23,7 @@
   "dependencies": {
     "bower": "1.6.5",
     "brunch": "1.8.5",
-    "cordova": "5.3.3",
+    "cordova": "5.4.0",
     "lodash": "3.10.1",
     "minimist": "1.2.0",
     "shelljs": "0.5.3",
