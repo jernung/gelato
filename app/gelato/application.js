@@ -11,37 +11,54 @@ module.exports = Backbone.Model.extend({
         version: '{!gelato-version!}'
     },
     /**
-     * @property dialog
-     * @type {GelatoDialog}
+     * @method createCollection
+     * @param {String} path
+     * @param {Array} [models]
+     * @param {Object} [options]
+     * @returns {GelatoCollection}
      */
-    dialog: null,
-    /**
-     * @property sidebar
-     * @type {GelatoSidebar}
-     */
-    sidebar: null,
-    /**
-     * @method closeDialog
-     */
-    closeDialog: function() {
-        if (this.dialog) {
-            this.dialog.close();
-        }
+    createCollection: function(path, models, options) {
+        return new (require(path))(models, options, this);
     },
     /**
-     * @method closeSidebar
+     * @method createModel
+     * @param {String} path
+     * @param {Object} [attributes]
+     * @param {Object} [options]
+     * @returns {GelatoModel}
      */
-    closeSidebar: function() {
-        if (this.sidebar) {
-            this.sidebar.close();
-        }
+    createModel: function(path, attributes, options) {
+        return new (require(path))(attributes, options, this);
+    },
+    /**
+     * @method createRouter
+     * @param {String} path
+     * @param {Object} [options]
+     * @returns {GelatoRouter}
+     */
+    createRouter: function(path, options) {
+        return new (require(path))(options, this);
     },
     /**
      * @method getHeight
      * @returns {Number}
      */
     getHeight: function() {
-        return $(window).height();
+        return Backbone.$('gelato-application').height();
+    },
+    /**
+     * @method getLocalStorage
+     * @param {String} key
+     */
+    getLocalStorage: function(key) {
+        return JSON.parse(localStorage.getItem(key));
+    },
+    /**
+     * @method getPlatform
+     * @returns {String}
+     */
+    getPlatform: function() {
+        return window.device ? window.device.platform : 'Website';
     },
     /**
      * @method getSetting
@@ -56,7 +73,14 @@ module.exports = Backbone.Model.extend({
      * @returns {Number}
      */
     getWidth: function() {
-        return $(window).width();
+        return Backbone.$('gelato-application').width();
+    },
+    /**
+     * @method isAndroid
+     * @returns {Boolean}
+     */
+    isAndroid: function() {
+        return this.getPlatform() === 'Android';
     },
     /**
      * @method isDevelopment
@@ -66,6 +90,27 @@ module.exports = Backbone.Model.extend({
         return location.hostname === 'localhost';
     },
     /**
+     * @method isIOS
+     * @returns {Boolean}
+     */
+    isIOS: function() {
+        return this.getPlatform() === 'iOS';
+    },
+    /**
+     * @method isLandscape
+     * @returns {Boolean}
+     */
+    isLandscape: function() {
+        return this.getWidth() > this.getHeight();
+    },
+    /**
+     * @method isPortrait
+     * @returns {Boolean}
+     */
+    isPortrait: function() {
+        return this.getWidth() <= this.getHeight();
+    },
+    /**
      * @method isProduction
      * @returns {Boolean}
      */
@@ -73,26 +118,11 @@ module.exports = Backbone.Model.extend({
         return location.hostname !== 'localhost';
     },
     /**
-     * @method openDialog
-     * @param {String} name
-     * @param {Object} [options]
+     * @method isWebsite
+     * @returns {Boolean}
      */
-    openDialog: function(name, options) {
-        var dialog = new (require('dialogs/' + name + '/view'));
-        if (!this.dialog && dialog) {
-            dialog.render().open(options);
-        }
-    },
-    /**
-     * @method openSidebar
-     * @param {String} name
-     * @param {Object} [options]
-     */
-    openSidebar: function(name, options) {
-        var sidebar = new (require('sidebars/' + name + '/view'));
-        if (!this.sidebar && sidebar) {
-            sidebar.render().open(options);
-        }
+    isWebsite: function() {
+        return this.getPlatform() === 'Website';
     },
     /**
      * @method reload
@@ -101,11 +131,26 @@ module.exports = Backbone.Model.extend({
         location.reload(true);
     },
     /**
+     * @method getLocalStorage
+     * @param {String} key
+     */
+    removeLocalStorage: function(key) {
+        localStorage.removeItem(key);
+    },
+    /**
      * @method removeSetting
      * @param {String} key
      */
     removeSetting: function(key) {
         localStorage.removeItem('application-' + key);
+    },
+    /**
+     * @method setLocalStorage
+     * @param {String} key
+     * @param {Array|Number|Object|String} value
+     */
+    setLocalStorage: function(key, value) {
+        return localStorage.setItem(key, JSON.stringify(value));
     },
     /**
      * @method setSetting

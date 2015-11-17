@@ -5,110 +5,123 @@ process.env.project = process.cwd().toString();
 
 var lodash = require('lodash');
 var minimist = require('minimist');
-var gelato = require(process.env.framework + '/bin/cli-gelato');
-var arguments = lodash.omit(minimist(process.argv.slice(2)), '_');
-var commands = minimist(process.argv.slice(2))['_'];
 
-//TODO: command for creating new projects
+var cordova = require(process.env.framework + '/bin/cli-cordova');
+var cordovaAndroid = require(process.env.framework + '/bin/cli-cordova-android');
+var cordovaIos = require(process.env.framework + '/bin/cli-cordova-ios');
+var framework = require(process.env.framework + '/bin/cli-framework');
+var project = require(process.env.framework + '/bin/cli-project');
+
+var arguments = lodash.omit(minimist(process.argv.slice(2)), '_') || {};
+var commands = minimist(process.argv.slice(2))['_'] || [];
 
 if (arguments.version) {
-    console.log(gelato.framework.version);
+    console.log(framework.pkg.version);
     process.exit(1);
 }
 
-try {
-    var project = require(gelato.path.project + '/package.json');
-} catch (error) {
-    switch (error.code) {
-        case 'MODULE_NOT_FOUND':
-            console.log("Directory package.json file not found.");
-            break;
-    }
+if (!project.pkg) {
+    console.log("Package.json is missing.");
     process.exit(0);
 }
 
-if (project.framework !== 'gelato') {
-    console.log("Directory is not gelato project.");
+if (project.pkg.framework !== 'gelato') {
+    console.log("Package.json not a gelato project.");
     process.exit(0);
-}
-
-//TODO: command for updating framework bower dependencies
-
-if (['install'].indexOf(commands[0]) > -1) {
-    gelato.cordova.install();
-    process.exit(1);
 }
 
 if (['android'].indexOf(commands[0]) > -1) {
-    if (!gelato.cordova.isInstalled()) {
-        gelato.cordova.install();
-    }
-    if (!gelato.cordova.hasAndroid()) {
-        gelato.cordova.addAndroid();
+    if (!cordova.isInstalled()) {
+        console.log("Cordova is not installed.");
+        process.exit(0);
     }
     switch (commands[1]) {
         case 'build':
-            gelato.framework.update();
-            gelato.brunch.build();
-            gelato.cordova.copy();
-            gelato.cordova.exec(['build', 'android']);
+            framework.update(arguments);
+            project.build(arguments);
+            cordovaAndroid.build();
             process.exit(1);
             break;
         case 'install':
-            gelato.cordova.addAndroid();
+            cordovaAndroid.install();
             process.exit(1);
             break;
         case 'run':
-            gelato.framework.update();
-            gelato.brunch.build();
-            gelato.cordova.copy();
-            gelato.cordova.exec(['run', 'android']);
+            framework.update(arguments);
+            project.build(arguments);
+            cordovaAndroid.run();
             process.exit(1);
             break;
+        default:
+            console.log("gelato cordova android (build|install|run) [--production]");
+            process.exit(0);
+    }
+}
+
+if (['cordova'].indexOf(commands[0]) > -1) {
+    switch (commands[1]) {
+        case 'install':
+            cordova.install();
+            process.exit(1);
+            break;
+        case 'uninstall':
+            cordova.uninstall();
+            process.exit(1);
+            break;
+        default:
+            console.log("gelato cordova (install|uninstall)");
+            process.exit(0);
     }
 }
 
 if (['ios'].indexOf(commands[0]) > -1) {
-    if (!gelato.cordova.isInstalled()) {
-        gelato.cordova.install();
-    }
-    if (!gelato.cordova.hasIos()) {
-        gelato.cordova.addIos();
+    if (!cordova.isInstalled()) {
+        console.log("Cordova is not installed.");
+        process.exit(0);
     }
     switch (commands[1]) {
         case 'build':
-            gelato.framework.update();
-            gelato.brunch.build();
-            gelato.cordova.copy();
-            gelato.cordova.exec(['build', 'ios']);
+            framework.update(arguments);
+            project.build(arguments);
+            cordovaIos.build();
             process.exit(1);
             break;
         case 'install':
-            gelato.cordova.addIos();
+            cordovaIos.install();
             process.exit(1);
             break;
         case 'run':
-            gelato.framework.update();
-            gelato.brunch.build();
-            gelato.cordova.copy();
-            gelato.cordova.exec(['run', 'ios']);
+            framework.update(arguments);
+            project.build(arguments);
+            cordovaIos.run();
             process.exit(1);
             break;
+        default:
+            console.log("gelato cordova ios (build|install|run) [--production]");
+            process.exit(0);
     }
 }
 
 if (['web'].indexOf(commands[0]) > -1) {
     switch (commands[1]) {
         case 'build':
-            gelato.framework.update();
-            gelato.brunch.build();
+            framework.update(arguments);
+            project.build(arguments);
             process.exit(1);
             break;
         case 'run':
-            gelato.framework.update();
-            gelato.brunch.exec(['watch', '--server']);
+            framework.update(arguments);
+            project.exec(['watch', '--server']);
             process.exit(1);
             break;
+        case 'watch':
+            framework.update(arguments);
+            project.watch(arguments);
+            process.exit(1);
+            break;
+        default:
+            console.log("gelato web (build|run) [--production,--server]");
+            process.exit(0);
     }
 }
 

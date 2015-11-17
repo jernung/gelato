@@ -5,31 +5,34 @@
   "author": "Joshua McFarland",
   "version": "0.1.2",
   "license": "MIT",
+  "engines": {
+    "node": ">=4.2 <5.0",
+    "npm": ">=2.14 <3.0"
+  },
+  "bin": {
+    "gelato": "bin/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://www.github.com/jernung/gelato.git"
   },
   "scripts": {
-    "postinstall": "node_modules/bower/bin/bower install",
-    "postversion": "node_modules/bower/bin/bower update"
-  },
-  "bin": {
-    "gelato": "bin/cli.js"
+    "postinstall": "node_modules/.bin/bower install",
+    "postversion": "node_modules/.bin/bower update"
   },
   "dependencies": {
-    "bower": "1.4.1",
-    "brunch": "1.8.4",
-    "cordova": "5.1.1",
+    "bower": "1.6.5",
+    "brunch": "1.8.5",
+    "cordova": "5.4.0",
     "lodash": "3.10.1",
-    "minimist": "1.1.2",
-    "shelljs": "0.5.1",
+    "minimist": "1.2.0",
+    "shelljs": "0.5.3",
     "clean-css-brunch": "1.7.2",
-    "coffee-script-brunch": "1.8.2",
     "css-brunch": "1.7.0",
     "jade-brunch": "1.8.1",
-    "javascript-brunch": "1.7.1",
+    "javascript-brunch": "1.8.0",
     "keyword-brunch": "1.7.8",
-    "sass-brunch": "1.8.10",
+    "sass-brunch": "1.9.1",
     "uglify-js-brunch": "1.7.8"
   }
 }

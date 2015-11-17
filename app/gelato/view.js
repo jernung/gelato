@@ -6,89 +6,109 @@ var globals = require('globals');
  */
 module.exports = Backbone.View.extend({
     /**
+     * @method constructor
+     * @param {Object} [options]
+     * @param {GelatoApplication} [application]
+     */
+    constructor: function(options, application) {
+        this.app = application || window.app;
+        Backbone.View.prototype.constructor.call(this, options);
+    },
+    /**
+     * @property app
+     * @type {GelatoApplication}
+     */
+    app: null,
+    /**
      * @property template
      * @type {Function}
      */
     template: null,
     /**
-     * @method renderEvents
-     * @returns {GelatoView}
+     * @method createCollection
+     * @param {String} path
+     * @param {Array} [models]
+     * @param {Object} [options]
+     * @returns {GelatoCollection}
      */
-    renderEvents: function() {
-        var self = this;
-        var resize = null;
-        this.$('[data-dialog]').off().on('vclick', $.proxy(this.handleClickDataDialog, this));
-        this.$('[data-navigate]').off().on('vclick', $.proxy(this.handleClickDataNavigate, this));
-        this.$('[data-sidebar]').off().on('vclick', $.proxy(this.handleClickDataSidebar, this));
-        $(window).resize(function(event) {
-            clearTimeout(resize);
-            resize = setTimeout(function() {
-                self.trigger('resize', event);
-            }, 100);
-        });
+    createCollection: function(path, models, options) {
+        return new (require(path))(models, options, this.app);
     },
     /**
-     * @method renderTemplate
-     * @returns {GelatoView}
+     * @method createComponent
+     * @param {String} path
+     * @param {Object} [options]
+     * @returns {GelatoComponent}
      */
-    renderTemplate: function() {
-        this.$el.html(this.template(globals));
-        this.renderEvents();
-        return this;
+    createComponent: function(path, options) {
+        return new (require(path + '/view'))(options, this.app);
     },
     /**
-     * @method disableForm
-     * @param {String} [selector]
-     * @returns {GelatoView}
+     * @method createModel
+     * @param {String} path
+     * @param {Object} [attributes]
+     * @param {Object} [options]
+     * @returns {GelatoModel}
      */
-    disableForm: function(selector) {
-        this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
-        return this;
+    createModel: function(path, attributes, options) {
+        return new (require(path))(attributes, options, this.app);
     },
     /**
-     * @method handleClickDataDialog
+     * @method getHeight
+     * @returns {Number}
+     */
+    getHeight: function() {
+        return this.$el.height();
+    },
+    /**
+     * @method getWidth
+     * @returns {Number}
+     */
+    getWidth: function() {
+        return this.$el.width();
+    },
+    /**
+     * @method handleClickHref
      * @param {Event} event
      */
-    handleClickDataDialog: function(event) {
-        event.preventDefault();
-        var dialogName = $(event.currentTarget).data('dialog');
-        app.openDialog(dialogName);
+    handleClickHref: function(event) {
+        var target = $(event.currentTarget);
+        var href = target.attr('href');
+        if (this.app !== undefined &&
+            href.indexOf('#') !== 0 &&
+            href.indexOf('http://') !== 0 &&
+            href.indexOf('https://') !== 0) {
+            event.preventDefault();
+            this.app.router.navigate(href, {
+                replace: target.data('replace') || false,
+                trigger: target.data('trigger') || true
+            });
+        }
     },
     /**
-     * @method handleClickDataNavigate
+     * @method handleResize
      * @param {Event} event
      */
-    handleClickDataNavigate: function(event) {
-        event.preventDefault();
-        var route = $(event.currentTarget).data('navigate') || '';
-        var replace = $(event.currentTarget).data('replace') || false;
-        var trigger = $(event.currentTarget).data('trigger') || true;
-        app.router.navigate(route, {replace: replace, trigger: trigger});
+    handleResize: function(event) {
+        this.trigger('resize', event);
     },
     /**
-     * @method handleClickDataSidebar
-     * @param {Event} event
+     * @method getContext
+     * @param {Object} [context]
+     * @returns {Object}
      */
-    handleClickDataSidebar: function(event) {
-        event.preventDefault();
-        var sidebarName = $(event.currentTarget).data('sidebar');
-        app.openSidebar(sidebarName);
-    },
-    /**
-     * @method enableForm
-     * @param {String} [selector]
-     * @returns {GelatoView}
-     */
-    enableForm: function(selector) {
-        this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', false);
-        return this;
+    getContext: function(context) {
+        globals.app = this.app;
+        globals.view = this;
+        globals = $.extend(true, globals, context || {});
+        return globals;
     },
     /**
      * @method hide
-     * @returns {GelatoView}
+     * @returns {GelatoPage}
      */
     hide: function() {
-        this.$el.hide();
+        this.$el.hide(arguments.length ? arguments : 0);
         return this;
     },
     /**
@@ -96,11 +116,28 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     remove: function() {
-        this.$el.empty();
-        this.$el.find('*').off();
         this.stopListening();
         this.undelegateEvents();
-        $(window).off('resize');
+        this.$el.find('*').off();
+        this.$el.empty();
+        Backbone.$(window).off('resize', this.handleResize.bind(this));
+        return this;
+    },
+    /**
+     * @method renderTemplate
+     * @param {Object} [context]
+     * @returns {GelatoView}
+     */
+    renderTemplate: function(context) {
+        /***
+         * TODO: review this concept for implementation
+        this.$view = $(document.createElement('gelato-view'));
+        this.$view.html(this.template(this.getContext(context)));
+         ***/
+        this.$el.html(this.template(this.getContext(context)));
+        this.$('a[href]').on('click vclick', this.handleClickHref.bind(this));
+        Backbone.$(window).off('resize', this.handleResize.bind(this));
+        Backbone.$(window).on('resize', this.handleResize.bind(this));
         return this;
     },
     /**
@@ -108,7 +145,7 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     show: function() {
-        this.$el.show();
+        this.$el.show(arguments.length ? arguments : 0);
         return this;
     }
 });

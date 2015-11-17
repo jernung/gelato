@@ -3,8 +3,10 @@ var Application = require('application');
 module.exports = (function() {
 
     function start() {
-        window.app = new Application();
-        window.app.start();
+        document.body.appendChild(document.createElement('gelato-application'));
+        document.body.appendChild(document.createElement('bootstrap-dialogs'));
+        document.body.appendChild(document.createElement('bootstrap-navbars'));
+        new Application().start();
     }
 
     if (location.protocol === 'file:') {
@@ -14,7 +16,7 @@ module.exports = (function() {
         }).done(function() {
             document.addEventListener('deviceready', start, false);
         }).fail(function() {
-            console.error('Unable to load cordova.js file.')
+            console.error(new Error('Unable to load cordova.js file.'));
         });
     } else {
         $(document).ready(start);

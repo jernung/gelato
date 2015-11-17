@@ -6,77 +6,55 @@ var GelatoView = require('gelato/view');
  */
 module.exports = GelatoView.extend({
     /**
-     * @property title
+     * @property bodyClass
      * @type {String}
      */
-    title: null,
+    bodyClass: null,
     /**
      * @property el
      * @type {String}
      */
     el: 'gelato-application',
     /**
-     * @property $page
-     * @type {jQuery}
+     * @property title
+     * @type {String}
      */
-    $page: null,
+    title: null,
     /**
      * @method renderTemplate
-     * @returns {GelatoView}
-     */
-    renderTemplate: function() {
-        GelatoView.prototype.renderTemplate.call(this);
-        this.$page = $(this.$('gelato-page').get(0));
-        this.adjustNavbarPadding();
-        return this;
-    },
-    /**
-     * @method adjustNavbarPadding
+     * @param {Object} [context]
      * @returns {GelatoPage}
      */
-    adjustNavbarPadding: function() {
-        var navbarFixedBottom = this.$('.fixed-bottom');
-        var navbarFixedTop = this.$('.fixed-top');
-        if (navbarFixedBottom.length) {
-            $('body').css('padding-bottom', navbarFixedBottom.height());
-        } else {
-            $('body').css('padding-bottom', '');
+    renderTemplate: function(context) {
+        if (this.bodyClass) {
+            $('body').addClass(this.bodyClass);
         }
-        if (navbarFixedTop.length) {
-            $('body').css('padding-top', navbarFixedTop.height());
-        } else {
-            $('body').css('padding-top', '');
+        if (this.title) {
+            document.title = this.title;
         }
-        return this;
-    },
-    /**
-     * @method getName
-     * @returns {String}
-     */
-    getName: function() {
-        return this.$('gelato-page').data('name');
-    },
-    /**
-     * @method hide
-     * @returns {GelatoComponent}
-     */
-    hide: function() {
-        this.$page.hide();
-        return this;
+        return GelatoView.prototype.renderTemplate.call(this, context);
     },
     /**
      * @method remove
      * @returns {GelatoPage}
      */
     remove: function() {
+        if (this.bodyClass) {
+            $('body').removeClass(this.bodyClass);
+        }
+        if (this.title) {
+            document.title = '';
+        }
         return GelatoView.prototype.remove.call(this);
     },
     /**
-     * @method show
-     * @returns {GelatoComponent}
+     * @method setTitle
+     * @param {String} value
+     * @returns {GelatoPage}
      */
-    show: function() {
-        this.$page.show();
+    setTitle: function(value) {
+        document.title = value;
+        this.title = value;
         return this;
     }
 });

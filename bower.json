@@ -4,16 +4,12 @@
     "public/js/gelato.js"
   ],
   "dependencies": {
-    "async": "1.4.0",
-    "backbone": "1.2.1",
-    "bootstrap": "3.3.5",
+    "backbone": "1.2.3",
     "jquery": "2.1.4",
-    "lodash": "3.10.1"
+    "lodash": "3.10.1",
+    "routefilter": "0.2.1"
   },
   "overrides": {
-    "async": {
-      "main": "lib/async.js"
-    },
     "backbone": {
       "dependencies": {
         "lodash": "*",
@@ -21,17 +17,18 @@
       },
       "main": "backbone.js"
     },
-    "bootstrap": {
-      "main": [
-        "dist/css/bootstrap.css",
-        "dist/js/bootstrap.js"
-      ]
-    },
     "jquery": {
       "main": "dist/jquery.js"
     },
     "lodash": {
       "main": "lodash.js"
+    },
+    "routefilter": {
+      "dependencies": {
+        "backbone": "*",
+        "jquery": "*"
+      },
+      "main": "dist/backbone.routefilter.js"
     }
   }
 }

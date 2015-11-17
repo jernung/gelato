@@ -9,7 +9,7 @@ module.exports = GelatoView.extend({
      * @property el
      * @type {String}
      */
-    el: 'gelato-dialogs',
+    el: 'bootstrap-dialogs',
     /**
      * @property element
      * @type {jQuery}
@@ -17,15 +17,16 @@ module.exports = GelatoView.extend({
     element: null,
     /**
      * @method renderTemplate
+     * @param {Object} [properties]
      * @returns {GelatoView}
      */
-    renderTemplate: function() {
-        GelatoView.prototype.renderTemplate.call(this);
+    renderTemplate: function(properties) {
+        GelatoView.prototype.renderTemplate.call(this, properties);
         this.element = this.$('[role="dialog"]');
-        this.element.on('hide.bs.modal', $.proxy(this.handleElementHide, this));
-        this.element.on('hidden.bs.modal', $.proxy(this.handleElementHidden, this));
-        this.element.on('show.bs.modal', $.proxy(this.handleElementShow, this));
-        this.element.on('shown.bs.modal', $.proxy(this.handleElementShown, this));
+        this.element.on('hide.bs.modal', _.bind(this.handleElementHide, this));
+        this.element.on('hidden.bs.modal', _.bind(this.handleElementHidden, this));
+        this.element.on('show.bs.modal', _.bind(this.handleElementShow, this));
+        this.element.on('shown.bs.modal', _.bind(this.handleElementShown, this));
         return this;
     },
     /**
@@ -48,14 +49,12 @@ module.exports = GelatoView.extend({
     handleElementHidden: function() {
         this.trigger('hidden');
         this.remove();
-        app.dialog = null;
     },
     /**
      * @method handleElementShow
      */
     handleElementShow: function() {
         this.trigger('show');
-        app.dialog = this;
     },
     /**
      * @method handleElementShown
@@ -74,7 +73,7 @@ module.exports = GelatoView.extend({
         options.keyboard = options.keyboard || false;
         options.show = options.show || true;
         options.remote = options.remote || false;
-        this.element.modal(options);
+        this.render().element.modal(options);
         return this;
     }
 });
