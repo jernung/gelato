@@ -6,12 +6,13 @@
     "dist/gelato.js"
   ],
   "ignore": [
+    ".*",
+    "*.md",
+    "*.js",
     "app",
     "bin",
-    "bower_components",
     "docs",
     "gelato",
-    "node_modules",
     "public",
     "vendor"
   ],
