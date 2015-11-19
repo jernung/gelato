@@ -29,8 +29,7 @@
     "backbone": {
       "dependencies": {
         "jquery": "*",
-        "lodash": "*",
-        "underscore": ""
+        "lodash": "*"
       }
     }
   }

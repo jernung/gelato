@@ -420,6 +420,11 @@ module.exports = GelatoView.extend({
      */
     el: 'gelato-application',
     /**
+     * @property title
+     * @type {Function|String}
+     */
+    title: null,
+    /**
      * @method renderTemplate
      * @param {Object} [context]
      * @returns {GelatoPage}
