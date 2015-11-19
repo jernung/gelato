@@ -6,13 +6,15 @@ exports.config = {
             joinTo: {
                 'js/application.js': /^app[\\/]/,
                 'js/gelato.js': /^(bower_components|gelato)[\\/]/,
+                'js/libraries.js': /^vendor[\\/]/,
                 '../dist/gelato.js': /^(bower_components|gelato)[\\/]/
             },
             order: {
                 before: [
                     'bower_components/jquery/dist/jquery.js',
                     'bower_components/lodash/lodash.js',
-                    'bower_components/backbone/backbone.js'
+                    'bower_components/backbone/backbone.js',
+                    'vendor/bootstrap/bootstrap.js'
                 ]
             }
         },
@@ -20,7 +22,19 @@ exports.config = {
             joinTo: {
                 'styles/application.css': /^app[\\/]/,
                 'styles/gelato.css': /^(bower_components|gelato)[\\/]/,
+                'styles/libraries.css': /^vendor[\\/]/,
                 '../dist/gelato.css': /^(bower_components|gelato)[\\/]/
+            },
+            order: {
+                before: [
+                    'vendor/bootstrap/bootstrap.css'
+                ]
+            }
+        },
+        templates: {
+            joinTo: {
+                'js/application.js': /^app[\\/]/,
+                'js/libraries.js': /^vendor[\\/]/
             }
         }
     },
