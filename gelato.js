@@ -120,7 +120,7 @@ module.exports = Backbone.Model.extend({
      * @type {Object}
      */
     gelato: {
-        version: '{!gelato-version!}'
+        version: '0.1.0'
     },
     /**
      * @method getHeight

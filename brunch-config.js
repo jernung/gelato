@@ -26,9 +26,7 @@ exports.config = {
                 '../gelato.css': /^gelato[\\/]/
             },
             order: {
-                before: [
-                    'vendor/bootstrap/bootstrap.css'
-                ]
+                before: ['vendor/bootstrap/bootstrap.css']
             }
         },
         templates: {
@@ -39,6 +37,7 @@ exports.config = {
         }
     },
     keyword: {
+        extraFiles: ['gelato.css', 'gelato.js'],
         filePattern: /\.(js|css|html)$/,
         map: {
             'application-description': application.description,
@@ -49,11 +48,7 @@ exports.config = {
     },
     paths: {
         'public': 'public',
-        'watched': [
-            'app',
-            'gelato',
-            'vendor'
-        ]
+        'watched': ['app', 'gelato', 'vendor']
     },
     sourceMaps: false
 };
