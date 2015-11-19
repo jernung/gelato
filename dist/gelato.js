@@ -23713,46 +23713,10 @@ require.register("gelato/collection", function(exports, require, module) {
  */
 module.exports = Backbone.Collection.extend({
     /**
-     * @method constructor
-     * @param {Array} [models]
-     * @param {Object} [options]
-     * @param {GelatoApplication} [application]
-     * @constructor
-     */
-    constructor: function(models, options, application) {
-        this.app = application;
-        Backbone.Collection.prototype.constructor.call(this, models, options);
-    },
-    /**
-     * @property app
-     * @type {GelatoApplication}
-     */
-    app: null,
-    /**
      * @property state
      * @type {String}
      */
     state: 'standby',
-    /**
-     * @method createCollection
-     * @param {String} path
-     * @param {Array} [models]
-     * @param {Object} [options]
-     * @returns {GelatoCollection}
-     */
-    createCollection: function(path, models, options) {
-        return new (require(path))(models, options, this.app);
-    },
-    /**
-     * @method createModel
-     * @param {String} path
-     * @param {Object} [attributes]
-     * @param {Object} [options]
-     * @returns {GelatoModel}
-     */
-    createModel: function(path, attributes, options) {
-        return new (require(path))(attributes, options, this.app);
-    },
     /**
      * @method fetch
      * @param {Object} [options]
@@ -23803,7 +23767,7 @@ module.exports = Backbone.Collection.extend({
 });
 
 require.register("gelato/component", function(exports, require, module) {
-var GelatoView = require('gelato/view');
+var GelatoView = require('./view');
 
 /**
  * @class GelatoComponent
@@ -23836,55 +23800,16 @@ require.register("gelato/model", function(exports, require, module) {
  */
 module.exports = Backbone.Model.extend({
     /**
-     * @method constructor
-     * @param {Object} [attributes]
-     * @param {Object} [options]
-     * @param {GelatoApplication} [application]
-     * @constructor
-     */
-    constructor: function(attributes, options, application) {
-        this.app = application;
-        Backbone.Model.prototype.constructor.call(this, attributes, options);
-    },
-    /**
-     * @property app
-     * @type {GelatoApplication}
-     */
-    app: null,
-    /**
      * @property state
      * @type {String}
      */
     state: 'standby',
-    /**
-     * @method createCollection
-     * @param {String} path
-     * @param {Array} [models]
-     * @param {Object} [options]
-     * @returns {GelatoCollection}
-     */
-    createCollection: function(path, models, options) {
-        return new (require(path))(models, options, this.app);
-    },
-    /**
-     * @method createModel
-     * @param {String} path
-     * @param {Object} [attributes]
-     * @param {Object} [options]
-     * @returns {GelatoModel}
-     */
-    createModel: function(path, attributes, options) {
-        return new (require(path))(attributes, options, this.app);
-    },
     /**
      * @method fetch
      * @param {Object} [options]
      */
     fetch: function(options) {
         options = options || {};
-        if (this.state !== 'standby') {
-            throw new Error('Unable to fetch while syncing.');
-        }
         this.state = 'fetching';
         this._triggerState();
         this._handleRequestEvent(options);
@@ -23897,9 +23822,6 @@ module.exports = Backbone.Model.extend({
      */
     save: function(attributes, options) {
         options = options || {};
-        if (this.state !== 'standby') {
-            throw new Error('Unable to save while syncing.');
-        }
         this.state = 'saving';
         this._triggerState();
         this._handleRequestEvent(options);
@@ -23944,7 +23866,7 @@ module.exports = Backbone.Model.extend({
 });
 
 require.register("gelato/page", function(exports, require, module) {
-var GelatoView = require('gelato/view');
+var GelatoView = require('./view');
 
 /**
  * @class GelatoPage
@@ -23952,32 +23874,17 @@ var GelatoView = require('gelato/view');
  */
 module.exports = GelatoView.extend({
     /**
-     * @property bodyClass
-     * @type {String}
-     */
-    bodyClass: null,
-    /**
      * @property el
      * @type {String}
      */
     el: 'gelato-application',
-    /**
-     * @property title
-     * @type {String}
-     */
-    title: null,
     /**
      * @method renderTemplate
      * @param {Object} [context]
      * @returns {GelatoPage}
      */
     renderTemplate: function(context) {
-        if (this.bodyClass) {
-            $('body').addClass(this.bodyClass);
-        }
-        if (this.title) {
-            document.title = this.title;
-        }
+        document.title = _.result(this, 'title', app.get('title'));
         return GelatoView.prototype.renderTemplate.call(this, context);
     },
     /**
@@ -23985,23 +23892,7 @@ module.exports = GelatoView.extend({
      * @returns {GelatoPage}
      */
     remove: function() {
-        if (this.bodyClass) {
-            $('body').removeClass(this.bodyClass);
-        }
-        if (this.title) {
-            document.title = '';
-        }
         return GelatoView.prototype.remove.call(this);
-    },
-    /**
-     * @method setTitle
-     * @param {String} value
-     * @returns {GelatoPage}
-     */
-    setTitle: function(value) {
-        document.title = value;
-        this.title = value;
-        return this;
     }
 });
 
@@ -24014,33 +23905,10 @@ require.register("gelato/router", function(exports, require, module) {
  */
 module.exports = Backbone.Router.extend({
     /**
-     * @method constructor
-     * @param {Object} [options]
-     * @param {GelatoApplication} [application]
-     */
-    constructor: function(options, application) {
-        this.app = application;
-        Backbone.Router.prototype.constructor.call(this, options);
-    },
-    /**
-     * @property app
-     * @type {GelatoApplication}
-     */
-    app: null,
-    /**
      * @property page
      * @type {String}
      */
     page: null,
-    /**
-     * @method createPage
-     * @param {String} path
-     * @param {Object} [options]
-     * @returns {GelatoPage}
-     */
-    createPage: function(path, options) {
-        return new (require(path + '/view'))(options, this.app);
-    },
     /**
      * @method go
      * @param {String} path
@@ -24051,7 +23919,7 @@ module.exports = Backbone.Router.extend({
         if (this.page) {
             this.page.remove();
         }
-        this.page = this.createPage(path, options);
+        this.page = new (require(path + '/view'))(options);
         return this.page.render();
     },
     /**
@@ -24060,7 +23928,7 @@ module.exports = Backbone.Router.extend({
      */
     start: function() {
         return Backbone.history.start({
-            pushState: location.protocol !== 'file:',
+            pushState: app.isWebsite(),
             root: '/'
         });
     }
@@ -24069,88 +23937,44 @@ module.exports = Backbone.Router.extend({
 });
 
 require.register("gelato/view", function(exports, require, module) {
-var globals = require('globals');
-
 /**
  * @class GelatoView
  * @extends {Backbone.View}
  */
 module.exports = Backbone.View.extend({
     /**
-     * @method constructor
-     * @param {Object} [options]
-     * @param {GelatoApplication} [application]
-     */
-    constructor: function(options, application) {
-        this.app = application || window.app;
-        Backbone.View.prototype.constructor.call(this, options);
-    },
-    /**
-     * @property app
-     * @type {GelatoApplication}
-     */
-    app: null,
-    /**
      * @property template
      * @type {Function}
      */
     template: null,
     /**
-     * @method createCollection
-     * @param {String} path
-     * @param {Array} [models]
-     * @param {Object} [options]
-     * @returns {GelatoCollection}
-     */
-    createCollection: function(path, models, options) {
-        return new (require(path))(models, options, this.app);
-    },
-    /**
-     * @method createComponent
-     * @param {String} path
-     * @param {Object} [options]
-     * @returns {GelatoComponent}
-     */
-    createComponent: function(path, options) {
-        return new (require(path + '/view'))(options, this.app);
-    },
-    /**
-     * @method createModel
-     * @param {String} path
-     * @param {Object} [attributes]
-     * @param {Object} [options]
-     * @returns {GelatoModel}
-     */
-    createModel: function(path, attributes, options) {
-        return new (require(path))(attributes, options, this.app);
-    },
-    /**
      * @method getHeight
      * @returns {Number}
      */
     getHeight: function() {
-        return this.$el.height();
+        return this.$view.height();
     },
     /**
      * @method getWidth
      * @returns {Number}
      */
     getWidth: function() {
-        return this.$el.width();
+        return this.$view.width();
     },
     /**
      * @method handleClickHref
      * @param {Event} event
      */
     handleClickHref: function(event) {
-        var target = $(event.currentTarget);
+        var target = Backbone.$(event.target);
         var href = target.attr('href');
-        if (this.app !== undefined &&
+        if (window.app !== undefined &&
+            window.app.router !== undefined &&
             href.indexOf('#') !== 0 &&
             href.indexOf('http://') !== 0 &&
             href.indexOf('https://') !== 0) {
             event.preventDefault();
-            this.app.router.navigate(href, {
+            window.app.router.navigate(href, {
                 replace: target.data('replace') || false,
                 trigger: target.data('trigger') || true
             });
@@ -24169,9 +23993,10 @@ module.exports = Backbone.View.extend({
      * @returns {Object}
      */
     getContext: function(context) {
-        globals.app = this.app;
+        var globals = require('globals') || {};
+        globals.app = window.app;
         globals.view = this;
-        globals = $.extend(true, globals, context || {});
+        globals = Backbone.$.extend(true,  globals, context || {});
         return globals;
     },
     /**
@@ -24200,12 +24025,8 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderTemplate: function(context) {
-        /***
-         * TODO: review this concept for implementation
-        this.$view = $(document.createElement('gelato-view'));
-        this.$view.html(this.template(this.getContext(context)));
-         ***/
-        this.$el.html(this.template(this.getContext(context)));
+        this.$template = Backbone.$(this.template(this.getContext(context)));
+        this.$el.html(this.$template);
         this.$('a[href]').on('click vclick', this.handleClickHref.bind(this));
         Backbone.$(window).off('resize', this.handleResize.bind(this));
         Backbone.$(window).on('resize', this.handleResize.bind(this));

@@ -4,46 +4,10 @@
  */
 module.exports = Backbone.Collection.extend({
     /**
-     * @method constructor
-     * @param {Array} [models]
-     * @param {Object} [options]
-     * @param {GelatoApplication} [application]
-     * @constructor
-     */
-    constructor: function(models, options, application) {
-        this.app = application;
-        Backbone.Collection.prototype.constructor.call(this, models, options);
-    },
-    /**
-     * @property app
-     * @type {GelatoApplication}
-     */
-    app: null,
-    /**
      * @property state
      * @type {String}
      */
     state: 'standby',
-    /**
-     * @method createCollection
-     * @param {String} path
-     * @param {Array} [models]
-     * @param {Object} [options]
-     * @returns {GelatoCollection}
-     */
-    createCollection: function(path, models, options) {
-        return new (require(path))(models, options, this.app);
-    },
-    /**
-     * @method createModel
-     * @param {String} path
-     * @param {Object} [attributes]
-     * @param {Object} [options]
-     * @returns {GelatoModel}
-     */
-    createModel: function(path, attributes, options) {
-        return new (require(path))(attributes, options, this.app);
-    },
     /**
      * @method fetch
      * @param {Object} [options]

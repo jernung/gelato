@@ -1,4 +1,4 @@
-var GelatoView = require('gelato/view');
+var GelatoView = require('./view');
 
 /**
  * @class GelatoComponent

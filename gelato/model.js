@@ -4,55 +4,16 @@
  */
 module.exports = Backbone.Model.extend({
     /**
-     * @method constructor
-     * @param {Object} [attributes]
-     * @param {Object} [options]
-     * @param {GelatoApplication} [application]
-     * @constructor
-     */
-    constructor: function(attributes, options, application) {
-        this.app = application;
-        Backbone.Model.prototype.constructor.call(this, attributes, options);
-    },
-    /**
-     * @property app
-     * @type {GelatoApplication}
-     */
-    app: null,
-    /**
      * @property state
      * @type {String}
      */
     state: 'standby',
-    /**
-     * @method createCollection
-     * @param {String} path
-     * @param {Array} [models]
-     * @param {Object} [options]
-     * @returns {GelatoCollection}
-     */
-    createCollection: function(path, models, options) {
-        return new (require(path))(models, options, this.app);
-    },
-    /**
-     * @method createModel
-     * @param {String} path
-     * @param {Object} [attributes]
-     * @param {Object} [options]
-     * @returns {GelatoModel}
-     */
-    createModel: function(path, attributes, options) {
-        return new (require(path))(attributes, options, this.app);
-    },
     /**
      * @method fetch
      * @param {Object} [options]
      */
     fetch: function(options) {
         options = options || {};
-        if (this.state !== 'standby') {
-            throw new Error('Unable to fetch while syncing.');
-        }
         this.state = 'fetching';
         this._triggerState();
         this._handleRequestEvent(options);
@@ -65,9 +26,6 @@ module.exports = Backbone.Model.extend({
      */
     save: function(attributes, options) {
         options = options || {};
-        if (this.state !== 'standby') {
-            throw new Error('Unable to save while syncing.');
-        }
         this.state = 'saving';
         this._triggerState();
         this._handleRequestEvent(options);
