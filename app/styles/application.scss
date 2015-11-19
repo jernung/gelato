@@ -1,3 +1,6 @@
 @import "_variables";
 
-html, body { background-color: $background-body; }
+html, body {
+  background-color: $background-color;
+  color: $font-color
+}

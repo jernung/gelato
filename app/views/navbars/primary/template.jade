@@ -1,0 +1,13 @@
+gelato-component(data-name='navbars-primary')
+
+  nav.navbar.navbar-fixed-top.navbar-dark.bg-inverse
+    button.navbar-toggler.hidden-sm-up(type="button", data-toggle="collapse", data-target="#navbar")
+      | &#9776;
+    #navbar.collapse.navbar-toggleable-xs
+      a.navbar-brand(href="/")= app.get('title')
+      .pull-right
+        ul.nav.navbar-nav
+          li.nav-item
+            a.nav-link(href="/page1") Page 1
+          li.nav-item
+            a.nav-link(href="/page2") Page 2

@@ -1,4 +1,5 @@
 var GelatoApplication = require('gelato/application');
+var Router = require('./router');
 
 /**
  * @class Application
@@ -10,8 +11,7 @@ module.exports = GelatoApplication.extend({
      * @constructor
      */
     initialize: function() {
-        console.log('initializing application');
-        window.app = this;
+        this.router = new Router();
     },
     /**
      * @property defaults
@@ -26,6 +26,6 @@ module.exports = GelatoApplication.extend({
      * @method start
      */
     start: function() {
-        console.log('starting application');
+        this.router.start();
     }
 });
