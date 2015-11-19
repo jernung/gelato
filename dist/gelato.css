@@ -1,0 +1,27 @@
+/* line 1, /Users/Joshua/Projects/gelato/gelato/styles/application.scss */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%; }
+
+/* line 10, /Users/Joshua/Projects/gelato/gelato/styles/application.scss */
+gelato-application {
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: relative;
+  width: 100%; }
+
+/* line 1, /Users/Joshua/Projects/gelato/gelato/styles/component.scss */
+gelato-component {
+  display: block; }
+
+/* line 1, /Users/Joshua/Projects/gelato/gelato/styles/page.scss */
+gelato-page {
+  display: block;
+  margin: 0;
+  padding: 0; }
+
