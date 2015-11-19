@@ -1,6 +1,6 @@
 {
-  "name": "gelato-framework",
-  "title": "Gelato Framework",
+  "name": "gelato",
+  "title": "Gelato",
   "description": "A light wrapper adding Gelato support to Brunch.",
   "author": {
     "name": "Joshua McFarland",
@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/jernung/gelato-framework.git"
+    "url": "https://www.github.com/jernung/gelato.git"
   },
   "scripts": {
     "build": "node_modules/.bin/brunch build",

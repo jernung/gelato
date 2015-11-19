@@ -1,18 +1,22 @@
 {
-  "name": "gelato-framework",
+  "name": "gelato",
   "private": true,
   "main": [
-    "dist/gelato.css",
-    "dist/gelato.js"
+    "gelato.css",
+    "gelato.js"
   ],
   "ignore": [
     ".*",
+    "*.log",
     "*.md",
-    "*.js",
+    "brunch-config.js",
+    "package.json",
     "app",
     "bin",
+    "bower_components",
     "docs",
     "gelato",
+    "node_modules",
     "public",
     "vendor"
   ],
@@ -25,7 +29,8 @@
     "backbone": {
       "dependencies": {
         "jquery": "*",
-        "lodash": "*"
+        "lodash": "*",
+        "underscore": ""
       }
     }
   }

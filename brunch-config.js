@@ -7,7 +7,7 @@ exports.config = {
                 'js/application.js': /^app[\\/]/,
                 'js/gelato.js': /^(bower_components|gelato)[\\/]/,
                 'js/libraries.js': /^vendor[\\/]/,
-                '../dist/gelato.js': /^(bower_components|gelato)[\\/]/
+                '../gelato.js': /^gelato[\\/]/
             },
             order: {
                 before: [
@@ -23,7 +23,7 @@ exports.config = {
                 'styles/application.css': /^app[\\/]/,
                 'styles/gelato.css': /^(bower_components|gelato)[\\/]/,
                 'styles/libraries.css': /^vendor[\\/]/,
-                '../dist/gelato.css': /^(bower_components|gelato)[\\/]/
+                '../gelato.css': /^gelato[\\/]/
             },
             order: {
                 before: [
