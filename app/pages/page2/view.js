@@ -1,6 +1,6 @@
 var GelatoPage = require('gelato/page');
 
-var Navbar = require('../navbars/primary/view');
+var Navbar = require('components/navbars/primary/view');
 
 /**
  * @class Page2

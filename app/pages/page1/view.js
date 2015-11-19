@@ -1,9 +1,9 @@
 var GelatoPage = require('gelato/page');
 
-var Navbar = require('../navbars/primary/view');
+var Navbar = require('components/navbars/primary/view');
 
 /**
- * @class Home
+ * @class Page1
  * @extends {GelatoPage}
  */
 module.exports = GelatoPage.extend({
@@ -23,10 +23,10 @@ module.exports = GelatoPage.extend({
      * @property title
      * @type {String}
      */
-    title: 'Home - ' + app.get('title'),
+    title: 'Page 1 - ' + app.get('title'),
     /**
      * @method render
-     * @returns {Home}
+     * @returns {Page1}
      */
     render: function() {
         this.renderTemplate();
@@ -35,7 +35,7 @@ module.exports = GelatoPage.extend({
     },
     /**
      * @method remove
-     * @returns {Home}
+     * @returns {Page1}
      */
     remove: function() {
         this.navbar.remove();

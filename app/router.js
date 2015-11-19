@@ -24,18 +24,18 @@ module.exports = GelatoRouter.extend({
      * @method navigateHome
      */
     navigateHome: function() {
-        this.go('views/home');
+        this.go('pages/home');
     },
     /**
      * @method navigatePage1
      */
     navigatePage1: function() {
-        this.go('views/page1');
+        this.go('pages/page1');
     },
     /**
      * @method navigatePage2
      */
     navigatePage2: function() {
-        this.go('views/page2');
+        this.go('pages/page2');
     }
 });
