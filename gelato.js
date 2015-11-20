@@ -489,6 +489,11 @@ require.register("gelato/view", function(exports, require, module) {
  */
 module.exports = Backbone.View.extend({
     /**
+     * @property $view
+     * @type {jQuery}
+     */
+    $view: null,
+    /**
      * @property template
      * @type {Function}
      */
@@ -550,7 +555,7 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoPage}
      */
     hide: function() {
-        this.$el.hide(arguments.length ? arguments : 0);
+        this.$view.hide(arguments.length ? arguments : 0);
         return this;
     },
     /**
@@ -571,8 +576,8 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderTemplate: function(context) {
-        this.$template = Backbone.$(this.template(this.getContext(context)));
-        this.$el.html(this.$template);
+        this.$view = Backbone.$(this.template(this.getContext(context)));
+        this.$el.html(this.$view);
         this.$('a[href]').on('click vclick', this.handleClickHref.bind(this));
         Backbone.$(window).off('resize', this.handleResize.bind(this));
         Backbone.$(window).on('resize', this.handleResize.bind(this));
@@ -583,7 +588,7 @@ module.exports = Backbone.View.extend({
      * @returns {GelatoView}
      */
     show: function() {
-        this.$el.show(arguments.length ? arguments : 0);
+        this.$view.show(arguments.length ? arguments : 0);
         return this;
     }
 });
