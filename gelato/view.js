@@ -36,6 +36,7 @@ module.exports = Backbone.View.extend({
         var href = target.attr('href');
         if (window.app !== undefined &&
             window.app.router !== undefined &&
+            href !== undefined &&
             href.indexOf('#') !== 0 &&
             href.indexOf('http://') !== 0 &&
             href.indexOf('https://') !== 0) {
