@@ -120,7 +120,7 @@ module.exports = Backbone.Model.extend({
      * @type {Object}
      */
     gelato: {
-        version: '0.1.0'
+        version: '{!gelato-version!}'
     },
     /**
      * @method getHeight
@@ -517,10 +517,11 @@ module.exports = Backbone.View.extend({
      * @param {Event} event
      */
     handleClickHref: function(event) {
-        var target = Backbone.$(event.target);
+        var target = Backbone.$(event.current);
         var href = target.attr('href');
         if (window.app !== undefined &&
             window.app.router !== undefined &&
+            href !== undefined &&
             href.indexOf('#') !== 0 &&
             href.indexOf('http://') !== 0 &&
             href.indexOf('https://') !== 0) {
