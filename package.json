@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "bower": "1.6.5",
-    "brunch": "2.0.0",
+    "brunch": "1.8.5",
     "cordova": "5.4.0"
   },
   "devDependencies": {
