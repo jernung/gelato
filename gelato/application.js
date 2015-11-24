@@ -8,6 +8,7 @@ module.exports = Backbone.Model.extend({
      * @type {Object}
      */
     gelato: {
+        timestamp: '{!timestamp!}',
         version: '{!gelato-version!}'
     },
     /**

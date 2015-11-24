@@ -36,19 +36,27 @@ exports.config = {
             }
         }
     },
-    keyword: {
-        extraFiles: ['gelato.css', 'gelato.js'],
-        filePattern: /\.(js|css|html)$/,
-        map: {
-            'application-description': application.description,
-            'application-title': application.title,
-            'application-version': application.version,
-            'gelato-version': application.version
-        }
-    },
     paths: {
         'public': 'public',
         'watched': ['app', 'gelato', 'vendor']
+    },
+    plugins: {
+        replace: {
+            mappings: {
+                'application-description': application.description,
+                'application-title': application.title,
+                'application-version': application.version,
+                'gelato-version': application.version
+            },
+            paths: [
+                'gelato.css',
+                'gelato.js',
+                'public/js/application.js',
+                'public/js/gelato.js',
+                'public/style/application.css',
+                'public/style/gelato.css'
+            ]
+        }
     },
     sourceMaps: false
 };
