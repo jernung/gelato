@@ -1,6 +1,7 @@
 {
   "name": "gelato",
-  "private": true,
+  "description": "Base modules for building modern applications.",
+  "private": false,
   "main": [
     "gelato.css",
     "gelato.js"

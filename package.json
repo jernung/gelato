@@ -1,7 +1,7 @@
 {
   "name": "gelato",
   "title": "Gelato",
-  "description": "A light wrapper adding Gelato support to Brunch.",
+  "description": "Base modules for building modern applications.",
   "author": {
     "name": "Joshua McFarland",
     "email": "josh@jernung.com",
@@ -11,18 +11,16 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/jernung/gelato.git"
+    "url": "https://www.github.com/mcfarljw/gelato.git"
   },
   "scripts": {
     "build": "./node_modules/.bin/brunch build",
     "start": "./node_modules/.bin/brunch watch --server"
   },
-  "dependencies": {
-    "bower": "1.6.5",
-    "brunch": "1.8.5",
-    "cordova": "5.4.0"
-  },
   "devDependencies": {
+    "bower": "1.6.6",
+    "brunch": "1.8.5",
+    "cordova": "5.4.1",
     "auto-reload-brunch": "1.8.1",
     "clean-css-brunch": "1.8.0",
     "css-brunch": "1.7.0",
