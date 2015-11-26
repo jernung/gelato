@@ -23,7 +23,7 @@ module.exports = GelatoPage.extend({
      * @property title
      * @type {String}
      */
-    title: 'Home - ' + app.get('title'),
+    title: 'Home | ' + app.get('title'),
     /**
      * @method render
      * @returns {Home}

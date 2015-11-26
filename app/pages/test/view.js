@@ -2,8 +2,9 @@ var GelatoPage = require('gelato/page');
 
 var Navbar = require('components/navbars/primary/view');
 
+
 /**
- * @class Page1
+ * @class Test
  * @extends {GelatoPage}
  */
 module.exports = GelatoPage.extend({
@@ -15,27 +16,47 @@ module.exports = GelatoPage.extend({
         this.navbar = new Navbar();
     },
     /**
+     * @property events
+     * @type {Object}
+     */
+    events: {},
+    /**
+     * @property title
+     * @type {String}
+     */
+    title: 'Test | ' + app.get('title'),
+    /**
      * @property template
      * @type {Function}
      */
     template: require('./template'),
     /**
-     * @property title
-     * @type {String}
-     */
-    title: 'Page 1 | ' + app.get('title'),
-    /**
      * @method render
-     * @returns {Page1}
+     * @returns {Test}
      */
     render: function() {
         this.renderTemplate();
         this.navbar.setElement('#navbar-container').render();
+        $.ajax({
+            url: 'js/test.js',
+            context: this,
+            dataType: "script",
+            success: this.load
+        });
         return this;
     },
     /**
+     * @method load
+     */
+    load: function() {
+        mocha.setup('bdd');
+        require('test/index');
+        mocha.checkLeaks();
+        mocha.run();
+    },
+    /**
      * @method remove
-     * @returns {Page1}
+     * @returns {Test}
      */
     remove: function() {
         this.navbar.remove();

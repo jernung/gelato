@@ -18,6 +18,7 @@ module.exports = GelatoRouter.extend({
         '': 'navigateHome',
         'page1': 'navigatePage1',
         'page2': 'navigatePage2',
+        'test': 'navigateTest',
         '*route': 'navigateHome'
     },
     /**
@@ -37,5 +38,11 @@ module.exports = GelatoRouter.extend({
      */
     navigatePage2: function() {
         this.go('pages/page2');
+    },
+    /**
+     * @method navigateTest
+     */
+    navigateTest: function() {
+        this.go('pages/test');
     }
 });
