@@ -120,7 +120,7 @@ module.exports = Backbone.Model.extend({
      * @type {Object}
      */
     gelato: {
-        timestamp: '1448408377',
+        timestamp: '1448525091',
         version: '0.1.0'
     },
     /**

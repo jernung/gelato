@@ -7,6 +7,7 @@ exports.config = {
                 'js/application.js': /^app[\\/]/,
                 'js/gelato.js': /^(bower_components|gelato)[\\/]/,
                 'js/libraries.js': /^vendor[\\/]/,
+                'js/test.js': /^test[\\/]/,
                 '../gelato.js': /^gelato[\\/]/
             },
             order: {
@@ -14,7 +15,9 @@ exports.config = {
                     'bower_components/jquery/dist/jquery.js',
                     'bower_components/lodash/lodash.js',
                     'bower_components/backbone/backbone.js',
-                    'vendor/bootstrap/bootstrap.js'
+                    'vendor/bootstrap/bootstrap.js',
+                    'vendor/chai/chai.js',
+                    'vendor/mocha/mocha.js'
                 ]
             }
         },
@@ -23,10 +26,14 @@ exports.config = {
                 'styles/application.css': /^app[\\/]/,
                 'styles/gelato.css': /^(bower_components|gelato)[\\/]/,
                 'styles/libraries.css': /^vendor[\\/]/,
+                'styles/test.css': /^test[\\/]/,
                 '../gelato.css': /^gelato[\\/]/
             },
             order: {
-                before: ['vendor/bootstrap/bootstrap.css']
+                before: [
+                    'vendor/bootstrap/bootstrap.css',
+                    'vendor/mocha/mocha.css'
+                ]
             }
         },
         templates: {
@@ -38,7 +45,7 @@ exports.config = {
     },
     paths: {
         'public': 'public',
-        'watched': ['app', 'gelato', 'vendor']
+        'watched': ['app', 'gelato', 'test', 'vendor']
     },
     plugins: {
         replace: {
