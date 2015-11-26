@@ -11,7 +11,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/mcfarljw/gelato.git"
+    "url": "https://www.github.com/jernung/gelato-framework.git"
   },
   "scripts": {
     "build": "./node_modules/.bin/brunch build",
