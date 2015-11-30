@@ -1,14 +1,11 @@
 var expect = chai.expect;
+var Application = require('gelato/application');
 
 describe('Application', function() {
-    var application = new (require('application'));
+    var application;
 
-    afterEach(function() {
-        Backbone.$('gelato-application').height('100%');
-        Backbone.$('gelato-application').width('100%');
-        localStorage.removeItem('application-hello');
-        localStorage.removeItem('hello');
-        window.device = undefined;
+    beforeEach(function() {
+        application = new Application();
     });
 
     it('getHeight()', function() {
@@ -84,6 +81,14 @@ describe('Application', function() {
     it('setSetting()', function() {
         application.setSetting('hello', 'world');
         expect(JSON.parse(localStorage.getItem('application-hello'))).to.equal('world');
+    });
+
+    afterEach(function() {
+        Backbone.$('gelato-application').height('100%');
+        Backbone.$('gelato-application').width('100%');
+        localStorage.removeItem('application-hello');
+        localStorage.removeItem('hello');
+        window.device = undefined;
     });
 
 });
