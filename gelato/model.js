@@ -38,20 +38,16 @@ module.exports = Backbone.Model.extend({
      */
     _handleRequestEvent: function(options) {
         var originalOptions = _.clone(options);
-        options.complete = (function() {
-            this._triggerState();
-            if (typeof originalOptions.complete === 'function') {
-                originalOptions.complete.apply(originalOptions, arguments);
-            }
-        }).bind(this);
         options.error = (function() {
             this.state = 'standby';
+            this._triggerState();
             if (typeof originalOptions.error === 'function') {
                 originalOptions.error.apply(originalOptions, arguments);
             }
         }).bind(this);
         options.success = (function() {
             this.state = 'standby';
+            this._triggerState();
             if (typeof originalOptions.success === 'function') {
                 originalOptions.success.apply(originalOptions, arguments);
             }
