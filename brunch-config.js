@@ -17,7 +17,8 @@ exports.config = {
                     'bower_components/backbone/backbone.js',
                     'vendor/bootstrap/bootstrap.js',
                     'vendor/chai/chai.js',
-                    'vendor/mocha/mocha.js'
+                    'vendor/mocha/mocha.js',
+                    'vendor/mocha/sinon.js'
                 ]
             }
         },
