@@ -22,9 +22,9 @@
     "vendor"
   ],
   "dependencies": {
-    "backbone": "~1.2.3",
-    "jquery": "~2.1.4",
-    "lodash": "~3.10.1"
+    "backbone": "~1.2.0",
+    "jquery": "~2.1.0",
+    "lodash": "~3.10.0"
   },
   "overrides": {
     "backbone": {
