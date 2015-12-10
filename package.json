@@ -21,8 +21,8 @@
     "test": "./node_modules/.bin/brunch build && ./node_modules/.bin/mocha-phantomjs ./test/index.html"
   },
   "devDependencies": {
-    "bower": "~1.6.0",
-    "brunch": "~1.8.0",
+    "bower": "~1.7.0",
+    "brunch": "~2.0.0",
     "chai": "~3.4.0",
     "cordova": "~5.4.0",
     "mocha": "~2.3.0",
