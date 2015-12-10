@@ -120,7 +120,7 @@ module.exports = Backbone.Model.extend({
      * @type {Object}
      */
     gelato: {
-        timestamp: '1448846053',
+        timestamp: '1449757140',
         version: '0.1.0'
     },
     /**
@@ -492,6 +492,17 @@ module.exports = Backbone.View.extend({
      */
     template: null,
     /**
+     * @property throttleResize
+     * @type {Function}
+     */
+    throttleResize: function() {
+        clearTimeout(this._resizeTimeout);
+        this._resizeTimeout = setTimeout((function(event) {
+            this._resizeTimeout = null;
+            this.trigger('resize', event);
+        }).bind(this), 100);
+    },
+    /**
      * @method getHeight
      * @returns {Number}
      */
@@ -526,13 +537,6 @@ module.exports = Backbone.View.extend({
         }
     },
     /**
-     * @method handleResize
-     * @param {Event} event
-     */
-    handleResize: function(event) {
-        this.trigger('resize', event);
-    },
-    /**
      * @method getContext
      * @param {Object} [context]
      * @returns {Object}
@@ -561,7 +565,7 @@ module.exports = Backbone.View.extend({
         this.undelegateEvents();
         this.$el.find('*').off();
         this.$el.empty();
-        Backbone.$(window).off('resize', this.handleResize.bind(this));
+        Backbone.$(window).off('resize.View');
         return this;
     },
     /**
@@ -572,9 +576,9 @@ module.exports = Backbone.View.extend({
     renderTemplate: function(context) {
         this.$view = Backbone.$(this.template(this.getContext(context)));
         this.$el.html(this.$view);
-        this.$('a[href]').on('click vclick', this.handleClickHref.bind(this));
-        Backbone.$(window).off('resize', this.handleResize.bind(this));
-        Backbone.$(window).on('resize', this.handleResize.bind(this));
+        this.$('a[href]').on('click vclick', this.handleClickHref);
+        Backbone.$(window).off('resize.View');
+        Backbone.$(window).on('resize.View', this.throttleResize.bind(this));
         return this;
     },
     /**
