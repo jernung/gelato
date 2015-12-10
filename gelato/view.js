@@ -14,17 +14,6 @@ module.exports = Backbone.View.extend({
      */
     template: null,
     /**
-     * @property throttleResize
-     * @type {Function}
-     */
-    throttleResize: function() {
-        clearTimeout(this._resizeTimeout);
-        this._resizeTimeout = setTimeout((function(event) {
-            this._resizeTimeout = null;
-            this.trigger('resize', event);
-        }).bind(this), 100);
-    },
-    /**
      * @method getHeight
      * @returns {Number}
      */
@@ -99,8 +88,13 @@ module.exports = Backbone.View.extend({
         this.$view = Backbone.$(this.template(this.getContext(context)));
         this.$el.html(this.$view);
         this.$('a[href]').on('click vclick', this.handleClickHref);
-        Backbone.$(window).off('resize.View');
-        Backbone.$(window).on('resize.View', this.throttleResize.bind(this));
+        Backbone.$(window).on('resize.View', (function() {
+            clearTimeout(this._resize);
+            this._resize = setTimeout((function(event) {
+                this._resize = null;
+                this.trigger('resize', event);
+            }).bind(this), 200);
+        }).bind(this));
         return this;
     },
     /**
