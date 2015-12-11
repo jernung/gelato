@@ -120,7 +120,7 @@ module.exports = Backbone.Model.extend({
      * @type {Object}
      */
     gelato: {
-        timestamp: '1449777519',
+        timestamp: '1449822561',
         version: '0.1.0'
     },
     /**
@@ -558,17 +558,29 @@ module.exports = Backbone.View.extend({
         return this;
     },
     /**
+     * @method render
+     * @returns {GelatoView}
+     */
+    render: function() {
+        this.renderTemplate();
+        return this;
+    },
+    /**
      * @method renderTemplate
      * @param {Object} [context]
      * @returns {GelatoView}
      */
     renderTemplate: function(context) {
-        this.$view = Backbone.$(this.template(this.getContext(context)));
+        if (typeof this.template === 'function') {
+            this.$view = Backbone.$(this.template(this.getContext(context)));
+        } else {
+            this.$view = Backbone.$(this.template);
+        }
         this.$el.html(this.$view);
         this.$('a[href]').on('click vclick', this.handleClickHref);
-        Backbone.$(window).on('resize.View', (function() {
+        Backbone.$(window).on('resize.View', (function(event) {
             clearTimeout(this._resize);
-            this._resize = setTimeout((function(event) {
+            this._resize = setTimeout((function() {
                 this._resize = null;
                 this.trigger('resize', event);
             }).bind(this), 200);
