@@ -120,8 +120,8 @@ module.exports = Backbone.Model.extend({
      * @type {Object}
      */
     gelato: {
-        timestamp: '1449822561',
-        version: '0.1.0'
+        timestamp: '1452017068',
+        version: '0.1.2'
     },
     /**
      * @method getHeight
@@ -458,6 +458,7 @@ module.exports = Backbone.Router.extend({
         if (this.page) {
             this.page.remove();
         }
+        window.scrollTo(0, 0);
         this.page = new (require(path + '/view'))(options);
         return this.page.render();
     },
