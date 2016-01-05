@@ -18,6 +18,7 @@ module.exports = Backbone.Router.extend({
         if (this.page) {
             this.page.remove();
         }
+        window.scrollTo(0, 0);
         this.page = new (require(path + '/view'))(options);
         return this.page.render();
     },
