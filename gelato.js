@@ -120,8 +120,8 @@ module.exports = Backbone.Model.extend({
      * @type {Object}
      */
     gelato: {
-        timestamp: '1452017068',
-        version: '0.1.2'
+        timestamp: '1452355773',
+        version: '0.1.3'
     },
     /**
      * @method getHeight
@@ -245,6 +245,40 @@ module.exports = Backbone.Model.extend({
         localStorage.setItem('application-' + key, JSON.stringify(value));
     }
 });
+
+});
+
+require.register("gelato/class", function(exports, require, module) {
+/**
+ * @class GelatoClass
+ * @constructor
+ */
+function GelatoClass() {}
+
+/**
+ * @method extend
+ * @param {Object} protoProps
+ * @param {Object} staticProps
+ * @returns {Object}
+ */
+GelatoClass.prototype.extend = function(protoProps, staticProps) {
+    var parent = this;
+    var child = undefined;
+    if (protoProps && _.has(protoProps, 'constructor')) {
+        child = protoProps.constructor;
+    } else {
+        child = function(){ return parent.apply(this, arguments); };
+    }
+    _.extend(child, parent, staticProps);
+    child.prototype = _.create(parent.prototype, protoProps);
+    child.prototype.constructor = child;
+    child.__super__ = parent.prototype;
+    return child;
+};
+
+_.extend(GelatoClass.prototype, Backbone.Events);
+
+module.exports = GelatoClass;
 
 });
 
