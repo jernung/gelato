@@ -1,7 +1,7 @@
 var expect = chai.expect;
 var View = require('gelato/view');
 
-describe('View', function() {
+describe('GelatoView', function() {
     var view;
 
     before(function() {

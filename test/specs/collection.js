@@ -1,7 +1,7 @@
 var expect = chai.expect;
 var Collection = require('gelato/collection');
 
-describe('Collection', function() {
+describe('GelatoCollection', function() {
     var collection, server;
 
     before(function() {

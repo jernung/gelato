@@ -1,7 +1,7 @@
 var expect = chai.expect;
 var Model = require('gelato/model');
 
-describe('Model', function() {
+describe('GelatoModel', function() {
     var model, server;
 
     before(function() {

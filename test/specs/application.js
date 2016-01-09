@@ -1,7 +1,7 @@
 var expect = chai.expect;
 var Application = require('gelato/application');
 
-describe('Application', function() {
+describe('GelatoApplication', function() {
     var application;
 
     beforeEach(function() {
