@@ -2,7 +2,7 @@
  * @class GelatoRouter
  * @extends {Backbone.Router}
  */
-module.exports = Backbone.Router.extend({
+var GelatoRouter = Backbone.Router.extend({
     /**
      * @property page
      * @type {String}
@@ -33,3 +33,5 @@ module.exports = Backbone.Router.extend({
         });
     }
 });
+
+module.exports = GelatoRouter;

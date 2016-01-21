@@ -2,7 +2,7 @@
  * @class GelatoCollection
  * @extends {Backbone.Collection}
  */
-module.exports = Backbone.Collection.extend({
+var GelatoCollection = Backbone.Collection.extend({
     /**
      * @property state
      * @type {String}
@@ -50,3 +50,5 @@ module.exports = Backbone.Collection.extend({
         this.trigger('state:' + this.state, this);
     }
 });
+
+module.exports = GelatoCollection;

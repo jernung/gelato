@@ -2,7 +2,7 @@
  * @class GelatoView
  * @extends {Backbone.View}
  */
-module.exports = Backbone.View.extend({
+var GelatoView = Backbone.View.extend({
     /**
      * @property $view
      * @type {jQuery}
@@ -118,3 +118,5 @@ module.exports = Backbone.View.extend({
         return this;
     }
 });
+
+module.exports = GelatoView;

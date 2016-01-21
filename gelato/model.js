@@ -2,7 +2,7 @@
  * @class GelatoModel
  * @extends {Backbone.Model}
  */
-module.exports = Backbone.Model.extend({
+var GelatoModel = Backbone.Model.extend({
     /**
      * @property state
      * @type {String}
@@ -62,3 +62,5 @@ module.exports = Backbone.Model.extend({
         this.trigger('state:' + this.state, this);
     }
 });
+
+module.exports = GelatoModel;

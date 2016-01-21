@@ -2,7 +2,7 @@
  * @class GelatoApplication
  * @extends {Backbone.Model}
  */
-module.exports = Backbone.Model.extend({
+var GelatoApplication = Backbone.Model.extend({
     /**
      * @property gelato
      * @type {Object}
@@ -133,3 +133,5 @@ module.exports = Backbone.Model.extend({
         localStorage.setItem('application-' + key, JSON.stringify(value));
     }
 });
+
+module.exports = GelatoApplication;

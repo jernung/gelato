@@ -4,7 +4,7 @@ var GelatoView = require('./view');
  * @class GelatoPage
  * @extends {GelatoView}
  */
-module.exports = GelatoView.extend({
+var GelatoPage = GelatoView.extend({
     /**
      * @property el
      * @type {String}
@@ -32,3 +32,5 @@ module.exports = GelatoView.extend({
         return GelatoView.prototype.remove.call(this);
     }
 });
+
+module.exports = GelatoPage;

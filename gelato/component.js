@@ -4,7 +4,7 @@ var GelatoView = require('./view');
  * @class GelatoComponent
  * @extends {GelatoView}
  */
-module.exports = GelatoView.extend({
+var GelatoComponent = GelatoView.extend({
     /**
      * @method renderTemplate
      * @param {Object} [context]
@@ -21,3 +21,5 @@ module.exports = GelatoView.extend({
         return GelatoView.prototype.remove.call(this);
     }
 });
+
+module.exports = GelatoComponent;
