@@ -3,5 +3,5 @@ gelato-page(data-name='home')
   #navbar-container
 
   .container.text-center
-    h1= app.get('title') + ' (' + app.get('version') + ')'
+    h1= _.capitalize(app.get('title')) + ' (' + app.get('version') + ')'
     p= app.get('description')

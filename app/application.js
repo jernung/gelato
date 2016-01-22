@@ -19,7 +19,7 @@ module.exports = GelatoApplication.extend({
      */
     defaults: {
         description: '{!application-description!}',
-        title: '{!application-title!}',
+        title: '{!application-name!}',
         version: '{!application-version!}'
     },
     /**
