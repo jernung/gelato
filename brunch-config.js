@@ -12,13 +12,13 @@ exports.config = {
             },
             order: {
                 before: [
-                    'bower_components/jquery/dist/jquery.js',
-                    'bower_components/lodash/lodash.js',
-                    'bower_components/backbone/backbone.js',
-                    'vendor/bootstrap/bootstrap.js',
-                    'vendor/chai/chai.js',
-                    'vendor/mocha/mocha.js',
-                    'vendor/mocha/sinon.js'
+                    'gelato/vendor/jquery-2.2.0.js',
+                    'gelato/vendor/lodash-4.0.0.js',
+                    'gelato/vendor/backbone-1.2.3.js',
+                    'vendor/bootstrap-3.3.6.js',
+                    'vendor/chai-3.4.2.js',
+                    'vendor/mocha-2.3.4.js',
+                    'vendor/sinon-1.17.2.js'
                 ]
             }
         },
@@ -32,8 +32,8 @@ exports.config = {
             },
             order: {
                 before: [
-                    'vendor/bootstrap/bootstrap.css',
-                    'vendor/mocha/mocha.css'
+                    'vendor/bootstrap-3.3.6.css',
+                    'vendor/mocha-2.3.4.css'
                 ]
             }
         },
@@ -52,7 +52,7 @@ exports.config = {
         replace: {
             mappings: {
                 'application-description': application.description,
-                'application-title': application.title,
+                'application-name': application.name,
                 'application-version': application.version,
                 'gelato-version': application.version
             },
