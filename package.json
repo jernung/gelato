@@ -1,6 +1,5 @@
 {
   "name": "gelato",
-  "title": "Gelato",
   "description": "Base modules for building modern applications.",
   "author": {
     "name": "Joshua McFarland",
@@ -15,13 +14,10 @@
   },
   "scripts": {
     "build": "./node_modules/.bin/brunch build",
-    "install": "./node_modules/.bin/bower install",
-    "postversion": "./node_modules/.bin/bower update",
     "start": "./node_modules/.bin/brunch watch --server",
     "test": "./node_modules/.bin/brunch build && ./node_modules/.bin/mocha-phantomjs ./test/index.html"
   },
   "devDependencies": {
-    "bower": "~1.7.0",
     "brunch": "~2.1.0",
     "chai": "~3.4.0",
     "cordova": "~5.4.0",
