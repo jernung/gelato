@@ -61,11 +61,23 @@ var GelatoView = Backbone.View.extend({
     },
     /**
      * @method hide
-     * @returns {GelatoPage}
+     * @returns {GelatoView}
      */
     hide: function() {
         this.$view.hide(arguments.length ? arguments : 0);
         return this;
+    },
+    /**
+     * @method parseTemplate
+     * @param {Function} template
+     * @param {Object} [context]
+     * @returns {Object}
+     */
+    parseTemplate: function(template, context) {
+        if (typeof template === 'function') {
+            return template(this.getContext(context));
+        }
+        return template;
     },
     /**
      * @method remove
@@ -93,11 +105,7 @@ var GelatoView = Backbone.View.extend({
      * @returns {GelatoView}
      */
     renderTemplate: function(context) {
-        if (typeof this.template === 'function') {
-            this.$view = Backbone.$(this.template(this.getContext(context)));
-        } else {
-            this.$view = Backbone.$(this.template);
-        }
+        this.$view = Backbone.$(this.parseTemplate(this.template, context));
         this.$el.html(this.$view);
         this.$('a[href]').on('click vclick', this.handleClickHref);
         Backbone.$(window).on('resize.View', (function(event) {
