@@ -13,12 +13,12 @@ exports.config = {
             order: {
                 before: [
                     'gelato/vendor/jquery-2.2.0.js',
-                    'gelato/vendor/lodash-4.0.0.js',
+                    'gelato/vendor/lodash-4.1.0.js',
                     'gelato/vendor/backbone-1.2.3.js',
                     'vendor/bootstrap-3.3.6.js',
-                    'vendor/chai-3.4.2.js',
-                    'vendor/mocha-2.3.4.js',
-                    'vendor/sinon-1.17.2.js'
+                    'vendor/chai-3.5.0.js',
+                    'vendor/mocha-2.4.5.js',
+                    'vendor/sinon-1.17.3.js'
                 ]
             }
         },

@@ -18,19 +18,19 @@
     "test": "./node_modules/.bin/brunch build && ./node_modules/.bin/mocha-phantomjs ./test/index.html"
   },
   "devDependencies": {
-    "brunch": "~2.1.0",
-    "chai": "~3.4.0",
-    "cordova": "~5.4.0",
-    "mocha": "~2.3.0",
+    "brunch": "~2.2.0",
+    "chai": "~3.5.0",
+    "cordova": "~6.0.0",
+    "mocha": "~2.4.0",
     "mocha-phantomjs": "~4.0.0",
     "sinon": "~1.17.0",
-    "auto-reload-brunch": "~1.8.0",
-    "clean-css-brunch": "~1.8.0",
-    "css-brunch": "~1.7.0",
-    "jade-brunch": "~1.8.0",
-    "javascript-brunch": "~1.8.0",
+    "auto-reload-brunch": "~2.0.0",
+    "clean-css-brunch": "~2.0.0",
+    "css-brunch": "~2.0.0",
+    "jade-brunch": "~2.0.0",
+    "javascript-brunch": "~2.0.0",
     "replace-brunch": "~1.0.0",
-    "sass-brunch": "~1.9.0",
-    "uglify-js-brunch": "~1.7.0"
+    "sass-brunch": "~2.0.0",
+    "uglify-js-brunch": "~2.0.0"
   }
 }
