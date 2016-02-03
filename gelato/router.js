@@ -24,12 +24,20 @@ var GelatoRouter = Backbone.Router.extend({
     },
     /**
      * @method start
+     * @param {Object} [options]
      * @returns {Boolean}
      */
-    start: function() {
+    start: function(options) {
+        options = _.defaults(
+            options || {},
+            {
+                pushState: app.isWebsite(),
+                root: '/'
+            }
+        );
         return Backbone.history.start({
-            pushState: app.isWebsite(),
-            root: '/'
+            pushState: options.pushState,
+            root: options.root
         });
     }
 });
