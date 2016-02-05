@@ -98,9 +98,10 @@ var GelatoApplication = Backbone.Model.extend({
     },
     /**
      * @method reload
+     * @param {Boolean} [forcedReload]
      */
-    reload: function() {
-        location.reload(true);
+    reload: function(forcedReload) {
+        location.reload(forcedReload);
     },
     /**
      * @method getLocalStorage
