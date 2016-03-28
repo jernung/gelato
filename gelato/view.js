@@ -14,6 +14,22 @@ var GelatoView = Backbone.View.extend({
      */
     template: null,
     /**
+     * @param {String} [selector]
+     * @returns {GelatoView}
+     */
+    disableForm: function(selector) {
+        this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
+        return this;
+    },
+    /**
+     * @param {String} [selector]
+     * @returns {GelatoView}
+     */
+    enableForm: function(selector) {
+        this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', false);
+        return this;
+    },
+    /**
      * @method getHeight
      * @returns {Number}
      */
