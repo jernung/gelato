@@ -1,5 +1,5 @@
 {
-  "name": "gelato",
+  "name": "gelato-framework",
   "description": "Base modules for building modern applications.",
   "author": {
     "name": "Joshua McFarland",
@@ -10,7 +10,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://www.github.com/jernung/gelato-framework.git"
+    "url": "https://www.github.com/mcfarljw/gelato-framework.git"
   },
   "scripts": {
     "build": "./node_modules/.bin/brunch build",
