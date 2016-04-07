@@ -21,7 +21,7 @@ describe('GelatoDialog', function() {
         dialog.open();
         dialog.close();
         dialog.on('hidden', function() {
-            expect(Backbone.$('#dialog-container').find('gelato-dialog')).to.have.length(1);
+            expect(Backbone.$('gelato-dialogs').find('gelato-dialog')).to.have.length(1);
             done();
         });
     });
@@ -29,7 +29,7 @@ describe('GelatoDialog', function() {
     it('open()', function(done) {
         dialog.open();
         dialog.on('shown', function() {
-            expect(Backbone.$('#dialog-container').find('gelato-dialog')).to.have.length(1);
+            expect(Backbone.$('gelato-dialogs').find('gelato-dialog')).to.have.length(1);
             dialog.close();
             done();
         });
