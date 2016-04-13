@@ -6,10 +6,7 @@ exports.config = {
 			joinTo: {
 				'js/gelato.js': /^(app|node_modules|gelato)/,
 				'js/test.js': /^test/
-			},
-			before: [
-				'gelato/global.js'
-			]
+			}
 		},
 		stylesheets: {
 			joinTo: {
@@ -36,7 +33,7 @@ exports.config = {
 			},
 			paths: [
 				'public/js/gelato.js',
-				'public/style/gelato.css'
+				'public/styles/gelato.css'
 			]
 		}
 	},
