@@ -1,15 +1,13 @@
-var GelatoRouter = require('gelato/router');
-
 /**
  * @class Router
  * @extends {GelatoRouter}
  */
-module.exports = GelatoRouter.extend({
+var Router = Gelato.Router.extend({
 	/**
 	 * @method initialize
 	 * @constructor
 	 */
-	initialize: function () {
+	initialize: function(options) {
 	},
 	/**
 	 * @property routes
@@ -17,33 +15,14 @@ module.exports = GelatoRouter.extend({
 	 */
 	routes: {
 		'': 'navigateHome',
-		'page1': 'navigatePage1',
-		'page2': 'navigatePage2',
-		'test': 'navigateTest',
 		'*route': 'navigateHome'
 	},
 	/**
 	 * @method navigateHome
 	 */
-	navigateHome: function () {
+	navigateHome: function() {
 		this.go('pages/home');
-	},
-	/**
-	 * @method navigatePage1
-	 */
-	navigatePage1: function () {
-		this.go('pages/page1');
-	},
-	/**
-	 * @method navigatePage2
-	 */
-	navigatePage2: function () {
-		this.go('pages/page2');
-	},
-	/**
-	 * @method navigateTest
-	 */
-	navigateTest: function () {
-		this.go('pages/test');
 	}
 });
+
+module.exports = Router;

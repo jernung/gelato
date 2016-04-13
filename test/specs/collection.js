@@ -1,6 +1,3 @@
-var expect = chai.expect;
-var Collection = require('gelato/collection');
-
 describe('GelatoCollection', function() {
     var collection, server;
 
@@ -19,7 +16,7 @@ describe('GelatoCollection', function() {
     });
 
     it('should trigger state events', function(done) {
-        collection = new Collection();
+        collection = new Gelato.Collection();
         collection.url = 'fake/path';
         expect(collection.state).to.equal('standby');
         collection.on('state:fetching', function() {

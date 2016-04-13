@@ -1,11 +1,8 @@
-var expect = chai.expect;
-var Application = require('gelato/application');
-
 describe('GelatoApplication', function() {
     var application;
 
     beforeEach(function() {
-        application = new Application();
+        application = new Gelato.Application();
     });
 
     it('getHeight()', function() {

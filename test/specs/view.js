@@ -1,6 +1,3 @@
-var expect = chai.expect;
-var View = require('gelato/view');
-
 describe('GelatoView', function() {
     var view;
 
@@ -9,7 +6,7 @@ describe('GelatoView', function() {
     });
 
     beforeEach(function() {
-        view = new View();
+        view = new Gelato.View();
         view.template = "<gelato-view data-name='test'></gelato-view>";
         view.setElement('test-view').render()
     });

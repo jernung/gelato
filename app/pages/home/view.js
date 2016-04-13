@@ -1,18 +1,14 @@
-var GelatoPage = require('gelato/page');
-
-var Navbar = require('components/navbars/primary/view');
-
 /**
- * @class Home
+ * @class HomePage
  * @extends {GelatoPage}
  */
-module.exports = GelatoPage.extend({
+var HomePage = Gelato.Page.extend({
 	/**
 	 * @method initialize
+	 * @param {Object} [options]
 	 * @constructor
 	 */
-	initialize: function () {
-		this.navbar = new Navbar();
+	initialize: function(options) {
 	},
 	/**
 	 * @property template
@@ -23,22 +19,15 @@ module.exports = GelatoPage.extend({
 	 * @property title
 	 * @type {String}
 	 */
-	title: 'Home | ' + app.get('title'),
+	title: app.get('title') + ' - ' + app.get('version'),
 	/**
 	 * @method render
-	 * @returns {Home}
+	 * @returns {HomePage}
 	 */
-	render: function () {
+	render: function() {
 		this.renderTemplate();
-		this.navbar.setElement('#navbar-container').render();
 		return this;
-	},
-	/**
-	 * @method remove
-	 * @returns {Home}
-	 */
-	remove: function () {
-		this.navbar.remove();
-		return GelatoPage.prototype.remove.call(this);
 	}
 });
+
+module.exports = HomePage;

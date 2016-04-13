@@ -1,6 +1,3 @@
-var expect = chai.expect;
-var Model = require('gelato/model');
-
 describe('GelatoModel', function() {
     var model, server;
 
@@ -20,7 +17,7 @@ describe('GelatoModel', function() {
     });
 
     it('should trigger state events', function(done) {
-        model = new Model({id: 0});
+        model = new Gelato.Model({id: 0});
         model.urlRoot = 'fake/path';
         model.on('state:fetching', function() {
             expect(model.state).to.equal('fetching');

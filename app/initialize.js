@@ -1,9 +1,9 @@
-var Application = require('./application');
+window.Gelato = require('gelato/global');
 
-module.exports = (function () {
-
+module.exports = (function() {
+	
 	function start() {
-		window.app = new Application();
+		window.app = new (require('./application'))();
 		window.app.start();
 	}
 

@@ -1,6 +1,3 @@
-var expect = chai.expect;
-var Dialog = require('gelato/dialog');
-
 describe('GelatoDialog', function() {
     var dialog;
 
@@ -10,7 +7,7 @@ describe('GelatoDialog', function() {
 
     beforeEach(function() {
         Backbone.$('test-view').html('<div id="dialog-container"></div>');
-        dialog = new Dialog();
+        dialog = new Gelato.Dialog();
         dialog.template = '<gelato-dialog data-name="test">';
         dialog.template += '<div class="modal fade" role="dialog">';
         dialog.template += '<div class="modal-dialog"></div>';
