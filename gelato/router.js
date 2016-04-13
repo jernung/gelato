@@ -1,3 +1,7 @@
+var $ = require('jquery');
+var _ = require('lodash');
+var Backbone = require('backbone');
+
 /**
  * @class GelatoRouter
  * @extends {Backbone.Router}
@@ -14,7 +18,7 @@ var GelatoRouter = Backbone.Router.extend({
 	 * @param {Object} [options]
 	 * @returns {GelatoPage}
 	 */
-	go: function (path, options) {
+	go: function(path, options) {
 		if (this.page) {
 			this.page.remove();
 		}
@@ -27,7 +31,7 @@ var GelatoRouter = Backbone.Router.extend({
 	 * @param {Object} [options]
 	 * @returns {Boolean}
 	 */
-	start: function (options) {
+	start: function(options) {
 		options = _.defaults(
 			options || {},
 			{

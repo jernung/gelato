@@ -1,3 +1,7 @@
+var $ = require('jquery');
+var _ = require('lodash');
+var Backbone = require('backbone');
+
 /**
  * @class GelatoApplication
  * @extends {Backbone.Model}
@@ -15,21 +19,21 @@ var GelatoApplication = Backbone.Model.extend({
 	 * @method getHeight
 	 * @returns {Number}
 	 */
-	getHeight: function () {
+	getHeight: function() {
 		return Backbone.$('gelato-application').height();
 	},
 	/**
 	 * @method getLocalStorage
 	 * @param {String} key
 	 */
-	getLocalStorage: function (key) {
+	getLocalStorage: function(key) {
 		return JSON.parse(localStorage.getItem(key));
 	},
 	/**
 	 * @method getPlatform
 	 * @returns {String}
 	 */
-	getPlatform: function () {
+	getPlatform: function() {
 		return window.device ? window.device.platform : 'Website';
 	},
 	/**
@@ -37,84 +41,84 @@ var GelatoApplication = Backbone.Model.extend({
 	 * @param {String} key
 	 * @returns {Boolean|Number|Object|String}
 	 */
-	getSetting: function (key) {
+	getSetting: function(key) {
 		return JSON.parse(localStorage.getItem('application-' + key));
 	},
 	/**
 	 * @method getWidth
 	 * @returns {Number}
 	 */
-	getWidth: function () {
+	getWidth: function() {
 		return Backbone.$('gelato-application').width();
 	},
 	/**
 	 * @method isAndroid
 	 * @returns {Boolean}
 	 */
-	isAndroid: function () {
+	isAndroid: function() {
 		return this.getPlatform() === 'Android';
 	},
 	/**
 	 * @method isDevelopment
 	 * @returns {Boolean}
 	 */
-	isDevelopment: function () {
+	isDevelopment: function() {
 		return location.hostname === 'localhost';
 	},
 	/**
 	 * @method isIOS
 	 * @returns {Boolean}
 	 */
-	isIOS: function () {
+	isIOS: function() {
 		return this.getPlatform() === 'iOS';
 	},
 	/**
 	 * @method isLandscape
 	 * @returns {Boolean}
 	 */
-	isLandscape: function () {
+	isLandscape: function() {
 		return this.getWidth() > this.getHeight();
 	},
 	/**
 	 * @method isPortrait
 	 * @returns {Boolean}
 	 */
-	isPortrait: function () {
+	isPortrait: function() {
 		return this.getWidth() <= this.getHeight();
 	},
 	/**
 	 * @method isProduction
 	 * @returns {Boolean}
 	 */
-	isProduction: function () {
+	isProduction: function() {
 		return location.hostname !== 'localhost';
 	},
 	/**
 	 * @method isWebsite
 	 * @returns {Boolean}
 	 */
-	isWebsite: function () {
+	isWebsite: function() {
 		return this.getPlatform() === 'Website';
 	},
 	/**
 	 * @method reload
 	 * @param {Boolean} [forcedReload]
 	 */
-	reload: function (forcedReload) {
+	reload: function(forcedReload) {
 		location.reload(forcedReload);
 	},
 	/**
 	 * @method getLocalStorage
 	 * @param {String} key
 	 */
-	removeLocalStorage: function (key) {
+	removeLocalStorage: function(key) {
 		localStorage.removeItem(key);
 	},
 	/**
 	 * @method removeSetting
 	 * @param {String} key
 	 */
-	removeSetting: function (key) {
+	removeSetting: function(key) {
 		localStorage.removeItem('application-' + key);
 	},
 	/**
@@ -122,7 +126,7 @@ var GelatoApplication = Backbone.Model.extend({
 	 * @param {String} key
 	 * @param {Array|Number|Object|String} value
 	 */
-	setLocalStorage: function (key, value) {
+	setLocalStorage: function(key, value) {
 		return localStorage.setItem(key, JSON.stringify(value));
 	},
 	/**
@@ -130,7 +134,7 @@ var GelatoApplication = Backbone.Model.extend({
 	 * @param {String} key
 	 * @param {Boolean|Number|Object|String} value
 	 */
-	setSetting: function (key, value) {
+	setSetting: function(key, value) {
 		localStorage.setItem('application-' + key, JSON.stringify(value));
 	}
 });

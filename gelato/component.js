@@ -10,14 +10,14 @@ var GelatoComponent = GelatoView.extend({
 	 * @param {Object} [context]
 	 * @returns {GelatoPage}
 	 */
-	renderTemplate: function (context) {
+	renderTemplate: function(context) {
 		return GelatoView.prototype.renderTemplate.call(this, context);
 	},
 	/**
 	 * @method remove
 	 * @returns {GelatoPage}
 	 */
-	remove: function () {
+	remove: function() {
 		return GelatoView.prototype.remove.call(this);
 	}
 });

@@ -1,3 +1,7 @@
+var $ = require('jquery');
+var _ = require('lodash');
+var Backbone = require('backbone');
+
 /**
  * @class GelatoView
  * @extends {Backbone.View}
@@ -17,7 +21,7 @@ var GelatoView = Backbone.View.extend({
 	 * @param {String} [selector]
 	 * @returns {GelatoView}
 	 */
-	disableForm: function (selector) {
+	disableForm: function(selector) {
 		this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
 		return this;
 	},
@@ -25,7 +29,7 @@ var GelatoView = Backbone.View.extend({
 	 * @param {String} [selector]
 	 * @returns {GelatoView}
 	 */
-	enableForm: function (selector) {
+	enableForm: function(selector) {
 		this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', false);
 		return this;
 	},
@@ -33,21 +37,21 @@ var GelatoView = Backbone.View.extend({
 	 * @method getHeight
 	 * @returns {Number}
 	 */
-	getHeight: function () {
+	getHeight: function() {
 		return this.$view.height();
 	},
 	/**
 	 * @method getWidth
 	 * @returns {Number}
 	 */
-	getWidth: function () {
+	getWidth: function() {
 		return this.$view.width();
 	},
 	/**
 	 * @method handleClickHref
 	 * @param {Event} event
 	 */
-	handleClickHref: function (event) {
+	handleClickHref: function(event) {
 		var target = Backbone.$(event.target);
 		var href = target.attr('href');
 		if (window.app !== undefined &&
@@ -68,7 +72,7 @@ var GelatoView = Backbone.View.extend({
 	 * @param {Object} [context]
 	 * @returns {Object}
 	 */
-	getContext: function (context) {
+	getContext: function(context) {
 		var globals = require('globals') || {};
 		globals.app = window.app;
 		globals.view = this;
@@ -79,7 +83,7 @@ var GelatoView = Backbone.View.extend({
 	 * @method hide
 	 * @returns {GelatoView}
 	 */
-	hide: function () {
+	hide: function() {
 		this.$view.hide(arguments.length ? arguments : 0);
 		return this;
 	},
@@ -89,7 +93,7 @@ var GelatoView = Backbone.View.extend({
 	 * @param {Object} [context]
 	 * @returns {Object}
 	 */
-	parseTemplate: function (template, context) {
+	parseTemplate: function(template, context) {
 		if (typeof template === 'function') {
 			return template(this.getContext(context));
 		}
@@ -99,7 +103,7 @@ var GelatoView = Backbone.View.extend({
 	 * @method remove
 	 * @returns {GelatoView}
 	 */
-	remove: function () {
+	remove: function() {
 		this.stopListening();
 		this.undelegateEvents();
 		this.$el.find('*').off();
@@ -111,7 +115,7 @@ var GelatoView = Backbone.View.extend({
 	 * @method render
 	 * @returns {GelatoView}
 	 */
-	render: function () {
+	render: function() {
 		this.renderTemplate();
 		return this;
 	},
@@ -120,13 +124,13 @@ var GelatoView = Backbone.View.extend({
 	 * @param {Object} [context]
 	 * @returns {GelatoView}
 	 */
-	renderTemplate: function (context) {
+	renderTemplate: function(context) {
 		this.$view = Backbone.$(this.parseTemplate(this.template, context));
 		this.$el.html(this.$view);
 		this.$('a[href]').on('click vclick', this.handleClickHref);
-		Backbone.$(window).on('resize.View', (function (event) {
+		Backbone.$(window).on('resize.View', (function(event) {
 			clearTimeout(this._resize);
-			this._resize = setTimeout((function () {
+			this._resize = setTimeout((function() {
 				this._resize = null;
 				this.trigger('resize', event);
 			}).bind(this), 200);
@@ -137,7 +141,7 @@ var GelatoView = Backbone.View.extend({
 	 * @method show
 	 * @returns {GelatoView}
 	 */
-	show: function () {
+	show: function() {
 		this.$view.show(arguments.length ? arguments : 0);
 		return this;
 	}
