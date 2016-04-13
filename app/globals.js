@@ -1,3 +1,3 @@
 module.exports = {
-    _: _
+	_: _
 };
