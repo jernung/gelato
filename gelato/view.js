@@ -127,7 +127,7 @@ var GelatoView = Backbone.View.extend({
   renderTemplate: function(context) {
     this.$view = Backbone.$(this.parseTemplate(this.template, context));
     this.$el.html(this.$view);
-    this.$('a[href]').on('click vclick', this.handleClickHref);
+    this.$('a[href]').on('click', this.handleClickHref);
     Backbone.$(window).on('resize.View', (function(event) {
       clearTimeout(this._resize);
       this._resize = setTimeout((function() {
