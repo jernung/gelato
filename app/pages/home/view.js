@@ -19,7 +19,7 @@ var HomePage = Gelato.Page.extend({
    * @property title
    * @type {String}
    */
-  title: app.get('title') + ' - ' + app.get('version'),
+  title: app.locale('title') + ' - ' + app.locale('version'),
   /**
    * @method render
    * @returns {HomePage}

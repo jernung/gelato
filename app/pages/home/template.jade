@@ -1,5 +1,6 @@
 gelato-page(data-name='home')
 
   .container.text-center
-    h1= app.get('title') + ' (' + app.get('version') + ')'
-    p= app.get('description')
+    h1= locale('title')
+    h3= 'Language: ' + _.upperCase(locale('language'))
+    p= locale('description')
