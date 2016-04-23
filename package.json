@@ -24,8 +24,8 @@
 		"lodash": "~4.11.0"
 	},
 	"devDependencies": {
-		"brunch": "~2.6.0",
-		"auto-reload-brunch": "~2.2.0",
+		"brunch": "~2.7.0",
+		"auto-reload-brunch": "~2.7.0",
 		"clean-css-brunch": "~2.0.0",
 		"css-brunch": "~2.6.0",
 		"jade-brunch": "~2.0.0",
