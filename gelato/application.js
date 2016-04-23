@@ -8,14 +8,6 @@ var Backbone = require('backbone');
  */
 var GelatoApplication = Backbone.Model.extend({
   /**
-   * @property gelato
-   * @type {Object}
-   */
-  gelato: {
-    timestamp: '{!timestamp!}',
-    version: '{!gelato-version!}'
-  },
-  /**
    * @method getHeight
    * @returns {Number}
    */
@@ -99,6 +91,21 @@ var GelatoApplication = Backbone.Model.extend({
    */
   isWebsite: function() {
     return this.getPlatform() === 'Website';
+  },
+  /**
+   * @method locale
+   * @param {String} path
+   * @param {String} [code]
+   * @returns {*}
+   */
+  locale: function(path, code) {
+    var locale = {};
+    try {
+      locale = require('locale/' + code || app.get('locale'));
+    } catch (error) {
+      locale = require('locale/default');
+    }
+    return _.get(locale, path);
   },
   /**
    * @method reload

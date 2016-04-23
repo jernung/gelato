@@ -18,10 +18,7 @@ var Application = Gelato.Application.extend({
    * @type {Object}
    */
   defaults: {
-    description: '{!application-description!}',
-    name: '{!application-name!}',
-    title: 'Gelato Framework',
-    version: '{!application-version!}'
+    locale: 'default'
   },
   /**
    * @method start
