@@ -58,6 +58,10 @@ describe('GelatoApplication', function() {
     expect(application.isWebsite()).to.be.true;
   });
 
+  it('locale()', function() {
+    expect(application.locale('language')).to.equal('default');
+  });
+
   it('removeLocalStorage()', function() {
     localStorage.setItem('hello', JSON.stringify('world'));
     application.removeLocalStorage('hello', 'world');
