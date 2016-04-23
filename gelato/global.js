@@ -3,8 +3,8 @@ window._ = require('lodash');
 window.Backbone = require('backbone');
 
 module.exports = {
-  BUILD: '{!gelato-version!}',
-  VERSION: '{!gelato-version!}',
+  BUILD: '{!date!}',
+  VERSION: '{!application-version!}',
   Application: require('./application'),
   Collection: require('./collection'),
   Component: require('./component'),
