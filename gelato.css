@@ -1,1 +1,39 @@
-body,gelato-application,html{height:100%;width:100%}body,gelato-application,gelato-page,html{margin:0;padding:0;position:absolute}gelato-application{display:block}gelato-component{display:block;margin:0;padding:0;position:relative}gelato-dialog .modal{z-index:9000}gelato-page{display:block;min-height:100%;min-width:100%;overflow:auto}
+
+/* line 1, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/application.scss */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%; }
+
+/* line 9, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/application.scss */
+gelato-application {
+  display: block;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  width: 100%; }
+
+/* line 1, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/component.scss */
+gelato-component {
+  display: block;
+  margin: 0;
+  padding: 0;
+  position: relative; }
+
+/* line 2, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/dialog.scss */
+gelato-dialog .modal {
+  z-index: 9000; }
+
+/* line 1, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/page.scss */
+gelato-page {
+  display: block;
+  margin: 0;
+  min-height: 100%;
+  min-width: 100%;
+  overflow: auto;
+  padding: 0;
+  position: absolute; }
+
