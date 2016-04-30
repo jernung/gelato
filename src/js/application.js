@@ -1,12 +1,8 @@
-var $ = require('jquery');
-var _ = require('lodash');
-var Backbone = require('backbone');
-
 /**
  * @class GelatoApplication
  * @extends {Backbone.Model}
  */
-var GelatoApplication = Backbone.Model.extend({
+Gelato.Application = Backbone.Model.extend({
   /**
    * @method getHeight
    * @returns {Number}
@@ -145,5 +141,3 @@ var GelatoApplication = Backbone.Model.extend({
     localStorage.setItem('application-' + key, JSON.stringify(value));
   }
 });
-
-module.exports = GelatoApplication;

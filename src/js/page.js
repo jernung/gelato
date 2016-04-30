@@ -1,10 +1,8 @@
-var GelatoView = require('./view');
-
 /**
  * @class GelatoPage
  * @extends {GelatoView}
  */
-var GelatoPage = GelatoView.extend({
+Gelato.Page = Gelato.View.extend({
   /**
    * @property el
    * @type {String}
@@ -13,7 +11,7 @@ var GelatoPage = GelatoView.extend({
   /**
    * @property title
    * @type {Function|String}
-   */
+
   title: null,
   /**
    * @method renderTemplate
@@ -22,15 +20,13 @@ var GelatoPage = GelatoView.extend({
    */
   renderTemplate: function(context) {
     document.title = _.result(this, 'title', app.get('title'));
-    return GelatoView.prototype.renderTemplate.call(this, context);
+    return Gelato.View.prototype.renderTemplate.call(this, context);
   },
   /**
    * @method remove
    * @returns {GelatoPage}
    */
   remove: function() {
-    return GelatoView.prototype.remove.call(this);
+    return Gelato.View.prototype.remove.call(this);
   }
 });
-
-module.exports = GelatoPage;

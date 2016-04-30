@@ -1,10 +1,8 @@
-var GelatoView = require('./view');
-
 /**
  * @class GelatoDialog
  * @extends {GelatoView}
  */
-var GelatoDialog = GelatoView.extend({
+Gelato.Dialog = Gelato.View.extend({
   /**
    * @property el
    * @type {String}
@@ -21,7 +19,7 @@ var GelatoDialog = GelatoView.extend({
    * @returns {GelatoDialog}
    */
   renderTemplate: function(context) {
-    GelatoView.prototype.renderTemplate.call(this, context);
+    Gelato.View.prototype.renderTemplate.call(this, context);
     this.element = this.$('[role="dialog"]');
     this.element.on('hide.bs.modal', this.handleElementHide.bind(this));
     this.element.on('hidden.bs.modal', this.handleElementHidden.bind(this));
@@ -82,5 +80,3 @@ var GelatoDialog = GelatoView.extend({
     return this;
   }
 });
-
-module.exports = GelatoDialog;

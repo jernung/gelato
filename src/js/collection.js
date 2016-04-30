@@ -1,12 +1,8 @@
-var $ = require('jquery');
-var _ = require('lodash');
-var Backbone = require('backbone');
-
 /**
- * @class GelatoModel
- * @extends {Backbone.Model}
+ * @class GelatoCollection
+ * @extends {Backbone.Collection}
  */
-var GelatoModel = Backbone.Model.extend({
+Gelato.Collection = Backbone.Collection.extend({
   /**
    * @property state
    * @type {String}
@@ -21,19 +17,7 @@ var GelatoModel = Backbone.Model.extend({
     this.state = 'fetching';
     this._triggerState();
     this._handleRequestEvent(options);
-    return Backbone.Model.prototype.fetch.call(this, options);
-  },
-  /**
-   * @method save
-   * @param [attributes]
-   * @param [options]
-   */
-  save: function(attributes, options) {
-    options = options || {};
-    this.state = 'saving';
-    this._triggerState();
-    this._handleRequestEvent(options);
-    return Backbone.Model.prototype.save.call(this, attributes, options);
+    return Backbone.Collection.prototype.fetch.call(this, options);
   },
   /**
    * @method _handleRequestEvent
@@ -66,5 +50,3 @@ var GelatoModel = Backbone.Model.extend({
     this.trigger('state:' + this.state, this);
   }
 });
-
-module.exports = GelatoModel;

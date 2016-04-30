@@ -1,5 +1,8 @@
-
-/* line 1, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/application.scss */
+/**
+ * Gelato Framework
+ * Version: 0.3.0
+ * Date: Fri Apr 29 2016 21:23:19 GMT-0500 (CDT)
+ */
 html, body {
   height: 100%;
   margin: 0;
@@ -7,7 +10,6 @@ html, body {
   position: absolute;
   width: 100%; }
 
-/* line 9, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/application.scss */
 gelato-application {
   display: block;
   height: 100%;
@@ -16,18 +18,15 @@ gelato-application {
   position: absolute;
   width: 100%; }
 
-/* line 1, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/component.scss */
 gelato-component {
   display: block;
   margin: 0;
   padding: 0;
   position: relative; }
 
-/* line 2, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/dialog.scss */
 gelato-dialog .modal {
   z-index: 9000; }
 
-/* line 1, /Users/Joshua/Github/mcfarljw/gelato-framework/gelato/styles/page.scss */
 gelato-page {
   display: block;
   margin: 0;
@@ -36,4 +35,3 @@ gelato-page {
   overflow: auto;
   padding: 0;
   position: absolute; }
-

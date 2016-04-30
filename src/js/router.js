@@ -1,12 +1,8 @@
-var $ = require('jquery');
-var _ = require('lodash');
-var Backbone = require('backbone');
-
 /**
  * @class GelatoRouter
  * @extends {Backbone.Router}
  */
-var GelatoRouter = Backbone.Router.extend({
+Gelato.Router = Backbone.Router.extend({
   /**
    * @property page
    * @type {String}
@@ -45,5 +41,3 @@ var GelatoRouter = Backbone.Router.extend({
     });
   }
 });
-
-module.exports = GelatoRouter;

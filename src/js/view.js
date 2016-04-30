@@ -1,12 +1,8 @@
-var $ = require('jquery');
-var _ = require('lodash');
-var Backbone = require('backbone');
-
 /**
  * @class GelatoView
  * @extends {Backbone.View}
  */
-var GelatoView = Backbone.View.extend({
+Gelato.View = Backbone.View.extend({
   /**
    * @property $view
    * @type {jQuery}
@@ -147,5 +143,3 @@ var GelatoView = Backbone.View.extend({
     return this;
   }
 });
-
-module.exports = GelatoView;
