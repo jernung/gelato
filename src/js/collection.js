@@ -25,21 +25,22 @@ Gelato.Collection = Backbone.Collection.extend({
    * @private
    */
   _handleRequestEvent: function(options) {
+    var self = this;
     var originalOptions = _.clone(options);
-    options.error = (function() {
-      this.state = 'standby';
-      this._triggerState();
+    options.error = function() {
+      self.state = 'standby';
+      self._triggerState();
       if (typeof originalOptions.error === 'function') {
         originalOptions.error.apply(originalOptions, arguments);
       }
-    }).bind(this);
-    options.success = (function() {
-      this.state = 'standby';
-      this._triggerState();
+    };
+    options.success = function() {
+      self.state = 'standby';
+      self._triggerState();
       if (typeof originalOptions.success === 'function') {
         originalOptions.success.apply(originalOptions, arguments);
       }
-    }).bind(this);
+    };
   },
   /**
    * @method _triggerState
