@@ -25,7 +25,8 @@ gulp.task('compile-js', function() {
         './src/js/dialog.js',
         './src/js/model.js',
         './src/js/page.js',
-        './src/js/router.js'
+        './src/js/router.js',
+        './src/js/storage.js'
       ]
     )
     .pipe(concat('gelato.js'))

@@ -11,26 +11,11 @@ Gelato.Application = Backbone.Model.extend({
     return Backbone.$('gelato-application').height();
   },
   /**
-   * @method getLocalStorage
-   * @param {String} key
-   */
-  getLocalStorage: function(key) {
-    return JSON.parse(localStorage.getItem(key));
-  },
-  /**
    * @method getPlatform
    * @returns {String}
    */
   getPlatform: function() {
     return window.device ? window.device.platform : 'Website';
-  },
-  /**
-   * @method getSetting
-   * @param {String} key
-   * @returns {Boolean|Number|Object|String}
-   */
-  getSetting: function(key) {
-    return JSON.parse(localStorage.getItem('application-' + key));
   },
   /**
    * @method getWidth
@@ -95,13 +80,13 @@ Gelato.Application = Backbone.Model.extend({
    * @returns {*}
    */
   locale: function(path, code) {
-    var locale = {};
+    var locale;
     try {
-      locale = require('locale/' + code || app.get('locale'));
+      locale = require('locale/' + (code || this.get('locale')));
     } catch (error) {
-      locale = require('locale/default');
+      locale = {};
     }
-    return _.get(locale, path);
+    return _.get(locale, path) || _.get(require('locale/en'), path);
   },
   /**
    * @method reload
@@ -109,35 +94,5 @@ Gelato.Application = Backbone.Model.extend({
    */
   reload: function(forcedReload) {
     location.reload(forcedReload);
-  },
-  /**
-   * @method getLocalStorage
-   * @param {String} key
-   */
-  removeLocalStorage: function(key) {
-    localStorage.removeItem(key);
-  },
-  /**
-   * @method removeSetting
-   * @param {String} key
-   */
-  removeSetting: function(key) {
-    localStorage.removeItem('application-' + key);
-  },
-  /**
-   * @method setLocalStorage
-   * @param {String} key
-   * @param {Array|Number|Object|String} value
-   */
-  setLocalStorage: function(key, value) {
-    return localStorage.setItem(key, JSON.stringify(value));
-  },
-  /**
-   * @method setSetting
-   * @param {String} key
-   * @param {Boolean|Number|Object|String} value
-   */
-  setSetting: function(key, value) {
-    localStorage.setItem('application-' + key, JSON.stringify(value));
   }
 });
