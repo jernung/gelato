@@ -1,7 +1,7 @@
 /**
  * Gelato Framework
- * Version: 0.4.0
- * Date: Fri Apr 29 2016 21:36:30 GMT-0500 (CDT)
+ * Version: 0.4.1
+ * Date: Sun May 01 2016 22:15:45 GMT-0500 (CDT)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -29,26 +29,11 @@ Gelato.Application = Backbone.Model.extend({
     return Backbone.$('gelato-application').height();
   },
   /**
-   * @method getLocalStorage
-   * @param {String} key
-   */
-  getLocalStorage: function(key) {
-    return JSON.parse(localStorage.getItem(key));
-  },
-  /**
    * @method getPlatform
    * @returns {String}
    */
   getPlatform: function() {
     return window.device ? window.device.platform : 'Website';
-  },
-  /**
-   * @method getSetting
-   * @param {String} key
-   * @returns {Boolean|Number|Object|String}
-   */
-  getSetting: function(key) {
-    return JSON.parse(localStorage.getItem('application-' + key));
   },
   /**
    * @method getWidth
@@ -113,13 +98,13 @@ Gelato.Application = Backbone.Model.extend({
    * @returns {*}
    */
   locale: function(path, code) {
-    var locale = {};
+    var locale;
     try {
-      locale = require('locale/' + code || app.get('locale'));
+      locale = require('locale/' + (code || this.get('locale')));
     } catch (error) {
-      locale = require('locale/default');
+      locale = {};
     }
-    return _.get(locale, path);
+    return _.get(locale, path) || _.get(require('locale/en'), path);
   },
   /**
    * @method reload
@@ -127,36 +112,6 @@ Gelato.Application = Backbone.Model.extend({
    */
   reload: function(forcedReload) {
     location.reload(forcedReload);
-  },
-  /**
-   * @method getLocalStorage
-   * @param {String} key
-   */
-  removeLocalStorage: function(key) {
-    localStorage.removeItem(key);
-  },
-  /**
-   * @method removeSetting
-   * @param {String} key
-   */
-  removeSetting: function(key) {
-    localStorage.removeItem('application-' + key);
-  },
-  /**
-   * @method setLocalStorage
-   * @param {String} key
-   * @param {Array|Number|Object|String} value
-   */
-  setLocalStorage: function(key, value) {
-    return localStorage.setItem(key, JSON.stringify(value));
-  },
-  /**
-   * @method setSetting
-   * @param {String} key
-   * @param {Boolean|Number|Object|String} value
-   */
-  setSetting: function(key, value) {
-    localStorage.setItem('application-' + key, JSON.stringify(value));
   }
 });
 
@@ -333,21 +288,22 @@ Gelato.Collection = Backbone.Collection.extend({
    * @private
    */
   _handleRequestEvent: function(options) {
+    var self = this;
     var originalOptions = _.clone(options);
-    options.error = (function() {
-      this.state = 'standby';
-      this._triggerState();
+    options.error = function() {
+      self.state = 'standby';
+      self._triggerState();
       if (typeof originalOptions.error === 'function') {
         originalOptions.error.apply(originalOptions, arguments);
       }
-    }).bind(this);
-    options.success = (function() {
-      this.state = 'standby';
-      this._triggerState();
+    };
+    options.success = function() {
+      self.state = 'standby';
+      self._triggerState();
       if (typeof originalOptions.success === 'function') {
         originalOptions.success.apply(originalOptions, arguments);
       }
-    }).bind(this);
+    };
   },
   /**
    * @method _triggerState
@@ -503,21 +459,22 @@ Gelato.Model = Backbone.Model.extend({
    * @private
    */
   _handleRequestEvent: function(options) {
+    var self = this;
     var originalOptions = _.clone(options);
-    options.error = (function() {
-      this.state = 'standby';
-      this._triggerState();
+    options.error = function() {
+      self.state = 'standby';
+      self._triggerState();
       if (typeof originalOptions.error === 'function') {
         originalOptions.error.apply(originalOptions, arguments);
       }
-    }).bind(this);
-    options.success = (function() {
-      this.state = 'standby';
-      this._triggerState();
+    };
+    options.success = function() {
+      self.state = 'standby';
+      self._triggerState();
       if (typeof originalOptions.success === 'function') {
         originalOptions.success.apply(originalOptions, arguments);
       }
-    }).bind(this);
+    };
   },
   /**
    * @method _triggerState
@@ -605,6 +562,62 @@ Gelato.Router = Backbone.Router.extend({
     });
   }
 });
+
+/**
+ * @class Storage
+ * @param {String} [prefix]
+ * @constructor
+ */
+Gelato.Storage = function(prefix) {
+  this.prefix = prefix || '';
+};
+
+/**
+ * @method clear
+ * @param {String} key
+ */
+Gelato.Storage.prototype.clear = function(key) {
+  window.localStorage.clear();
+};
+
+/**
+ * @method has
+ * @param {String} key
+ * @returns {Boolean}
+ */
+Gelato.Storage.prototype.has = function(key) {
+  return window.localStorage.getItem(this.prefix + key) ? true : false;
+};
+
+/**
+ * @method get
+ * @param {String} key
+ * @returns {*}
+ */
+Gelato.Storage.prototype.get = function(key) {
+  try {
+    return JSON.parse(window.localStorage.getItem(this.prefix + key))
+  } catch (error) {
+    return null;
+  }
+};
+
+/**
+ * @method remove
+ * @param {String} key
+ */
+Gelato.Storage.prototype.remove = function(key) {
+  window.localStorage.removeItem(this.prefix + key);
+};
+
+/**
+ * @method set
+ * @param {String} key
+ * @param {*} value
+ */
+Gelato.Storage.prototype.set = function(key, value) {
+  window.localStorage.setItem(this.prefix + key, JSON.stringify(value));
+};
 
 return Gelato;
 }));
