@@ -11,7 +11,7 @@ Gelato.Page = Gelato.View.extend({
   /**
    * @property title
    * @type {Function|String}
-
+   */
   title: null,
   /**
    * @method renderTemplate
@@ -19,7 +19,7 @@ Gelato.Page = Gelato.View.extend({
    * @returns {GelatoPage}
    */
   renderTemplate: function(context) {
-    document.title = _.result(this, 'title', app.get('title'));
+    document.title = _.result(this, 'title', window.app.get('title'));
     return Gelato.View.prototype.renderTemplate.call(this, context);
   },
   /**

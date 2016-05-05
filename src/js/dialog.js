@@ -21,10 +21,10 @@ Gelato.Dialog = Gelato.View.extend({
   renderTemplate: function(context) {
     Gelato.View.prototype.renderTemplate.call(this, context);
     this.element = this.$('[role="dialog"]');
-    this.element.on('hide.bs.modal', this.handleElementHide.bind(this));
-    this.element.on('hidden.bs.modal', this.handleElementHidden.bind(this));
-    this.element.on('show.bs.modal', this.handleElementShow.bind(this));
-    this.element.on('shown.bs.modal', this.handleElementShown.bind(this));
+    this.element.on('hide.bs.modal', _.bind(this.handleElementHide, this));
+    this.element.on('hidden.bs.modal', _.bind(this.handleElementHidden, this));
+    this.element.on('show.bs.modal', _.bind(this.handleElementShow, this));
+    this.element.on('shown.bs.modal', _.bind(this.handleElementShown, this));
     return this;
   },
   /**
