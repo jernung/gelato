@@ -44,24 +44,12 @@ Gelato.View = Backbone.View.extend({
     return this.$view.width();
   },
   /**
-   * @method handleClickHref
+   * @method handleClickDataNavigate
    * @param {Event} event
    */
-  handleClickHref: function(event) {
-    var target = Backbone.$(event.target);
-    var href = target.attr('href');
-    if (window.app !== undefined &&
-      window.app.router !== undefined &&
-      href !== undefined &&
-      href.indexOf('#') !== 0 &&
-      href.indexOf('http://') !== 0 &&
-      href.indexOf('https://') !== 0) {
-      event.preventDefault();
-      window.app.router.navigate(href, {
-        replace: target.data('replace') || false,
-        trigger: target.data('trigger') || true
-      });
-    }
+  handleClickDataNavigate: function(event) {
+    event.preventDefault();
+    window.app.router.navigate(Backbone.$(event.target).data('navigate'), {trigger: true});
   },
   /**
    * @method getContext
@@ -69,12 +57,7 @@ Gelato.View = Backbone.View.extend({
    * @returns {Object}
    */
   getContext: function(context) {
-    var globals;
-    try {
-      globals = require('context');
-    } catch (error) {
-      globals = {};
-    }
+    var globals = require('context');
     globals.view = this;
     globals = Backbone.$.extend(true, globals, context || {});
     return globals;
@@ -94,10 +77,7 @@ Gelato.View = Backbone.View.extend({
    * @returns {Object}
    */
   parseTemplate: function(template, context) {
-    if (typeof template === 'function') {
-      return template(this.getContext(context));
-    }
-    return template;
+    return _.isFunction(template) ? template(this.getContext(context)) : template;
   },
   /**
    * @method remove
@@ -127,7 +107,7 @@ Gelato.View = Backbone.View.extend({
   renderTemplate: function(context) {
     this.$view = Backbone.$(this.parseTemplate(this.template, context));
     this.$el.html(this.$view);
-    this.$('a[href]').on('click', this.handleClickHref);
+    this.$('[data-navigate]').on('click', this.handleClickDataNavigate);
     Backbone.$(window).on('resize.View', (function(event) {
       clearTimeout(this._resize);
       this._resize = setTimeout((function() {
