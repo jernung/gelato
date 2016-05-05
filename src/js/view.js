@@ -44,10 +44,10 @@ Gelato.View = Backbone.View.extend({
     return this.$view.width();
   },
   /**
-   * @method handleClickDataNavigate
+   * @method handleClickNavigate
    * @param {Event} event
    */
-  handleClickDataNavigate: function(event) {
+  handleClickNavigate: function(event) {
     var $target = $(event.target);
     var href = $target.attr('href');
     var navigate = $target.attr('navigate');
@@ -113,7 +113,7 @@ Gelato.View = Backbone.View.extend({
   renderTemplate: function(context) {
     this.$view = $(this.parseTemplate(this.template, context));
     this.$el.html(this.$view);
-    this.$('[navigate]').on('click', this.handleClickDataNavigate);
+    this.$('[navigate]').on('click', _.bind(this.handleClickNavigate, this));
     return this;
   },
   /**
