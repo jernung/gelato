@@ -88,7 +88,6 @@ Gelato.View = Backbone.View.extend({
     this.undelegateEvents();
     this.$el.find('*').off();
     this.$el.empty();
-    Backbone.$(window).off('resize.View');
     return this;
   },
   /**
@@ -108,13 +107,6 @@ Gelato.View = Backbone.View.extend({
     this.$view = Backbone.$(this.parseTemplate(this.template, context));
     this.$el.html(this.$view);
     this.$('[data-navigate]').on('click', this.handleClickDataNavigate);
-    Backbone.$(window).on('resize.View', (function(event) {
-      clearTimeout(this._resize);
-      this._resize = setTimeout((function() {
-        this._resize = null;
-        this.trigger('resize', event);
-      }).bind(this), 200);
-    }).bind(this));
     return this;
   },
   /**
