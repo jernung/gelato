@@ -48,8 +48,15 @@ Gelato.View = Backbone.View.extend({
    * @param {Event} event
    */
   handleClickDataNavigate: function(event) {
+    var $target = $(event.target);
+    var href = $target.attr('href');
+    var navigate = $target.attr('navigate');
     event.preventDefault();
-    window.app.router.navigate(Backbone.$(event.target).data('navigate'), {trigger: true});
+    if (navigate === 'navigate') {
+      window.app.router.navigate(href, {trigger: true});
+    } else {
+      window.app.router.navigate(navigate, {trigger: true});
+    }
   },
   /**
    * @method getContext
@@ -59,7 +66,7 @@ Gelato.View = Backbone.View.extend({
   getContext: function(context) {
     var globals = require('context');
     globals.view = this;
-    globals = Backbone.$.extend(true, globals, context || {});
+    globals = $.extend(true, globals, context || {});
     return globals;
   },
   /**
@@ -104,9 +111,9 @@ Gelato.View = Backbone.View.extend({
    * @returns {GelatoView}
    */
   renderTemplate: function(context) {
-    this.$view = Backbone.$(this.parseTemplate(this.template, context));
+    this.$view = $(this.parseTemplate(this.template, context));
     this.$el.html(this.$view);
-    this.$('[data-navigate]').on('click', this.handleClickDataNavigate);
+    this.$('[navigate]').on('click', this.handleClickDataNavigate);
     return this;
   },
   /**
