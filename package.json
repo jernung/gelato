@@ -1,5 +1,5 @@
 {
-	"name": "gelato-framework",
+	"name": "backbone-gelato",
 	"description": "Base modules for building modern applications.",
 	"author": {
 		"name": "Joshua McFarland",
@@ -10,7 +10,7 @@
 	"license": "MIT",
 	"repository": {
 		"type": "git",
-		"url": "https://www.github.com/mcfarljw/gelato-framework.git"
+		"url": "https://www.github.com/mcfarljw/backbone-gelato.git"
 	},
   "main": "gelato.js",
 	"scripts": {

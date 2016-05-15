@@ -1,5 +1,5 @@
 /**
- * Gelato Framework
+ * Backbone Gelato
  * Version: {!version!}
  * Date: {!date!}
  */
