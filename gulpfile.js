@@ -23,15 +23,15 @@ gulp.task('compile-js', function() {
     .src(
       [
         './src/gelato.js',
-        './src/modules/application.js',
-        './src/modules/view.js',
-        './src/modules/collection.js',
-        './src/modules/component.js',
-        './src/modules/dialog.js',
-        './src/modules/model.js',
-        './src/modules/page.js',
-        './src/modules/router.js',
-        './src/modules/storage.js'
+        './src/modules/Application.js',
+        './src/modules/View.js',
+        './src/modules/Collection.js',
+        './src/modules/Component.js',
+        './src/modules/Dialog.js',
+        './src/modules/Model.js',
+        './src/modules/Page.js',
+        './src/modules/Router.js',
+        './src/modules/Storage.js'
       ]
     )
     .pipe(gulpConcat('backbone-gelato.js'))
