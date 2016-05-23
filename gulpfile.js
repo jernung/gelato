@@ -5,32 +5,44 @@ var buildVersion = require('./package.json').version;
 
 var fs = require('fs');
 var gulp = require('gulp');
-var concat = require('gulp-concat');
-var insert = require('gulp-insert');
-var replace = require('gulp-replace');
-var sass = require('gulp-sass');
-var umd = require('gulp-umd');
+var gulpBabel = require('gulp-babel');
+var gulpConcat = require('gulp-concat');
+var gulpInsert = require('gulp-insert');
+var gulpReplace = require('gulp-replace');
+var gulpSass = require('gulp-sass');
+var gulpUmd = require('gulp-umd');
 
 gulp.task('build', ['compile-js', 'compile-styles']);
+
+gulp.task('watch', function() {
+  gulp.watch('./src/**/*', ['build']);
+});
 
 gulp.task('compile-js', function() {
   return gulp
     .src(
       [
-        './src/init.js',
-        './src/js/application.js',
-        './src/js/view.js',
-        './src/js/collection.js',
-        './src/js/component.js',
-        './src/js/dialog.js',
-        './src/js/model.js',
-        './src/js/page.js',
-        './src/js/router.js',
-        './src/js/storage.js'
+        './src/gelato.js',
+        './src/modules/application.js',
+        './src/modules/view.js',
+        './src/modules/collection.js',
+        './src/modules/component.js',
+        './src/modules/dialog.js',
+        './src/modules/model.js',
+        './src/modules/page.js',
+        './src/modules/router.js',
+        './src/modules/storage.js'
       ]
     )
-    .pipe(concat('gelato.js'))
-    .pipe(umd({
+    .pipe(gulpConcat('backbone-gelato.js'))
+    .pipe(gulpBabel({presets: ['es2015']}))
+    .pipe(gulpUmd({
+      namespace: function() {
+        return 'Gelato';
+      },
+      exports: function() {
+        return 'Gelato';
+      },
       dependencies: function() {
         return [
           {
@@ -57,10 +69,10 @@ gulp.task('compile-js', function() {
         ];
       }
     }))
-    .pipe(insert.prepend(fs.readFileSync('./src/header.js')))
-    .pipe(replace('{!date!}', buildDate))
-    .pipe(replace('{!version!}', buildVersion))
-    .pipe(gulp.dest('./'));
+    .pipe(gulpInsert.prepend(fs.readFileSync('./src/header.js')))
+    .pipe(gulpReplace('{!date!}', buildDate))
+    .pipe(gulpReplace('{!version!}', buildVersion))
+    .pipe(gulp.dest('./dist'));
 });
 
 gulp.task('compile-styles', function() {
@@ -73,10 +85,10 @@ gulp.task('compile-styles', function() {
         './src/styles/page.scss'
       ]
     )
-    .pipe(sass())
-    .pipe(concat('gelato.css'))
-    .pipe(insert.prepend(fs.readFileSync('./src/header.js')))
-    .pipe(replace('{!date!}', buildDate))
-    .pipe(replace('{!version!}', buildVersion))
-    .pipe(gulp.dest('./'));
+    .pipe(gulpSass())
+    .pipe(gulpConcat('backbone-gelato.css'))
+    .pipe(gulpInsert.prepend(fs.readFileSync('./src/header.js')))
+    .pipe(gulpReplace('{!date!}', buildDate))
+    .pipe(gulpReplace('{!version!}', buildVersion))
+    .pipe(gulp.dest('./dist'));
 });

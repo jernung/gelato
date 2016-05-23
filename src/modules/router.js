@@ -31,7 +31,7 @@ Gelato.Router = Backbone.Router.extend({
     options = _.defaults(
       options || {},
       {
-        pushState: app.isWebsite(),
+        pushState: !Gelato.isLocalhost(),
         root: '/'
       }
     );

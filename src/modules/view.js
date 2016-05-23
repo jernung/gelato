@@ -64,10 +64,10 @@ Gelato.View = Backbone.View.extend({
    * @returns {Object}
    */
   getContext: function(context) {
-    var globals = require('context');
-    globals.view = this;
-    globals = $.extend(true, globals, context || {});
-    return globals;
+    var globalContext = window.app.context || {};
+    globalContext.view = this;
+    globalContext = $.extend(true, globalContext, context || {});
+    return globalContext;
   },
   /**
    * @method hide
