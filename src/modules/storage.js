@@ -1,55 +1,36 @@
-/**
- * @class Storage
- * @param {String} [prefix]
- * @constructor
- */
-Gelato.Storage = function(prefix) {
-  this.prefix = prefix || '';
-};
+class GelatoStorage {
 
-/**
- * @method clear
- * @param {String} key
- */
-Gelato.Storage.prototype.clear = function(key) {
-  window.localStorage.clear();
-};
-
-/**
- * @method has
- * @param {String} key
- * @returns {Boolean}
- */
-Gelato.Storage.prototype.has = function(key) {
-  return window.localStorage.getItem(this.prefix + key) ? true : false;
-};
-
-/**
- * @method get
- * @param {String} key
- * @returns {*}
- */
-Gelato.Storage.prototype.get = function(key) {
-  try {
-    return JSON.parse(window.localStorage.getItem(this.prefix + key))
-  } catch (error) {
-    return null;
+  constructor(prefix) {
+    this._storage = window.localStorage;
+    this._prefix = prefix || '';
   }
-};
 
-/**
- * @method remove
- * @param {String} key
- */
-Gelato.Storage.prototype.remove = function(key) {
-  window.localStorage.removeItem(this.prefix + key);
-};
+  clear() {
+    this._storage.clear();
+  }
 
-/**
- * @method set
- * @param {String} key
- * @param {*} value
- */
-Gelato.Storage.prototype.set = function(key, value) {
-  window.localStorage.setItem(this.prefix + key, JSON.stringify(value));
-};
+  has(key) {
+    return this._storage.getItem(this._prefix + key) ? true : false;
+  }
+
+  get(key) {
+    try {
+      return JSON.parse(this._storage.getItem(this._prefix + key))
+    } catch (error) {
+      return null;
+    }
+  }
+
+  remove(key) {
+    this._storage.removeItem(this._prefix + key);
+  }
+
+  set(key, value) {
+    this._storage.setItem(this._prefix + key, JSON.stringify(value));
+  }
+
+}
+
+Gelato = Gelato || {};
+
+Gelato.Storage = GelatoStorage;

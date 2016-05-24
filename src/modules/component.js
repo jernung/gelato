@@ -1,21 +1,13 @@
-/**
- * @class GelatoComponent
- * @extends {GelatoView}
- */
-Gelato.Component = Gelato.View.extend({
-  /**
-   * @method renderTemplate
-   * @param {Object} [context]
-   * @returns {GelatoPage}
-   */
-  renderTemplate: function(context) {
-    return Gelato.View.prototype.renderTemplate.call(this, context);
-  },
-  /**
-   * @method remove
-   * @returns {GelatoPage}
-   */
-  remove: function() {
-    return Gelato.View.prototype.remove.call(this);
+class GelatoComponent extends Gelato.View {
+
+  constructor(options) {
+    options = options || {};
+    options.tagName = 'gelato-component';
+    super(options);
   }
-});
+  
+}
+
+Gelato = Gelato || {};
+
+Gelato.Component = GelatoComponent;

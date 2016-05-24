@@ -27,3 +27,7 @@ Gelato._VERSION = '{!version!}';
 Gelato.isLocalhost = function() {
   return location.hostname === 'localhost';
 };
+
+Gelato.isWebsite = function() {
+  return location.protocol.indexOf('http') > -1;
+};
