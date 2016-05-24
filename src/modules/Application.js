@@ -3,29 +3,29 @@ class GelatoApplication extends Backbone.Model {
   constructor() {
     Backbone.$('body').prepend('<gelato-application></gelato-application>');
     Backbone.$('gelato-application').append('<gelato-navbar></gelato-navbar>');
-    Backbone.$('gelato-application').append('<gelato-page></gelato-page>');
+    Backbone.$('gelato-application').append('<gelato-pages></gelato-pages>');
     Backbone.$('gelato-application').append('<gelato-footer></gelato-footer>');
     super(arguments)
   }
 
   getHeight() {
-    return Backbone.$('gelato-application').height()
+    return Backbone.$('gelato-application').height();
   }
 
   getWidth() {
-    return Backbone.$('gelato-application').width()
+    return Backbone.$('gelato-application').width();
   }
 
   isLandscape() {
-    return this.getWidth() > this.getHeight()
+    return this.getWidth() > this.getHeight();
   }
 
   isPortrait() {
-    return this.getWidth() <= this.getHeight()
+    return this.getWidth() <= this.getHeight();
   }
 
   reload(forcedReload) {
-    location.reload(forcedReload)
+    location.reload(forcedReload);
   }
 
 }
