@@ -27,6 +27,7 @@ gulp.task('compile-js', function() {
         './src/modules/View.js',
         './src/modules/Collection.js',
         './src/modules/Component.js',
+        './src/modules/Locale.js',
         './src/modules/Model.js',
         './src/modules/Page.js',
         './src/modules/Router.js',
