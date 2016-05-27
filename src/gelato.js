@@ -29,5 +29,5 @@ Gelato.isLocalhost = function() {
 };
 
 Gelato.isWebsite = function() {
-  return location.protocol.indexOf('http') > -1;
+  return _.includes(location.protocol, 'http');
 };
