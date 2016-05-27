@@ -9,7 +9,7 @@ class GelatoPage extends Gelato.View {
   renderTemplate(context) {
     Gelato.View.prototype.renderTemplate.call(this, context);
     document.title = _.result(this, 'title', window.app.get('name'));
-    $('gelato-pages').html(this.$el);
+    Backbone.$('gelato-pages').html(this.$el);
     return this;
   }
 

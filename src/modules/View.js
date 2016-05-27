@@ -1,10 +1,10 @@
 class GelatoView extends Backbone.View {
 
   _handleClickNavigate(event) {
-    var $target = $(event.target);
-    var href = $target.attr('href');
-    var navigate = $target.attr('navigate');
     event.preventDefault();
+    let $target = Backbone.$(event.target);
+    let href = $target.attr('href');
+    let navigate = $target.attr('navigate');
     if (navigate === 'navigate') {
       window.app.router.navigate(href, {trigger: true});
     } else {
@@ -48,7 +48,7 @@ class GelatoView extends Backbone.View {
 
   renderTemplate(context) {
     this.$el.attr('data-name', this.name);
-    this.$el.html($(this._parseTemplate(this.template, context)));
+    this.$el.html(Backbone.$(this._parseTemplate(this.template, context)));
     this.$el.find('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
     return this;
   }
