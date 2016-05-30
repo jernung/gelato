@@ -4,6 +4,15 @@ class GelatoComponent extends Gelato.View {
     options = options || {};
     options.tagName = 'gelato-component';
     super(options);
+    this.container = options.container;
+  }
+
+  renderTemplate(context) {
+    if (this.container) {
+      Backbone.$(this.container).html(this.$el);
+    }
+    Gelato.View.prototype.renderTemplate.call(this, context);
+    return this;
   }
 
 }

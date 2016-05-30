@@ -4,12 +4,17 @@ class GelatoPage extends Gelato.View {
     options = options || {};
     options.tagName = 'gelato-page';
     super(options);
+    this.container = 'gelato-pages';
   }
 
   renderTemplate(context) {
+    if (this.title) {
+      document.title = _.result(this, 'title');
+    }
+    if (this.container) {
+      Backbone.$(this.container).html(this.$el);
+    }
     Gelato.View.prototype.renderTemplate.call(this, context);
-    document.title = _.result(this, 'title', window.app.get('name'));
-    Backbone.$('gelato-pages').html(this.$el);
     return this;
   }
 
