@@ -1,2 +1,7 @@
 # Directories
-/public
+/.idea
+/nbproject
+
+# Files
+*.DS_Store
+*.log
