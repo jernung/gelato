@@ -5,7 +5,7 @@ class GelatoComponent extends Gelato.View {
     options.tagName = 'gelato-component';
     super(options);
   }
-  
+
 }
 
 Gelato = Gelato || {};

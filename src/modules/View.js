@@ -1,5 +1,10 @@
 class GelatoView extends Backbone.View {
 
+  constructor(options) {
+    super(options);
+    this.views = {};
+  }
+
   _handleClickNavigate(event) {
     event.preventDefault();
     let $target = Backbone.$(event.target);
@@ -35,10 +40,21 @@ class GelatoView extends Backbone.View {
   }
 
   remove() {
+    this.removeViews();
     this.stopListening();
     this.undelegateEvents();
     this.$el.find('*').off();
     this.$el.remove();
+    return this;
+  }
+
+  removeViews() {
+    _.forOwn(
+      this.views,
+      function(view) {
+        view.remove();
+      }
+    );
     return this;
   }
 
