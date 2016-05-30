@@ -1,5 +1,12 @@
 class GelatoRouter extends Backbone.Router {
 
+  execute(callback, params) {
+    if (this.page) {
+      this.page.remove();
+    }
+    callback.apply(this, params);
+  }
+
   start(options) {
     options = options || {};
     options.pushState = options.pushState || Gelato.isWebsite();
