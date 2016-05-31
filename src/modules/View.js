@@ -2,7 +2,7 @@ class GelatoView extends Backbone.View {
 
   constructor(options) {
     super(options);
-    this.views = {};
+    this.components = {};
   }
 
   _handleClickNavigate(event) {
@@ -40,7 +40,7 @@ class GelatoView extends Backbone.View {
   }
 
   remove() {
-    this.removeViews();
+    this.removeComponents();
     this.stopListening();
     this.undelegateEvents();
     this.$el.find('*').off();
@@ -48,11 +48,11 @@ class GelatoView extends Backbone.View {
     return this;
   }
 
-  removeViews() {
+  removeComponents() {
     _.forOwn(
-      this.views,
-      function(view) {
-        view.remove();
+      this.components,
+      function(component) {
+        component.remove();
       }
     );
     return this;
@@ -62,10 +62,22 @@ class GelatoView extends Backbone.View {
     return this.renderTemplate();
   }
 
+  renderComponents() {
+    _.forOwn(
+      this.components,
+      function(component) {
+        component.render();
+      }
+    );
+    return this;
+  }
+
   renderTemplate(context) {
     this.$el.attr('data-name', this.name);
     this.$el.html(Backbone.$(this._parseTemplate(this.template, context)));
     this.$el.find('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
+    this.delegateEvents();
+    this.renderComponents();
     return this;
   }
 
