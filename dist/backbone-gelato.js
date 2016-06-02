@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.4.1
- * Date: Mon May 23 2016 17:25:34 GMT-0500 (CDT)
+ * Version: 0.5.1
+ * Date: Thu Jun 02 2016 13:52:03 GMT-0500 (CDT)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,12 +42,16 @@ if (Backbone === undefined) {
 
 var Gelato = {};
 
-Gelato._BUILD = 'Mon May 23 2016 17:25:34 GMT-0500 (CDT)';
+Gelato._BUILD = 'Thu Jun 02 2016 13:52:03 GMT-0500 (CDT)';
 
-Gelato._VERSION = '0.4.1';
+Gelato._VERSION = '0.5.1';
 
 Gelato.isLocalhost = function () {
   return location.hostname === 'localhost';
+};
+
+Gelato.isWebsite = function () {
+  return _.includes(location.protocol, 'http');
 };
 
 var GelatoApplication = function (_Backbone$Model) {
@@ -57,9 +61,8 @@ var GelatoApplication = function (_Backbone$Model) {
     _classCallCheck(this, GelatoApplication);
 
     Backbone.$('body').prepend('<gelato-application></gelato-application>');
-    Backbone.$('gelato-application').append('<gelato-modal></gelato-modal>');
     Backbone.$('gelato-application').append('<gelato-navbar></gelato-navbar>');
-    Backbone.$('gelato-application').append('<gelato-page></gelato-page>');
+    Backbone.$('gelato-application').append('<gelato-pages></gelato-pages>');
     Backbone.$('gelato-application').append('<gelato-footer></gelato-footer>');
     return _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoApplication).call(this, arguments));
   }
@@ -98,133 +101,102 @@ Gelato = Gelato || {};
 
 Gelato.Application = GelatoApplication;
 
-/**
- * @class GelatoView
- * @extends {Backbone.View}
- */
-Gelato.View = Backbone.View.extend({
-  /**
-   * @property $view
-   * @type {jQuery}
-   */
-  $view: null,
-  /**
-   * @property template
-   * @type {Function}
-   */
-  template: null,
-  /**
-   * @param {String} [selector]
-   * @returns {GelatoView}
-   */
-  disableForm: function disableForm(selector) {
-    this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', true);
-    return this;
-  },
-  /**
-   * @param {String} [selector]
-   * @returns {GelatoView}
-   */
-  enableForm: function enableForm(selector) {
-    this.$((selector ? selector + ' ' : '') + ':input').prop('disabled', false);
-    return this;
-  },
-  /**
-   * @method getHeight
-   * @returns {Number}
-   */
-  getHeight: function getHeight() {
-    return this.$view.height();
-  },
-  /**
-   * @method getWidth
-   * @returns {Number}
-   */
-  getWidth: function getWidth() {
-    return this.$view.width();
-  },
-  /**
-   * @method handleClickNavigate
-   * @param {Event} event
-   */
-  handleClickNavigate: function handleClickNavigate(event) {
-    var $target = $(event.target);
-    var href = $target.attr('href');
-    var navigate = $target.attr('navigate');
-    event.preventDefault();
-    if (navigate === 'navigate') {
-      window.app.router.navigate(href, { trigger: true });
-    } else {
-      window.app.router.navigate(navigate, { trigger: true });
-    }
-  },
-  /**
-   * @method getContext
-   * @param {Object} [context]
-   * @returns {Object}
-   */
-  getContext: function getContext(context) {
-    var globalContext = window.app.context || {};
-    globalContext.view = this;
-    globalContext = $.extend(true, globalContext, context || {});
-    return globalContext;
-  },
-  /**
-   * @method hide
-   * @returns {GelatoView}
-   */
-  hide: function hide() {
-    this.$view.hide(arguments.length ? arguments : 0);
-    return this;
-  },
-  /**
-   * @method parseTemplate
-   * @param {Function} template
-   * @param {Object} [context]
-   * @returns {Object}
-   */
-  parseTemplate: function parseTemplate(template, context) {
-    return _.isFunction(template) ? template(this.getContext(context)) : template;
-  },
-  /**
-   * @method remove
-   * @returns {GelatoView}
-   */
-  remove: function remove() {
-    this.stopListening();
-    this.undelegateEvents();
-    this.$el.find('*').off();
-    this.$el.empty();
-    return this;
-  },
-  /**
-   * @method render
-   * @returns {GelatoView}
-   */
-  render: function render() {
-    this.renderTemplate();
-    return this;
-  },
-  /**
-   * @method renderTemplate
-   * @param {Object} [context]
-   * @returns {GelatoView}
-   */
-  renderTemplate: function renderTemplate(context) {
-    this.$view = $(this.parseTemplate(this.template, context));
-    this.$el.html(this.$view);
-    this.$('[navigate]').on('click', _.bind(this.handleClickNavigate, this));
-    return this;
-  },
-  /**
-   * @method show
-   * @returns {GelatoView}
-   */
-  show: function show() {
-    this.$view.show(arguments.length ? arguments : 0);
-    return this;
+var GelatoView = function (_Backbone$View) {
+  _inherits(GelatoView, _Backbone$View);
+
+  function GelatoView(options) {
+    _classCallCheck(this, GelatoView);
+
+    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoView).call(this, options));
+
+    _this2.components = {};
+    return _this2;
   }
-});
+
+  _createClass(GelatoView, [{
+    key: '_handleClickNavigate',
+    value: function _handleClickNavigate(event) {
+      event.preventDefault();
+      var $target = Backbone.$(event.target);
+      var href = $target.attr('href');
+      var navigate = $target.attr('navigate');
+      if (navigate === 'navigate') {
+        window.app.router.navigate(href, { trigger: true });
+      } else {
+        window.app.router.navigate(navigate, { trigger: true });
+      }
+    }
+  }, {
+    key: '_parseTemplate',
+    value: function _parseTemplate(template, context) {
+      return _.isFunction(template) ? template(this.getContext(context)) : template;
+    }
+  }, {
+    key: 'getContext',
+    value: function getContext(context) {
+      context = $.extend(true, window.app.context || {}, context || {});
+      context.view = this;
+      return context;
+    }
+  }, {
+    key: 'getHeight',
+    value: function getHeight() {
+      return this.$el.height();
+    }
+  }, {
+    key: 'getWidth',
+    value: function getWidth() {
+      return this.$el.width();
+    }
+  }, {
+    key: 'remove',
+    value: function remove() {
+      this.removeComponents();
+      this.stopListening();
+      this.undelegateEvents();
+      this.$el.find('*').off();
+      this.$el.remove();
+      return this;
+    }
+  }, {
+    key: 'removeComponents',
+    value: function removeComponents() {
+      _.forOwn(this.components, function (component) {
+        component.remove();
+      });
+      return this;
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return this.renderTemplate();
+    }
+  }, {
+    key: 'renderComponents',
+    value: function renderComponents() {
+      _.forOwn(this.components, function (component) {
+        component.render();
+      });
+      return this;
+    }
+  }, {
+    key: 'renderTemplate',
+    value: function renderTemplate(context) {
+      this.$el.attr('data-name', this.name);
+      this.$el.html(Backbone.$(this._parseTemplate(this.template, context)));
+      this.$el.find('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
+      this.delegateEvents();
+      this.renderComponents();
+      return this;
+    }
+  }]);
+
+  return GelatoView;
+}(Backbone.View);
+
+Gelato = Gelato || {};
+
+Gelato.View = GelatoView;
 
 var GelatoCollection = function (_Backbone$Collection) {
   _inherits(GelatoCollection, _Backbone$Collection);
@@ -238,20 +210,22 @@ var GelatoCollection = function (_Backbone$Collection) {
   _createClass(GelatoCollection, [{
     key: '_handleRequestEvent',
     value: function _handleRequestEvent(options) {
-      var self = this;
+      var _this4 = this,
+          _arguments = arguments;
+
       var originalOptions = _.clone(options);
       options.error = function () {
-        self.state = 'standby';
-        self._triggerState();
-        if (typeof originalOptions.error === 'function') {
-          originalOptions.error.apply(originalOptions, arguments);
+        _this4.state = 'standby';
+        _this4._triggerState();
+        if (_.isFunction(originalOptions.error)) {
+          originalOptions.error.apply(originalOptions, _arguments);
         }
       };
       options.success = function () {
-        self.state = 'standby';
-        self._triggerState();
-        if (typeof originalOptions.success === 'function') {
-          originalOptions.success.apply(originalOptions, arguments);
+        _this4.state = 'standby';
+        _this4._triggerState();
+        if (_.isFunction(originalOptions.success)) {
+          originalOptions.success.apply(originalOptions, _arguments);
         }
       };
     }
@@ -281,107 +255,90 @@ Gelato = Gelato || {};
 
 Gelato.Collection = GelatoCollection;
 
-/**
- * @class GelatoComponent
- * @extends {GelatoView}
- */
-Gelato.Component = Gelato.View.extend({
-  /**
-   * @method renderTemplate
-   * @param {Object} [context]
-   * @returns {GelatoPage}
-   */
-  renderTemplate: function renderTemplate(context) {
-    return Gelato.View.prototype.renderTemplate.call(this, context);
-  },
-  /**
-   * @method remove
-   * @returns {GelatoPage}
-   */
-  remove: function remove() {
-    return Gelato.View.prototype.remove.call(this);
+var GelatoComponent = function (_Gelato$View) {
+  _inherits(GelatoComponent, _Gelato$View);
+
+  function GelatoComponent(options) {
+    _classCallCheck(this, GelatoComponent);
+
+    options = options || {};
+    options.tagName = 'gelato-component';
+
+    var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoComponent).call(this, options));
+
+    _this5.container = options.container;
+    return _this5;
   }
-});
+
+  _createClass(GelatoComponent, [{
+    key: 'renderTemplate',
+    value: function renderTemplate(context) {
+      if (this.container) {
+        Backbone.$(this.container).html(this.$el);
+      }
+      Gelato.View.prototype.renderTemplate.call(this, context);
+      return this;
+    }
+  }]);
+
+  return GelatoComponent;
+}(Gelato.View);
+
+Gelato = Gelato || {};
+
+Gelato.Component = GelatoComponent;
 
 /**
- * @class GelatoDialog
- * @extends {GelatoView}
+ * Class for handling localization strings.
  */
-Gelato.Dialog = Gelato.View.extend({
+
+var GelatoLocale = function () {
+
   /**
-   * @property el
-   * @type {String}
+   * Create a new locale instance.
+   * @param {object} primary
+   * @param {object} [secondary]
    */
-  el: 'gelato-dialogs',
-  /**
-   * @property element
-   * @type {jQuery}
-   */
-  element: null,
-  /**
-   * @method renderTemplate
-   * @param {Object} [context]
-   * @returns {GelatoDialog}
-   */
-  renderTemplate: function renderTemplate(context) {
-    Gelato.View.prototype.renderTemplate.call(this, context);
-    this.element = this.$('[role="dialog"]');
-    this.element.on('hide.bs.modal', _.bind(this.handleElementHide, this));
-    this.element.on('hidden.bs.modal', _.bind(this.handleElementHidden, this));
-    this.element.on('show.bs.modal', _.bind(this.handleElementShow, this));
-    this.element.on('shown.bs.modal', _.bind(this.handleElementShown, this));
-    return this;
-  },
-  /**
-   * @method close
-   * @returns {GelatoDialog}
-   */
-  close: function close() {
-    this.element.modal('hide');
-    return this;
-  },
-  /**
-   * @method handleElementHide
-   */
-  handleElementHide: function handleElementHide() {
-    this.trigger('hide');
-  },
-  /**
-   * @method handleElementHidden
-   */
-  handleElementHidden: function handleElementHidden() {
-    this.trigger('hidden');
-    this.remove();
-  },
-  /**
-   * @method handleElementShow
-   */
-  handleElementShow: function handleElementShow() {
-    this.trigger('show');
-  },
-  /**
-   * @method handleElementShown
-   */
-  handleElementShown: function handleElementShown() {
-    this.trigger('shown');
-  },
-  /**
-   * @method open
-   * @param {Object} [options]
-   * @returns {GelatoDialog}
-   */
-  open: function open(options) {
-    options = _.defaults(options || {}, {
-      backdrop: 'static',
-      keyboard: false,
-      show: true,
-      remote: false
-    });
-    this.render();
-    this.element.modal(options);
-    return this;
+
+  function GelatoLocale(primary, secondary) {
+    _classCallCheck(this, GelatoLocale);
+
+    this.set(primary, secondary);
   }
-});
+
+  /**
+   * Get the locale value at the provided path.
+   * @param {string} path
+   * @returns {string}
+   */
+
+
+  _createClass(GelatoLocale, [{
+    key: 'get',
+    value: function get(path) {
+      return _.get(this._primary, path) || _.get(this._secondary, path);
+    }
+
+    /**
+     * Set primary and secondary locale objects.
+     * @param {object} primary
+     * @param {object} [secondary]
+     */
+
+  }, {
+    key: 'set',
+    value: function set(primary, secondary) {
+      this._primary = primary;
+      this._secondary = secondary;
+    }
+  }]);
+
+  return GelatoLocale;
+}();
+
+Gelato = Gelato || {};
+
+Gelato.Locale = GelatoLocale;
 
 var GelatoModel = function (_Backbone$Model2) {
   _inherits(GelatoModel, _Backbone$Model2);
@@ -395,20 +352,22 @@ var GelatoModel = function (_Backbone$Model2) {
   _createClass(GelatoModel, [{
     key: '_handleRequestEvent',
     value: function _handleRequestEvent(options) {
-      var self = this;
+      var _this7 = this,
+          _arguments2 = arguments;
+
       var originalOptions = _.clone(options);
       options.error = function () {
-        self.state = 'standby';
-        self._triggerState();
-        if (typeof originalOptions.error === 'function') {
-          originalOptions.error.apply(originalOptions, arguments);
+        _this7.state = 'standby';
+        _this7._triggerState();
+        if (_.isFunction(originalOptions.error)) {
+          originalOptions.error.apply(originalOptions, _arguments2);
         }
       };
       options.success = function () {
-        self.state = 'standby';
-        self._triggerState();
-        if (typeof originalOptions.success === 'function') {
-          originalOptions.success.apply(originalOptions, arguments);
+        _this7.state = 'standby';
+        _this7._triggerState();
+        if (_.isFunction(originalOptions.success)) {
+          originalOptions.success.apply(originalOptions, _arguments2);
         }
       };
     }
@@ -447,134 +406,123 @@ Gelato = Gelato || {};
 
 Gelato.Model = GelatoModel;
 
-/**
- * @class GelatoPage
- * @extends {GelatoView}
- */
-Gelato.Page = Gelato.View.extend({
-  /**
-   * @property el
-   * @type {String}
-   */
-  el: 'gelato-page',
-  /**
-   * @property title
-   * @type {Function|String}
-   */
-  title: null,
-  /**
-   * @method renderTemplate
-   * @param {Object} [context]
-   * @returns {GelatoPage}
-   */
-  renderTemplate: function renderTemplate(context) {
-    document.title = _.result(this, 'title');
-    return Gelato.View.prototype.renderTemplate.call(this, context);
-  },
-  /**
-   * @method remove
-   * @returns {GelatoPage}
-   */
-  remove: function remove() {
-    return Gelato.View.prototype.remove.call(this);
-  }
-});
+var GelatoPage = function (_Gelato$View2) {
+  _inherits(GelatoPage, _Gelato$View2);
 
-/**
- * @class GelatoRouter
- * @extends {Backbone.Router}
- */
-Gelato.Router = Backbone.Router.extend({
-  /**
-   * @property page
-   * @type {String}
-   */
-  page: null,
-  /**
-   * @method go
-   * @param {String} path
-   * @param {Object} [options]
-   * @returns {GelatoPage}
-   */
-  go: function go(path, options) {
-    if (this.page) {
-      this.page.remove();
+  function GelatoPage(options) {
+    _classCallCheck(this, GelatoPage);
+
+    options = options || {};
+    options.tagName = 'gelato-page';
+
+    var _this8 = _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoPage).call(this, options));
+
+    _this8.container = 'gelato-pages';
+    return _this8;
+  }
+
+  _createClass(GelatoPage, [{
+    key: 'renderTemplate',
+    value: function renderTemplate(context) {
+      if (this.title) {
+        document.title = _.result(this, 'title');
+      }
+      if (this.container) {
+        Backbone.$(this.container).html(this.$el);
+      }
+      Gelato.View.prototype.renderTemplate.call(this, context);
+      return this;
     }
-    window.scrollTo(0, 0);
-    this.page = new (require(path + '/view'))(options);
-    return this.page.render();
-  },
-  /**
-   * @method start
-   * @param {Object} [options]
-   * @returns {Boolean}
-   */
-  start: function start(options) {
-    options = _.defaults(options || {}, {
-      pushState: !Gelato.isLocalhost(),
-      root: '/'
-    });
-    return Backbone.history.start({
-      pushState: options.pushState,
-      root: options.root
-    });
+  }]);
+
+  return GelatoPage;
+}(Gelato.View);
+
+Gelato = Gelato || {};
+
+Gelato.Page = GelatoPage;
+
+var GelatoRouter = function (_Backbone$Router) {
+  _inherits(GelatoRouter, _Backbone$Router);
+
+  function GelatoRouter() {
+    _classCallCheck(this, GelatoRouter);
+
+    return _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoRouter).apply(this, arguments));
   }
-});
 
-/**
- * @class Storage
- * @param {String} [prefix]
- * @constructor
- */
-Gelato.Storage = function (prefix) {
-  this.prefix = prefix || '';
-};
+  _createClass(GelatoRouter, [{
+    key: 'execute',
+    value: function execute(callback, params) {
+      if (this.page) {
+        this.page.remove();
+      }
+      callback.apply(this, params);
+    }
+  }, {
+    key: 'start',
+    value: function start(options) {
+      options = options || {};
+      options.pushState = options.pushState || Gelato.isWebsite();
+      options.root = options.root || '/';
+      return Backbone.history.start({
+        pushState: options.pushState,
+        root: options.root
+      });
+    }
+  }]);
 
-/**
- * @method clear
- * @param {String} key
- */
-Gelato.Storage.prototype.clear = function (key) {
-  window.localStorage.clear();
-};
+  return GelatoRouter;
+}(Backbone.Router);
 
-/**
- * @method has
- * @param {String} key
- * @returns {Boolean}
- */
-Gelato.Storage.prototype.has = function (key) {
-  return window.localStorage.getItem(this.prefix + key) ? true : false;
-};
+Gelato = Gelato || {};
 
-/**
- * @method get
- * @param {String} key
- * @returns {*}
- */
-Gelato.Storage.prototype.get = function (key) {
-  try {
-    return JSON.parse(window.localStorage.getItem(this.prefix + key));
-  } catch (error) {
-    return null;
+Gelato.Router = GelatoRouter;
+
+var GelatoStorage = function () {
+  function GelatoStorage(prefix) {
+    _classCallCheck(this, GelatoStorage);
+
+    this._storage = window.localStorage;
+    this._prefix = prefix || '';
   }
-};
 
-/**
- * @method remove
- * @param {String} key
- */
-Gelato.Storage.prototype.remove = function (key) {
-  window.localStorage.removeItem(this.prefix + key);
-};
+  _createClass(GelatoStorage, [{
+    key: 'clear',
+    value: function clear() {
+      this._storage.clear();
+    }
+  }, {
+    key: 'has',
+    value: function has(key) {
+      return this._storage.getItem(this._prefix + key) ? true : false;
+    }
+  }, {
+    key: 'get',
+    value: function get(key) {
+      try {
+        return JSON.parse(this._storage.getItem(this._prefix + key));
+      } catch (error) {
+        return null;
+      }
+    }
+  }, {
+    key: 'remove',
+    value: function remove(key) {
+      this._storage.removeItem(this._prefix + key);
+    }
+  }, {
+    key: 'set',
+    value: function set(key, value) {
+      this._storage.setItem(this._prefix + key, JSON.stringify(value));
+    }
+  }]);
 
-/**
- * @method set
- * @param {String} key
- * @param {*} value
- */
-Gelato.Storage.prototype.set = function (key, value) {
-  window.localStorage.setItem(this.prefix + key, JSON.stringify(value));
-};
+  return GelatoStorage;
+}();
+
+Gelato = Gelato || {};
+
+Gelato.Storage = GelatoStorage;
 return Gelato;
 }));

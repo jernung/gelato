@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.4.1
- * Date: Mon May 23 2016 17:25:34 GMT-0500 (CDT)
+ * Version: 0.5.1
+ * Date: Thu Jun 02 2016 13:52:03 GMT-0500 (CDT)
  */
 html, body {
   height: 100%;
@@ -23,9 +23,6 @@ gelato-component {
   margin: 0;
   padding: 0;
   position: relative; }
-
-gelato-dialog .modal {
-  z-index: 9000; }
 
 gelato-page {
   display: block;
