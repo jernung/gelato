@@ -1,20 +1,16 @@
 class GelatoCollection extends Backbone.Collection {
 
   _handleRequestEvent(options) {
-    let originalOptions = _.clone(options);
+    options = _.clone(options);
     options.error = () => {
       this.state = 'standby';
       this._triggerState();
-      if (_.isFunction(originalOptions.error)) {
-        originalOptions.error.apply(originalOptions, arguments);
-      }
+      options.error && options.error(...arguments);
     };
     options.success = () => {
       this.state = 'standby';
       this._triggerState();
-      if (_.isFunction(originalOptions.success)) {
-        originalOptions.success.apply(originalOptions, arguments);
-      }
+      options.success && options.success(...arguments);
     };
   }
 
