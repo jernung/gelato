@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.2
- * Date: Tue Jun 21 2016 10:45:34 GMT-0400 (EDT)
+ * Version: 0.5.3
+ * Date: Tue Jun 21 2016 14:02:27 GMT-0400 (EDT)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,9 +42,9 @@ if (Backbone === undefined) {
 
 var Gelato = {};
 
-Gelato._BUILD = 'Tue Jun 21 2016 10:45:34 GMT-0400 (EDT)';
+Gelato._BUILD = 'Tue Jun 21 2016 14:02:27 GMT-0400 (EDT)';
 
-Gelato._VERSION = '0.5.2';
+Gelato._VERSION = '0.5.3';
 
 Gelato.isLocalhost = function () {
   return location.hostname === 'localhost';
@@ -463,8 +463,6 @@ var GelatoRouter = function (_Backbone$Router) {
     key: 'start',
     value: function start(options) {
       options = options || {};
-      options.pushState = options.pushState || Gelato.isWebsite();
-      options.root = options.root || '/';
       return Backbone.history.start({
         pushState: options.pushState,
         root: options.root
