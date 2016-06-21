@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.1
- * Date: Thu Jun 02 2016 13:52:03 GMT-0500 (CDT)
+ * Version: 0.5.2
+ * Date: Tue Jun 21 2016 10:45:34 GMT-0400 (EDT)
  */
 html, body {
   height: 100%;
@@ -17,6 +17,9 @@ gelato-application {
   padding: 0;
   position: absolute;
   width: 100%; }
+
+.cursor-pointer {
+  cursor: pointer; }
 
 gelato-component {
   display: block;

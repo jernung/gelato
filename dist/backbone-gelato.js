@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.1
- * Date: Thu Jun 02 2016 13:52:03 GMT-0500 (CDT)
+ * Version: 0.5.2
+ * Date: Tue Jun 21 2016 10:45:34 GMT-0400 (EDT)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,9 +42,9 @@ if (Backbone === undefined) {
 
 var Gelato = {};
 
-Gelato._BUILD = 'Thu Jun 02 2016 13:52:03 GMT-0500 (CDT)';
+Gelato._BUILD = 'Tue Jun 21 2016 10:45:34 GMT-0400 (EDT)';
 
-Gelato._VERSION = '0.5.1';
+Gelato._VERSION = '0.5.2';
 
 Gelato.isLocalhost = function () {
   return location.hostname === 'localhost';
@@ -213,20 +213,20 @@ var GelatoCollection = function (_Backbone$Collection) {
       var _this4 = this,
           _arguments = arguments;
 
-      var originalOptions = _.clone(options);
+      options = _.clone(options);
       options.error = function () {
+        var _options;
+
         _this4.state = 'standby';
         _this4._triggerState();
-        if (_.isFunction(originalOptions.error)) {
-          originalOptions.error.apply(originalOptions, _arguments);
-        }
+        options.error && (_options = options).error.apply(_options, _arguments);
       };
       options.success = function () {
+        var _options2;
+
         _this4.state = 'standby';
         _this4._triggerState();
-        if (_.isFunction(originalOptions.success)) {
-          originalOptions.success.apply(originalOptions, _arguments);
-        }
+        options.success && (_options2 = options).success.apply(_options2, _arguments);
       };
     }
   }, {
@@ -355,20 +355,20 @@ var GelatoModel = function (_Backbone$Model2) {
       var _this7 = this,
           _arguments2 = arguments;
 
-      var originalOptions = _.clone(options);
+      options = _.clone(options);
       options.error = function () {
+        var _options3;
+
         _this7.state = 'standby';
         _this7._triggerState();
-        if (_.isFunction(originalOptions.error)) {
-          originalOptions.error.apply(originalOptions, _arguments2);
-        }
+        options.error && (_options3 = options).error.apply(_options3, _arguments2);
       };
       options.success = function () {
+        var _options4;
+
         _this7.state = 'standby';
         _this7._triggerState();
-        if (_.isFunction(originalOptions.success)) {
-          originalOptions.success.apply(originalOptions, _arguments2);
-        }
+        options.success && (_options4 = options).success.apply(_options4, _arguments2);
       };
     }
   }, {
