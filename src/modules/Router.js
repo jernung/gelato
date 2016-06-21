@@ -8,11 +8,7 @@ class GelatoRouter extends Backbone.Router {
   }
 
   start(options) {
-    options = options || {};
-    return Backbone.history.start({
-      pushState: options.pushState,
-      root: options.root
-    });
+    return Backbone.history.start(options);
   }
 
 }
