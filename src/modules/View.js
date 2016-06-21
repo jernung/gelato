@@ -7,7 +7,7 @@ class GelatoView extends Backbone.View {
 
   _handleClickNavigate(event) {
     event.preventDefault();
-    let $target = Backbone.$(event.target);
+    let $target = Backbone.$(event.currentTarget);
     let href = $target.attr('href');
     let navigate = $target.attr('navigate');
     if (navigate === 'navigate') {
