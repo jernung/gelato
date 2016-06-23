@@ -27,6 +27,7 @@ gulp.task('compile-js', function() {
         './src/modules/View.js',
         './src/modules/Collection.js',
         './src/modules/Component.js',
+        './src/modules/Dialog.js',
         './src/modules/Locale.js',
         './src/modules/Model.js',
         './src/modules/Page.js',
@@ -81,6 +82,7 @@ gulp.task('compile-styles', function() {
       [
         './src/styles/application.scss',
         './src/styles/component.scss',
+        './src/styles/dialog.scss',
         './src/styles/page.scss'
       ]
     )
