@@ -1,10 +1,12 @@
 class GelatoRouter extends Backbone.Router {
 
-  execute(callback, params) {
+  execute(callback, args, name) {
     if (this.page) {
       this.page.remove();
     }
-    callback.apply(this, params);
+    this.trigger('navigate:before', args, name);
+    callback && callback.apply(this, args);
+    this.trigger('navigate:after', args, name);
   }
 
   start(options) {
