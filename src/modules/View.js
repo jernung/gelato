@@ -72,10 +72,14 @@ class GelatoView extends Backbone.View {
     return this;
   }
 
-  renderTemplate(context) {
+  renderTemplate(context, element) {
     this.$el.attr('data-name', this.name);
-    this.$el.html(Backbone.$(this._parseTemplate(this.template, context)));
-    this.$el.find('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
+    if (element) {
+      this.$(element).html(Backbone.$(this._parseTemplate(this.template, context)));
+    } else {
+      this.$el.html(Backbone.$(this._parseTemplate(this.template, context)));
+    }
+    this.$('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
     this.delegateEvents();
     this.renderComponents();
     return this;
