@@ -23,19 +23,19 @@ class GelatoDialog extends Gelato.View {
   }
 
   handleElementHide() {
-    this.trigger('hide');
+    this.trigger('modal:hide');
   }
 
   handleElementHidden() {
-    this.trigger('hidden');
+    this.trigger('modal:hidden');
   }
 
   handleElementShow() {
-    this.trigger('show');
+    this.trigger('modal:show');
   }
 
   handleElementShown() {
-    this.trigger('shown');
+    this.trigger('modal:shown');
   }
 
   open(options) {
