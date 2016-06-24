@@ -40,6 +40,11 @@ class GelatoView extends Backbone.View {
     return this.$el.width();
   }
 
+  hide() {
+    this.$el.hide();
+    return this;
+  }
+
   remove() {
     this.removeComponents();
     this.removeDialogs();
@@ -94,6 +99,11 @@ class GelatoView extends Backbone.View {
     this.$('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
     this.delegateEvents();
     this.renderComponents();
+    return this;
+  }
+
+  show() {
+    this.$el.show();
     return this;
   }
 
