@@ -24,6 +24,10 @@ Gelato._BUILD = '{!date!}';
 
 Gelato._VERSION = '{!version!}';
 
+Gelato.isCordova = function() {
+  return window.cordova !== undefined;
+};
+
 Gelato.isLocalhost = function() {
   return location.hostname === 'localhost';
 };
