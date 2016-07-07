@@ -9,6 +9,10 @@ class GelatoRouter extends Backbone.Router {
     this.trigger('navigate:after', args, name);
   }
 
+  isRunning() {
+    return Backbone.History.started;
+  }
+
   start(options) {
     return Backbone.history.start(options);
   }
