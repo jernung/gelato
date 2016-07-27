@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.7
- * Date: Tue Jun 28 2016 14:21:07 GMT-0500 (CDT)
+ * Version: 0.5.9
+ * Date: Tue Jul 26 2016 22:10:10 GMT-0500 (CDT)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,9 +42,9 @@ if (Backbone === undefined) {
 
 var Gelato = {};
 
-Gelato._BUILD = 'Tue Jun 28 2016 14:21:07 GMT-0500 (CDT)';
+Gelato._BUILD = 'Tue Jul 26 2016 22:10:10 GMT-0500 (CDT)';
 
-Gelato._VERSION = '0.5.7';
+Gelato._VERSION = '0.5.9';
 
 Gelato.isCordova = function () {
   return window.cordova !== undefined;
@@ -244,20 +244,16 @@ var GelatoCollection = function (_Backbone$Collection) {
       var _this4 = this,
           _arguments = arguments;
 
-      options = _.clone(options);
+      var clonedOptions = _.clone(options);
       options.error = function () {
-        var _options;
-
         _this4.state = 'standby';
         _this4._triggerState();
-        options.error && (_options = options).error.apply(_options, _arguments);
+        clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments);
       };
       options.success = function () {
-        var _options2;
-
         _this4.state = 'standby';
         _this4._triggerState();
-        options.success && (_options2 = options).success.apply(_options2, _arguments);
+        clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments);
       };
     }
   }, {
@@ -469,20 +465,16 @@ var GelatoModel = function (_Backbone$Model2) {
       var _this8 = this,
           _arguments2 = arguments;
 
-      options = _.clone(options);
+      var clonedOptions = _.clone(options);
       options.error = function () {
-        var _options3;
-
         _this8.state = 'standby';
         _this8._triggerState();
-        options.error && (_options3 = options).error.apply(_options3, _arguments2);
+        clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments2);
       };
       options.success = function () {
-        var _options4;
-
         _this8.state = 'standby';
         _this8._triggerState();
-        options.success && (_options4 = options).success.apply(_options4, _arguments2);
+        clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments2);
       };
     }
   }, {
@@ -574,6 +566,11 @@ var GelatoRouter = function (_Backbone$Router) {
       this.trigger('navigate:before', args, name);
       callback && callback.apply(this, args);
       this.trigger('navigate:after', args, name);
+    }
+  }, {
+    key: 'isRunning',
+    value: function isRunning() {
+      return Backbone.History.started;
     }
   }, {
     key: 'start',
