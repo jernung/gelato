@@ -15,7 +15,6 @@ class GelatoCollection extends Backbone.Collection {
   }
 
   _triggerState() {
-    console.log('state:', this.state);
     this.trigger('state', this.state, this);
     this.trigger('state:' + this.state, this);
   }
