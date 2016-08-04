@@ -35,7 +35,7 @@
     "gulp-sass": "~2.3.0",
     "gulp-umd": "~0.2.0",
     "gulp-watch": "~4.3.0",
-    "mocha": "~2.5.0",
+    "mocha": "~3.0.0",
     "mocha-phantomjs": "~4.1.0",
     "shelljs": "~0.7.0",
     "sinon": "~1.17.0"
