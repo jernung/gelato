@@ -3,17 +3,24 @@ class GelatoModel extends Backbone.Model {
   _handleRequestEvent(options) {
     let clonedOptions = _.clone(options);
     options.error = () => {
-      this.loaded = true;
       this.state = 'standby';
+      this._triggerLoad();
       this._triggerState();
       clonedOptions.error && clonedOptions.error(...arguments);
     };
     options.success = () => {
-      this.loaded = true;
       this.state = 'standby';
+      this._triggerLoad();
       this._triggerState();
       clonedOptions.success && clonedOptions.success(...arguments);
     };
+  }
+
+  _triggerLoad() {
+    if (!this.loaded) {
+      this.loaded = true;
+      this.trigger('load', this);
+    }
   }
 
   _triggerState() {
