@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.9
- * Date: Tue Jul 26 2016 22:10:10 GMT-0500 (CDT)
+ * Version: 0.5.10
+ * Date: Tue Sep 06 2016 20:13:55 GMT+0800 (CST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,9 +42,9 @@ if (Backbone === undefined) {
 
 var Gelato = {};
 
-Gelato._BUILD = 'Tue Jul 26 2016 22:10:10 GMT-0500 (CDT)';
+Gelato._BUILD = 'Tue Sep 06 2016 20:13:55 GMT+0800 (CST)';
 
-Gelato._VERSION = '0.5.9';
+Gelato._VERSION = '0.5.10';
 
 Gelato.isCordova = function () {
   return window.cordova !== undefined;
@@ -69,7 +69,7 @@ var GelatoApplication = function (_Backbone$Model) {
     Backbone.$('gelato-application').append('<gelato-navbar></gelato-navbar>');
     Backbone.$('gelato-application').append('<gelato-pages></gelato-pages>');
     Backbone.$('gelato-application').append('<gelato-footer></gelato-footer>');
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoApplication).call(this, arguments));
+    return _possibleConstructorReturn(this, (GelatoApplication.__proto__ || Object.getPrototypeOf(GelatoApplication)).call(this, arguments));
   }
 
   _createClass(GelatoApplication, [{
@@ -112,7 +112,7 @@ var GelatoView = function (_Backbone$View) {
   function GelatoView(options) {
     _classCallCheck(this, GelatoView);
 
-    var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoView).call(this, options));
+    var _this2 = _possibleConstructorReturn(this, (GelatoView.__proto__ || Object.getPrototypeOf(GelatoView)).call(this, options));
 
     _this2.components = {};
     _this2.dialogs = {};
@@ -235,7 +235,7 @@ var GelatoCollection = function (_Backbone$Collection) {
   function GelatoCollection() {
     _classCallCheck(this, GelatoCollection);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoCollection).apply(this, arguments));
+    return _possibleConstructorReturn(this, (GelatoCollection.__proto__ || Object.getPrototypeOf(GelatoCollection)).apply(this, arguments));
   }
 
   _createClass(GelatoCollection, [{
@@ -247,14 +247,24 @@ var GelatoCollection = function (_Backbone$Collection) {
       var clonedOptions = _.clone(options);
       options.error = function () {
         _this4.state = 'standby';
+        _this4._triggerLoad();
         _this4._triggerState();
         clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments);
       };
       options.success = function () {
         _this4.state = 'standby';
+        _this4._triggerLoad();
         _this4._triggerState();
         clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments);
       };
+    }
+  }, {
+    key: '_triggerLoad',
+    value: function _triggerLoad() {
+      if (!this.loaded) {
+        this.loaded = true;
+        this.trigger('load', this);
+      }
     }
   }, {
     key: '_triggerState',
@@ -276,6 +286,7 @@ var GelatoCollection = function (_Backbone$Collection) {
   return GelatoCollection;
 }(Backbone.Collection);
 
+GelatoCollection.prototype.loaded = false;
 GelatoCollection.prototype.state = 'standby';
 
 Gelato = Gelato || {};
@@ -291,7 +302,7 @@ var GelatoComponent = function (_Gelato$View) {
     options = options || {};
     options.tagName = 'gelato-component';
 
-    var _this5 = _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoComponent).call(this, options));
+    var _this5 = _possibleConstructorReturn(this, (GelatoComponent.__proto__ || Object.getPrototypeOf(GelatoComponent)).call(this, options));
 
     _this5.container = options.container;
     return _this5;
@@ -324,7 +335,7 @@ var GelatoDialog = function (_Gelato$View2) {
     options = options || {};
     options.tagName = 'gelato-dialog';
 
-    var _this6 = _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoDialog).call(this, options));
+    var _this6 = _possibleConstructorReturn(this, (GelatoDialog.__proto__ || Object.getPrototypeOf(GelatoDialog)).call(this, options));
 
     _this6.container = 'gelato-dialogs';
     return _this6;
@@ -456,7 +467,7 @@ var GelatoModel = function (_Backbone$Model2) {
   function GelatoModel() {
     _classCallCheck(this, GelatoModel);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoModel).apply(this, arguments));
+    return _possibleConstructorReturn(this, (GelatoModel.__proto__ || Object.getPrototypeOf(GelatoModel)).apply(this, arguments));
   }
 
   _createClass(GelatoModel, [{
@@ -468,14 +479,24 @@ var GelatoModel = function (_Backbone$Model2) {
       var clonedOptions = _.clone(options);
       options.error = function () {
         _this8.state = 'standby';
+        _this8._triggerLoad();
         _this8._triggerState();
         clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments2);
       };
       options.success = function () {
         _this8.state = 'standby';
+        _this8._triggerLoad();
         _this8._triggerState();
         clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments2);
       };
+    }
+  }, {
+    key: '_triggerLoad',
+    value: function _triggerLoad() {
+      if (!this.loaded) {
+        this.loaded = true;
+        this.trigger('load', this);
+      }
     }
   }, {
     key: '_triggerState',
@@ -506,6 +527,7 @@ var GelatoModel = function (_Backbone$Model2) {
   return GelatoModel;
 }(Backbone.Model);
 
+GelatoModel.prototype.loaded = false;
 GelatoModel.prototype.state = 'standby';
 
 Gelato = Gelato || {};
@@ -521,7 +543,7 @@ var GelatoPage = function (_Gelato$View3) {
     options = options || {};
     options.tagName = 'gelato-page';
 
-    var _this9 = _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoPage).call(this, options));
+    var _this9 = _possibleConstructorReturn(this, (GelatoPage.__proto__ || Object.getPrototypeOf(GelatoPage)).call(this, options));
 
     _this9.container = 'gelato-pages';
     return _this9;
@@ -554,7 +576,7 @@ var GelatoRouter = function (_Backbone$Router) {
   function GelatoRouter() {
     _classCallCheck(this, GelatoRouter);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(GelatoRouter).apply(this, arguments));
+    return _possibleConstructorReturn(this, (GelatoRouter.__proto__ || Object.getPrototypeOf(GelatoRouter)).apply(this, arguments));
   }
 
   _createClass(GelatoRouter, [{
