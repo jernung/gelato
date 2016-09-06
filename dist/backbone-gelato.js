@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.10
- * Date: Tue Sep 06 2016 20:13:55 GMT+0800 (CST)
+ * Version: 0.5.11
+ * Date: Tue Sep 06 2016 21:29:45 GMT+0800 (CST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,9 +42,9 @@ if (Backbone === undefined) {
 
 var Gelato = {};
 
-Gelato._BUILD = 'Tue Sep 06 2016 20:13:55 GMT+0800 (CST)';
+Gelato._BUILD = 'Tue Sep 06 2016 21:29:45 GMT+0800 (CST)';
 
-Gelato._VERSION = '0.5.10';
+Gelato._VERSION = '0.5.11';
 
 Gelato.isCordova = function () {
   return window.cordova !== undefined;
