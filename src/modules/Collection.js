@@ -3,11 +3,13 @@ class GelatoCollection extends Backbone.Collection {
   _handleRequestEvent(options) {
     let clonedOptions = _.clone(options);
     options.error = () => {
+      this.loaded = true;
       this.state = 'standby';
       this._triggerState();
       clonedOptions.error && clonedOptions.error(...arguments);
     };
     options.success = () => {
+      this.loaded = true;
       this.state = 'standby';
       this._triggerState();
       clonedOptions.success && clonedOptions.success(...arguments);
@@ -29,6 +31,7 @@ class GelatoCollection extends Backbone.Collection {
 
 }
 
+GelatoCollection.prototype.loaded = false;
 GelatoCollection.prototype.state = 'standby';
 
 Gelato = Gelato || {};
