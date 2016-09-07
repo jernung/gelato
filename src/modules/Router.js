@@ -4,6 +4,7 @@ class GelatoRouter extends Backbone.Router {
     if (this.page) {
       this.page.remove();
     }
+
     this.trigger('navigate:before', args, name);
     callback && callback.apply(this, args);
     this.trigger('navigate:after', args, name);

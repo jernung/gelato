@@ -1,5 +1,7 @@
 'use strict';
 
+let Gelato = {};
+
 if ($ === undefined) {
   throw 'Gelato requires jQuery as a dependency.'
 } else {
@@ -17,8 +19,6 @@ if (Backbone === undefined) {
 } else {
   window.Backbone = Backbone;
 }
-
-var Gelato = {};
 
 Gelato._BUILD = '{!date!}';
 

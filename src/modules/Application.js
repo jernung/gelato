@@ -6,6 +6,7 @@ class GelatoApplication extends Backbone.Model {
     Backbone.$('gelato-application').append('<gelato-navbar></gelato-navbar>');
     Backbone.$('gelato-application').append('<gelato-pages></gelato-pages>');
     Backbone.$('gelato-application').append('<gelato-footer></gelato-footer>');
+
     super(arguments);
   }
 

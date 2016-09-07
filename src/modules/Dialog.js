@@ -3,7 +3,9 @@ class GelatoDialog extends Gelato.View {
   constructor(options) {
     options = options || {};
     options.tagName = 'gelato-dialog';
+
     super(options);
+
     this.container = 'gelato-dialogs';
   }
 
@@ -14,11 +16,13 @@ class GelatoDialog extends Gelato.View {
 
   renderTemplate(context) {
     Gelato.View.prototype.renderTemplate.call(this, context, '.modal-content');
+
     return this;
   }
 
   close() {
     this.dialog.modal('hide');
+
     return this;
   }
 

@@ -2,14 +2,15 @@ class GelatoView extends Backbone.View {
 
   constructor(options) {
     super(options);
+
     this.components = {};
   }
 
   _handleClickNavigate(event) {
     event.preventDefault();
-    let $target = Backbone.$(event.currentTarget);
-    let href = $target.attr('href');
-    let navigate = $target.attr('navigate');
+    const $target = Backbone.$(event.currentTarget);
+    const href = $target.attr('href');
+    const navigate = $target.attr('navigate');
 
     if (href === '#') {
       return;
@@ -32,7 +33,9 @@ class GelatoView extends Backbone.View {
       window.app.context || {},
       context || {}
     );
+
     context.view = this;
+
     return context;
   }
 
@@ -55,6 +58,7 @@ class GelatoView extends Backbone.View {
     this.undelegateEvents();
     this.$el.find('*').off();
     this.$el.remove();
+
     return this;
   }
 
@@ -65,6 +69,7 @@ class GelatoView extends Backbone.View {
         component.remove();
       }
     );
+
     return this;
   }
 
@@ -79,24 +84,29 @@ class GelatoView extends Backbone.View {
         component.render();
       }
     );
+
     return this;
   }
 
   renderTemplate(context, element) {
     this.$el.attr('data-name', this.name);
+
     if (element) {
       this.$(element).html(Backbone.$(this._parseTemplate(this.template, context)));
     } else {
       this.$el.html(Backbone.$(this._parseTemplate(this.template, context)));
     }
+
     this.$('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
     this.delegateEvents();
     this.renderComponents();
+
     return this;
   }
 
   show() {
     this.$el.show();
+
     return this;
   }
 

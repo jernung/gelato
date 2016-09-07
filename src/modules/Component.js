@@ -3,7 +3,9 @@ class GelatoComponent extends Gelato.View {
   constructor(options) {
     options = options || {};
     options.tagName = 'gelato-component';
+
     super(options);
+
     this.container = options.container;
   }
 
@@ -11,7 +13,9 @@ class GelatoComponent extends Gelato.View {
     if (this.container) {
       Backbone.$(this.container).html(this.$el);
     }
+
     Gelato.View.prototype.renderTemplate.call(this, context);
+
     return this;
   }
 
