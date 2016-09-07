@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.11
- * Date: Tue Sep 06 2016 21:29:45 GMT+0800 (CST)
+ * Version: 0.5.12
+ * Date: Wed Sep 07 2016 18:33:12 GMT+0800 (CST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -22,6 +22,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
+var Gelato = {};
+
 if ($ === undefined) {
   throw 'Gelato requires jQuery as a dependency.';
 } else {
@@ -40,11 +42,9 @@ if (Backbone === undefined) {
   window.Backbone = Backbone;
 }
 
-var Gelato = {};
+Gelato._BUILD = 'Wed Sep 07 2016 18:33:12 GMT+0800 (CST)';
 
-Gelato._BUILD = 'Tue Sep 06 2016 21:29:45 GMT+0800 (CST)';
-
-Gelato._VERSION = '0.5.11';
+Gelato._VERSION = '0.5.12';
 
 Gelato.isCordova = function () {
   return window.cordova !== undefined;
@@ -69,6 +69,7 @@ var GelatoApplication = function (_Backbone$Model) {
     Backbone.$('gelato-application').append('<gelato-navbar></gelato-navbar>');
     Backbone.$('gelato-application').append('<gelato-pages></gelato-pages>');
     Backbone.$('gelato-application').append('<gelato-footer></gelato-footer>');
+
     return _possibleConstructorReturn(this, (GelatoApplication.__proto__ || Object.getPrototypeOf(GelatoApplication)).call(this, arguments));
   }
 
@@ -115,7 +116,6 @@ var GelatoView = function (_Backbone$View) {
     var _this2 = _possibleConstructorReturn(this, (GelatoView.__proto__ || Object.getPrototypeOf(GelatoView)).call(this, options));
 
     _this2.components = {};
-    _this2.dialogs = {};
     return _this2;
   }
 
@@ -124,12 +124,17 @@ var GelatoView = function (_Backbone$View) {
     value: function _handleClickNavigate(event) {
       event.preventDefault();
       var $target = Backbone.$(event.currentTarget);
-      var href = $target.attr('href');
-      var navigate = $target.attr('navigate');
+      var href = $target.attr('href').replace(Backbone.history.root, '');
+      var navigate = $target.attr('navigate').replace(Backbone.history.root, '');
+
+      if (href === '#') {
+        return;
+      }
+
       if (navigate === 'navigate') {
         window.app.router.navigate(href, { trigger: true });
       } else {
-        window.app.router.navigate(navigate, { trigger: true });
+        document.location.href = href;
       }
     }
   }, {
@@ -141,7 +146,9 @@ var GelatoView = function (_Backbone$View) {
     key: 'getContext',
     value: function getContext(context) {
       context = $.extend(true, window.app.context || {}, context || {});
+
       context.view = this;
+
       return context;
     }
   }, {
@@ -164,11 +171,11 @@ var GelatoView = function (_Backbone$View) {
     key: 'remove',
     value: function remove() {
       this.removeComponents();
-      this.removeDialogs();
       this.stopListening();
       this.undelegateEvents();
       this.$el.find('*').off();
       this.$el.remove();
+
       return this;
     }
   }, {
@@ -177,14 +184,7 @@ var GelatoView = function (_Backbone$View) {
       _.forOwn(this.components, function (component) {
         component.remove();
       });
-      return this;
-    }
-  }, {
-    key: 'removeDialogs',
-    value: function removeDialogs() {
-      _.forOwn(this.dialogs, function (dialog) {
-        dialog.remove();
-      });
+
       return this;
     }
   }, {
@@ -198,26 +198,31 @@ var GelatoView = function (_Backbone$View) {
       _.forOwn(this.components, function (component) {
         component.render();
       });
+
       return this;
     }
   }, {
     key: 'renderTemplate',
     value: function renderTemplate(context, element) {
       this.$el.attr('data-name', this.name);
+
       if (element) {
         this.$(element).html(Backbone.$(this._parseTemplate(this.template, context)));
       } else {
         this.$el.html(Backbone.$(this._parseTemplate(this.template, context)));
       }
+
       this.$('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
       this.delegateEvents();
       this.renderComponents();
+
       return this;
     }
   }, {
     key: 'show',
     value: function show() {
       this.$el.show();
+
       return this;
     }
   }]);
@@ -245,16 +250,20 @@ var GelatoCollection = function (_Backbone$Collection) {
           _arguments = arguments;
 
       var clonedOptions = _.clone(options);
+
       options.error = function () {
         _this4.state = 'standby';
         _this4._triggerLoad();
         _this4._triggerState();
+
         clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments);
       };
+
       options.success = function () {
         _this4.state = 'standby';
         _this4._triggerLoad();
         _this4._triggerState();
+
         clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments);
       };
     }
@@ -276,9 +285,11 @@ var GelatoCollection = function (_Backbone$Collection) {
     key: 'fetch',
     value: function fetch(options) {
       options = options || {};
+
       this.state = 'fetching';
       this._triggerState();
       this._handleRequestEvent(options);
+
       return Backbone.Collection.prototype.fetch.call(this, options);
     }
   }]);
@@ -314,7 +325,9 @@ var GelatoComponent = function (_Gelato$View) {
       if (this.container) {
         Backbone.$(this.container).html(this.$el);
       }
+
       Gelato.View.prototype.renderTemplate.call(this, context);
+
       return this;
     }
   }]);
@@ -351,12 +364,14 @@ var GelatoDialog = function (_Gelato$View2) {
     key: 'renderTemplate',
     value: function renderTemplate(context) {
       Gelato.View.prototype.renderTemplate.call(this, context, '.modal-content');
+
       return this;
     }
   }, {
     key: 'close',
     value: function close() {
       this.dialog.modal('hide');
+
       return this;
     }
   }, {
@@ -368,6 +383,7 @@ var GelatoDialog = function (_Gelato$View2) {
     key: 'handleElementHidden',
     value: function handleElementHidden() {
       this.trigger('modal:hidden');
+      this.remove();
     }
   }, {
     key: 'handleElementShow',
@@ -382,7 +398,10 @@ var GelatoDialog = function (_Gelato$View2) {
   }, {
     key: 'open',
     value: function open(options) {
-      this.remove();
+      if (window.app.dialog) {
+        return;
+      }
+
       Backbone.$(this.container).html(this.$el);
       this.renderModalContainer();
       this.renderTemplate();
@@ -392,12 +411,18 @@ var GelatoDialog = function (_Gelato$View2) {
       this.dialog.on('show.bs.modal', this.handleElementShow.bind(this));
       this.dialog.on('shown.bs.modal', this.handleElementShown.bind(this));
       this.dialog.modal(options);
+
+      window.app.dialog = this.dialog;
+
       return this;
     }
   }, {
     key: 'remove',
     value: function remove() {
       Backbone.$('.modal-backdrop').remove();
+
+      window.app.dialog = null;
+
       return Gelato.View.prototype.remove.call(this);
     }
   }]);
@@ -477,16 +502,20 @@ var GelatoModel = function (_Backbone$Model2) {
           _arguments2 = arguments;
 
       var clonedOptions = _.clone(options);
+
       options.error = function () {
         _this8.state = 'standby';
         _this8._triggerLoad();
         _this8._triggerState();
+
         clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments2);
       };
+
       options.success = function () {
         _this8.state = 'standby';
         _this8._triggerLoad();
         _this8._triggerState();
+
         clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments2);
       };
     }
@@ -508,18 +537,22 @@ var GelatoModel = function (_Backbone$Model2) {
     key: 'fetch',
     value: function fetch(options) {
       options = options || {};
+
       this.state = 'fetching';
       this._triggerState();
       this._handleRequestEvent(options);
+
       return Backbone.Model.prototype.fetch.call(this, options);
     }
   }, {
     key: 'save',
     value: function save(attributes, options) {
       options = options || {};
+
       this.state = 'saving';
       this._triggerState();
       this._handleRequestEvent(options);
+
       return Backbone.Model.prototype.save.call(this, attributes, options);
     }
   }]);
@@ -555,10 +588,13 @@ var GelatoPage = function (_Gelato$View3) {
       if (this.title) {
         document.title = _.result(this, 'title');
       }
+
       if (this.container) {
         Backbone.$(this.container).html(this.$el);
       }
+
       Gelato.View.prototype.renderTemplate.call(this, context);
+
       return this;
     }
   }]);
@@ -585,6 +621,7 @@ var GelatoRouter = function (_Backbone$Router) {
       if (this.page) {
         this.page.remove();
       }
+
       this.trigger('navigate:before', args, name);
       callback && callback.apply(this, args);
       this.trigger('navigate:after', args, name);
