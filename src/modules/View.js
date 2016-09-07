@@ -3,7 +3,6 @@ class GelatoView extends Backbone.View {
   constructor(options) {
     super(options);
     this.components = {};
-    this.dialogs = {};
   }
 
   _handleClickNavigate(event) {
@@ -47,7 +46,6 @@ class GelatoView extends Backbone.View {
 
   remove() {
     this.removeComponents();
-    this.removeDialogs();
     this.stopListening();
     this.undelegateEvents();
     this.$el.find('*').off();
@@ -60,16 +58,6 @@ class GelatoView extends Backbone.View {
       this.components,
       function(component) {
         component.remove();
-      }
-    );
-    return this;
-  }
-
-  removeDialogs() {
-    _.forOwn(
-      this.dialogs,
-      function(dialog) {
-        dialog.remove();
       }
     );
     return this;

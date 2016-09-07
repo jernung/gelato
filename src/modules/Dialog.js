@@ -28,6 +28,7 @@ class GelatoDialog extends Gelato.View {
 
   handleElementHidden() {
     this.trigger('modal:hidden');
+    this.remove();
   }
 
   handleElementShow() {
@@ -39,7 +40,10 @@ class GelatoDialog extends Gelato.View {
   }
 
   open(options) {
-    this.remove();
+    if (window.app.dialog) {
+      return;
+    }
+
     Backbone.$(this.container).html(this.$el);
     this.renderModalContainer();
     this.renderTemplate();
@@ -49,11 +53,17 @@ class GelatoDialog extends Gelato.View {
     this.dialog.on('show.bs.modal', this.handleElementShow.bind(this));
     this.dialog.on('shown.bs.modal', this.handleElementShown.bind(this));
     this.dialog.modal(options);
+
+    window.app.dialog = this.dialog;
+
     return this;
   }
 
   remove() {
     Backbone.$('.modal-backdrop').remove();
+
+    window.app.dialog = null;
+
     return Gelato.View.prototype.remove.call(this);
   }
 
