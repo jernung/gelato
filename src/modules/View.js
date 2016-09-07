@@ -10,10 +10,15 @@ class GelatoView extends Backbone.View {
     let $target = Backbone.$(event.currentTarget);
     let href = $target.attr('href');
     let navigate = $target.attr('navigate');
+
+    if (href === '#') {
+      return;
+    }
+
     if (navigate === 'navigate') {
-      window.app.router.navigate(href, {trigger: true});
-    } else {
       window.app.router.navigate(navigate, {trigger: true});
+    } else {
+      document.location.href = href;
     }
   }
 
