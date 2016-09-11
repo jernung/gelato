@@ -10,10 +10,10 @@ describe('GelatoApplication', function() {
     'should create application elements in the body',
     function() {
       expect($('gelato-application')).to.have.length(1);
+      expect($('gelato-application > gelato-dialogs')).to.have.length(1);
       expect($('gelato-application > gelato-footer')).to.have.length(1);
-      expect($('gelato-application > gelato-modal')).to.have.length(1);
       expect($('gelato-application > gelato-navbar')).to.have.length(1);
-      expect($('gelato-application > gelato-page')).to.have.length(1);
+      expect($('gelato-application > gelato-pages')).to.have.length(1);
     }
   );
 
