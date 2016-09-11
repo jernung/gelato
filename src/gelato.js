@@ -24,6 +24,15 @@ Gelato._BUILD = '{!date!}';
 
 Gelato._VERSION = '{!version!}';
 
+Gelato.getCookie = function(name) {
+  const value = '; ' + document.cookie;
+  const parts = value.split('; ' + name + '=');
+
+  if (parts.length == 2) {
+    return parts.pop().split(';').shift();
+  }
+};
+
 Gelato.isCordova = function() {
   return window.cordova !== undefined;
 };
@@ -33,5 +42,5 @@ Gelato.isLocalhost = function() {
 };
 
 Gelato.isWebsite = function() {
-  return _.includes(location.protocol, 'http');
+  return location.protocol.indexOf('http') !== -1;
 };
