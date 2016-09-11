@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.12
- * Date: Wed Sep 07 2016 18:33:12 GMT+0800 (CST)
+ * Version: 0.5.13
+ * Date: Sun Sep 11 2016 11:25:36 GMT+0800 (CST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,9 +42,18 @@ if (Backbone === undefined) {
   window.Backbone = Backbone;
 }
 
-Gelato._BUILD = 'Wed Sep 07 2016 18:33:12 GMT+0800 (CST)';
+Gelato._BUILD = 'Sun Sep 11 2016 11:25:36 GMT+0800 (CST)';
 
-Gelato._VERSION = '0.5.12';
+Gelato._VERSION = '0.5.13';
+
+Gelato.getCookie = function (name) {
+  var value = '; ' + document.cookie;
+  var parts = value.split('; ' + name + '=');
+
+  if (parts.length == 2) {
+    return parts.pop().split(';').shift();
+  }
+};
 
 Gelato.isCordova = function () {
   return window.cordova !== undefined;
@@ -55,7 +64,7 @@ Gelato.isLocalhost = function () {
 };
 
 Gelato.isWebsite = function () {
-  return _.includes(location.protocol, 'http');
+  return location.protocol.indexOf('http') !== -1;
 };
 
 var GelatoApplication = function (_Backbone$Model) {
