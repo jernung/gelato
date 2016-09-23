@@ -20,27 +20,62 @@ if (Backbone === undefined) {
   window.Backbone = Backbone;
 }
 
-Gelato._BUILD = '{!date!}';
-
-Gelato._VERSION = '{!version!}';
-
-Gelato.getCookie = function(name) {
+function getCookie(name) {
   const value = '; ' + document.cookie;
   const parts = value.split('; ' + name + '=');
 
   if (parts.length == 2) {
     return parts.pop().split(';').shift();
   }
-};
+}
 
-Gelato.isCordova = function() {
-  return window.cordova !== undefined;
-};
+function getScreenHeight() {
+  return $(window).height();
+}
 
-Gelato.isLocalhost = function() {
+function getScreenWidth() {
+  return $(window).width();
+}
+
+function isCordova() {
+  return _.isObject(window.cordova);
+}
+
+function isLocalhost() {
   return location.hostname === 'localhost';
-};
+}
 
-Gelato.isWebsite = function() {
-  return location.protocol.indexOf('http') !== -1;
-};
+function isWebsite() {
+  return _.includes(document.location, 'http');
+}
+
+function setCookie(name, value, days) {
+  let expires = '';
+
+  if (days) {
+    const date = new Date();
+
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = '; expires=' + date.toGMTString();
+  }
+
+  document.cookie = name + '=' + value + expires + '; path=/';
+}
+
+Gelato.getCookie = getCookie;
+
+Gelato.getScreenHeight = getScreenHeight;
+
+Gelato.getScreenWidth = getScreenWidth;
+
+Gelato.isCordova = isCordova;
+
+Gelato.isLocalhost = isLocalhost;
+
+Gelato.isWebsite = isWebsite;
+
+Getato.setCookie = setCookie;
+
+Gelato._BUILD = '{!date!}';
+
+Gelato._VERSION = '{!version!}';
