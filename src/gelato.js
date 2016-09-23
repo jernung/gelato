@@ -49,6 +49,10 @@ function isWebsite() {
   return _.includes(document.location, 'http');
 }
 
+function reload(forcedReload) {
+  document.location.reload(forcedReload);
+}
+
 function setCookie(name, value, days) {
   let expires = '';
 
@@ -73,6 +77,8 @@ Gelato.isCordova = isCordova;
 Gelato.isLocalhost = isLocalhost;
 
 Gelato.isWebsite = isWebsite;
+
+Gelato.reload = reload;
 
 Gelato.setCookie = setCookie;
 
