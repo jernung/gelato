@@ -74,7 +74,7 @@ Gelato.isLocalhost = isLocalhost;
 
 Gelato.isWebsite = isWebsite;
 
-Getato.setCookie = setCookie;
+Gelato.setCookie = setCookie;
 
 Gelato._BUILD = '{!date!}';
 
