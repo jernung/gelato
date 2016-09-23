@@ -1,13 +1,20 @@
-class GelatoApplication extends Backbone.Model {
+class GelatoApplication extends Backbone.View {
 
-  constructor() {
-    Backbone.$('body').prepend('<gelato-application></gelato-application>');
-    Backbone.$('gelato-application').append('<gelato-dialogs></gelato-dialogs>');
-    Backbone.$('gelato-application').append('<gelato-navbar></gelato-navbar>');
-    Backbone.$('gelato-application').append('<gelato-pages></gelato-pages>');
-    Backbone.$('gelato-application').append('<gelato-footer></gelato-footer>');
+  constructor(options) {
+    options = options || {};
+    options.tagName = 'gelato-application';
 
-    super(arguments);
+    super(options);
+  }
+
+  render() {
+    $(document.body).prepend(this.el);
+    this.$el.append('<gelato-navbar></gelato-navbar>');
+    this.$el.append('<gelato-pages></gelato-pages>');
+    this.$el.append('<gelato-footer></gelato-footer>');
+    this.$el.append('<gelato-dialogs></gelato-dialogs>');
+
+    return this;
   }
 
   getHeight() {
@@ -24,10 +31,6 @@ class GelatoApplication extends Backbone.Model {
 
   isPortrait() {
     return this.getWidth() <= this.getHeight();
-  }
-
-  reload(forcedReload) {
-    location.reload(forcedReload);
   }
 
 }
