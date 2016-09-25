@@ -17,8 +17,25 @@ class GelatoApplication extends Backbone.View {
     return this;
   }
 
+  getCookie(name) {
+    const value = '; ' + document.cookie;
+    const parts = value.split('; ' + name + '=');
+
+    if (parts.length == 2) {
+      return parts.pop().split(';').shift();
+    }
+  }
+
   getHeight() {
     return Backbone.$('gelato-application').height();
+  }
+
+  getQueryString(name, url) {
+    const href = url ? url : window.location.href;
+    const expression = new RegExp( '[?&]' + name + '=([^&#]*)', 'i' );
+    const result = expression.exec(href);
+
+    return result ? result[1] : null;
   }
 
   getWidth() {
@@ -31,6 +48,23 @@ class GelatoApplication extends Backbone.View {
 
   isPortrait() {
     return this.getWidth() <= this.getHeight();
+  }
+
+  reload(forcedReload) {
+    document.location.reload(forcedReload);
+  }
+
+  setCookie(name, value, days) {
+    let expires = '';
+
+    if (days) {
+      const date = new Date();
+
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      expires = '; expires=' + date.toGMTString();
+    }
+
+    document.cookie = name + '=' + value + expires + '; path=/';
   }
 
 }
