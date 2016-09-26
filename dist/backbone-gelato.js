@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.13
- * Date: Sun Sep 11 2016 11:25:36 GMT+0800 (CST)
+ * Version: 0.5.14
+ * Date: Mon Sep 26 2016 08:54:46 GMT+0800 (CST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -42,50 +42,103 @@ if (Backbone === undefined) {
   window.Backbone = Backbone;
 }
 
-Gelato._BUILD = 'Sun Sep 11 2016 11:25:36 GMT+0800 (CST)';
+function getScreenHeight() {
+  return $(window).height();
+}
 
-Gelato._VERSION = '0.5.13';
+function getScreenWidth() {
+  return $(window).width();
+}
 
-Gelato.getCookie = function (name) {
-  var value = '; ' + document.cookie;
-  var parts = value.split('; ' + name + '=');
+function isCordova() {
+  return _.isObject(window.cordova);
+}
 
-  if (parts.length == 2) {
-    return parts.pop().split(';').shift();
-  }
-};
+function isFileSystem() {
+  return location.protocol === 'file:';
+}
 
-Gelato.isCordova = function () {
-  return window.cordova !== undefined;
-};
-
-Gelato.isLocalhost = function () {
+function isLocalhost() {
   return location.hostname === 'localhost';
-};
+}
 
-Gelato.isWebsite = function () {
-  return location.protocol.indexOf('http') !== -1;
-};
+function isWebsite() {
+  return _.includes(['http:', 'https:'], location.protocol);
+}
 
-var GelatoApplication = function (_Backbone$Model) {
-  _inherits(GelatoApplication, _Backbone$Model);
+function setCookie(name, value, days) {
+  var expires = '';
 
-  function GelatoApplication() {
+  if (days) {
+    var date = new Date();
+
+    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+    expires = '; expires=' + date.toGMTString();
+  }
+
+  document.cookie = name + '=' + value + expires + '; path=/';
+}
+
+Gelato.getScreenHeight = getScreenHeight;
+
+Gelato.getScreenWidth = getScreenWidth;
+
+Gelato.isCordova = isCordova;
+
+Gelato.isLocalhost = isLocalhost;
+
+Gelato.isWebsite = isWebsite;
+
+Gelato._BUILD = 'Mon Sep 26 2016 08:54:46 GMT+0800 (CST)';
+
+Gelato._VERSION = '0.5.14';
+
+var GelatoApplication = function (_Backbone$View) {
+  _inherits(GelatoApplication, _Backbone$View);
+
+  function GelatoApplication(options) {
     _classCallCheck(this, GelatoApplication);
 
-    Backbone.$('body').prepend('<gelato-application></gelato-application>');
-    Backbone.$('gelato-application').append('<gelato-dialogs></gelato-dialogs>');
-    Backbone.$('gelato-application').append('<gelato-navbar></gelato-navbar>');
-    Backbone.$('gelato-application').append('<gelato-pages></gelato-pages>');
-    Backbone.$('gelato-application').append('<gelato-footer></gelato-footer>');
+    options = options || {};
+    options.tagName = 'gelato-application';
 
-    return _possibleConstructorReturn(this, (GelatoApplication.__proto__ || Object.getPrototypeOf(GelatoApplication)).call(this, arguments));
+    return _possibleConstructorReturn(this, (GelatoApplication.__proto__ || Object.getPrototypeOf(GelatoApplication)).call(this, options));
   }
 
   _createClass(GelatoApplication, [{
+    key: 'render',
+    value: function render() {
+      $(document.body).prepend(this.el);
+      this.$el.append('<gelato-navbar></gelato-navbar>');
+      this.$el.append('<gelato-pages></gelato-pages>');
+      this.$el.append('<gelato-footer></gelato-footer>');
+      this.$el.append('<gelato-dialogs></gelato-dialogs>');
+
+      return this;
+    }
+  }, {
+    key: 'getCookie',
+    value: function getCookie(name) {
+      var value = '; ' + document.cookie;
+      var parts = value.split('; ' + name + '=');
+
+      if (parts.length == 2) {
+        return parts.pop().split(';').shift();
+      }
+    }
+  }, {
     key: 'getHeight',
     value: function getHeight() {
       return Backbone.$('gelato-application').height();
+    }
+  }, {
+    key: 'getQueryString',
+    value: function getQueryString(name, url) {
+      var href = url ? url : window.location.href;
+      var expression = new RegExp('[?&]' + name + '=([^&#]*)', 'i');
+      var result = expression.exec(href);
+
+      return result ? result[1] : null;
     }
   }, {
     key: 'getWidth',
@@ -105,19 +158,33 @@ var GelatoApplication = function (_Backbone$Model) {
   }, {
     key: 'reload',
     value: function reload(forcedReload) {
-      location.reload(forcedReload);
+      document.location.reload(forcedReload);
+    }
+  }, {
+    key: 'setCookie',
+    value: function setCookie(name, value, days) {
+      var expires = '';
+
+      if (days) {
+        var date = new Date();
+
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = '; expires=' + date.toGMTString();
+      }
+
+      document.cookie = name + '=' + value + expires + '; path=/';
     }
   }]);
 
   return GelatoApplication;
-}(Backbone.Model);
+}(Backbone.View);
 
 Gelato = Gelato || {};
 
 Gelato.Application = GelatoApplication;
 
-var GelatoView = function (_Backbone$View) {
-  _inherits(GelatoView, _Backbone$View);
+var GelatoView = function (_Backbone$View2) {
+  _inherits(GelatoView, _Backbone$View2);
 
   function GelatoView(options) {
     _classCallCheck(this, GelatoView);
@@ -495,8 +562,8 @@ Gelato = Gelato || {};
 
 Gelato.Locale = GelatoLocale;
 
-var GelatoModel = function (_Backbone$Model2) {
-  _inherits(GelatoModel, _Backbone$Model2);
+var GelatoModel = function (_Backbone$Model) {
+  _inherits(GelatoModel, _Backbone$Model);
 
   function GelatoModel() {
     _classCallCheck(this, GelatoModel);

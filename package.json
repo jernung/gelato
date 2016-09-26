@@ -6,7 +6,7 @@
     "email": "josh@jernung.com",
     "url": "http://www.jernung.com"
   },
-  "version": "0.5.13",
+  "version": "0.5.14",
   "license": "MIT",
   "main": "./dist/backbone-gelato.js",
   "repository": {
