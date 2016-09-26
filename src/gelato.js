@@ -32,12 +32,16 @@ function isCordova() {
   return _.isObject(window.cordova);
 }
 
+function isFileSystem() {
+  return location.protocol === 'file:';
+}
+
 function isLocalhost() {
   return location.hostname === 'localhost';
 }
 
 function isWebsite() {
-  return _.includes(document.location, 'http');
+  return _.includes(['http:', 'https:'], location.protocol);
 }
 
 function setCookie(name, value, days) {
