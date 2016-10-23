@@ -81,7 +81,9 @@ class GelatoView extends Backbone.View {
     _.forOwn(
       this.components,
       function(component) {
-        component.render();
+        if (component.autoRender) {
+          component.render();
+        }
       }
     );
 
@@ -98,10 +100,10 @@ class GelatoView extends Backbone.View {
     }
 
     this.$('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
-    this.delegateEvents();
-    this.renderComponents();
 
-    return this;
+    this.delegateEvents();
+
+    return this.renderComponents();
   }
 
   show() {

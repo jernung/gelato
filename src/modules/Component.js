@@ -6,6 +6,7 @@ class GelatoComponent extends Gelato.View {
 
     super(options);
 
+    this.autoRender = _.defaultTo(options.autoRender, true);
     this.container = options.container;
   }
 
