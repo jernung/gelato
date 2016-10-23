@@ -102,6 +102,7 @@ class GelatoView extends Backbone.View {
     this.$('[navigate]').on('click', _.bind(this._handleClickNavigate, this));
 
     this.delegateEvents();
+    this.stopListening();
 
     return this.renderComponents();
   }
