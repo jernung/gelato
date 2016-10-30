@@ -6,7 +6,7 @@
     "email": "josh@jernung.com",
     "url": "http://www.jernung.com"
   },
-  "version": "0.5.15",
+  "version": "0.5.16",
   "license": "MIT",
   "main": "./dist/backbone-gelato.js",
   "repository": {
@@ -19,7 +19,7 @@
     "test": "node ./scripts/test.js"
   },
   "devDependencies": {
-    "babel-preset-es2015": "~6.16.0",
+    "babel-preset-es2015": "~6.18.0",
     "backbone": "~1.3.0",
     "chai": "~3.5.0",
     "gulp": "~3.9.0",
