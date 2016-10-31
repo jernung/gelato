@@ -4,6 +4,7 @@ class GelatoView extends Backbone.View {
     super(options);
 
     this.components = {};
+    this.parent = null;
   }
 
   _handleClickNavigate(event) {
@@ -65,7 +66,7 @@ class GelatoView extends Backbone.View {
   removeComponents() {
     _.forOwn(
       this.components,
-      function(component) {
+      (component) => {
         component.remove();
       }
     );
@@ -80,7 +81,9 @@ class GelatoView extends Backbone.View {
   renderComponents() {
     _.forOwn(
       this.components,
-      function(component) {
+      (component) => {
+        component.parent = this;
+
         if (component.autoRender) {
           component.render();
         }

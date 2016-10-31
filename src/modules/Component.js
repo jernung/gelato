@@ -12,7 +12,7 @@ class GelatoComponent extends Gelato.View {
 
   renderTemplate(context) {
     if (this.container) {
-      Backbone.$(this.container).html(this.$el);
+      this.parent.$(this.container).html(this.$el);
     }
 
     Gelato.View.prototype.renderTemplate.call(this, context);
