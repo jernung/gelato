@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.16
- * Date: Sun Oct 30 2016 12:57:38 GMT+0800 (CST)
+ * Version: 0.5.17
+ * Date: Tue Nov 01 2016 10:38:36 GMT+0800 (CST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -113,9 +113,9 @@ Gelato.isLocalhost = isLocalhost;
 
 Gelato.isWebsite = isWebsite;
 
-Gelato._BUILD = 'Sun Oct 30 2016 12:57:38 GMT+0800 (CST)';
+Gelato._BUILD = 'Tue Nov 01 2016 10:38:36 GMT+0800 (CST)';
 
-Gelato._VERSION = '0.5.16';
+Gelato._VERSION = '0.5.17';
 
 var GelatoApplication = function (_Backbone$View) {
   _inherits(GelatoApplication, _Backbone$View);
@@ -216,6 +216,7 @@ var GelatoView = function (_Backbone$View2) {
     var _this2 = _possibleConstructorReturn(this, (GelatoView.__proto__ || Object.getPrototypeOf(GelatoView)).call(this, options));
 
     _this2.components = {};
+    _this2.parent = null;
     return _this2;
   }
 
@@ -295,7 +296,11 @@ var GelatoView = function (_Backbone$View2) {
   }, {
     key: 'renderComponents',
     value: function renderComponents() {
+      var _this3 = this;
+
       _.forOwn(this.components, function (component) {
+        component.parent = _this3;
+
         if (component.autoRender) {
           component.render();
         }
@@ -349,23 +354,23 @@ var GelatoCollection = function (_Backbone$Collection) {
   _createClass(GelatoCollection, [{
     key: '_handleRequestEvent',
     value: function _handleRequestEvent(options) {
-      var _this4 = this,
+      var _this5 = this,
           _arguments = arguments;
 
       var clonedOptions = _.clone(options);
 
       options.error = function () {
-        _this4.state = 'standby';
-        _this4._triggerLoad();
-        _this4._triggerState();
+        _this5.state = 'standby';
+        _this5._triggerLoad();
+        _this5._triggerState();
 
         clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments);
       };
 
       options.success = function () {
-        _this4.state = 'standby';
-        _this4._triggerLoad();
-        _this4._triggerState();
+        _this5.state = 'standby';
+        _this5._triggerLoad();
+        _this5._triggerState();
 
         clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments);
       };
@@ -416,18 +421,18 @@ var GelatoComponent = function (_Gelato$View) {
     options = options || {};
     options.tagName = 'gelato-component';
 
-    var _this5 = _possibleConstructorReturn(this, (GelatoComponent.__proto__ || Object.getPrototypeOf(GelatoComponent)).call(this, options));
+    var _this6 = _possibleConstructorReturn(this, (GelatoComponent.__proto__ || Object.getPrototypeOf(GelatoComponent)).call(this, options));
 
-    _this5.autoRender = _.defaultTo(options.autoRender, true);
-    _this5.container = options.container;
-    return _this5;
+    _this6.autoRender = _.defaultTo(options.autoRender, true);
+    _this6.container = options.container;
+    return _this6;
   }
 
   _createClass(GelatoComponent, [{
     key: 'renderTemplate',
     value: function renderTemplate(context) {
       if (this.container) {
-        Backbone.$(this.container).html(this.$el);
+        this.parent.$(this.container).html(this.$el);
       }
 
       Gelato.View.prototype.renderTemplate.call(this, context);
@@ -452,10 +457,10 @@ var GelatoDialog = function (_Gelato$View2) {
     options = options || {};
     options.tagName = 'gelato-dialog';
 
-    var _this6 = _possibleConstructorReturn(this, (GelatoDialog.__proto__ || Object.getPrototypeOf(GelatoDialog)).call(this, options));
+    var _this7 = _possibleConstructorReturn(this, (GelatoDialog.__proto__ || Object.getPrototypeOf(GelatoDialog)).call(this, options));
 
-    _this6.container = 'gelato-dialogs';
-    return _this6;
+    _this7.container = 'gelato-dialogs';
+    return _this7;
   }
 
   _createClass(GelatoDialog, [{
@@ -602,23 +607,23 @@ var GelatoModel = function (_Backbone$Model) {
   _createClass(GelatoModel, [{
     key: '_handleRequestEvent',
     value: function _handleRequestEvent(options) {
-      var _this8 = this,
+      var _this9 = this,
           _arguments2 = arguments;
 
       var clonedOptions = _.clone(options);
 
       options.error = function () {
-        _this8.state = 'standby';
-        _this8._triggerLoad();
-        _this8._triggerState();
+        _this9.state = 'standby';
+        _this9._triggerLoad();
+        _this9._triggerState();
 
         clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments2);
       };
 
       options.success = function () {
-        _this8.state = 'standby';
-        _this8._triggerLoad();
-        _this8._triggerState();
+        _this9.state = 'standby';
+        _this9._triggerLoad();
+        _this9._triggerState();
 
         clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments2);
       };
@@ -680,10 +685,10 @@ var GelatoPage = function (_Gelato$View3) {
     options = options || {};
     options.tagName = 'gelato-page';
 
-    var _this9 = _possibleConstructorReturn(this, (GelatoPage.__proto__ || Object.getPrototypeOf(GelatoPage)).call(this, options));
+    var _this10 = _possibleConstructorReturn(this, (GelatoPage.__proto__ || Object.getPrototypeOf(GelatoPage)).call(this, options));
 
-    _this9.container = 'gelato-pages';
-    return _this9;
+    _this10.container = 'gelato-pages';
+    return _this10;
   }
 
   _createClass(GelatoPage, [{
