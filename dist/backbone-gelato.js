@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.17
- * Date: Tue Nov 01 2016 10:38:36 GMT+0800 (CST)
+ * Version: 0.5.18
+ * Date: Wed Nov 02 2016 10:24:38 GMT+0800 (CST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -113,9 +113,9 @@ Gelato.isLocalhost = isLocalhost;
 
 Gelato.isWebsite = isWebsite;
 
-Gelato._BUILD = 'Tue Nov 01 2016 10:38:36 GMT+0800 (CST)';
+Gelato._BUILD = 'Wed Nov 02 2016 10:24:38 GMT+0800 (CST)';
 
-Gelato._VERSION = '0.5.17';
+Gelato._VERSION = '0.5.18';
 
 var GelatoApplication = function (_Backbone$View) {
   _inherits(GelatoApplication, _Backbone$View);
@@ -216,7 +216,7 @@ var GelatoView = function (_Backbone$View2) {
     var _this2 = _possibleConstructorReturn(this, (GelatoView.__proto__ || Object.getPrototypeOf(GelatoView)).call(this, options));
 
     _this2.components = {};
-    _this2.parent = null;
+    _this2.parent = Backbone.$(document.body);
     return _this2;
   }
 
@@ -299,7 +299,7 @@ var GelatoView = function (_Backbone$View2) {
       var _this3 = this;
 
       _.forOwn(this.components, function (component) {
-        component.parent = _this3;
+        component.parent = _this3.$el;
 
         if (component.autoRender) {
           component.render();
@@ -431,9 +431,7 @@ var GelatoComponent = function (_Gelato$View) {
   _createClass(GelatoComponent, [{
     key: 'renderTemplate',
     value: function renderTemplate(context) {
-      if (this.container) {
-        this.parent.$(this.container).html(this.$el);
-      }
+      this.parent.find(this.container).html(this.$el);
 
       Gelato.View.prototype.renderTemplate.call(this, context);
 
