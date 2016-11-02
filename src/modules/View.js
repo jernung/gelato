@@ -4,7 +4,7 @@ class GelatoView extends Backbone.View {
     super(options);
 
     this.components = {};
-    this.parent = null;
+    this.parent = Backbone.$(document.body);
   }
 
   _handleClickNavigate(event) {
@@ -82,7 +82,7 @@ class GelatoView extends Backbone.View {
     _.forOwn(
       this.components,
       (component) => {
-        component.parent = this;
+        component.parent = this.$el;
 
         if (component.autoRender) {
           component.render();

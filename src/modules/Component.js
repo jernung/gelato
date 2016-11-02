@@ -11,9 +11,7 @@ class GelatoComponent extends Gelato.View {
   }
 
   renderTemplate(context) {
-    if (this.container) {
-      this.parent.$(this.container).html(this.$el);
-    }
+    this.parent.find(this.container).html(this.$el);
 
     Gelato.View.prototype.renderTemplate.call(this, context);
 
