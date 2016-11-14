@@ -10,7 +10,7 @@ class GelatoRouter extends Backbone.Router {
     this.trigger('navigate:after', args, name);
   }
 
-  getQueryString() {
+  getQueryString(name) {
     const location = window.location;
 
     let query = '';
