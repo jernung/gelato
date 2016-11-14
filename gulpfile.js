@@ -25,6 +25,7 @@ gulp.task('compile-js', function() {
         './src/gelato.js',
         './src/modules/Application.js',
         './src/modules/View.js',
+        './src/modules/Cookies.js',
         './src/modules/Collection.js',
         './src/modules/Component.js',
         './src/modules/Dialog.js',

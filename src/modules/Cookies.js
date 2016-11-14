@@ -26,4 +26,4 @@ class GelatoCookies {
 
 Gelato = Gelato || {};
 
-Gelato.Storage = GelatoCookies;
+Gelato.Cookies = GelatoCookies;
