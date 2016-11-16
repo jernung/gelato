@@ -1,7 +1,2 @@
 # Directories
-/.idea
-/nbproject
-
-# Files
-*.DS_Store
-*.log
+/node_modules
