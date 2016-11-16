@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.5.18
- * Date: Wed Nov 02 2016 10:24:38 GMT+0800 (CST)
+ * Version: 0.6.0
+ * Date: Wed Nov 16 2016 16:24:18 GMT+0800 (CST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -13,14 +13,6 @@
   }
 }(this, function($, _, Backbone) {
 'use strict';
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Gelato = {};
 
@@ -40,28 +32,6 @@ if (Backbone === undefined) {
   throw 'Gelato requires Backbone as a dependency.';
 } else {
   window.Backbone = Backbone;
-}
-
-function getQueryString(name) {
-  var location = window.location;
-
-  var query = '';
-  if (location.hash.length) {
-    query = location.hash.substring(location.hash.indexOf('?') + 1);
-  } else {
-    query = location.search.substring(1);
-  }
-
-  var params = query.split('&');
-  for (var i = 0; i < params.length; i++) {
-    var pair = params[i].split('=');
-
-    if (pair[0] === name) {
-      return pair[1];
-    }
-  }
-
-  return null;
 }
 
 function getScreenHeight() {
@@ -88,34 +58,30 @@ function isWebsite() {
   return _.includes(['http:', 'https:'], location.protocol);
 }
 
-function setCookie(name, value, days) {
-  var expires = '';
-
-  if (days) {
-    var date = new Date();
-
-    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-    expires = '; expires=' + date.toGMTString();
-  }
-
-  document.cookie = name + '=' + value + expires + '; path=/';
-}
-
-Gelato.getQueryString = getQueryString;
-
 Gelato.getScreenHeight = getScreenHeight;
 
 Gelato.getScreenWidth = getScreenWidth;
 
 Gelato.isCordova = isCordova;
 
+Gelato.isFileSystem = isFileSystem;
+
 Gelato.isLocalhost = isLocalhost;
 
 Gelato.isWebsite = isWebsite;
 
-Gelato._BUILD = 'Wed Nov 02 2016 10:24:38 GMT+0800 (CST)';
+Gelato._BUILD = 'Wed Nov 16 2016 16:24:18 GMT+0800 (CST)';
 
-Gelato._VERSION = '0.5.18';
+Gelato._VERSION = '0.6.0';
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var GelatoApplication = function (_Backbone$View) {
   _inherits(GelatoApplication, _Backbone$View);
@@ -141,28 +107,14 @@ var GelatoApplication = function (_Backbone$View) {
       return this;
     }
   }, {
-    key: 'getCookie',
-    value: function getCookie(name) {
-      var value = '; ' + document.cookie;
-      var parts = value.split('; ' + name + '=');
-
-      if (parts.length == 2) {
-        return parts.pop().split(';').shift();
-      }
-    }
-  }, {
     key: 'getHeight',
     value: function getHeight() {
       return Backbone.$('gelato-application').height();
     }
   }, {
-    key: 'getQueryString',
-    value: function getQueryString(name, url) {
-      var href = url ? url : window.location.href;
-      var expression = new RegExp('[?&]' + name + '=([^&#]*)', 'i');
-      var result = expression.exec(href);
-
-      return result ? result[1] : null;
+    key: 'getPlatform',
+    value: function getPlatform() {
+      return window.device ? window.device.platform : 'Website';
     }
   }, {
     key: 'getWidth',
@@ -184,20 +136,6 @@ var GelatoApplication = function (_Backbone$View) {
     value: function reload(forcedReload) {
       document.location.reload(forcedReload);
     }
-  }, {
-    key: 'setCookie',
-    value: function setCookie(name, value, days) {
-      var expires = '';
-
-      if (days) {
-        var date = new Date();
-
-        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-        expires = '; expires=' + date.toGMTString();
-      }
-
-      document.cookie = name + '=' + value + expires + '; path=/';
-    }
   }]);
 
   return GelatoApplication;
@@ -206,18 +144,27 @@ var GelatoApplication = function (_Backbone$View) {
 Gelato = Gelato || {};
 
 Gelato.Application = GelatoApplication;
+'use strict';
 
-var GelatoView = function (_Backbone$View2) {
-  _inherits(GelatoView, _Backbone$View2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GelatoView = function (_Backbone$View) {
+  _inherits(GelatoView, _Backbone$View);
 
   function GelatoView(options) {
     _classCallCheck(this, GelatoView);
 
-    var _this2 = _possibleConstructorReturn(this, (GelatoView.__proto__ || Object.getPrototypeOf(GelatoView)).call(this, options));
+    var _this = _possibleConstructorReturn(this, (GelatoView.__proto__ || Object.getPrototypeOf(GelatoView)).call(this, options));
 
-    _this2.components = {};
-    _this2.parent = Backbone.$(document.body);
-    return _this2;
+    _this.components = {};
+    _this.parent = Backbone.$(document.body);
+    return _this;
   }
 
   _createClass(GelatoView, [{
@@ -296,10 +243,10 @@ var GelatoView = function (_Backbone$View2) {
   }, {
     key: 'renderComponents',
     value: function renderComponents() {
-      var _this3 = this;
+      var _this2 = this;
 
       _.forOwn(this.components, function (component) {
-        component.parent = _this3.$el;
+        component.parent = _this2.$el;
 
         if (component.autoRender) {
           component.render();
@@ -341,6 +288,58 @@ var GelatoView = function (_Backbone$View2) {
 Gelato = Gelato || {};
 
 Gelato.View = GelatoView;
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var GelatoCookies = function () {
+  function GelatoCookies() {
+    _classCallCheck(this, GelatoCookies);
+  }
+
+  _createClass(GelatoCookies, [{
+    key: 'get',
+    value: function get(name) {
+      var value = '; ' + document.cookie;
+      var parts = value.split('; ' + name + '=');
+
+      if (parts.length == 2) {
+        return parts.pop().split(';').shift();
+      }
+    }
+  }, {
+    key: 'set',
+    value: function set(name, value, days) {
+      var expires = '';
+
+      if (days) {
+        var date = new Date();
+
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+        expires = '; expires=' + date.toGMTString();
+      }
+
+      document.cookie = name + '=' + value + expires + '; path=/';
+    }
+  }]);
+
+  return GelatoCookies;
+}();
+
+Gelato = Gelato || {};
+
+Gelato.Cookies = GelatoCookies;
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var GelatoCollection = function (_Backbone$Collection) {
   _inherits(GelatoCollection, _Backbone$Collection);
@@ -354,23 +353,23 @@ var GelatoCollection = function (_Backbone$Collection) {
   _createClass(GelatoCollection, [{
     key: '_handleRequestEvent',
     value: function _handleRequestEvent(options) {
-      var _this5 = this,
+      var _this2 = this,
           _arguments = arguments;
 
       var clonedOptions = _.clone(options);
 
       options.error = function () {
-        _this5.state = 'standby';
-        _this5._triggerLoad();
-        _this5._triggerState();
+        _this2.state = 'standby';
+        _this2._triggerLoad();
+        _this2._triggerState();
 
         clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments);
       };
 
       options.success = function () {
-        _this5.state = 'standby';
-        _this5._triggerLoad();
-        _this5._triggerState();
+        _this2.state = 'standby';
+        _this2._triggerLoad();
+        _this2._triggerState();
 
         clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments);
       };
@@ -411,6 +410,15 @@ GelatoCollection.prototype.state = 'standby';
 Gelato = Gelato || {};
 
 Gelato.Collection = GelatoCollection;
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var GelatoComponent = function (_Gelato$View) {
   _inherits(GelatoComponent, _Gelato$View);
@@ -421,11 +429,11 @@ var GelatoComponent = function (_Gelato$View) {
     options = options || {};
     options.tagName = 'gelato-component';
 
-    var _this6 = _possibleConstructorReturn(this, (GelatoComponent.__proto__ || Object.getPrototypeOf(GelatoComponent)).call(this, options));
+    var _this = _possibleConstructorReturn(this, (GelatoComponent.__proto__ || Object.getPrototypeOf(GelatoComponent)).call(this, options));
 
-    _this6.autoRender = _.defaultTo(options.autoRender, true);
-    _this6.container = options.container;
-    return _this6;
+    _this.autoRender = _.defaultTo(options.autoRender, true);
+    _this.container = options.container;
+    return _this;
   }
 
   _createClass(GelatoComponent, [{
@@ -445,9 +453,18 @@ var GelatoComponent = function (_Gelato$View) {
 Gelato = Gelato || {};
 
 Gelato.Component = GelatoComponent;
+'use strict';
 
-var GelatoDialog = function (_Gelato$View2) {
-  _inherits(GelatoDialog, _Gelato$View2);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GelatoDialog = function (_Gelato$View) {
+  _inherits(GelatoDialog, _Gelato$View);
 
   function GelatoDialog(options) {
     _classCallCheck(this, GelatoDialog);
@@ -455,10 +472,10 @@ var GelatoDialog = function (_Gelato$View2) {
     options = options || {};
     options.tagName = 'gelato-dialog';
 
-    var _this7 = _possibleConstructorReturn(this, (GelatoDialog.__proto__ || Object.getPrototypeOf(GelatoDialog)).call(this, options));
+    var _this = _possibleConstructorReturn(this, (GelatoDialog.__proto__ || Object.getPrototypeOf(GelatoDialog)).call(this, options));
 
-    _this7.container = 'gelato-dialogs';
-    return _this7;
+    _this.container = 'gelato-dialogs';
+    return _this;
   }
 
   _createClass(GelatoDialog, [{
@@ -540,11 +557,15 @@ var GelatoDialog = function (_Gelato$View2) {
 Gelato = Gelato || {};
 
 Gelato.Dialog = GelatoDialog;
+"use strict";
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 /**
  * Class for handling localization strings.
  */
-
 var GelatoLocale = function () {
 
   /**
@@ -552,7 +573,6 @@ var GelatoLocale = function () {
    * @param {object} primary
    * @param {object} [secondary]
    */
-
   function GelatoLocale(primary, secondary) {
     _classCallCheck(this, GelatoLocale);
 
@@ -567,7 +587,7 @@ var GelatoLocale = function () {
 
 
   _createClass(GelatoLocale, [{
-    key: 'get',
+    key: "get",
     value: function get(path) {
       return _.get(this._primary, path) || _.get(this._secondary, path);
     }
@@ -579,7 +599,7 @@ var GelatoLocale = function () {
      */
 
   }, {
-    key: 'set',
+    key: "set",
     value: function set(primary, secondary) {
       this._primary = primary;
       this._secondary = secondary;
@@ -592,6 +612,15 @@ var GelatoLocale = function () {
 Gelato = Gelato || {};
 
 Gelato.Locale = GelatoLocale;
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var GelatoModel = function (_Backbone$Model) {
   _inherits(GelatoModel, _Backbone$Model);
@@ -605,25 +634,25 @@ var GelatoModel = function (_Backbone$Model) {
   _createClass(GelatoModel, [{
     key: '_handleRequestEvent',
     value: function _handleRequestEvent(options) {
-      var _this9 = this,
-          _arguments2 = arguments;
+      var _this2 = this,
+          _arguments = arguments;
 
       var clonedOptions = _.clone(options);
 
       options.error = function () {
-        _this9.state = 'standby';
-        _this9._triggerLoad();
-        _this9._triggerState();
+        _this2.state = 'standby';
+        _this2._triggerLoad();
+        _this2._triggerState();
 
-        clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments2);
+        clonedOptions.error && clonedOptions.error.apply(clonedOptions, _arguments);
       };
 
       options.success = function () {
-        _this9.state = 'standby';
-        _this9._triggerLoad();
-        _this9._triggerState();
+        _this2.state = 'standby';
+        _this2._triggerLoad();
+        _this2._triggerState();
 
-        clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments2);
+        clonedOptions.success && clonedOptions.success.apply(clonedOptions, _arguments);
       };
     }
   }, {
@@ -673,9 +702,18 @@ GelatoModel.prototype.state = 'standby';
 Gelato = Gelato || {};
 
 Gelato.Model = GelatoModel;
+'use strict';
 
-var GelatoPage = function (_Gelato$View3) {
-  _inherits(GelatoPage, _Gelato$View3);
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var GelatoPage = function (_Gelato$View) {
+  _inherits(GelatoPage, _Gelato$View);
 
   function GelatoPage(options) {
     _classCallCheck(this, GelatoPage);
@@ -683,10 +721,10 @@ var GelatoPage = function (_Gelato$View3) {
     options = options || {};
     options.tagName = 'gelato-page';
 
-    var _this10 = _possibleConstructorReturn(this, (GelatoPage.__proto__ || Object.getPrototypeOf(GelatoPage)).call(this, options));
+    var _this = _possibleConstructorReturn(this, (GelatoPage.__proto__ || Object.getPrototypeOf(GelatoPage)).call(this, options));
 
-    _this10.container = 'gelato-pages';
-    return _this10;
+    _this.container = 'gelato-pages';
+    return _this;
   }
 
   _createClass(GelatoPage, [{
@@ -712,6 +750,15 @@ var GelatoPage = function (_Gelato$View3) {
 Gelato = Gelato || {};
 
 Gelato.Page = GelatoPage;
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var GelatoRouter = function (_Backbone$Router) {
   _inherits(GelatoRouter, _Backbone$Router);
@@ -734,6 +781,29 @@ var GelatoRouter = function (_Backbone$Router) {
       this.trigger('navigate:after', args, name);
     }
   }, {
+    key: 'getQueryString',
+    value: function getQueryString(name) {
+      var location = window.location;
+
+      var query = '';
+      if (location.hash.length) {
+        query = location.hash.substring(location.hash.indexOf('?') + 1);
+      } else {
+        query = location.search.substring(1);
+      }
+
+      var params = query.split('&');
+      for (var i = 0; i < params.length; i++) {
+        var pair = params[i].split('=');
+
+        if (pair[0] === name) {
+          return pair[1];
+        }
+      }
+
+      return null;
+    }
+  }, {
     key: 'isRunning',
     value: function isRunning() {
       return Backbone.History.started;
@@ -751,6 +821,11 @@ var GelatoRouter = function (_Backbone$Router) {
 Gelato = Gelato || {};
 
 Gelato.Router = GelatoRouter;
+'use strict';
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var GelatoStorage = function () {
   function GelatoStorage(prefix) {
