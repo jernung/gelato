@@ -58,6 +58,7 @@ class GelatoView extends Backbone.View {
     this.stopListening();
     this.undelegateEvents();
     this.$el.find('*').off();
+    this.$el.empty();
     this.$el.remove();
 
     return this;
