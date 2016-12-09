@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
  * Version: 0.6.0
- * Date: Wed Nov 16 2016 16:24:18 GMT+0800 (CST)
+ * Date: Fri Dec 09 2016 16:50:31 GMT-0500 (EST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -70,7 +70,7 @@ Gelato.isLocalhost = isLocalhost;
 
 Gelato.isWebsite = isWebsite;
 
-Gelato._BUILD = 'Wed Nov 16 2016 16:24:18 GMT+0800 (CST)';
+Gelato._BUILD = 'Fri Dec 09 2016 16:50:31 GMT-0500 (EST)';
 
 Gelato._VERSION = '0.6.0';
 'use strict';
@@ -222,6 +222,7 @@ var GelatoView = function (_Backbone$View) {
       this.stopListening();
       this.undelegateEvents();
       this.$el.find('*').off();
+      this.$el.empty();
       this.$el.remove();
 
       return this;

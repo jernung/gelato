@@ -6,7 +6,7 @@
     "email": "josh@jernung.com",
     "url": "http://www.jernung.com"
   },
-  "version": "0.6.0",
+  "version": "0.6.1",
   "license": "MIT",
   "main": "./dist/backbone-gelato.js",
   "repository": {
@@ -33,7 +33,7 @@
     "gulp-watch": "~4.3.0",
     "jquery": "~3.1.0",
     "lodash": "~4.17.0",
-    "mocha": "~3.1.0",
+    "mocha": "~3.2.0",
     "mocha-phantomjs": "~4.1.0",
     "shelljs": "~0.7.0",
     "sinon": "~1.17.0"
