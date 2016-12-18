@@ -6,7 +6,7 @@
     "email": "josh@jernung.com",
     "url": "http://www.jernung.com"
   },
-  "version": "0.6.1",
+  "version": "0.6.2",
   "license": "MIT",
   "main": "./dist/backbone-gelato.js",
   "repository": {
@@ -28,7 +28,7 @@
     "gulp-concat": "~2.6.0",
     "gulp-insert": "~0.5.0",
     "gulp-replace": "~0.5.0",
-    "gulp-sass": "~2.3.0",
+    "gulp-sass": "~3.0.0",
     "gulp-umd": "~0.2.0",
     "gulp-watch": "~4.3.0",
     "jquery": "~3.1.0",

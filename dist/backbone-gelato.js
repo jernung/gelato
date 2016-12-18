@@ -1,7 +1,7 @@
 /**
  * Backbone Gelato
- * Version: 0.6.0
- * Date: Fri Dec 09 2016 16:50:31 GMT-0500 (EST)
+ * Version: 0.6.2
+ * Date: Sun Dec 18 2016 18:45:28 GMT-0500 (EST)
  */
 ;(function(root, factory) {
   if (typeof define === 'function' && define.amd) {
@@ -70,9 +70,9 @@ Gelato.isLocalhost = isLocalhost;
 
 Gelato.isWebsite = isWebsite;
 
-Gelato._BUILD = 'Fri Dec 09 2016 16:50:31 GMT-0500 (EST)';
+Gelato._BUILD = 'Sun Dec 18 2016 18:45:28 GMT-0500 (EST)';
 
-Gelato._VERSION = '0.6.0';
+Gelato._VERSION = '0.6.2';
 'use strict';
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -537,7 +537,7 @@ var GelatoDialog = function (_Gelato$View) {
       this.dialog.on('shown.bs.modal', this.handleElementShown.bind(this));
       this.dialog.modal(options);
 
-      window.app.dialog = this.dialog;
+      window.app.dialog = this;
 
       return this;
     }
