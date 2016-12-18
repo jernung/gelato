@@ -58,7 +58,7 @@ class GelatoDialog extends Gelato.View {
     this.dialog.on('shown.bs.modal', this.handleElementShown.bind(this));
     this.dialog.modal(options);
 
-    window.app.dialog = this.dialog;
+    window.app.dialog = this;
 
     return this;
   }
